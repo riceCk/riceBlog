@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="基本类型约束 TS是一个可选的静态的类型系统  如何进行类型约束仅需要在变量、函数的参数、函数的返回值位置加上123456789101112131415161718192021ts在很多场景中可以完成类型推导any：表示任意类型，对该类型，ts不进行类型检查&amp;gt; 小技巧，如何区分数字字符串和数字，关键看怎么读？&amp;gt; 如果按照数字的方式朗读，则为数字；否则，为字符串```bash# 变量le">
+<meta name="description" content="基本类型约束 TS是一个可选的静态的类型系统  如何进行类型约束仅需要在变量、函数的参数、函数的返回值位置加上XXX:类型ts在很多场景中可以完成类型推导any：表示任意类型，对该类型，ts不进行类型检查  小技巧，如何区分数字字符串和数字，关键看怎么读？如果按照数字的方式朗读，则为数字；否则，为字符串  12345678910111213141516# 变量let name:string;nam">
 <meta name="keywords" content="TypeScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="3.基本的类型检查">
+<meta property="og:title" content="3.TS-基本的类型检查">
 <meta property="og:url" content="http://yoursite.com/2020/05/04/TypeScript/基本的类型检查/index.html">
 <meta property="og:site_name" content="riceCK">
-<meta property="og:description" content="基本类型约束 TS是一个可选的静态的类型系统  如何进行类型约束仅需要在变量、函数的参数、函数的返回值位置加上123456789101112131415161718192021ts在很多场景中可以完成类型推导any：表示任意类型，对该类型，ts不进行类型检查&amp;gt; 小技巧，如何区分数字字符串和数字，关键看怎么读？&amp;gt; 如果按照数字的方式朗读，则为数字；否则，为字符串```bash# 变量le">
+<meta property="og:description" content="基本类型约束 TS是一个可选的静态的类型系统  如何进行类型约束仅需要在变量、函数的参数、函数的返回值位置加上XXX:类型ts在很多场景中可以完成类型推导any：表示任意类型，对该类型，ts不进行类型检查  小技巧，如何区分数字字符串和数字，关键看怎么读？如果按照数字的方式朗读，则为数字；否则，为字符串  12345678910111213141516# 变量let name:string;nam">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-05T11:39:11.865Z">
+<meta property="og:updated_time" content="2020-05-06T11:27:11.818Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="3.基本的类型检查">
-<meta name="twitter:description" content="基本类型约束 TS是一个可选的静态的类型系统  如何进行类型约束仅需要在变量、函数的参数、函数的返回值位置加上123456789101112131415161718192021ts在很多场景中可以完成类型推导any：表示任意类型，对该类型，ts不进行类型检查&amp;gt; 小技巧，如何区分数字字符串和数字，关键看怎么读？&amp;gt; 如果按照数字的方式朗读，则为数字；否则，为字符串```bash# 变量le">
+<meta name="twitter:title" content="3.TS-基本的类型检查">
+<meta name="twitter:description" content="基本类型约束 TS是一个可选的静态的类型系统  如何进行类型约束仅需要在变量、函数的参数、函数的返回值位置加上XXX:类型ts在很多场景中可以完成类型推导any：表示任意类型，对该类型，ts不进行类型检查  小技巧，如何区分数字字符串和数字，关键看怎么读？如果按照数字的方式朗读，则为数字；否则，为字符串  12345678910111213141516# 变量let name:string;nam">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>3.基本的类型检查 | riceCK</title>
+  <title>3.TS-基本的类型检查 | riceCK</title>
   
 
 
@@ -260,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">3.基本的类型检查</h1>
+          <h1 class="post-title" itemprop="name headline">3.TS-基本的类型检查</h1>
         
 
         <div class="post-meta">
@@ -346,7 +346,11 @@
         <h1 id="基本类型约束"><a href="#基本类型约束" class="headerlink" title="基本类型约束"></a>基本类型约束</h1><blockquote>
 <p>TS是一个可选的静态的类型系统</p>
 </blockquote>
-<h1 id="如何进行类型约束"><a href="#如何进行类型约束" class="headerlink" title="如何进行类型约束"></a>如何进行类型约束</h1><p>仅需要在变量、函数的参数、函数的返回值位置加上<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">ts在很多场景中可以完成类型推导</span><br><span class="line">any：表示任意类型，对该类型，ts不进行类型检查</span><br><span class="line">&gt; 小技巧，如何区分数字字符串和数字，关键看怎么读？</span><br><span class="line">&gt; 如果按照数字的方式朗读，则为数字；否则，为字符串</span><br><span class="line">```bash</span><br><span class="line"># 变量</span><br><span class="line">let name:string;</span><br><span class="line">name = &apos;2131&apos;</span><br><span class="line"># 函数参数</span><br><span class="line">function sum (a:number, b:number): number &#123;</span><br><span class="line">  return a + b;</span><br><span class="line">&#125;</span><br><span class="line">let num:number = sum(12312, 3123)</span><br><span class="line"># 变量推导出的类型和手动类型一致</span><br><span class="line"># 中途不能修改变量类型</span><br><span class="line">let name = &apos;12312&apos;; # 推导出string</span><br><span class="line">name = 12321  # 错误</span><br><span class="line"># number类型数组</span><br><span class="line">let nums: number[];</span><br><span class="line">nums = [2, 3, 4]</span><br><span class="line"># let nums: Array&lt;number&gt; = [3, 4, 5]</span><br></pre></td></tr></table></figure></p>
+<h1 id="如何进行类型约束"><a href="#如何进行类型约束" class="headerlink" title="如何进行类型约束"></a>如何进行类型约束</h1><p>仅需要在变量、函数的参数、函数的返回值位置加上XXX:类型<br>ts在很多场景中可以完成类型推导<br>any：表示任意类型，对该类型，ts不进行类型检查</p>
+<blockquote>
+<p>小技巧，如何区分数字字符串和数字，关键看怎么读？<br>如果按照数字的方式朗读，则为数字；否则，为字符串</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 变量</span></span><br><span class="line"><span class="built_in">let</span> name:string;</span><br><span class="line">name = <span class="string">'2131'</span></span><br><span class="line"><span class="comment"># 函数参数</span></span><br><span class="line"><span class="keyword">function</span> sum (a:number, b:number): number &#123;</span><br><span class="line">  <span class="built_in">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> num:number = sum(12312, 3123)</span><br><span class="line"><span class="comment"># 变量推导出的类型和手动类型一致</span></span><br><span class="line"><span class="comment"># 中途不能修改变量类型</span></span><br><span class="line"><span class="built_in">let</span> name = <span class="string">'12312'</span>; <span class="comment"># 推导出string</span></span><br><span class="line">name = 12321  <span class="comment"># 错误</span></span><br><span class="line"><span class="comment"># number类型数组</span></span><br><span class="line"><span class="built_in">let</span> nums: number[];</span><br><span class="line">nums = [2, 3, 4]</span><br><span class="line"><span class="comment"># let nums: Array&lt;number&gt; = [3, 4, 5]</span></span><br></pre></td></tr></table></figure>
 <h1 id="源代码和编译结果的差异"><a href="#源代码和编译结果的差异" class="headerlink" title="源代码和编译结果的差异"></a>源代码和编译结果的差异</h1><p>编译结果中没有类型约束信息</p>
 <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><ul>
 <li>number: 数字</li>
@@ -370,11 +374,11 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 函数永远不会结束</span></span><br><span class="line"><span class="keyword">function</span> throwError(msg: string): never &#123;</span><br><span class="line">  throw new Error(msg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> alwaysDoSometing(): never &#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>字面量类型:使用一个值进行约束</p>
+<li>字面量类型:使用一个值进行约束</li>
+</ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 变量只能去指定值</span></span><br><span class="line"><span class="built_in">let</span> a:<span class="string">"A"</span> <span class="comment"># a只能取值A</span></span><br><span class="line">a = <span class="string">"A"</span></span><br><span class="line"> <span class="comment"># 结合联合类型，gender只能指定男或女</span></span><br><span class="line"><span class="built_in">let</span> gender: <span class="string">"男"</span> | <span class="string">"女"</span></span><br><span class="line"><span class="comment"># 对user进行约束，赋值必须有字符串name，和数字age</span></span><br><span class="line"><span class="built_in">let</span> user: &#123;</span><br><span class="line">  name: string</span><br><span class="line">  age: number</span><br><span class="line">&#125;</span><br><span class="line">user = &#123;</span><br><span class="line">  name: <span class="string">'12312'</span>,</span><br><span class="line">  age: 123</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>元祖类型（Tuple）:一个固定长度数组，并且数组中每一项的类型确定</p>
-</li>
+<ul>
+<li>元祖类型（Tuple）:一个固定长度数组，并且数组中每一项的类型确定</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> tu: [string, number];</span><br><span class="line">tu = [<span class="string">'3'</span>, 4]</span><br></pre></td></tr></table></figure>
 <ul>
@@ -383,6 +387,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> data:any = <span class="string">'ssdfas'</span></span><br><span class="line"><span class="built_in">let</span> num:number = data</span><br></pre></td></tr></table></figure>
 <h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><p>对已知的一些类型定义名称<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> 类型名称 =</span><br></pre></td></tr></table></figure></p>
 <p>举个栗子<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> Gender = <span class="string">'男'</span> | <span class="string">'女'</span></span><br><span class="line"><span class="built_in">type</span> User = &#123;</span><br><span class="line">  name: string,</span><br><span class="line">  age: number,</span><br><span class="line">  gender: Gender</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> u: User</span><br><span class="line"><span class="keyword">function</span> getUser(g: Gender): User[] &#123;</span><br><span class="line">  <span class="built_in">return</span> [&#123;</span><br><span class="line">    name: <span class="string">"12312"</span>,</span><br><span class="line">    age: 123,</span><br><span class="line">    gender: g</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br><span class="line">getUser(<span class="string">'男'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="函数的相关约束"><a href="#函数的相关约束" class="headerlink" title="函数的相关约束"></a>函数的相关约束</h2><p>函数重载：在函数实现之前，对函数调用的多种情况进行声明<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 得到a乘以b的结果</span><br><span class="line"> * @param a </span><br><span class="line"> * @param b </span><br><span class="line"> */</span><br><span class="line"><span class="keyword">function</span> combine(a:number, b: number): number;</span><br><span class="line">/**</span><br><span class="line"> * 得到a和b拼接的结果</span><br><span class="line"> * @param a </span><br><span class="line"> * @param b </span><br><span class="line"> */</span><br><span class="line"><span class="keyword">function</span> combine(a:string, b: string): string;</span><br><span class="line"><span class="keyword">function</span> combine(a: number | string, b: number | string): number | string &#123;</span><br><span class="line">  <span class="keyword">if</span> (typeof a === <span class="string">'number'</span> &amp;&amp; typeof b === <span class="string">'number'</span>) &#123;</span><br><span class="line">    <span class="built_in">return</span> a * b</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (typeof a === <span class="string">'string'</span> &amp;&amp; typeof b === <span class="string">'string'</span>) &#123;</span><br><span class="line">    <span class="built_in">return</span> a + b</span><br><span class="line">  &#125;</span><br><span class="line">  throw new Error(<span class="string">'a和b必须时候是相同的类型'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const result = combine(3, 3);</span><br></pre></td></tr></table></figure></p>
+<p>可选参数：可以在某些参数名后加上问号，表示该参数可以不用传递。可选参数必须在参数列表的末尾<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># c设置可选参数</span></span><br><span class="line"><span class="keyword">function</span> sum (a: number, b: number, c?: number) &#123;</span><br><span class="line">  <span class="keyword">if</span> (c) &#123;</span><br><span class="line">    <span class="built_in">return</span> a + b + c;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># c设置默认参数</span></span><br><span class="line"><span class="keyword">function</span> sum1(a: number, b: number, c: number = 0) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">sum1(1, 2)</span><br></pre></td></tr></table></figure></p>
+<h1 id="扑克牌小练习"><a href="#扑克牌小练习" class="headerlink" title="扑克牌小练习"></a>扑克牌小练习</h1><p>1.目标：创建一副扑克牌（不包括大小王），打印该扑克牌<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> Deck = NormalCard[]</span><br><span class="line"><span class="built_in">type</span> Color = <span class="string">"♠"</span> | <span class="string">"♥"</span> | <span class="string">"♣"</span> | <span class="string">"♦"</span></span><br><span class="line"><span class="built_in">type</span> NormalCard = &#123;</span><br><span class="line">  color: Color,</span><br><span class="line">  mark: number</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> createDeck (): Deck &#123;</span><br><span class="line">  const deck: Deck = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">let</span> i = 1; i &lt;= 13; i++) &#123;</span><br><span class="line">    deck.push(&#123;</span><br><span class="line">      mark: i,</span><br><span class="line">      color: <span class="string">"♠"</span></span><br><span class="line">    &#125;)</span><br><span class="line">    deck.push(&#123;</span><br><span class="line">      mark: i,</span><br><span class="line">      color: <span class="string">"♣"</span></span><br><span class="line">    &#125;)</span><br><span class="line">    deck.push(&#123;</span><br><span class="line">      mark: i,</span><br><span class="line">      color: <span class="string">"♥"</span></span><br><span class="line">    &#125;)</span><br><span class="line">    deck.push(&#123;</span><br><span class="line">      mark: i,</span><br><span class="line">      color: <span class="string">"♦"</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> deck</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> printDeck (deck: Deck) &#123;</span><br><span class="line">  deck.forEach(item =&gt; &#123;</span><br><span class="line">    <span class="built_in">let</span> str = item.color;</span><br><span class="line">    <span class="keyword">if</span> (item.mark &lt;= 10) &#123;</span><br><span class="line">      str += item.mark</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (item.mark === 11) &#123;</span><br><span class="line">      str += <span class="string">'J'</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (item.mark === 12) &#123;</span><br><span class="line">      str += <span class="string">"Q"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">      str += <span class="string">"K"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -413,8 +420,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/riceBlog/2020/05/01/TypeScript/在node中搭建ts开发环境/" rel="next" title="2.在node中搭建ts开发环境">
-                <i class="fa fa-chevron-left"></i> 2.在node中搭建ts开发环境
+              <a href="/riceBlog/2020/05/01/TypeScript/在node中搭建ts开发环境/" rel="next" title="2.TS-在node中搭建ts开发环境">
+                <i class="fa fa-chevron-left"></i> 2.TS-在node中搭建ts开发环境
               </a>
             
           </div>
@@ -422,6 +429,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/05/06/TypeScript/扩展类型-枚举/" rel="prev" title="4.TS-扩展类型_枚举">
+                4.TS-扩展类型_枚举 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -512,7 +523,7 @@
               
                 <a href="/riceBlog/archives/">
               
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -583,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本类型约束"><span class="nav-number">1.</span> <span class="nav-text">基本类型约束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何进行类型约束"><span class="nav-number">2.</span> <span class="nav-text">如何进行类型约束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码和编译结果的差异"><span class="nav-number">3.</span> <span class="nav-text">源代码和编译结果的差异</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">3.1.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常用类型"><span class="nav-number">3.2.</span> <span class="nav-text">其他常用类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型别名"><span class="nav-number">3.3.</span> <span class="nav-text">类型别名</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本类型约束"><span class="nav-number">1.</span> <span class="nav-text">基本类型约束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何进行类型约束"><span class="nav-number">2.</span> <span class="nav-text">如何进行类型约束</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代码和编译结果的差异"><span class="nav-number">3.</span> <span class="nav-text">源代码和编译结果的差异</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">3.1.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常用类型"><span class="nav-number">3.2.</span> <span class="nav-text">其他常用类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型别名"><span class="nav-number">3.3.</span> <span class="nav-text">类型别名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的相关约束"><span class="nav-number">3.4.</span> <span class="nav-text">函数的相关约束</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扑克牌小练习"><span class="nav-number">4.</span> <span class="nav-text">扑克牌小练习</span></a></li></ol></div>
             
 
           </div>
@@ -762,7 +773,7 @@
         var disqus_config = function () {
           this.page.url = 'http://yoursite.com/2020/05/04/TypeScript/基本的类型检查/';
           this.page.identifier = '2020/05/04/TypeScript/基本的类型检查/';
-          this.page.title = '3.基本的类型检查';
+          this.page.title = '3.TS-基本的类型检查';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
