@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="riceCK">
 <meta property="og:description" content="模块化相关配置    配置名称 含义     module 设置编译结果中使用的模块化标准   moduleResolution 设置间隙模块的模式   noImpliciuUseStrict 编译结果中不包含”use strict”   removeComments 编译结果移除注释   noEmitOnError 错误时不生成编译结果   esModuleInterop 启用es模块化交互非e">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-08T14:31:17.113Z">
+<meta property="og:updated_time" content="2020-05-12T10:52:56.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="5.TS-模块化">
 <meta name="twitter:description" content="模块化相关配置    配置名称 含义     module 设置编译结果中使用的模块化标准   moduleResolution 设置间隙模块的模式   noImpliciuUseStrict 编译结果中不包含”use strict”   removeComments 编译结果移除注释   noEmitOnError 错误时不生成编译结果   esModuleInterop 启用es模块化交互非e">
@@ -399,6 +399,16 @@
 <p><strong>index.ts</strong>导入<br>TS语法导入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import 声明 = require(<span class="string">'路径'</span>)</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这种方式可以导出但是没法进行类型检查 </span></span><br><span class="line">const &#123;name, sum&#125; = require(<span class="string">'./myModule'</span>);</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import myModule = reuqire(<span class="string">'./myModule'</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="模块化解析"><a href="#模块化解析" class="headerlink" title="模块化解析"></a>模块化解析</h1><p>模块解析：应该从什么位置寻找模块<br>TS中，有两种模块解析策略</p>
+<ul>
+<li>classic：经典</li>
+<li>node：node解析策略（唯一的变化，是将js替换成ts）<ul>
+<li>相对路径<strong>require(“./xxx”)</strong></li>
+<li>非相对模块<strong>require(“xxx”)</strong></li>
+</ul>
+</li>
+</ul>
+
       
     </div>
     
@@ -437,6 +447,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/05/13/TypeScript/6.接口和类型兼容性/" rel="prev" title="6.TS-接口和类型兼容性">
+                6.TS-接口和类型兼容性 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -527,7 +541,7 @@
               
                 <a href="/riceBlog/archives/">
               
-                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -598,7 +612,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化"><span class="nav-number">1.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TS中如何书写模块化语句"><span class="nav-number">2.</span> <span class="nav-text">TS中如何书写模块化语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译结果中的模块化"><span class="nav-number">3.</span> <span class="nav-text">编译结果中的模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决modules中默认导入错误"><span class="nav-number">4.</span> <span class="nav-text">解决modules中默认导入错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在TS中书写commonjs模块化代码"><span class="nav-number">5.</span> <span class="nav-text">如何在TS中书写commonjs模块化代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化"><span class="nav-number">1.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TS中如何书写模块化语句"><span class="nav-number">2.</span> <span class="nav-text">TS中如何书写模块化语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译结果中的模块化"><span class="nav-number">3.</span> <span class="nav-text">编译结果中的模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决modules中默认导入错误"><span class="nav-number">4.</span> <span class="nav-text">解决modules中默认导入错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在TS中书写commonjs模块化代码"><span class="nav-number">5.</span> <span class="nav-text">如何在TS中书写commonjs模块化代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模块化解析"><span class="nav-number">6.</span> <span class="nav-text">模块化解析</span></a></li></ol></div>
             
 
           </div>
