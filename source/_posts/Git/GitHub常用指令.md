@@ -4,6 +4,11 @@ tags: Git常用指令
 date: 2018-07-27 09:47:00
 ---
 ## 欢迎来到GitHub世界，精彩继续
+#### 秘钥生成
+```bash
+ssh-keygen
+```
+
 #### 在本地项目文件下创建本地仓库，初始化
 ```bash
 git init
@@ -29,8 +34,23 @@ git remote add origin https://github.com/riceCk/snake.git
 * git remote rename `<原远端名>` `<现远端名>`   远端仓库重命名
 * git remote add `<远端名>` `<远端地址>`  添加源仓库地址为远端仓库
 
-#### 基础工作流
+#### git新建分支
+1.切换基础分支
+```bash
+git checkout master
+```
+2.创建并切换新的分支
+```bash
+git checkout -b panda
+```
+3.更新分支代码并提交
+```bash
+git add *
+git commit -m 'init panda'
+git push origin panda
+```
 
+#### 基础工作流
 ```bash
 git add .   #添加当前目录下的所有文件
 ```
@@ -52,6 +72,7 @@ git push origin master  #master是主干分支的意思
 ```
 
 * git clone `<远端地址>`克隆仓库
+* git clone -b `<分支名称>` `<远端地址>`克隆仓库
 * git status查看当前文件的状态
 * git add `<工作区文件名>` 将工作区提交暂存区
 * git commit -m `<标记>` 提交到本地仓库，name是标记的意思

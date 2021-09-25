@@ -7,7 +7,7 @@ date: 2018-07-18 10:47:00
 # Vue简单语法糖
 ## Vue实例生命周期
 ### 周期图
-![生命周期图示](https://raw.githubusercontent.com/riceCk/riceBlog/master/2018/07/02/post-img/lifecycle.png)
+![生命周期图示](https://github.com/riceCk/riceBlog/blob/master/images/lifecycle.png)
 
 ### 父级->子级->孙子
 ```bash

@@ -30,9 +30,9 @@ var vm = new Vue({
 console.log(vm);
 ```
 # 为了方便理解下面的构建了实例图像
-![实例结构图](https://raw.githubusercontent.com/riceCk/riceBlog/master/2018/07/02/post-img/vuex-2.png)
+![实例结构图](https://github.com/riceCk/riceBlog/blob/master/images/vuex-2.png)
 # vuex五中方法的关系图
-![vuex五中方法的关系图](https://raw.githubusercontent.com/riceCk/riceBlog/master/2018/07/02/post-img/vuex-1.png)
+![vuex五中方法的关系图](https://github.com/riceCk/riceBlog/blob/master/images/vuex-1.png)
 ## store下的index.js的相关配置
 ### store下的参数应用
 * state 状态  数据
