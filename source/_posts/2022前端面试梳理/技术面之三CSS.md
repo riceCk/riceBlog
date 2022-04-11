@@ -1,8 +1,8 @@
 ---
-title: 技术面之二简历html、CSS
-categories: 前端面试梳理
-tags: 技术面
-date: 2019-10-22 09:50:00
+title: 技术面之二简历CSS
+categories: 2022前端面试梳理
+tags: 面试题
+date: 2022-04-01 09:48:00
 ---
 
 # HTML面试题
@@ -25,8 +25,8 @@ date: 2019-10-22 09:50:00
 ## 布局（1）
 
 ### 盒子模型的宽度如何计算
-常规：padding + boder + w/h (无外边距)
-IE：W
+W3C：width = content
+IE： width = content+padding+border (横向相关)
 
 ### margin纵向重叠问题
 ```base
