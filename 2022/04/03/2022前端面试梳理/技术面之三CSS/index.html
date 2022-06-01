@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试题," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HTML面试题如何理解HTML语义化 让人更容易读懂（增加代码可读性） 让搜索引擎更容易读懂（CEO）  默认情况下，哪些HTML标签是块级元素，哪些是内联元素 display:block/table;有div、h1、table、ul、p等（会独占一行） display：inline/inline-block；有span、img、input、button等（不会独占一行）  Css面试题分析知识模">
+<meta name="keywords" content="面试题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="技术面之二简历CSS">
+<meta property="og:url" content="http://yoursite.com/2022/04/03/2022前端面试梳理/技术面之三CSS/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="HTML面试题如何理解HTML语义化 让人更容易读懂（增加代码可读性） 让搜索引擎更容易读懂（CEO）  默认情况下，哪些HTML标签是块级元素，哪些是内联元素 display:block/table;有div、h1、table、ul、p等（会独占一行） display：inline/inline-block；有span、img、input、button等（不会独占一行）  Css面试题分析知识模">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-05-23T01:49:13.376Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="技术面之二简历CSS">
+<meta name="twitter:description" content="HTML面试题如何理解HTML语义化 让人更容易读懂（增加代码可读性） 让搜索引擎更容易读懂（CEO）  默认情况下，哪些HTML标签是块级元素，哪些是内联元素 display:block/table;有div、h1、table、ul、p等（会独占一行） display：inline/inline-block；有span、img、input、button等（不会独占一行）  Css面试题分析知识模">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/riceBlog/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/04/03/2022前端面试梳理/技术面之三CSS/"/>
+
+
+
+
+
+  <title>技术面之二简历CSS | riceCK</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2022/04/03/2022前端面试梳理/技术面之三CSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">技术面之二简历CSS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-03T09:48:00+08:00">
+                2022-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/2022前端面试梳理/" itemprop="url" rel="index">
+                    <span itemprop="name">2022前端面试梳理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2022/04/03/2022前端面试梳理/技术面之三CSS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/04/03/2022前端面试梳理/技术面之三CSS/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="HTML面试题"><a href="#HTML面试题" class="headerlink" title="HTML面试题"></a>HTML面试题</h1><h2 id="如何理解HTML语义化"><a href="#如何理解HTML语义化" class="headerlink" title="如何理解HTML语义化"></a>如何理解HTML语义化</h2><ul>
+<li>让人更容易读懂（增加代码可读性）</li>
+<li>让搜索引擎更容易读懂（CEO）</li>
+</ul>
+<h2 id="默认情况下，哪些HTML标签是块级元素，哪些是内联元素"><a href="#默认情况下，哪些HTML标签是块级元素，哪些是内联元素" class="headerlink" title="默认情况下，哪些HTML标签是块级元素，哪些是内联元素"></a>默认情况下，哪些HTML标签是块级元素，哪些是内联元素</h2><ul>
+<li>display:block/table;有div、h1、table、ul、p等（会独占一行）</li>
+<li>display：inline/inline-block；有span、img、input、button等（不会独占一行）</li>
+</ul>
+<h1 id="Css面试题"><a href="#Css面试题" class="headerlink" title="Css面试题"></a>Css面试题</h1><h2 id="分析知识模块"><a href="#分析知识模块" class="headerlink" title="分析知识模块"></a>分析知识模块</h2><ul>
+<li>布局</li>
+<li>定位</li>
+<li>图文样式</li>
+<li>响应式</li>
+<li>CSS3</li>
+</ul>
+<h2 id="布局（1）"><a href="#布局（1）" class="headerlink" title="布局（1）"></a>布局（1）</h2><h3 id="盒子模型的宽度如何计算"><a href="#盒子模型的宽度如何计算" class="headerlink" title="盒子模型的宽度如何计算"></a>盒子模型的宽度如何计算</h3><p>W3C：width = content<br>IE： width = content+padding+border (横向相关)</p>
+<h3 id="margin纵向重叠问题"><a href="#margin纵向重叠问题" class="headerlink" title="margin纵向重叠问题"></a>margin纵向重叠问题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 如下代码：AAA 和 BBB 之间的距离是多少？</span><br><span class="line">&lt;style&gt;</span><br><span class="line">p &#123;</span><br><span class="line">    font-size: 16px;</span><br><span class="line">    line-height: 1;</span><br><span class="line">    margin-top: 10px;</span><br><span class="line">    margin-bottom: 15px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;p&gt;AAA&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;BBB&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>相邻元素的margin-top 和 margin-bottom会发生重叠</li>
+<li>空白内容的<code>&lt;p&gt;&lt;/p&gt;</code>也会重叠（相当于忽略不计）</li>
+<li>答案：15px</li>
+</ul>
+<h3 id="margin-负值问题"><a href="#margin-负值问题" class="headerlink" title="margin 负值问题"></a>margin 负值问题</h3><p>对margin的top、left、right、bottom设置负值，有什么效果？<br>反方向移动p</p>
+<h3 id="BFC理解和应用"><a href="#BFC理解和应用" class="headerlink" title="BFC理解和应用"></a>BFC理解和应用</h3><ul>
+<li>Block format context, 块级格式化上下文</li>
+<li>一块独立渲染区域，内部元素的渲染不会影响边界以外的元素</li>
+</ul>
+<h4 id="形成BFC的常见条件"><a href="#形成BFC的常见条件" class="headerlink" title="形成BFC的常见条件"></a>形成BFC的常见条件</h4><ul>
+<li>float 不是none</li>
+<li>position 是absolute或者fixed</li>
+<li>overflow不是visible</li>
+<li>display是flex inline-block等</li>
+</ul>
+<h3 id="float布局的问题，以及clearfix"><a href="#float布局的问题，以及clearfix" class="headerlink" title="float布局的问题，以及clearfix"></a>float布局的问题，以及clearfix</h3><h4 id="圣杯布局和双飞翼布局的目的"><a href="#圣杯布局和双飞翼布局的目的" class="headerlink" title="圣杯布局和双飞翼布局的目的"></a>圣杯布局和双飞翼布局的目的</h4><ul>
+<li>三栏布局，中间一栏最先加载和渲染（内容重要）</li>
+<li>两侧内容固定，中间内容随着宽度自适应</li>
+<li>一般用于PC网页</li>
+</ul>
+<h4 id="圣杯布局和双飞翼布局的技术总结"><a href="#圣杯布局和双飞翼布局的技术总结" class="headerlink" title="圣杯布局和双飞翼布局的技术总结"></a>圣杯布局和双飞翼布局的技术总结</h4><ul>
+<li>使用float布局</li>
+<li>两侧使用margin负值，以便和中间内容横向重叠</li>
+<li>防止中间内容被两侧覆盖，一个用padding一个用margin</li>
+</ul>
+<h3 id="flex画筛子"><a href="#flex画筛子" class="headerlink" title="flex画筛子"></a>flex画筛子</h3><ul>
+<li>flex-direction</li>
+<li>justify-content</li>
+<li>align-items</li>
+<li>flex-wrap</li>
+<li>align-self</li>
+</ul>
+<h3 id="flex-属性"><a href="#flex-属性" class="headerlink" title="flex 属性"></a>flex 属性</h3><ul>
+<li>flex-grow 一个数字，进行扩展</li>
+<li>flex-shrink 一个数字，进行收缩</li>
+<li>flex-basis 长度，合法值：”auto”,”%”,”px”,”em”,或者任意长度的数据</li>
+</ul>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><h3 id="absolute-和-relative-分别依据什么定位"><a href="#absolute-和-relative-分别依据什么定位" class="headerlink" title="absolute 和 relative 分别依据什么定位"></a>absolute 和 relative 分别依据什么定位</h3><ul>
+<li>relative 依据自身定位</li>
+<li>absolute 依据最近一层定位元素</li>
+</ul>
+<h3 id="定位元素"><a href="#定位元素" class="headerlink" title="定位元素"></a>定位元素</h3><ul>
+<li>absoulte relative fixed</li>
+<li>body</li>
+</ul>
+<h3 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h3><ul>
+<li>inline元素：text-align:center</li>
+<li>block元素：margin: auto;</li>
+<li>absolute元素：left:50% + margin-left负值</li>
+</ul>
+<h3 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h3><ul>
+<li>inline元素：line-height的值等于height值</li>
+<li>absolute元素：top：50% + margin-top负值</li>
+<li>absoulte元素：transform(-50%, -50%)</li>
+<li>absoulte元素：top,left,right,bottom = 0;margin: auto</li>
+</ul>
+<h2 id="line-height如何继承"><a href="#line-height如何继承" class="headerlink" title="line-height如何继承"></a>line-height如何继承</h2><ul>
+<li>写具体数值，如30px，则继承该值</li>
+<li>写比例，如2/1.5,则继承改比例</li>
+<li>写百分比，如200%,则继承计算出来的值</li>
+</ul>
+<h2 id="响应式"><a href="#响应式" class="headerlink" title="响应式"></a>响应式</h2><h3 id="rem是个长度单位"><a href="#rem是个长度单位" class="headerlink" title="rem是个长度单位"></a>rem是个长度单位</h3><ul>
+<li>px，绝对长度单位，最常用</li>
+<li>em，相对长度单位，相对于父元素，不常用</li>
+<li>rem，相对长度单位，相对于根元素（如：font-size: 18px），常用于响应式布局</li>
+</ul>
+<h3 id="vw-vh"><a href="#vw-vh" class="headerlink" title="vw-vh"></a>vw-vh</h3><ul>
+<li>rem的弊端</li>
+<li>网页视口尺寸</li>
+<li>vw/vh</li>
+</ul>
+<h1 id="四种定位区别"><a href="#四种定位区别" class="headerlink" title="四种定位区别"></a>四种定位区别</h1><ul>
+<li>static是默认</li>
+<li>relative 相对定位 相对于自身原位置进行偏移</li>
+<li>absolute 绝对定位 相对于最近已定位的祖先元素</li>
+<li>fixed 固定定位的元素会相对于视窗口对位</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/面试题/" rel="tag"># 面试题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2022/04/02/2022前端面试梳理/技术面之二网络和浏览器/" rel="next" title="技术面之二简历网络和浏览器">
+                <i class="fa fa-chevron-left"></i> 技术面之二简历网络和浏览器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2022/04/04/2022前端面试梳理/技术面之四JS/" rel="prev" title="技术面之四JS">
+                技术面之四JS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="陈凯" />
+            
+              <p class="site-author-name" itemprop="name">陈凯</p>
+              <p class="site-description motion-element" itemprop="description">learning target</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/">
+              
+                  <span class="site-state-item-count">104</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/riceCk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="your-weibo-url" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML面试题"><span class="nav-number">1.</span> <span class="nav-text">HTML面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何理解HTML语义化"><span class="nav-number">1.1.</span> <span class="nav-text">如何理解HTML语义化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#默认情况下，哪些HTML标签是块级元素，哪些是内联元素"><span class="nav-number">1.2.</span> <span class="nav-text">默认情况下，哪些HTML标签是块级元素，哪些是内联元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Css面试题"><span class="nav-number">2.</span> <span class="nav-text">Css面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析知识模块"><span class="nav-number">2.1.</span> <span class="nav-text">分析知识模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布局（1）"><span class="nav-number">2.2.</span> <span class="nav-text">布局（1）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#盒子模型的宽度如何计算"><span class="nav-number">2.2.1.</span> <span class="nav-text">盒子模型的宽度如何计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#margin纵向重叠问题"><span class="nav-number">2.2.2.</span> <span class="nav-text">margin纵向重叠问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#margin-负值问题"><span class="nav-number">2.2.3.</span> <span class="nav-text">margin 负值问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BFC理解和应用"><span class="nav-number">2.2.4.</span> <span class="nav-text">BFC理解和应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#形成BFC的常见条件"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">形成BFC的常见条件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#float布局的问题，以及clearfix"><span class="nav-number">2.2.5.</span> <span class="nav-text">float布局的问题，以及clearfix</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#圣杯布局和双飞翼布局的目的"><span class="nav-number">2.2.5.1.</span> <span class="nav-text">圣杯布局和双飞翼布局的目的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#圣杯布局和双飞翼布局的技术总结"><span class="nav-number">2.2.5.2.</span> <span class="nav-text">圣杯布局和双飞翼布局的技术总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flex画筛子"><span class="nav-number">2.2.6.</span> <span class="nav-text">flex画筛子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flex-属性"><span class="nav-number">2.2.7.</span> <span class="nav-text">flex 属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位"><span class="nav-number">2.3.</span> <span class="nav-text">定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#absolute-和-relative-分别依据什么定位"><span class="nav-number">2.3.1.</span> <span class="nav-text">absolute 和 relative 分别依据什么定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定位元素"><span class="nav-number">2.3.2.</span> <span class="nav-text">定位元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#水平居中"><span class="nav-number">2.3.3.</span> <span class="nav-text">水平居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直居中"><span class="nav-number">2.3.4.</span> <span class="nav-text">垂直居中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#line-height如何继承"><span class="nav-number">2.4.</span> <span class="nav-text">line-height如何继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式"><span class="nav-number">2.5.</span> <span class="nav-text">响应式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rem是个长度单位"><span class="nav-number">2.5.1.</span> <span class="nav-text">rem是个长度单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vw-vh"><span class="nav-number">2.5.2.</span> <span class="nav-text">vw-vh</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四种定位区别"><span class="nav-number">3.</span> <span class="nav-text">四种定位区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2022/04/03/2022前端面试梳理/技术面之三CSS/';
+          this.page.identifier = '2022/04/03/2022前端面试梳理/技术面之三CSS/';
+          this.page.title = '技术面之二简历CSS';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
