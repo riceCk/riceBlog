@@ -165,31 +165,7 @@ console.log(m.add())
 * 复杂一点的例子，render函数是什么样子的？
 * v-if,v-for,v-on都是怎么处理的？
 
-## vue的整个实现流程
-* 第一步：解析模板成render函数
-* 第二步：响应式开始监听
-* 第三步：首次渲染，显示页面，且绑定依赖
-* 第四步：data属性变换，触发render
 
-### 第一步：解析模板成render函数
-* with的用法
-* 模板中的所有信息都被render函数包含
-* 模板中用到的data中的属性，都变成js变量 
-* 模板中的v-model,v-for,v-on都变成了js逻辑
-* render函数返回的vnode
-
-### 第二步：响应式开始监听
-* Object.defineProperty
-* 将data的属性代理到vm上
-
-### 第三步：首次渲染，显示页面，且绑定依赖
-* 初次渲染，执行updateComponent，执行vm._render()
-* 执行render函数，会访问到vm.list和vm.title
-* 会被响应式的get方法监听到
-* 执行updateComponent，会走到vdom的patch方法
-* patch将vnode渲染DOM，初次渲染完成
-
-### 第四步：data属性变化，触发render
 
 # 组件化与react
 * 说一下对组件化的理解

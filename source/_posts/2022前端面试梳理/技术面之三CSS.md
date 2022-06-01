@@ -2,7 +2,7 @@
 title: 技术面之二简历CSS
 categories: 2022前端面试梳理
 tags: 面试题
-date: 2022-04-01 09:48:00
+date: 2022-04-03 09:48:00
 ---
 
 # HTML面试题
@@ -82,6 +82,11 @@ p {
 * align-items
 * flex-wrap
 * align-self
+
+### flex 属性
+* flex-grow 一个数字，进行扩展
+* flex-shrink 一个数字，进行收缩
+* flex-basis 长度，合法值："auto","%","px","em",或者任意长度的数据
 
 ## 定位
 ### absolute 和 relative 分别依据什么定位

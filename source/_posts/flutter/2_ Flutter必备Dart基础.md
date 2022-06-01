@@ -1,3 +1,9 @@
+---
+title: 1_Flutter必备Dart基础
+categories: flutter
+tags: flutter
+date: 2021-07-27 09:47:00
+---
 
 ## Mixins
 * Mixins类似于多继承，是在多类继承中重用一个类代码的方式
