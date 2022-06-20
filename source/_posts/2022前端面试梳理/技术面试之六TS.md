@@ -1,8 +1,8 @@
 ---
-title: 技术面之四TS
+title: 技术面之六TS
 categories: 2022前端面试梳理
 tags: 面试题
-date: 2022-04-06 09:48:00
+date: 2022-04-25 09:48:00
 ---
 
 ## typeScript面试题相关
