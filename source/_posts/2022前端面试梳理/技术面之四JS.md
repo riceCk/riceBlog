@@ -2,7 +2,7 @@
 title: 技术面之四JS
 categories: 2022前端面试梳理
 tags: 面试题
-date: 2022-04-04 09:48:00
+date: 2022-04-27 09:48:00
 ---
 ## JavaScript 面试题汇总
 
@@ -138,11 +138,11 @@ Hash路由通过在地址增加`#path`实现区分页面，当hash发生变化�
 > * 在箭头函数中，this指向有外层（函数或者全局）作用域来决定的。
 
 ### 15、原型与原型链
-* 每个对象都有一个`__proto__`属性，该属性指向自己的原型对象
+* 每个实例对象都有一个`__proto__`属性，该属性指向自己的原型对象prototype
 * 每一个构造函数都有一个`protoype`属性，该属性指向实例对象的原型对象
 * 原型对象里的`contructor`指向构造函数本身
 
-![原型与原型链](https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2021-08-12-081402.png)
+![原型与原型链](https://xiejie-typora.oss-cn-chengdu.aliyuncs.  /2021-08-12-081402.png)
 
 ### 16、ES6新增了那些东西
 * 1、箭头函数
