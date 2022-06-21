@@ -117,7 +117,7 @@
         <option value="$PROJECT_DIR$/source/_posts/JavaScript/你不知道的JavaScript系列（一）.md" />
         <option value="$PROJECT_DIR$/source/_posts/vue/vue之服务器渲染初探.md" />
         <option value="$PROJECT_DIR$/source/_posts/vue/vue之服务器单页面应用.md" />
-        <option value="$PROJECT_DIR$/../index.html" />
+        <option value="D:/index.html" />
         <option value="$PROJECT_DIR$/source/_posts/你不知道的es6/你不知道的ES6（下）.md" />
         <option value="$PROJECT_DIR$/source/_posts/标签/从渲染原理到虚拟DOM.md" />
         <option value="$PROJECT_DIR$/source/_posts/标签/从渲染到虚拟DOM.md" />
@@ -147,6 +147,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
       <path value="$PROJECT_DIR$/package.json" />
@@ -166,7 +169,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,6 +198,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -286,11 +289,12 @@
       <workItem from="1577784745656" duration="15000" />
       <workItem from="1634546289651" duration="286000" />
       <workItem from="1649662092540" duration="12000" />
+      <workItem from="1655812116008" duration="95000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="199237000" />
+    <option name="totallyTimeSpent" value="199332000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -303,13 +307,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18018967" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18018967" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32907802" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32904148" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.020719739" />
+      <window_info anchor="bottom" id="Version Control" order="8" visible="true" weight="0.020719739" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3569405" />
@@ -317,31 +320,32 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="DB Execution Console" order="11" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="npm" order="3" sideWeight="0.23469388" side_tool="true" weight="0.18665607" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info id="DB Browser" order="3" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="DB Browser" order="3" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32907802" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32907802" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -360,9 +364,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/_posts/JavaScript/javaScript设计模式（二）.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/_posts/JavaScript/javaScript设计模式（二）.md">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../deom.html" />
+    <entry file="file://D:/deom.html" />
     <entry file="file://$PROJECT_DIR$/source/_posts/Git/Git与时间简史.md">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -385,7 +396,7 @@
     <entry file="file://$PROJECT_DIR$/source/_posts/vue/vue之服务器渲染初探.md" />
     <entry file="file://$PROJECT_DIR$/source/_posts/vue/vue之服务器单页面应用.md" />
     <entry file="file://$PROJECT_DIR$/source/_posts/JavaScript/你不知道的JavaScript系列（一）.md" />
-    <entry file="file://$PROJECT_DIR$/../index.html" />
+    <entry file="file://D:/index.html" />
     <entry file="file://$PROJECT_DIR$/source/_posts/标签/从渲染原理到虚拟DOM.md" />
     <entry file="file://$PROJECT_DIR$/themes/landscape/_config.yml">
       <provider selected="true" editor-type-id="text-editor" />
