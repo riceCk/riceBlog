@@ -1,7 +1,7 @@
 ---
-title: 技术面之五Vue
-categories: 2022前端面试梳理
-tags: 面试题
+title: 前端随笔之五Vue
+categories: 2022前端随笔汇总
+tags: 前端随笔
 date: 2022-04-26 09:48:00
 ---
 

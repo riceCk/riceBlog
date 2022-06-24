@@ -1,7 +1,7 @@
 ---
-title: 技术面之四JS
-categories: 2022前端面试梳理
-tags: 面试题
+title: 前端随笔之四JS
+categories: 2022前端随笔汇总
+tags: 前端随笔
 date: 2022-04-27 09:48:00
 ---
 ## JavaScript 面试题汇总
@@ -176,62 +176,169 @@ Hash路由通过在地址增加`#path`实现区分页面，当hash发生变化�
 > * 把属性和方法加入到this引用的对象中
 > * 新创建的对象由this引用，最后隐式的返回this
 
-### 20.继承
-#### 原型链继承
+### 20.创建对象几种方法
+#### 第一类字面量对象
 ```bash
-function Parent () {
-  this.name = 'kevin'
-}
-Parent.prototype.getName = function () {
-  console.log(this.name);
-}
-function Child () {}
-Child.prototype = new Patent()
-var child = new Child();
-console.log(child1.getName())
+# 第一种
+var obj1 = {name: 'obj1'}
+# 第二种
+var obj2 = new Object({name: 'obj2'})
 ```
-**缺点：**
-> 1.引用类型的属性被所有实例共享
-> 2.在闯将child的时候，不能向Parent传参
-
-#### 借用构造函数（经典继承）
+#### 第二类显示构造函数
 ```bash
-function Parent() {
-  this.names = ['kavin', 'daisy']
+var Obj = function(){this.name='obj'}
+var obj = new Obj();
+```
+#### 第三类定义父级原型的构造
+```bash
+var Farther = {name: 'farther'}
+var Son = Object.create(Farther)
+```
+
+### 21.原型链原理
+![原型链](https://raw.githubusercontent.com/riceCk/riceBlog/master/images/prototype.png)
+#### 以jQuery源码为例
+```bash
+window.jQuery = window.$ = jQuery
+
+function jQuery (str) {
+  return new jQuery.prototype.init(str)
 }
-function Child () {
+jQuery.prototype.init.prototype = jQuery.prototype
+jQuery.prototype.init = function (str) {
+  ...
+  return this.
+}
+jQuery.prototype.css = function(){
+  ...
+  return this;
+}
+jQuery.protoype.html = function(){
+  ...
+  return this;
+}
+```
+
+### 22.面向对象
+#### 声明与实例化
+```bash
+# 类的声明
+function Animal(){
+  this.name = 'name';
+}
+# ES6中的class的声明
+class Animal2(){
+  constructor(){
+    this.name = name;
+  }
+}
+# 实例化
+new Animal();
+new Animal2();
+```
+
+#### 继承
+**1、借助构造函数实现继承**
+```bash
+Parent.prototype.lasName = 'aaa'
+function Parent(){
+  this.name = 'parent';
+}
+Child.prototype.newName = 'bbb'
+function Child(){
   Parent.call(this);
+  this.type = 'child'
 }
-
-var child1 = new Child();
-child1.names.push('yayu')
-console.log(child1.names); //  ["kevin", "daisy", "yayu"]
-var child2 = new Child();
-console.log(child2.names); // ["kevin", "daisy"]
 ```
-**优点：**
-1.避免了引用类型的属性被所有实例共享
-2.可以在Child中想Parent传参
-**缺点：**
-方法都在构造函数中定义，每次创建实例都会自动创建一遍
+**特点**
+* call/apply能改函数运行的上下文，从而实现继承，但是`Parent`如果定义原型上的方法，`Child`是无法取到的
+* `Child`只能取到`Parent`函数中的属性，但是取不到`Parent`的原型属性
 
-#### 寄生组合式继承
+**2、正则共享原型**
 ```bash
-function Parent (name) {
-  this.name = name;
-  this.colors = ['red', 'blue', 'green']
+Parent.prototype.lasName = 'aaa'
+function Parent(){
+  this.name = 'parent';
 }
-Parent.prototype.getName = function () {
-  console.log(this.name);
+Child.prototype.newName = 'bbb'
+function Child(){
+  this.type = 'child';
 }
-function Child (name, age) {
-  Parent.call(this, name);
-  this.age = age;
+Child.prototype = new Parent();
+var child = new Child()
+var parent = new Parent()
+parent.name = 'ccc'
+```
+**特点：**
+1、改变`Child`原型从而继承`parent`原型上的属性
+2、Child上定义的原型，在实例上就取不到了，因为已经改变了自身的原型指向。
+3、此继承了`Parent`上的原型方法和函数自身属性，`child`修改原型上面属性时，`Parent`原型上方法会随之也改变，这是我们不希望的。
+
+**3、复合方法**
+```bash
+function Parent(){
+  this.name = 'parent';
 }
-// 关键的第三部
-var F = function () {}
-F.protptype = Parent.prototype;
-child.prototype = new F();
-var child1 = new Child('kevin', '18');
-console.log(child1);
+function Child(){
+  Parent.call(this);
+  this.type = 'child'
+}
+Child.prototype = new Parent();
+```
+**特点：**
+1、`Parent`被new执行了两次，没有必要的事
+2、`Child`改变原型的方法，`Parent`不会随之改变
+
+**4、圣杯模式**
+```bash
+Parent.prototype.lasName = 'aaa'
+function Parent(){
+  this.name = 'parent';
+  this.play = [1,2]
+}
+Child.prototype.newName = 'bbb'
+function Child(){
+  Parent.call(this);
+  this.type = 'child';
+}
+function inherit (Target, Origin){
+  function F(){};
+  F.prototype = Origin.prototype;
+  Target.prototype = new F;
+  Target.prototype.constructor = Target
+  Target.prototype.uber = Object.prototype;
+}
+inherit(Child, Parent);
+var a = new Child()
+Child.prototype.lasName='ccc'
+```
+**特点**
+`Child`定义的自身原型无效的，实例无法访问
+
+### 23.克隆
+1、遍历对象for(var prop in obj)；
+2、判断是不是原始值；
+3、判断数组还是对象； 
+4、简历相应的数组或对象
+```bash
+function deepClone(origin, target){
+  var target = target || {},
+      toStr = Object.prototype.toString,
+      arrStr = "[object Array]";
+  for(var prop in origin){
+    if(origin.hasOwnProperty(prop)){
+      if(origin[prop] !== 'null' && type(origin[prop]) == 'object'){
+        if(toStr.call(origin[prop]) === arrStr){
+          target[prop] = [];
+        }else{
+          target[prop] = {};
+        }
+        deepClone(origin[prop], target[prop]);
+      }else{
+        target[prop] = origin[prop]
+      }
+    }
+  }
+  return target;
+}
 ```
