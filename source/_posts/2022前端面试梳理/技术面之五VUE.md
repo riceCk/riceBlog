@@ -18,7 +18,7 @@ MVC的思想：一句话描述就是Controller负责将Model的数据用View显�
 > **MVVM**
 MVVM新增VM类
 > ViewModel层：做了两件事达到了数据的双向绑定，一是将【模型】转成【视图】，即将后端传递的数据转化成所看到的页面。实现的方式是：数据绑定。二将【视图】转化成【模型】，即将所看到多页面转化成后端数据，实现DOM事件监听
-MVVM和MVC最大的区别就是，它实现了View和Model的自动同步，也就是当Model的属性改变是，我们不用再自己手动操作Dom元素，来改变View的显示，而是改变属性后改属性对应View层显示自动改变（对应Vue数据驱动的思想）
+> MVVM和MVC最大的区别就是，它实现了View和Model的自动同步，也就是当Model的属性改变是，我们不用再自己手动操作Dom元素，来改变View的显示，而是改变属性后改属性对应View层显示自动改变（对应Vue数据驱动的思想）
 > 整体来来，MVVM比MVC精简了很多，因为MVVM中，View不知道Model的存在，Model和ViewModel也观察不到View，这种低耦合模式提高代码的可重用性
 > 严格来说MVVM要求View不能和Model直接通行，而Vue提供了$ref这个属性，让Model可以直接操作View，违反了这一规定，所以Vue没有完全遵循MVVM。
 
@@ -68,7 +68,7 @@ MVVM和MVC最大的区别就是，它实现了View和Model的自动同步，也�
 
 #### (1) 解释hash模式和history模式的实现原理
 > hash值变化，不会导致浏览器向服务器发起请求，浏览器不发请求，就不会刷新页面；通过hashchange事件，可以知道hash发生了那些变化，让后根据hash变化来实现更新页面部分内容的操作。
-> history模式的实现，主要是html5标注两个api，pushState和replaceState，这两个api可以在改变Url，但是不会发送请求，，这样就可以监听url变化来实现更新页面部分内容的操作
+> history模式的实现，主要是html5标注两个api，pushState和replaceState，这两个api可以在改变Url，但是不会发送请求，这样就可以监听url变化来实现更新页面部分内容的操作
 > **两种模式的区别：**
 * 首先Url的展示上，hash模式有#
 * 刷新页面时，hash模式可以正常加载到hash值对应的页面，而history没有做处理的话，会返回404，一般需要后端将页面配置重定向到首页路由
@@ -112,8 +112,8 @@ Vuex是专门为vue提供的全局状态管理系统，用户多组件数据共�
 主要包括以下几个模块
 * state：定义了应用状态的数据结构，可以这里设置默认的初始化状态
 * geeter：允许组件从store中获取数据，mapGetter辅助函数仅仅将store中的geeter映射到全局计算属性
-* mutaion：唯一更改story中状态的方法，必须是同步函数
-* action：用户提交mutaion。而不是直接更改状态，可以包含异步
+* mutation：唯一更改story中状态的方法，必须是同步函数
+* action：用户提交mutations。而不是直接更改状态，可以包含异步
 * module：允许将单一的store拆分多个store且同时保存单一状态树中
 
 ### 10.keep-alive使用场景和原理
@@ -179,7 +179,7 @@ Vue的编译过程就是讲template转化为render函数过程，分为三步
 > * （1）.number自动将用户输入值转化成数值类型
 > * （2）.trim自动过滤用户输入的收尾空格
 
-> 键盘事件的修饰符
+> **键盘事件的修饰符**
 > * （1）.enter 
 > * （2）.tab
 > * （3）.delete（捕获删除和退格键）
@@ -218,7 +218,7 @@ Vue的编译过程就是讲template转化为render函数过程，分为三步
 v-for的优先级比v-if要高。所以vue会先进行遍历，然后再进行条件判断，这样在条件为假的时候会造成不必要的性能浪费。
 
 ### 23、自定义指令
-> 全局的：vue.directive{“”, {}} 
+> 全局的：vue.directive{"", {}} 
 > 局部：directives:{指令名：{钩子函数}}
 > Bind：只调用一次，指令第一次绑定元素时调用，这里可以进行一次性的初始化设置
 > Inserted：被绑定元素插入父节点调用（仅保证父节点存在，但不一定已被插入文档）
