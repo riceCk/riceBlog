@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TypeScript," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="面向对象概述为什么要学习面向对象1.为什么要讲面向对象开发带来的契机js语言没有类型检查，如果使用面向对象的方式开发，会产生大量的接口，而大量的接口会导致调用复杂度剧增，这种复杂度必须通过严格的类型检查避免错误，尽管可以是使用注释或文档记忆力，但是他们没有强约束力 TS带来了完整的类型系统，因此开发复杂程序时，无论接口数量多少，都可以获取完整的类型检查，并且这种检查是具有强约束力的。 2.面向对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9.TS进阶-深入理解类的接口">
+<meta property="og:url" content="http://yoursite.com/2020/06/04/TypeScript/9.TS%E8%BF%9B%E9%98%B6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E7%B1%BB%E7%9A%84%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="面向对象概述为什么要学习面向对象1.为什么要讲面向对象开发带来的契机js语言没有类型检查，如果使用面向对象的方式开发，会产生大量的接口，而大量的接口会导致调用复杂度剧增，这种复杂度必须通过严格的类型检查避免错误，尽管可以是使用注释或文档记忆力，但是他们没有强约束力 TS带来了完整的类型系统，因此开发复杂程序时，无论接口数量多少，都可以获取完整的类型检查，并且这种检查是具有强约束力的。 2.面向对象">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-06-04T11:36:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.733Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/04/TypeScript/9.TS进阶-深入理解类的接口/"/>
+
+
+
+
+
+  <title>9.TS进阶-深入理解类的接口 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2020/06/04/TypeScript/9.TS%E8%BF%9B%E9%98%B6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E7%B1%BB%E7%9A%84%E6%8E%A5%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">9.TS进阶-深入理解类的接口</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-04T19:36:00+08:00">
+                2020-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/TypeScript/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2020/06/04/TypeScript/9.TS%E8%BF%9B%E9%98%B6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E7%B1%BB%E7%9A%84%E6%8E%A5%E5%8F%A3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/06/04/TypeScript/9.TS进阶-深入理解类的接口/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="面向对象概述"><a href="#面向对象概述" class="headerlink" title="面向对象概述"></a>面向对象概述</h1><h2 id="为什么要学习面向对象"><a href="#为什么要学习面向对象" class="headerlink" title="为什么要学习面向对象"></a>为什么要学习面向对象</h2><p>1.为什么要讲面向对象开发带来的契机<br>js语言没有类型检查，如果使用面向对象的方式开发，会产生大量的接口，而大量的接口会导致调用复杂度剧增，这种复杂度必须通过严格的类型检查避免错误，尽管可以是使用注释或文档记忆力，但是他们没有强约束力</p>
+<p>TS带来了完整的类型系统，因此开发复杂程序时，无论接口数量多少，都可以获取完整的类型检查，并且这种检查是具有强约束力的。</p>
+<p>2.面向对象中许多非常熟悉的模式，能处理复杂问题<br>再过去的很多年中，在大型应该用或复杂领域，面向对象已经积累了非常多的经验<br>nest.js：相当于前端的java spring<br>typeorm: ORM框架，比如：mongoose，类似C# EF</p>
+<h2 id="什么是面向对象"><a href="#什么是面向对象" class="headerlink" title="什么是面向对象"></a>什么是面向对象</h2><p>面向对象：Oriented（基于） Object，简称OO</p>
+<ul>
+<li>是一种编程思想，它提出一切对象对切入点思考问题</li>
+</ul>
+<p>其他编程思想：面向过程，函数式编程</p>
+<p>面向过程：以功能流程为思考切入点，不太适合大型应该用</p>
+<p>函数式编程：以数学运算为思考切入点<br>类：可以产生对象的模板<br>面向对象：划分类为切入点。类最小的功能单元</p>
+<h1 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h1><h2 id="继承的作用"><a href="#继承的作用" class="headerlink" title="继承的作用"></a>继承的作用</h2><p>继承可以描述类与类之间的关系</p>
+<blockquote>
+<p>坦克、玩家坦克、敌方坦克<br>玩家坦克是坦克，敌方坦克是坦克</p>
+</blockquote>
+<p>如果A和B都是类，并且可以描述A是B，则A和B形成继承关系：</p>
+<ul>
+<li>B是父类，A是子类</li>
+<li>B派生A，A继承B</li>
+<li>B是A的基类</li>
+</ul>
+<p>如果A继承自B，则A中自动拥有B中的所有成员<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">Tank &lt;|-- PlayerTank</span><br><span class="line">Tank &lt;|-- EnemyTank</span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure></p>
+<h2 id="成员的重写"><a href="#成员的重写" class="headerlink" title="成员的重写"></a>成员的重写</h2><p>重写（override）：子类中覆盖父类的成员</p>
+<p>子类成员不能改变父类成员的类型</p>
+<p>无论是属性还是方法，子类都可以对父类的相应成员进行重写，但是重写时，需要保证类型的匹配</p>
+<p>注意this关键字：在继承关系中，this的指向是动态——调用方法时，根据具体的调用者确定this的指向<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> class Tank &#123;</span><br><span class="line">  x: number | string = 0</span><br><span class="line">  y: number = 0</span><br><span class="line">  name: string = <span class="string">&#x27;坦克&#x27;</span></span><br><span class="line">  shoot (zidanSpeed: number) &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;发射子弹&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> class PlayerTank extends Tank &#123;</span><br><span class="line">  x: string = <span class="string">&#x27;11&#x27;</span></span><br><span class="line">  y: number = 20</span><br><span class="line">  name: string = <span class="string">&#x27;玩家坦克&#x27;</span></span><br><span class="line">  <span class="function"><span class="title">shoot</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;玩家坦克发射子弹&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> class EnemyTank extends Tank &#123;</span><br><span class="line">  <span class="function"><span class="title">shoot</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;敌方坦克发射子弹&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">const palyerTank = new PlayerTank()</span><br><span class="line">console.log(palyerTank.x, palyerTank.y)</span><br><span class="line">palyerTank.shoot()</span><br></pre></td></tr></table></figure></p>
+<p>super关键字：在子类的方法中，可以使用super关键字读取父类成员</p>
+<h2 id="类型匹配"><a href="#类型匹配" class="headerlink" title="类型匹配"></a>类型匹配</h2><p>鸭子辨型法<br>子类的对象，始终可以赋值父类<br>面向对象中，这种现象，叫做里氏替换原则<br>如果需要判断一个数据的具体子类类型，可以使用<code>instanceof</code></p>
+<h2 id="protected修饰符"><a href="#protected修饰符" class="headerlink" title="protected修饰符"></a>protected修饰符</h2><p>redonly: 只读修饰符<br>访问权限修饰符：private、public、protected<br>protected: 受保护的成员，只能在自身和子类中访问</p>
+<h2 id="单根性和传递性"><a href="#单根性和传递性" class="headerlink" title="单根性和传递性"></a>单根性和传递性</h2><p>单根性：每个类最多只能拥有一个父类<br>传递性：如果A是B的父类，并且B是C的父类，则，可以认为A也是C的父类</p>
+<h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><h2 id="为什么需要抽象类"><a href="#为什么需要抽象类" class="headerlink" title="为什么需要抽象类"></a>为什么需要抽象类</h2><p>有事，某个类只表示一个抽象概念，主要用于提取子类共有成员，而不能直接创建它对象，该类可以作为抽象类。<br>给类前面加上 <code>abstract</code>，表示该类是一个抽象类，不可以创建一个抽象类的对象，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 抽象类</span></span><br><span class="line">abstract class Chess &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line">class Horse extends Chess &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const h = new Horse()</span><br><span class="line">const chess = new Chess() <span class="comment"># 报错</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="抽象成员"><a href="#抽象成员" class="headerlink" title="抽象成员"></a>抽象成员</h2><p>父类中，可能知道有些成员是必须存在的，但是不知道该成员的值或实现是什么，因此，需要有一种强约束，让继承该类的子类，必须要实现该成员。<br><strong>抽象类中</strong>，可以有抽象成员，这些抽象成员必须在子类实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 抽象类</span></span><br><span class="line">abstract class Chess &#123;</span><br><span class="line">  x: number = 0;</span><br><span class="line">  y: number = 0</span><br><span class="line">  abstract <span class="built_in">readonly</span> name: string; <span class="comment"># 抽象成员</span></span><br><span class="line">&#125;</span><br><span class="line">class Horse extends Chess &#123;</span><br><span class="line">  <span class="built_in">readonly</span> name: string = <span class="string">&quot;马&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">class Pao extends Chess &#123;</span><br><span class="line">  name: string;</span><br><span class="line">  <span class="function"><span class="title">constructor</span></span> () &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.name = <span class="string">&#x27;炮&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Soldier extends Chess &#123;</span><br><span class="line">  get <span class="function"><span class="title">name</span></span> () &#123;</span><br><span class="line">    <span class="built_in">return</span> <span class="string">&#x27;兵&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const h = new Horse()</span><br><span class="line">const p = new Pao();</span><br><span class="line">const s = new Soldier();</span><br></pre></td></tr></table></figure></p>
+<h2 id="设计模式-模板模式"><a href="#设计模式-模板模式" class="headerlink" title="设计模式 - 模板模式"></a>设计模式 - 模板模式</h2><p>设计模式：面对一些常见的功能场景，有一些固定的、经过多年实践的成熟方法，这些方法称之为设计模式</p>
+<p>模板模式：有些方法，所有的子类实现的流程完全一致，只是流程中的某个步骤具体实现不一致，可以将该方法提取到父类，在父类中完成整个流程的实现，遇到实现不一致的方法时，将该方法做成功抽象方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 抽象类</span></span><br><span class="line">abstract class Chess &#123;</span><br><span class="line">  x: number = 0;</span><br><span class="line">  y: number = 0</span><br><span class="line">  abstract <span class="built_in">readonly</span> name: string;</span><br><span class="line">  move(targetX: number, targetY: number): boolean &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;1.边界判断&#x27;</span>)</span><br><span class="line">    console.log(<span class="string">&#x27;2.目标位置是否有己方棋子&#x27;</span>)</span><br><span class="line">    <span class="comment"># 3.规则判断</span></span><br><span class="line">    <span class="keyword">if</span> (this.rule(targetX, targetY)) &#123;</span><br><span class="line">      this.x = targetX</span><br><span class="line">      this.y = targetY</span><br><span class="line">      <span class="built_in">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">  protected abstract rule(targetX: number, targetY: number): boolean</span><br><span class="line">&#125;</span><br><span class="line">class Horse extends Chess &#123;</span><br><span class="line">  move(targetX: number, targetY: number): boolean &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;1.边界判断&#x27;</span>)</span><br><span class="line">    console.log(<span class="string">&#x27;2.目标位置是否有己方棋子&#x27;</span>)</span><br><span class="line">    console.log(<span class="string">&#x27;3.棋子移动规范判断&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    console.log(<span class="string">&#x27;马移动成功&#x27;</span>)</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">readonly</span> name: string = <span class="string">&quot;马&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h1><h2 id="什么是静态成员"><a href="#什么是静态成员" class="headerlink" title="什么是静态成员"></a>什么是静态成员</h2><p>静态成员是指，附着在类上的成员（属于某个构造函数的成员）<br>使用static修饰的成员，是静态成员<br>实例成功：对象成员，属于某个类的对象<br>静态成员：非实例成员<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class User &#123;</span><br><span class="line">  constructor (</span><br><span class="line">    public loginId: string,</span><br><span class="line">    public loginPwd: string,</span><br><span class="line">    public name: string,</span><br><span class="line">    public age: number</span><br><span class="line">  ) &#123;&#125;</span><br><span class="line">  static login(loginId: string, loginPwd: string): User | undefined &#123;</span><br><span class="line">    <span class="built_in">return</span> undefined</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">User.login(<span class="string">&#x27;xxx&#x27;</span>, <span class="string">&#x27;ddd&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="静态方法中的this"><a href="#静态方法中的this" class="headerlink" title="静态方法中的this"></a>静态方法中的this</h2><p>实例方法中的this指向的是<em>当前对象</em><br>而静态方法中的this指向的是<em>当前类</em></p>
+<h2 id="设计模式-单例模式"><a href="#设计模式-单例模式" class="headerlink" title="设计模式 - 单例模式"></a>设计模式 - 单例模式</h2><p>单例模式：某些类的对象，在系统的对象，在系统中最多只能有一个，为了避免开发者早餐随意创建多个类对象的错误，可以使用单例模式进行强约束<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Board &#123;</span><br><span class="line">  width: number = 500;</span><br><span class="line">  height: number = 700;</span><br><span class="line">  <span class="function"><span class="title">init</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;初始化棋盘&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  private <span class="function"><span class="title">constructor</span></span> () &#123;&#125;</span><br><span class="line">  private static _board?: Board</span><br><span class="line"></span><br><span class="line">  static createBoard (): Board &#123;</span><br><span class="line">    <span class="keyword">if</span> (this._board) &#123;</span><br><span class="line">      <span class="built_in">return</span>  this._board</span><br><span class="line">    &#125; </span><br><span class="line">    this._board = new Board();</span><br><span class="line">    <span class="built_in">return</span> this._board;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const b = Board.createBoard();</span><br><span class="line">const c = Board.createBoard();</span><br><span class="line">console.log(b === c)</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Board &#123;</span><br><span class="line">  width: number = 500;</span><br><span class="line">  height: number = 700;</span><br><span class="line">  <span class="function"><span class="title">init</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;初始化棋盘&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  private <span class="function"><span class="title">constructor</span></span> () &#123;&#125;</span><br><span class="line">  static <span class="built_in">readonly</span>  singleBoard = new Board()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const b = Board.singleBoard;</span><br><span class="line">const c = Board.singleBoard;</span><br><span class="line">console.log(b === c)</span><br></pre></td></tr></table></figure></p>
+<h1 id="再谈接口"><a href="#再谈接口" class="headerlink" title="再谈接口"></a>再谈接口</h1><p>接口用于约束类、对象、函数，是一个类型契约</p>
+<blockquote>
+<p>有一个马戏团，马戏团有很多动物，包括：狮子、老虎、猴子、狗，这些动物都具有共用的特征：名字、年龄、种类名称，还包含一个共同方法：打招呼，他们各自有各自的技能，技能是可以通过顺利改变的。狮子老虎能够进行火圈表演，猴子能进行平衡表演，狗能进行智慧表演   </p>
+</blockquote>
+<blockquote>
+<p>马戏团中有以下常见的技能：</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>火圈表演：单火圈、双火圈</li>
+<li>平衡表演：独木桥、走钢丝</li>
+<li>智慧表演：算术题、跳舞 </li>
+</ul>
+</blockquote>
+<p>不使用接口实现时：</p>
+<ul>
+<li>对能力没有强约束力</li>
+<li>容易将类型和能力耦合在一起</li>
+</ul>
+<p>系统中缺少对能力的定义 —— 接口<br>面向对象领域中接口的语义：表达了某个类是否拥有某种能力<br>某个类具有某种能力，其他，就是实现某种接口<br>类型保护函数：通过调用该函数，会触发TS的类型保护，该函数必须返回boolean</p>
+<blockquote>
+<p>接口可以继承类，表示该类的所有成员都在接口中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line">  a1: string = <span class="string">&#x27;&#x27;</span></span><br><span class="line">  a2: string = <span class="string">&#x27;&#x27;</span></span><br><span class="line">  a3: string = <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">class B &#123;</span><br><span class="line">  b1: number = 0;</span><br><span class="line">  b2: number = 0;</span><br><span class="line">  b3: number = 0;</span><br><span class="line">&#125;</span><br><span class="line">interface C extends A, B &#123;&#125;</span><br><span class="line">const c: C = &#123;</span><br><span class="line">  a1: <span class="string">&#x27;1213&#x27;</span>,</span><br><span class="line">  a2: <span class="string">&#x27;2222&#x27;</span>,</span><br><span class="line">  a3: <span class="string">&#x27;33333&#x27;</span>,</span><br><span class="line">  b1: 0,</span><br><span class="line">  b2: 3,</span><br><span class="line">  b3: 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="一般思维代码"><a href="#一般思维代码" class="headerlink" title="一般思维代码"></a>一般思维代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># animals.ts</span></span><br><span class="line"><span class="built_in">export</span> abstract class Animal &#123;</span><br><span class="line">  abstract <span class="built_in">type</span>: string</span><br><span class="line">  constructor (</span><br><span class="line">    public name: string,</span><br><span class="line">    public age: number</span><br><span class="line">  ) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">sayHello</span></span> () &#123;</span><br><span class="line">    console.log(`各位观众，大家好，我是<span class="variable">$&#123;this.type&#125;</span>, 我叫<span class="variable">$&#123;this.name&#125;</span>,今年<span class="variable">$&#123;this.age&#125;</span>岁`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> class Lion extends Animal &#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;狮子&#x27;</span></span><br><span class="line">  <span class="function"><span class="title">singleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行单火圈`)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">doubleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行双火圈`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> class Tiger extends Animal &#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;老虎&#x27;</span></span><br><span class="line">  <span class="function"><span class="title">singleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行单火圈`)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">doubleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行双火圈`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">export</span> class Monkey extends Animal &#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;猴子&#x27;</span></span><br><span class="line">  <span class="function"><span class="title">dumuqiao</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行独木桥`)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">tightropeWalking</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行走钢丝`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">export</span> class Dog extends Animal &#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;狗 &#x27;</span></span><br><span class="line">  <span class="function"><span class="title">arithmeticProblem</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>做算术题`)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">dancing</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>跳舞`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># index.ts</span></span><br><span class="line">import &#123;Animal, Lion, Tiger, Monkey, Dog&#125; from <span class="string">&#x27;./animals&#x27;</span>;</span><br><span class="line"></span><br><span class="line">const animals: Animal[] = [</span><br><span class="line">  new Lion(<span class="string">&#x27;王富贵&#x27;</span>, 12),</span><br><span class="line">  new Tiger(<span class="string">&#x27;坤坤&#x27;</span>, 21),</span><br><span class="line">  new Monkey(<span class="string">&#x27;小六&#x27;</span>, 3),</span><br><span class="line">  new Dog(<span class="string">&#x27;旺财&#x27;</span>, 3),</span><br><span class="line">  new Dog(<span class="string">&#x27;狗剩&#x27;</span>, 5)</span><br><span class="line">]</span><br><span class="line"><span class="comment"># 1.所有动物打招呼</span></span><br><span class="line">animals.forEach(a =&gt; a.sayHello());</span><br><span class="line"><span class="comment"># 2.所有进行火圈表演的动物，完成火圈表情</span></span><br><span class="line">animals.forEach (a =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (a instanceof Lion) &#123;</span><br><span class="line">    a.singleFire();</span><br><span class="line">    a.doubleFire();</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a instanceof Tiger) &#123;</span><br><span class="line">    a.singleFire();</span><br><span class="line">    a.doubleFire();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="晋升代码"><a href="#晋升代码" class="headerlink" title="晋升代码"></a>晋升代码</h2><h3 id="入口文件-index-ts"><a href="#入口文件-index-ts" class="headerlink" title="入口文件 index.ts"></a>入口文件 index.ts</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">import &#123;Animal, Lion, Tiger, Monkey, Dog&#125; from <span class="string">&#x27;./animals&#x27;</span>;</span><br><span class="line">import &#123; IFireShow, WisdomShow &#125; from <span class="string">&#x27;./interfaces&#x27;</span>;</span><br><span class="line"></span><br><span class="line">const animals: Animal[] = [</span><br><span class="line">  new Lion(<span class="string">&#x27;王富贵&#x27;</span>, 12),</span><br><span class="line">  new Tiger(<span class="string">&#x27;坤坤&#x27;</span>, 21),</span><br><span class="line">  new Monkey(<span class="string">&#x27;小六&#x27;</span>, 3),</span><br><span class="line">  new Dog(<span class="string">&#x27;旺财&#x27;</span>, 3),</span><br><span class="line">  new Dog(<span class="string">&#x27;狗剩&#x27;</span>, 5)</span><br><span class="line">]</span><br><span class="line"><span class="comment"># 1.所有动物打招呼 </span></span><br><span class="line">animals.forEach(a =&gt; a.sayHello());</span><br><span class="line"><span class="comment"># 2.所有进行火圈表演的动物，完成火圈表情</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> hasFireShow (ani: Object): ani is IFireShow &#123;</span><br><span class="line">  <span class="keyword">if</span> ((ani as unknown as IFireShow).singleFire &amp;&amp; (ani as unknown as IFireShow).doubleFire) &#123;</span><br><span class="line">    return true</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">animals.forEach (a =&gt; &#123;</span><br><span class="line">  if (hasFireShow(a)) &#123;</span><br><span class="line">    a.singleFire();</span><br><span class="line">    a.doubleFire() </span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.所有平衡表演的动物，完成平衡表演</span></span><br><span class="line"><span class="keyword">function</span> hasWisdomShow (ani: Object): ani is WisdomShow&#123;</span><br><span class="line">  <span class="keyword">if</span> ((ani as unknown as WisdomShow).dumuqiao &amp;&amp; (ani as unknown as WisdomShow).tightropeWalking) &#123;</span><br><span class="line">    return true</span><br><span class="line">  &#125;</span><br><span class="line">  return false</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">animals.forEach (a =&gt; &#123;</span><br><span class="line">  if (hasWisdomShow(a)) &#123;</span><br><span class="line">    a.dumuqiao();</span><br><span class="line">    a.tightropeWalking() </span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="接口模块-interfaces-ts"><a href="#接口模块-interfaces-ts" class="headerlink" title="接口模块 interfaces.ts"></a>接口模块 interfaces.ts</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 火圈表演：单火圈、双火圈</span></span><br><span class="line"><span class="built_in">export</span> interface IFireShow &#123;</span><br><span class="line">  singleFire(): void;</span><br><span class="line">  doubleFire(): void;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 平衡表演：独木桥、走钢丝</span></span><br><span class="line"><span class="built_in">export</span> interface WisdomShow &#123;</span><br><span class="line">  dumuqiao(): void;</span><br><span class="line">  tightropeWalking(): void</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 智慧表演：算术题、跳舞 </span></span><br><span class="line"><span class="built_in">export</span> interface BalanceShow &#123;</span><br><span class="line">  arithmeticProblem(): void;</span><br><span class="line">  dancing(): void;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="动物class类-animals-ts"><a href="#动物class类-animals-ts" class="headerlink" title="动物class类 animals.ts"></a>动物class类 animals.ts</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">import &#123;IFireShow, WisdomShow, BalanceShow&#125; from <span class="string">&#x27;./interfaces&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> abstract class Animal &#123;</span><br><span class="line">  abstract <span class="built_in">type</span>: string</span><br><span class="line">  constructor (</span><br><span class="line">    public name: string,</span><br><span class="line">    public age: number</span><br><span class="line">  ) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">sayHello</span></span> () &#123;</span><br><span class="line">    console.log(`各位观众，大家好，我是<span class="variable">$&#123;this.type&#125;</span>, 我叫<span class="variable">$&#123;this.name&#125;</span>,今年<span class="variable">$&#123;this.age&#125;</span>岁`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> class Lion extends Animal&#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;狮子&#x27;</span></span><br><span class="line">  <span class="function"><span class="title">singleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行单火圈`)</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="function"><span class="title">doubleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行双火圈`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> class Tiger extends Animal implements IFireShow &#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;老虎&#x27;</span></span><br><span class="line">  <span class="function"><span class="title">singleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行单火圈`)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">doubleFire</span></span>() &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行双火圈`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">export</span> class Monkey extends Animal implements WisdomShow &#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;猴子&#x27;</span></span><br><span class="line">  <span class="function"><span class="title">dumuqiao</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行独木桥`)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">tightropeWalking</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>进行走钢丝`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">export</span> class Dog extends Animal implements BalanceShow &#123;</span><br><span class="line">  <span class="built_in">type</span>: string = <span class="string">&#x27;狗 &#x27;</span></span><br><span class="line">  <span class="function"><span class="title">arithmeticProblem</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>做算术题`)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">dancing</span></span> () &#123;</span><br><span class="line">    console.log(`<span class="variable">$&#123;this.name&#125;</span>跳舞`)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="索引器"><a href="#索引器" class="headerlink" title="索引器"></a>索引器</h1><p><code>对象[值]</code>,使用成员表达式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const methodName = <span class="string">&#x27;sayHello&#x27;</span></span><br><span class="line">class User &#123;</span><br><span class="line">  constructor (</span><br><span class="line">    public name: string,</span><br><span class="line">    public age: number</span><br><span class="line">  ) &#123;&#125;</span><br><span class="line">  [methodName] () &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const u = new User(<span class="string">&#x27;123&#x27;</span>, 123);</span><br><span class="line">u[methodName]()</span><br></pre></td></tr></table></figure><br>在Ts中，在默认情况下，不对索引器（成员表达式）做严格的类型检查<br>可配置<code>&quot;noImplicitAny&quot;: true,</code>开启隐式any的检查<br>隐式any：TS根据实际情况导出的angy类型<br>在索引器中，键的类型可以是字符串，也可以是数字<br>索引器在类中书写的位置应该是所有成员之前<br>TS索引器的作用</p>
+<ul>
+<li>在严格的检查下，可以实现为类动态增加成员</li>
+<li>可以实现动态的操作类成员</li>
+</ul>
+<p>在js中，所有成员名本质上，都是字符串，如果使用数字作为成员名，会自动转换为字符串。<br>在TS中，如果某个类中使用了两种类型的索引器，要求两种索引器的值类型必须匹配          </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class User &#123;</span><br><span class="line">  [prop: string]: any</span><br><span class="line">  constructor (</span><br><span class="line">    public name: string,</span><br><span class="line">    public age: number</span><br><span class="line">  ) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">sayHello</span></span>() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">const u = new User(<span class="string">&#x27;123&#x27;</span>, 123);</span><br><span class="line">u[<span class="string">&quot;name&quot;</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class MyArray &#123;</span><br><span class="line">  [index: number]: any</span><br><span class="line">  0 = <span class="string">&#x27;1&#x27;</span></span><br><span class="line">  1 = <span class="string">&#x27;asdfa&#x27;</span></span><br><span class="line">  3 = <span class="string">&#x27;dfsafasf&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const my = new MyArray();</span><br><span class="line">my[5] <span class="comment"># 不会报错</span></span><br></pre></td></tr></table></figure>
+<h1 id="this的指向约束"><a href="#this的指向约束" class="headerlink" title="this的指向约束"></a>this的指向约束</h1><h2 id="在js中this指向的几种情况"><a href="#在js中this指向的几种情况" class="headerlink" title="在js中this指向的几种情况"></a>在js中this指向的几种情况</h2><ul>
+<li>如果直接调用函数（全局调用），this指向全局对象或者undefined（启用严格模式）</li>
+<li>如果使用<code>对象.方法</code>调用，this指向对象本身</li>
+<li>如果是dom事件处理的函数，this指向事件处理对象</li>
+</ul>
+<p>特殊情况：</p>
+<ul>
+<li>箭头函数，this在函数声明时确定指向，指向函数位置this</li>
+<li>使用bind、apply、call手动绑定this对象</li>
+</ul>
+<h2 id="TS中this"><a href="#TS中this" class="headerlink" title="TS中this"></a>TS中this</h2><p>配置<code>&quot;noImplicitThis&quot;: true</code>表示不允许this隐式指向any<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface IUser &#123;</span><br><span class="line">  name: string,</span><br><span class="line">  age: number,</span><br><span class="line">  sayHello(this: IUser): void <span class="comment"># 这不是参数，约定this的指向</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const u: IUser = &#123;</span><br><span class="line">  name: <span class="string">&#x27;ssf&#x27;</span>,</span><br><span class="line">  age: 123,</span><br><span class="line">  <span class="function"><span class="title">sayHello</span></span> () &#123;</span><br><span class="line">    console.log(this.name, this.age);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2020/05/20/TypeScript/8.TS%E5%9F%BA%E7%A1%80%E7%AF%87%E6%80%BB%E7%BB%93/" rel="next" title="8.TS基础篇总结">
+                <i class="fa fa-chevron-left"></i> 8.TS基础篇总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/06/08/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/1.python%E5%9F%BA%E7%A1%80/" rel="prev" title="1.python基础">
+                1.python基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">面向对象概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要学习面向对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.</span> <span class="nav-text">什么是面向对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="nav-number">2.</span> <span class="nav-text">类的继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">继承的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E5%91%98%E7%9A%84%E9%87%8D%E5%86%99"><span class="nav-number">2.2.</span> <span class="nav-text">成员的重写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%8C%B9%E9%85%8D"><span class="nav-number">2.3.</span> <span class="nav-text">类型匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#protected%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">2.4.</span> <span class="nav-text">protected修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%A0%B9%E6%80%A7%E5%92%8C%E4%BC%A0%E9%80%92%E6%80%A7"><span class="nav-number">2.5.</span> <span class="nav-text">单根性和传递性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">抽象类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">3.1.</span> <span class="nav-text">为什么需要抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E6%88%90%E5%91%98"><span class="nav-number">3.2.</span> <span class="nav-text">抽象成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">设计模式 - 模板模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="nav-number">4.</span> <span class="nav-text">静态成员</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="nav-number">4.1.</span> <span class="nav-text">什么是静态成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E4%B8%AD%E7%9A%84this"><span class="nav-number">4.2.</span> <span class="nav-text">静态方法中的this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">设计模式 - 单例模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">再谈接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%80%9D%E7%BB%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">5.1.</span> <span class="nav-text">一般思维代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%8B%E5%8D%87%E4%BB%A3%E7%A0%81"><span class="nav-number">5.2.</span> <span class="nav-text">晋升代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6-index-ts"><span class="nav-number">5.2.1.</span> <span class="nav-text">入口文件 index.ts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E6%A8%A1%E5%9D%97-interfaces-ts"><span class="nav-number">5.2.2.</span> <span class="nav-text">接口模块 interfaces.ts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E7%89%A9class%E7%B1%BB-animals-ts"><span class="nav-number">5.2.3.</span> <span class="nav-text">动物class类 animals.ts</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">索引器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#this%E7%9A%84%E6%8C%87%E5%90%91%E7%BA%A6%E6%9D%9F"><span class="nav-number">7.</span> <span class="nav-text">this的指向约束</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8js%E4%B8%ADthis%E6%8C%87%E5%90%91%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5"><span class="nav-number">7.1.</span> <span class="nav-text">在js中this指向的几种情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TS%E4%B8%ADthis"><span class="nav-number">7.2.</span> <span class="nav-text">TS中this</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2020/06/04/TypeScript/9.TS%E8%BF%9B%E9%98%B6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E7%B1%BB%E7%9A%84%E6%8E%A5%E5%8F%A3/';
+          this.page.identifier = '2020/06/04/TypeScript/9.TS进阶-深入理解类的接口/';
+          this.page.title = '9.TS进阶-深入理解类的接口';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

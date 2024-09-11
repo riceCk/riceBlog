@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="jquery," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="选择器层级 selector1 selector2 后代选择器 parent &gt; child 子级选择器 prve + next  紧挨着后一个元素 prve ~ sliblings 选择peve后面同级的标签  基本筛选器 :first 第一个 :last  最后一个 :not(selector) 非 :even   基数（根据索引1开头） :odd    偶数（根据索引1开头） :eq(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="走进jQuery世界">
+<meta property="og:url" content="http://yoursite.com/2018/02/04/jQuery/%E8%B5%B0%E8%BF%9Bjquery%E4%B8%96%E7%95%8C/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="选择器层级 selector1 selector2 后代选择器 parent &gt; child 子级选择器 prve + next  紧挨着后一个元素 prve ~ sliblings 选择peve后面同级的标签  基本筛选器 :first 第一个 :last  最后一个 :not(selector) 非 :even   基数（根据索引1开头） :odd    偶数（根据索引1开头） :eq(">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-02-04T10:22:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="jquery">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/04/jQuery/走进jquery世界/"/>
+
+
+
+
+
+  <title>走进jQuery世界 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/02/04/jQuery/%E8%B5%B0%E8%BF%9Bjquery%E4%B8%96%E7%95%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">走进jQuery世界</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-04T18:22:00+08:00">
+                2018-02-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/jQuery/" itemprop="url" rel="index">
+                    <span itemprop="name">jQuery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/02/04/jQuery/%E8%B5%B0%E8%BF%9Bjquery%E4%B8%96%E7%95%8C/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/02/04/jQuery/走进jquery世界/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h1><h2 id="层级"><a href="#层级" class="headerlink" title="层级"></a>层级</h2><ul>
+<li>selector1 selector2 后代选择器</li>
+<li>parent &gt; child 子级选择器</li>
+<li>prve + next  紧挨着后一个元素</li>
+<li>prve ~ sliblings 选择peve后面同级的标签</li>
+</ul>
+<h2 id="基本筛选器"><a href="#基本筛选器" class="headerlink" title="基本筛选器"></a>基本筛选器</h2><ul>
+<li>:first 第一个</li>
+<li>:last  最后一个</li>
+<li>:not(selector) 非</li>
+<li>:even   基数（根据索引1开头）</li>
+<li>:odd    偶数（根据索引1开头）</li>
+<li>:eq(index)  指定第几个</li>
+</ul>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><ul>
+<li>:contains(text)  选择内容文本</li>
+<li>:empty           不包含子元素或文本的</li>
+<li>:has(selector)   包含selector元素</li>
+<li>:parent          返回有子元素的</li>
+</ul>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><ul>
+<li>[attribute]       指定attribute属性</li>
+<li>[attribute=value] 指定attribute=value元素</li>
+<li>[attribute!=value] 指定attribute！=value属性</li>
+<li>[attribute^=value] 指定attribute以value开头</li>
+</ul>
+<h2 id="子元素"><a href="#子元素" class="headerlink" title="子元素"></a>子元素</h2><p>:first-child    第一个子元素<br>:first-of-type  第一个子元素类型<br>:last-child<br>:last-of-type<br>:nth-child</p>
+<h1 id="jQuery对象访问"><a href="#jQuery对象访问" class="headerlink" title="jQuery对象访问"></a>jQuery对象访问</h1><ul>
+<li>each(callback)</li>
+<li>length</li>
+<li>selector</li>
+<li>data(removeData)</li>
+<li>index([selector|element])</li>
+<li>get([index])</li>
+</ul>
+<h2 id="each-遍历元素"><a href="#each-遍历元素" class="headerlink" title="each 遍历元素"></a>each 遍历元素</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;#list li&#x27;</span>).each(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(this)</span><br><span class="line">  $(this).css(<span class="string">&#x27;color&#x27;</span>, <span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="data"><a href="#data" class="headerlink" title="data"></a>data</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;.wrapper&#x27;</span>).data(<span class="string">&#x27;age&#x27;</span>, <span class="string">&#x27;19&#x27;</span>) <span class="comment">#存属性</span></span><br><span class="line">$(<span class="string">&#x27;.wrapper&#x27;</span>).data(<span class="string">&#x27;age&#x27;</span>)      <span class="comment">#读属性</span></span><br><span class="line">$(<span class="string">&#x27;.wrapper&#x27;</span>).removeData(<span class="string">&#x27;age&#x27;</span>)  <span class="comment">#删除</span></span><br></pre></td></tr></table></figure>
+<h2 id="index-取索引"><a href="#index-取索引" class="headerlink" title="index 取索引"></a>index 取索引</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;li&#x27;</span>).index()</span><br></pre></td></tr></table></figure>
+<h2 id="get-输出索引取元素"><a href="#get-输出索引取元素" class="headerlink" title="get  输出索引取元素"></a>get  输出索引取元素</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;li&#x27;</span>).get(2)</span><br></pre></td></tr></table></figure>
+<h1 id="jquery-应用"><a href="#jquery-应用" class="headerlink" title="jquery 应用"></a>jquery 应用</h1><h2 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h2><h3 id="attr"><a href="#attr" class="headerlink" title="attr"></a>attr</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#读class值</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).attr(<span class="string">&#x27;class&#x27;</span>) </span><br><span class="line"> <span class="comment">#写入class值</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).attr(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;box2 box&#x27;</span>)</span><br><span class="line"><span class="comment">#写入多个属性</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).attr(&#123;<span class="string">&#x27;data&#x27;</span>: <span class="string">&#x27;num&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: 19&#125;) </span><br><span class="line"><span class="comment"># 遍历满足条件的所有属性，必须return出一个数</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).attr(<span class="string">&#x27;class&#x27;</span>, <span class="keyword">function</span>(index, val)&#123;</span><br><span class="line">  console.log(index, val);</span><br><span class="line">  <span class="built_in">return</span> <span class="string">&#x27;list&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="removeAttr"><a href="#removeAttr" class="headerlink" title="removeAttr"></a>removeAttr</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#移除div的data属性</span></span><br><span class="line">$(<span class="string">&#x27;div&#x27;</span>).removeAttr(<span class="string">&#x27;data&#x27;</span>)</span><br><span class="line"><span class="comment">#移除wrapper值。就class</span></span><br><span class="line">$(<span class="string">&#x27;.wrapper&#x27;</span>).removeAttr(<span class="string">&#x27;class&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="prop、removeProp"><a href="#prop、removeProp" class="headerlink" title="prop、removeProp"></a>prop、removeProp</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> checked=<span class="string">&quot;true&quot;</span>&gt;</span><br><span class="line">$(<span class="string">&#x27;input&#x27;</span>).prop(<span class="string">&#x27;checked&#x27;</span>)  <span class="comment">#=&gt; true</span></span><br><span class="line">$(<span class="string">&#x27;input&#x27;</span>).attr(<span class="string">&#x27;checked&#x27;</span>)  <span class="comment">#=&gt; checked</span></span><br><span class="line">$(<span class="string">&#x27;input&#x27;</span>).prop(<span class="string">&#x27;checked&#x27;</span>, <span class="literal">false</span>)  </span><br></pre></td></tr></table></figure>
+<h2 id="CSS类"><a href="#CSS类" class="headerlink" title="CSS类"></a>CSS类</h2><h3 id="addClass、removeClass、toggleClass"><a href="#addClass、removeClass、toggleClass" class="headerlink" title="addClass、removeClass、toggleClass"></a>addClass、removeClass、toggleClass</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;ul&#x27;</span>).addClass(<span class="string">&#x27;list&#x27;</span>) <span class="comment">#ul添加list样式</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).removeClass(<span class="string">&#x27;item&#x27;</span>)  <span class="comment">#删除li中的item类</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).toggleClass(<span class="string">&#x27;first&#x27;</span>) <span class="comment">#first切换</span></span><br></pre></td></tr></table></figure>
+<h2 id="html类"><a href="#html类" class="headerlink" title="html类"></a>html类</h2><h3 id="html、val、text"><a href="#html、val、text" class="headerlink" title="html、val、text"></a>html、val、text</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;.wrapper&#x27;</span>).html(<span class="string">&#x27;&lt;p&gt;内容&lt;/p&gt;&#x27;</span>) <span class="comment">#包含标签，文本</span></span><br><span class="line">$(<span class="string">&#x27;.wrapper&#x27;</span>).text(<span class="string">&#x27;内容&#x27;</span>) <span class="comment"># 只包含文本</span></span><br><span class="line">$(<span class="string">&#x27;input&#x27;</span>).val()         <span class="comment"># 表单的内容</span></span><br></pre></td></tr></table></figure>
+<h2 id="css类"><a href="#css类" class="headerlink" title="css类"></a>css类</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).css(&#123;color: <span class="string">&#x27;red&#x27;</span>&#125;)</span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).css(<span class="string">&#x27;color&#x27;</span>,<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line"><span class="comment"># 视觉上的距离</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).offser().left/top  <span class="comment">#jq</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).offsetWidth/offsetHeight <span class="comment"># js（包含padding及margin）</span></span><br><span class="line"><span class="comment"># 作用于有定位的父级</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).left/top          <span class="comment">#jq</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).offsetLeft/offsetRight <span class="comment">#js</span></span><br><span class="line"><span class="comment">#css设置的height值</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).height()  </span><br><span class="line"><span class="comment">#height + padding</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).innerHeight() </span><br><span class="line"><span class="comment">#height + padding + border</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).outerHeight()</span><br><span class="line"><span class="comment">#height + padding + border + margin </span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).outerHeight(<span class="literal">true</span>) </span><br></pre></td></tr></table></figure>
+<h2 id="文档处理"><a href="#文档处理" class="headerlink" title="文档处理"></a>文档处理</h2><h3 id="内部插入"><a href="#内部插入" class="headerlink" title="内部插入"></a>内部插入</h3><p>在选中元素内部插入，父子级</p>
+<ul>
+<li>append、appendTo</li>
+<li>prepend、prependTo 插入元素的前面</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#链式调用操作的是第一个所选元素</span></span><br><span class="line">$(<span class="string">&#x27;.wrp&#x27;</span>).append(<span class="string">&#x27;&lt;div class=&quot;box&quot;&gt;111&lt;/div&gt;&#x27;</span>)</span><br><span class="line">$(<span class="string">&#x27;&lt;div class=&quot;box&quot;&gt;111&lt;/div&gt;&#x27;</span>).appendTo($(<span class="string">&#x27;.wrp&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="外部插入"><a href="#外部插入" class="headerlink" title="外部插入"></a>外部插入</h3><ul>
+<li>after、before 前、后</li>
+<li>insertAfter、insertBefore </li>
+</ul>
+<p>在选中原色外部插入，兄弟级<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;div&#x27;</span>).after(<span class="string">&#x27;&lt;li&gt;&lt;/li&gt;&#x27;</span>) <span class="comment">#div前面插入li标签</span></span><br><span class="line">$(<span class="string">&#x27;input&#x27;</span>).insertBefore(<span class="string">&#x27;.wrp&#x27;</span>) <span class="comment">#input插到wrp前面</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="包裹"><a href="#包裹" class="headerlink" title="包裹"></a>包裹</h3><ul>
+<li>wrap 给选中元素填一个父级</li>
+<li>unwrap 删除选中元素的父级</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给box添加一个wrapper父级</span></span><br><span class="line">$(<span class="string">&#x27;.box&#x27;</span>).wrap(<span class="string">&#x27;&lt;div class=&quot;wrapper&quot;&gt;&lt;/div&gt;&#x27;</span>)</span><br><span class="line"><span class="comment"># 删除box的父级</span></span><br><span class="line">$(<span class="string">&#x27;.box&#x27;</span>).unwrap(<span class="string">&#x27;&lt;div class=&quot;wrapper&quot;&gt;&lt;/div&gt;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h3><ul>
+<li>replaceWith</li>
+<li>replaceAll</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将input替换div</span></span><br><span class="line">$(<span class="string">&#x27;input&#x27;</span>).replaceWith(<span class="string">&#x27;&lt;div&gt;&lt;/div&gt;&#x27;</span>)</span><br><span class="line"><span class="comment"># 将ul剪切到input位置</span></span><br><span class="line">$(<span class="string">&#x27;input&#x27;</span>).replaceWith($(<span class="string">&#x27;ul&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li>remove </li>
+<li>detach</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除的同时删除其绑定事件</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).remove()</span><br><span class="line"><span class="comment"># 删除不会删除绑定事件</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).detach();</span><br></pre></td></tr></table></figure>
+<h3 id="克隆-clone"><a href="#克隆-clone" class="headerlink" title="克隆 clone"></a>克隆 clone</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;ul&#x27;</span>).<span class="built_in">clone</span>().appendTo($(<span class="string">&#x27;body&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h2><h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><ul>
+<li>eq</li>
+<li>hasClass</li>
+<li>filter 筛选</li>
+<li>is</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;li&#x27;</span>).eq(1)   <span class="comment">#选中li第一个</span></span><br><span class="line"><span class="comment">#输出true或false，只能判断class</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).hasClass(<span class="string">&#x27;first&#x27;</span>) </span><br><span class="line"><span class="comment"># 比hasClass更强大，属性都可以判断</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).is(<span class="string">&#x27;#wrapper&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><ul>
+<li>children只选择子元素，不会选出后代</li>
+<li>cloest自上查找，子级向上级，只找一个就返回</li>
+<li>find查找</li>
+<li>next在同辈中<em>向后</em>查找第一个满足的</li>
+<li>nextAll在同辈中<em>向后</em>查找所有满足的</li>
+<li>prev在同辈中<em>向上</em>查找第一个满足的</li>
+<li>prevAll在同辈中<em>向上</em>查找所有满足的</li>
+<li>siblings在同辈中查找<em>所有</em>满足的</li>
+<li>parent只找当前的<em>父级</em></li>
+<li>parents查找当前所有上级（父级祖父）</li>
+</ul>
+<h3 id="串联"><a href="#串联" class="headerlink" title="串联"></a>串联</h3><ul>
+<li>add</li>
+<li>end</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 串联li和input一起设置</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>).add(<span class="string">&#x27;input&#x27;</span>).css(<span class="string">&#x27;color&#x27;</span>, <span class="string">&#x27;red&#x27;</span>);</span><br><span class="line"><span class="comment"># 返回的a标签，回退一格的意思</span></span><br><span class="line">$(<span class="string">&#x27;li a&#x27;</span>).parent().end()</span><br></pre></td></tr></table></figure>
+<h2 id="工具类方法"><a href="#工具类方法" class="headerlink" title="工具类方法"></a>工具类方法</h2><ul>
+<li>merage合并数组</li>
+<li>parseHTML 创建数组标签</li>
+<li>extend、fn.extend 克隆</li>
+</ul>
+<h3 id="merage合并数组"><a href="#merage合并数组" class="headerlink" title="merage合并数组"></a>merage合并数组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var arr1 = [1, 2, 3];</span><br><span class="line">var arr2 = [4, 5, 5];</span><br><span class="line">$.merage(arr1, arr2);</span><br><span class="line"><span class="comment"># arr1 =&gt; [1, 2, 3, 4, 5, 5]</span></span><br><span class="line"><span class="comment"># arr2 =&gt; [4, 5, 5]</span></span><br></pre></td></tr></table></figure>
+<h3 id="parseHTML-创建数组标签"><a href="#parseHTML-创建数组标签" class="headerlink" title="parseHTML 创建数组标签"></a>parseHTML 创建数组标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认false，但true是允许创建script脚本标签</span></span><br><span class="line">var html = $.parseHTML(<span class="string">&#x27;&lt;div&gt;&lt;/div&gt;&lt;script&gt;&#x27;</span>, <span class="literal">true</span>)</span><br><span class="line">$(<span class="string">&#x27;body&#x27;</span>).append(html);</span><br></pre></td></tr></table></figure>
+<h3 id="extend"><a href="#extend" class="headerlink" title="extend"></a>extend</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;aa&#x27;</span>, <span class="string">&#x27;b&#x27;</span>:<span class="string">&#x27;bb&#x27;</span>&#125;</span><br><span class="line">var obj2 = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;cc&#x27;</span>, <span class="string">&#x27;d&#x27;</span>:<span class="string">&#x27;bb&#x27;</span>&#125;</span><br><span class="line">$.extend(<span class="literal">true</span>, &#123;&#125;, obj1, obj2)</span><br><span class="line"><span class="comment"># &#123;a: &#x27;cc&#x27;, b:&#x27;bb&#x27;, d:&#x27;bb&#x27;&#125;</span></span><br><span class="line"><span class="comment"># true表示深度克隆 </span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/jquery/" rel="tag"># jquery</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/01/29/jQuery/%E8%A7%A3%E8%AF%BBjquery%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/" rel="next" title="解读jQuery核心源码">
+                <i class="fa fa-chevron-left"></i> 解读jQuery核心源码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/04/13/webpack/webpack%E9%85%8D%E7%BD%AE/" rel="prev" title="webpack4配置">
+                webpack4配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%82%E7%BA%A7"><span class="nav-number">1.1.</span> <span class="nav-text">层级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%AD%9B%E9%80%89%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">基本筛选器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">1.3.</span> <span class="nav-text">内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">1.4.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E5%85%83%E7%B4%A0"><span class="nav-number">1.5.</span> <span class="nav-text">子元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery%E5%AF%B9%E8%B1%A1%E8%AE%BF%E9%97%AE"><span class="nav-number">2.</span> <span class="nav-text">jQuery对象访问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#each-%E9%81%8D%E5%8E%86%E5%85%83%E7%B4%A0"><span class="nav-number">2.1.</span> <span class="nav-text">each 遍历元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data"><span class="nav-number">2.2.</span> <span class="nav-text">data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index-%E5%8F%96%E7%B4%A2%E5%BC%95"><span class="nav-number">2.3.</span> <span class="nav-text">index 取索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#get-%E8%BE%93%E5%87%BA%E7%B4%A2%E5%BC%95%E5%8F%96%E5%85%83%E7%B4%A0"><span class="nav-number">2.4.</span> <span class="nav-text">get  输出索引取元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jquery-%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">jquery 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7-1"><span class="nav-number">3.1.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#attr"><span class="nav-number">3.1.1.</span> <span class="nav-text">attr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#removeAttr"><span class="nav-number">3.1.2.</span> <span class="nav-text">removeAttr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prop%E3%80%81removeProp"><span class="nav-number">3.1.3.</span> <span class="nav-text">prop、removeProp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E7%B1%BB"><span class="nav-number">3.2.</span> <span class="nav-text">CSS类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#addClass%E3%80%81removeClass%E3%80%81toggleClass"><span class="nav-number">3.2.1.</span> <span class="nav-text">addClass、removeClass、toggleClass</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#html%E7%B1%BB"><span class="nav-number">3.3.</span> <span class="nav-text">html类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E3%80%81val%E3%80%81text"><span class="nav-number">3.3.1.</span> <span class="nav-text">html、val、text</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css%E7%B1%BB"><span class="nav-number">3.4.</span> <span class="nav-text">css类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E5%A4%84%E7%90%86"><span class="nav-number">3.5.</span> <span class="nav-text">文档处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E6%8F%92%E5%85%A5"><span class="nav-number">3.5.1.</span> <span class="nav-text">内部插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E6%8F%92%E5%85%A5"><span class="nav-number">3.5.2.</span> <span class="nav-text">外部插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E8%A3%B9"><span class="nav-number">3.5.3.</span> <span class="nav-text">包裹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2"><span class="nav-number">3.5.4.</span> <span class="nav-text">替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">3.5.5.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%8B%E9%9A%86-clone"><span class="nav-number">3.5.6.</span> <span class="nav-text">克隆 clone</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%9B%E9%80%89"><span class="nav-number">3.6.</span> <span class="nav-text">筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4"><span class="nav-number">3.6.1.</span> <span class="nav-text">过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">3.6.2.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E8%81%94"><span class="nav-number">3.6.3.</span> <span class="nav-text">串联</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="nav-number">3.7.</span> <span class="nav-text">工具类方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#merage%E5%90%88%E5%B9%B6%E6%95%B0%E7%BB%84"><span class="nav-number">3.7.1.</span> <span class="nav-text">merage合并数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parseHTML-%E5%88%9B%E5%BB%BA%E6%95%B0%E7%BB%84%E6%A0%87%E7%AD%BE"><span class="nav-number">3.7.2.</span> <span class="nav-text">parseHTML 创建数组标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#extend"><span class="nav-number">3.7.3.</span> <span class="nav-text">extend</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/02/04/jQuery/%E8%B5%B0%E8%BF%9Bjquery%E4%B8%96%E7%95%8C/';
+          this.page.identifier = '2018/02/04/jQuery/走进jquery世界/';
+          this.page.title = '走进jQuery世界';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TypeScript," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="模块化相关配置    配置名称 含义     module 设置编译结果中使用的模块化标准   moduleResolution 设置间隙模块的模式   noImpliciuUseStrict 编译结果中不包含”use strict”   removeComments 编译结果移除注释   noEmitOnError 错误时不生成编译结果   esModuleInterop 启用es模块化交互非e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.TS-模块化">
+<meta property="og:url" content="http://yoursite.com/2020/05/08/TypeScript/%E6%A8%A1%E5%9D%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="模块化相关配置    配置名称 含义     module 设置编译结果中使用的模块化标准   moduleResolution 设置间隙模块的模式   noImpliciuUseStrict 编译结果中不包含”use strict”   removeComments 编译结果移除注释   noEmitOnError 错误时不生成编译结果   esModuleInterop 启用es模块化交互非e">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-05-08T11:36:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.733Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/08/TypeScript/模块化/"/>
+
+
+
+
+
+  <title>5.TS-模块化 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2020/05/08/TypeScript/%E6%A8%A1%E5%9D%97%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">5.TS-模块化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T19:36:00+08:00">
+                2020-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/TypeScript/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2020/05/08/TypeScript/%E6%A8%A1%E5%9D%97%E5%8C%96/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/05/08/TypeScript/模块化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h1><p>相关配置</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">配置名称</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">module</td>
+<td style="text-align:center">设置编译结果中使用的模块化标准</td>
+</tr>
+<tr>
+<td style="text-align:center">moduleResolution</td>
+<td style="text-align:center">设置间隙模块的模式</td>
+</tr>
+<tr>
+<td style="text-align:center">noImpliciuUseStrict</td>
+<td style="text-align:center">编译结果中不包含”use strict”</td>
+</tr>
+<tr>
+<td style="text-align:center">removeComments</td>
+<td style="text-align:center">编译结果移除注释</td>
+</tr>
+<tr>
+<td style="text-align:center">noEmitOnError</td>
+<td style="text-align:center">错误时不生成编译结果</td>
+</tr>
+<tr>
+<td style="text-align:center">esModuleInterop</td>
+<td style="text-align:center">启用es模块化交互非es模块导出</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>前端领域中的模块化标准：ES6、commonj 、amd、umd、system、esnext</p>
+</blockquote>
+<blockquote>
+<p>TS中如何书写模块化语句<br>编译结果？？</p>
+</blockquote>
+<h1 id="TS中如何书写模块化语句"><a href="#TS中如何书写模块化语句" class="headerlink" title="TS中如何书写模块化语句"></a>TS中如何书写模块化语句</h1><p>TS中，导入和导出模块，统一使用ES6的模块化标准<br><strong>myModules.ts</strong>导出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> const name = <span class="string">&#x27;charles&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="keyword">function</span> <span class="built_in">sum</span>(a: number, b: number) &#123;</span><br><span class="line">  <span class="built_in">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default &#123;</span><br><span class="line">  name: <span class="string">&#x27;charles&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>index.ts</strong>导入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123;name, <span class="built_in">sum</span>&#125; from <span class="string">&#x27;./myModule&#x27;</span>;</span><br><span class="line"></span><br><span class="line">console.log(name, <span class="built_in">sum</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="编译结果中的模块化"><a href="#编译结果中的模块化" class="headerlink" title="编译结果中的模块化"></a>编译结果中的模块化</h1><p>可配置</p>
+<p>TS中的模块化在编译结果中：</p>
+<ul>
+<li>如果编译结果的模块化标准是es6：没有区别</li>
+<li>如果编译结果的模块化标准是commonjs，导出的声明会变成exports的属性，默认的导出会变成exports的defalut属性；</li>
+</ul>
+<h1 id="解决modules中默认导入错误"><a href="#解决modules中默认导入错误" class="headerlink" title="解决modules中默认导入错误"></a>解决modules中默认导入错误</h1><p>导出fs模块<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import * as fa from <span class="string">&#x27;fs&#x27;</span></span><br><span class="line">fs.readFilesSync(<span class="string">&#x27;./&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="如何在TS中书写commonjs模块化代码"><a href="#如何在TS中书写commonjs模块化代码" class="headerlink" title="如何在TS中书写commonjs模块化代码"></a>如何在TS中书写commonjs模块化代码</h1><p>TS导出语法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> = &#123;&#125;</span><br></pre></td></tr></table></figure><br><strong>myModule.ts</strong>导出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这种方式可以实现导出但是无法实现类型检查</span></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  name: <span class="string">&quot;kevin&quot;</span>,</span><br><span class="line">  <span class="built_in">sum</span>(a: number, b: number) &#123;</span><br><span class="line">    <span class="built_in">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TS语法，具有类型检查</span></span><br><span class="line"><span class="built_in">export</span> = &#123;</span><br><span class="line">  name: <span class="string">&quot;kevin&quot;</span>,</span><br><span class="line">  <span class="built_in">sum</span>(a: number, b: number) &#123;</span><br><span class="line">    <span class="built_in">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>index.ts</strong>导入<br>TS语法导入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import 声明 = require(<span class="string">&#x27;路径&#x27;</span>)</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这种方式可以导出但是没法进行类型检查 </span></span><br><span class="line">const &#123;name, <span class="built_in">sum</span>&#125; = require(<span class="string">&#x27;./myModule&#x27;</span>);</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import myModule = reuqire(<span class="string">&#x27;./myModule&#x27;</span>);</span><br></pre></td></tr></table></figure></p>
+<h1 id="模块化解析"><a href="#模块化解析" class="headerlink" title="模块化解析"></a>模块化解析</h1><p>模块解析：应该从什么位置寻找模块<br>TS中，有两种模块解析策略</p>
+<ul>
+<li>classic：经典</li>
+<li>node：node解析策略（唯一的变化，是将js替换成ts）<ul>
+<li>相对路径<strong>require(“./xxx”)</strong></li>
+<li>非相对模块<strong>require(“xxx”)</strong></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2020/05/06/TypeScript/%E6%89%A9%E5%B1%95%E7%B1%BB%E5%9E%8B-%E6%9E%9A%E4%B8%BE/" rel="next" title="4.TS-扩展类型_枚举">
+                <i class="fa fa-chevron-left"></i> 4.TS-扩展类型_枚举
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/05/13/TypeScript/6.%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%85%BC%E5%AE%B9%E6%80%A7/" rel="prev" title="6.TS-接口和类型兼容性">
+                6.TS-接口和类型兼容性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TS%E4%B8%AD%E5%A6%82%E4%BD%95%E4%B9%A6%E5%86%99%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">TS中如何书写模块化语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%BB%93%E6%9E%9C%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">编译结果中的模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3modules%E4%B8%AD%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%85%A5%E9%94%99%E8%AF%AF"><span class="nav-number">4.</span> <span class="nav-text">解决modules中默认导入错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8TS%E4%B8%AD%E4%B9%A6%E5%86%99commonjs%E6%A8%A1%E5%9D%97%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text">如何在TS中书写commonjs模块化代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%A3%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">模块化解析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2020/05/08/TypeScript/%E6%A8%A1%E5%9D%97%E5%8C%96/';
+          this.page.identifier = '2020/05/08/TypeScript/模块化/';
+          this.page.title = '5.TS-模块化';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

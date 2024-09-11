@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTML5," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="fileReader 文件读取fileReader 方法通过不同的方式读取文件  abort() 终止读取 readAsBinaryString(file) 将文件读取为二进制编码 readAsDataURL(file) 将文件读取为DataURL编码base64 readAsText(file, [encoding]) 将文件读取为文本 readAsArrayBuffer(file) 将文件读取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5-fileReader_websocket-lesson6">
+<meta property="og:url" content="http://yoursite.com/2019/05/21/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-fileReader_websocket-lesson6/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="fileReader 文件读取fileReader 方法通过不同的方式读取文件  abort() 终止读取 readAsBinaryString(file) 将文件读取为二进制编码 readAsDataURL(file) 将文件读取为DataURL编码base64 readAsText(file, [encoding]) 将文件读取为文本 readAsArrayBuffer(file) 将文件读取">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/webSocket.png">
+<meta property="article:published_time" content="2019-05-21T12:46:50.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.730Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="HTML5">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/webSocket.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/21/Html5老司机必会技能/html5-fileReader_websocket-lesson6/"/>
+
+
+
+
+
+  <title>html5-fileReader_websocket-lesson6 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2019/05/21/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-fileReader_websocket-lesson6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">html5-fileReader_websocket-lesson6</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-21T20:46:50+08:00">
+                2019-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/" itemprop="url" rel="index">
+                    <span itemprop="name">Html5老司机必会技能</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2019/05/21/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-fileReader_websocket-lesson6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/05/21/Html5老司机必会技能/html5-fileReader_websocket-lesson6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="fileReader-文件读取"><a href="#fileReader-文件读取" class="headerlink" title="fileReader 文件读取"></a>fileReader 文件读取</h1><h2 id="fileReader-方法"><a href="#fileReader-方法" class="headerlink" title="fileReader 方法"></a>fileReader 方法</h2><p>通过不同的方式读取文件</p>
+<ul>
+<li>abort() 终止读取</li>
+<li>readAsBinaryString(file) 将文件读取为二进制编码</li>
+<li>readAsDataURL(file) 将文件读取为DataURL编码base64</li>
+<li>readAsText(file, [encoding]) 将文件读取为文本</li>
+<li>readAsArrayBuffer(file) 将文件读取为arraybuffer</li>
+</ul>
+<h2 id="fileReader-事件"><a href="#fileReader-事件" class="headerlink" title="fileReader 事件"></a>fileReader 事件</h2><ul>
+<li>onloadstart 读取开始时触发</li>
+<li>onprogress读取中</li>
+<li>onloadend 读取完成时触发，无论成功或者失败</li>
+<li>onloade 文件读取成功完成时触发</li>
+<li>onabort 中断时触发</li>
+<li>onerror 出错时触发</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> reader = new FileReader();</span><br><span class="line"><span class="built_in">let</span> inp = document.getElementsByTagName(<span class="string">&#x27;input&#x27;</span>)[0];</span><br><span class="line">inp.onchange = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  console.log(inp.files) <span class="comment"># 文件信息</span></span><br><span class="line">  reader.readAsDataURL(inp.files[0])</span><br><span class="line">&#125;    </span><br><span class="line">reader.onloadstart = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  console.log(this === e.target) <span class="comment"># true</span></span><br><span class="line">  console.log(<span class="string">&#x27;start：读取开始时触发&#x27;</span>, e);</span><br><span class="line">&#125;</span><br><span class="line">reader.onprogress = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  console.log(<span class="string">&#x27;读取中&#x27;</span>, e)</span><br><span class="line">&#125;</span><br><span class="line">reader.onload = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  console.log(<span class="string">&#x27;成功触发&#x27;</span>, e)</span><br><span class="line">&#125;</span><br><span class="line">reader.onloadend = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  console.log(<span class="string">&#x27;读取完成无论成功失败&#x27;</span>, e)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="举几个栗子"><a href="#举几个栗子" class="headerlink" title="举几个栗子"></a>举几个栗子</h2><h3 id="实例图片读取展示"><a href="#实例图片读取展示" class="headerlink" title="实例图片读取展示"></a>实例图片读取展示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">&quot;file&quot;</span>&gt;</span><br><span class="line">&lt;img src=<span class="string">&quot;&quot;</span> alt=<span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">-----------------js---------------------------------</span><br><span class="line"><span class="built_in">let</span> reader = new FileReader();</span><br><span class="line"><span class="built_in">let</span> inp = document.getElementsByTagName(<span class="string">&#x27;input&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> img = document.getElementsByTagName(<span class="string">&#x27;img&#x27;</span>)[0];</span><br><span class="line">inp.onchange = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  console.log(inp.files) <span class="comment"># 文件信息</span></span><br><span class="line">  reader.readAsDataURL(inp.files[0])</span><br><span class="line">&#125;    </span><br><span class="line">reader.onloadstart = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  console.log(this === e.target) <span class="comment"># true</span></span><br><span class="line">  console.log(<span class="string">&#x27;start：读取开始时触发&#x27;</span>, e);</span><br><span class="line">&#125;</span><br><span class="line">reader.onload = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  img.src = this.result;</span><br><span class="line">  console.log(<span class="string">&#x27;成功触发&#x27;</span>, e)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="上传大的文件写进度条-以及终止"><a href="#上传大的文件写进度条-以及终止" class="headerlink" title="上传大的文件写进度条,以及终止"></a>上传大的文件写进度条,以及终止</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">.progress &#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 30px;</span><br><span class="line">  border: 1px solid <span class="comment">#000;</span></span><br><span class="line">&#125;</span><br><span class="line">.bar &#123;</span><br><span class="line">  width: 0;</span><br><span class="line">  height: 30px;</span><br><span class="line">  background-color: aqua;</span><br><span class="line">&#125;</span><br><span class="line">---------------------css--------------------------------</span><br><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">&quot;file&quot;</span>&gt;</span><br><span class="line">&lt;div class=<span class="string">&quot;progress&quot;</span>&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;bar&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;span class=<span class="string">&quot;text&quot;</span>&gt;&lt;/span&gt;</span><br><span class="line">&lt;button class=<span class="string">&quot;abort&quot;</span>&gt;终止&lt;/button&gt;</span><br><span class="line">---------------------html--------------------------------</span><br><span class="line"><span class="built_in">let</span> reader = new FileReader();</span><br><span class="line"><span class="built_in">let</span> inp = document.getElementsByTagName(<span class="string">&#x27;input&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> text = document.getElementsByClassName(<span class="string">&#x27;text&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> bar = document.getElementsByClassName(<span class="string">&#x27;bar&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> progress = document.getElementsByClassName(<span class="string">&#x27;progress&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> abort = document.getElementsByClassName(<span class="string">&#x27;abort&#x27;</span>)[0]</span><br><span class="line">abort.onclick = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  reader.abort();</span><br><span class="line">&#125;</span><br><span class="line">inp.onchange = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  console.log(inp.files) <span class="comment"># 文件信息</span></span><br><span class="line">  reader.readAsDataURL(inp.files[0])</span><br><span class="line">&#125;    </span><br><span class="line">reader.onprogress = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  console.log(<span class="string">&#x27;读取中&#x27;</span>, e)</span><br><span class="line">  <span class="built_in">let</span> precent = e.loaded / e.total;</span><br><span class="line">  <span class="built_in">let</span> width = progress.offsetWidth * precent + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">  bar.style.width = width</span><br><span class="line">  text.innerHTML = parseInt(precent * 100) + <span class="string">&#x27;%&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="file分割方法slice-封装一个实例"><a href="#file分割方法slice-封装一个实例" class="headerlink" title="file分割方法slice,封装一个实例"></a>file分割方法slice,封装一个实例</h3><p>用于较大文件上传到服务器上，利用分割文件，异步同时上传减少上传时间<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">.progress &#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 30px;</span><br><span class="line">  border: 1px solid <span class="comment">#000;</span></span><br><span class="line">&#125;</span><br><span class="line">.bar &#123;</span><br><span class="line">  width: 0;</span><br><span class="line">  height: 30px;</span><br><span class="line">  background-color: aqua;</span><br><span class="line">&#125;</span><br><span class="line">---------------------css--------------------------------</span><br><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">&quot;file&quot;</span>&gt;</span><br><span class="line">&lt;div class=<span class="string">&quot;progress&quot;</span>&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;bar&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;span class=<span class="string">&quot;text&quot;</span>&gt;&lt;/span&gt;</span><br><span class="line">---------------------html--------------------------------</span><br><span class="line"><span class="built_in">let</span> reader = new FileReader();</span><br><span class="line"><span class="built_in">let</span> inp = document.getElementsByTagName(<span class="string">&#x27;input&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> text = document.getElementsByClassName(<span class="string">&#x27;text&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> bar = document.getElementsByClassName(<span class="string">&#x27;bar&#x27;</span>)[0];</span><br><span class="line"><span class="built_in">let</span> progress = document.getElementsByClassName(<span class="string">&#x27;progress&#x27;</span>)[0];</span><br><span class="line">inp.onchange = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  console.log(inp.files) <span class="comment"># 文件信息</span></span><br><span class="line">  const reader = new PartFileReader(inp.files[0], <span class="string">&#x27;readAsBinaryString&#x27;</span>, &#123;</span><br><span class="line">    loadStart: <span class="keyword">function</span> (e) &#123;</span><br><span class="line">      console.log(<span class="string">&#x27;start&#x27;</span>, e)</span><br><span class="line">    &#125;,</span><br><span class="line">    progress: <span class="keyword">function</span> (e, loaded, total) &#123;</span><br><span class="line">      console.log(<span class="string">&#x27;progress加载中&#x27;</span>, e)</span><br><span class="line">      <span class="built_in">let</span> precent = loaded / total;</span><br><span class="line">      <span class="built_in">let</span> width = progress.offsetWidth * precent + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">      bar.style.width = width</span><br><span class="line">      text.innerHTML = parseInt(precent * 100) + <span class="string">&#x27;%&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    load: <span class="keyword">function</span> (e) &#123;</span><br><span class="line">      console.log(<span class="string">&#x27;load成功加载&#x27;</span>, e);</span><br><span class="line">    &#125;,</span><br><span class="line">    loadend: <span class="keyword">function</span> (e) &#123;</span><br><span class="line">      console.log(<span class="string">&#x27;end&#x27;</span>, e)</span><br><span class="line">    &#125;,</span><br><span class="line">    abort: <span class="keyword">function</span> (e) &#123;</span><br><span class="line">      console.log(<span class="string">&#x27;abort&#x27;</span>, e)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>封装的<strong>fileReader.js</strong>方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 封装分割文件上传</span></span><br><span class="line"><span class="keyword">function</span> PartFileReader(files, <span class="built_in">type</span>, event) &#123;</span><br><span class="line">  this.files = files; <span class="comment"># 文件信息</span></span><br><span class="line">  this.type = <span class="built_in">type</span>;   <span class="comment"># 文件读取类型</span></span><br><span class="line">  this.event = event; <span class="comment"># 绑定事件</span></span><br><span class="line">  this.step = 1024 * 1024; <span class="comment"># 分割的每块</span></span><br><span class="line">  this.total = this.files.size;</span><br><span class="line">  this.reader = new FileReader(); <span class="comment"># 重置文件</span></span><br><span class="line">  this.loaded = 0;     <span class="comment"># 记录每次上传的进度</span></span><br><span class="line">  this.abort = this.reader.abort()  <span class="comment"># 暂停按钮</span></span><br><span class="line">  this.readPartFile(0)  <span class="comment"># 调用函数</span></span><br><span class="line">  this.bindEvent();</span><br><span class="line">&#125;</span><br><span class="line">PartFileReader.prototype.readPartFile = <span class="keyword">function</span> (start) &#123;</span><br><span class="line">  <span class="keyword">if</span> (this.files.slice) &#123;</span><br><span class="line">    <span class="built_in">let</span> file = this.files.slice(start, start + this.step)</span><br><span class="line">    console.log(this)</span><br><span class="line">    this.reader[this.type](file);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">PartFileReader.prototype.bindEvent = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  <span class="built_in">let</span> self = this</span><br><span class="line">  this.reader.onloadstart = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">    self.event.loadStart &amp;&amp; self.event.loadStart.call(self, e);</span><br><span class="line">  &#125;</span><br><span class="line">  this.reader.onprogress = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">    self.event.progress &amp;&amp; self.event.progress.call(self, e, self.loaded, self.total);</span><br><span class="line">  &#125;</span><br><span class="line">  self.reader.onload = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">    self.loaded += e.loaded;</span><br><span class="line">    self.event.load &amp;&amp; self.event.load.call(self, e);</span><br><span class="line">    <span class="keyword">if</span> (self.loaded &lt; self.total) &#123;</span><br><span class="line">      self.readPartFile(self.loaded);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  self.reader.onloadend = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">    self.event.loadend &amp;&amp; self.event.loadend.call(self, e);</span><br><span class="line">  &#125;</span><br><span class="line">  self.reader.onabort = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">    self.event.onabort &amp;&amp; self.event.onabort.call(self, e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="webSocket"><a href="#webSocket" class="headerlink" title="webSocket"></a>webSocket</h1><p>客户端与服务器都可以主动传送数据给对方;<br>不用频率创建TCP请求及销毁请求，减少网络带宽资源的占用，同时也节省服务器资源;</p>
+<ul>
+<li>（1）建立在 TCP 协议之上，服务器端的实现比较容易。</li>
+<li>（2）与 HTTP 协议有着良好的兼容性。默认端口也是80和443，并且握手阶段采用 HTTP 协议，因此握手时不容易屏蔽，能通过各种 HTTP 代理服务器。</li>
+<li>（3）数据格式比较轻量，性能开销小，通信高效。</li>
+<li>（4）可以发送文本，也可以发送二进制数据。</li>
+<li>（5）没有同源限制，客户端可以与任意服务器通信。</li>
+<li>（6）协议标识符为ws（如果加密为wss）服务器网址就是url</li>
+<li>（7）不受同源策略的限制</li>
+</ul>
+<h2 id="简单的几个事件"><a href="#简单的几个事件" class="headerlink" title="简单的几个事件"></a>简单的几个事件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var socket = new WebSocket(<span class="string">&#x27;ws://echo.websocket.org/&#x27;</span>);</span><br><span class="line">  socket.onopen = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">  socket.send(<span class="string">&#x27;hello world&#x27;</span>) <span class="comment"># 传数据</span></span><br><span class="line">&#125;</span><br><span class="line">socket.onmessage = <span class="keyword">function</span> (e) &#123; <span class="comment"># 获取数据</span></span><br><span class="line">  console.log(e)</span><br><span class="line">  socket.onclose() <span class="comment"># 关闭</span></span><br><span class="line">&#125;</span><br><span class="line">scoket.onclose = <span class="keyword">function</span>(e) &#123;</span><br><span class="line">  <span class="comment"># 监听关闭事件</span></span><br><span class="line">  console.log(<span class="string">&#x27;close&#x27;</span>, socket.readyState);</span><br><span class="line">&#125;</span><br><span class="line">scoket.onerror = <span class="keyword">function</span>(e) &#123;</span><br><span class="line">  <span class="comment"># 连接出错爆发</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="socket-readyState-状态码"><a href="#socket-readyState-状态码" class="headerlink" title="socket.readyState 状态码"></a>socket.readyState 状态码</h2><p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/webSocket.png" alt="状态码"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/HTML5/" rel="tag"># HTML5</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2019/05/21/screeps/api/" rel="next" title="api">
+                <i class="fa fa-chevron-left"></i> api
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2019/05/26/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-%E5%9C%B0%E5%9D%80%E4%BD%8D%E7%BD%AE_%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BA%8B%E4%BB%B6-lesson7/" rel="prev" title="html5-地址位置_移动端事件-lesson7">
+                html5-地址位置_移动端事件-lesson7 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fileReader-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96"><span class="nav-number">1.</span> <span class="nav-text">fileReader 文件读取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fileReader-%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">fileReader 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fileReader-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">fileReader 事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BE%E5%87%A0%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="nav-number">1.3.</span> <span class="nav-text">举几个栗子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E5%9B%BE%E7%89%87%E8%AF%BB%E5%8F%96%E5%B1%95%E7%A4%BA"><span class="nav-number">1.3.1.</span> <span class="nav-text">实例图片读取展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E5%A4%A7%E7%9A%84%E6%96%87%E4%BB%B6%E5%86%99%E8%BF%9B%E5%BA%A6%E6%9D%A1-%E4%BB%A5%E5%8F%8A%E7%BB%88%E6%AD%A2"><span class="nav-number">1.3.2.</span> <span class="nav-text">上传大的文件写进度条,以及终止</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file%E5%88%86%E5%89%B2%E6%96%B9%E6%B3%95slice-%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AA%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.3.3.</span> <span class="nav-text">file分割方法slice,封装一个实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webSocket"><span class="nav-number">2.</span> <span class="nav-text">webSocket</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E5%87%A0%E4%B8%AA%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">简单的几个事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#socket-readyState-%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">socket.readyState 状态码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/05/21/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-fileReader_websocket-lesson6/';
+          this.page.identifier = '2019/05/21/Html5老司机必会技能/html5-fileReader_websocket-lesson6/';
+          this.page.title = 'html5-fileReader_websocket-lesson6';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

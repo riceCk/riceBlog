@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node系统学习," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、后端的规范与思想1.分层（1）Web层（接收和发送Http请求，封装；Web层、controller层）    LoginController：（接收参数，判断是否非法，传给服务层） （2）业务逻辑层（服务层，XXXService）    LoginService：（获取这个用户密码，进行比较）（3）DAO层：(Data Access Objec）    DataBase（DB）：存数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeLess（一）">
+<meta property="og:url" content="http://yoursite.com/2018/11/26/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/NodeLess%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="一、后端的规范与思想1.分层（1）Web层（接收和发送Http请求，封装；Web层、controller层）    LoginController：（接收参数，判断是否非法，传给服务层） （2）业务逻辑层（服务层，XXXService）    LoginService：（获取这个用户密码，进行比较）（3）DAO层：(Data Access Objec）    DataBase（DB）：存数据">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-11-26T12:49:14.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.740Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="node系统学习">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/26/了解nodejs前世今生/NodeLess（一）/"/>
+
+
+
+
+
+  <title>NodeLess（一） | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/11/26/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/NodeLess%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NodeLess（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T20:49:14+08:00">
+                2018-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">了解nodejs前世今生</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/11/26/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/NodeLess%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/26/了解nodejs前世今生/NodeLess（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、后端的规范与思想"><a href="#一、后端的规范与思想" class="headerlink" title="一、后端的规范与思想"></a>一、后端的规范与思想</h1><h2 id="1-分层"><a href="#1-分层" class="headerlink" title="1.分层"></a>1.分层</h2><p><em>（1）Web层（接收和发送Http请求，封装；Web层、controller层）<br>    LoginController：（接收参数，判断是否非法，传给服务层）
+</em>（2）业务逻辑层（服务层，XXXService）<br>    LoginService：（获取这个用户密码，进行比较）<br><em>（3）DAO层：(Data Access Objec）<br>    DataBase（DB）：存数据<br>    业务：对对象进行操作<br>    如果要存储：对象转为数据<br>    如果要读取：数据转为对象
+</em>（4）持久层：存在磁盘上<br>    文件：数据库</p>
+<ul>
+<li>（5）Domain：User</li>
+</ul>
+<h2 id="2、模块化"><a href="#2、模块化" class="headerlink" title="2、模块化"></a>2、模块化</h2><p>（1）导入和导出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">module.exports == exports  </span><br><span class="line"><span class="comment"># true</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="3、nodejs的展现形式"><a href="#3、nodejs的展现形式" class="headerlink" title="3、nodejs的展现形式"></a>3、nodejs的展现形式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> xzy(module, require, module, __filename, __dirname) &#123;</span><br><span class="line">    <span class="comment"># ---</span></span><br><span class="line">    <span class="comment"># 中间的内容是我们写的nodejs代码</span></span><br><span class="line">    <span class="comment"># ---</span></span><br><span class="line">    console.log(module)</span><br><span class="line">    <span class="built_in">return</span> module.exports</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="二、TCP-id协议"><a href="#二、TCP-id协议" class="headerlink" title="二、TCP/id协议"></a>二、TCP/id协议</h1><h2 id="Server服务器"><a href="#Server服务器" class="headerlink" title="Server服务器"></a>Server服务器</h2><ul>
+<li>事件<br>  listening<br>  connection<br>  close<br>  error</li>
+<li>方法<br>  listen<br>  close<br>  address</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> net = require(<span class="string">&#x27;net&#x27;</span>)</span><br><span class="line"><span class="comment"># 网络层和运输层 -&gt; TCP/IP协议</span></span><br><span class="line"><span class="built_in">let</span> server = net.createServer()</span><br><span class="line">server.listen(3000, <span class="string">&#x27;127.0.0.1&#x27;</span>)  </span><br><span class="line"><span class="comment"># 监听服务器3000端口，ip：127.0.0.1</span></span><br><span class="line">server.on(<span class="string">&#x27;listening&#x27;</span>, () =&gt; &#123;</span><br><span class="line">    console.log(server.address())</span><br><span class="line">    <span class="comment"># address查看当前端口号和ip地址</span></span><br><span class="line">    console.log(<span class="string">&#x27;服务已启动&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.on(<span class="string">&#x27;connection&#x27;</span>, (socket) =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;有新的连接&#x27;</span>)</span><br><span class="line">    <span class="comment"># 反馈请求的数据</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="client客户端"><a href="#client客户端" class="headerlink" title="client客户端"></a>client客户端</h2><h3 id="事件-amp-方法"><a href="#事件-amp-方法" class="headerlink" title="事件&amp;方法"></a>事件&amp;方法</h3><h4 id="connect事件"><a href="#connect事件" class="headerlink" title="connect事件"></a>connect事件</h4><p>监听是否连接服务器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">socket.on(<span class="string">&#x27;connect&#x27;</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;已连接到服务器&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h4 id="data事件"><a href="#data事件" class="headerlink" title="data事件"></a>data事件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># client 客户端发请求</span></span><br><span class="line">socket.write(<span class="string">&#x27;hello server&#x27;</span>)</span><br><span class="line">socket.on(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span>(data) &#123;</span><br><span class="line">    console.log(data.toString)</span><br><span class="line">    <span class="comment"># 客户端监听服务器发的请求</span></span><br><span class="line">｝</span><br><span class="line"><span class="comment"># server 服务的监听</span></span><br><span class="line">server.on(<span class="string">&#x27;connection&#x27;</span>, (socket) =&gt; &#123;</span><br><span class="line">    socket.on(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span> (data) &#123;</span><br><span class="line">        console.log(data.toString())</span><br><span class="line">        socket.write(<span class="string">&#x27;hello client&#x27;</span>)</span><br><span class="line">        <span class="comment"># 服务器给客户端发请求</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="end客户端关闭事件-amp-close服务的事件"><a href="#end客户端关闭事件-amp-close服务的事件" class="headerlink" title="end客户端关闭事件 &amp; close服务的事件"></a>end客户端关闭事件 &amp; close服务的事件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># client 客户端收到信息就关闭</span></span><br><span class="line">socket.on(<span class="string">&#x27;data&#x27;</span>, <span class="keyword">function</span>(data)&#123;</span><br><span class="line">    console.log(data.toString())</span><br><span class="line">    socket.end()</span><br><span class="line">&#125;)</span><br><span class="line">socket.on(<span class="string">&#x27;end&#x27;</span>, <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;服务器已关闭&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># server 服务端</span></span><br><span class="line">server.on(<span class="string">&#x27;connection&#x27;</span>, (socket) =&gt; &#123;</span><br><span class="line">    socket.on(<span class="string">&#x27;close&#x27;</span>, <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">        console.log(<span class="string">&#x27;客户端已关闭&#x27;</span>)</span><br><span class="line">        server.close() <span class="comment"># 服务端关闭服务</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="setTimeout-amp-timeout-客户端的超时事件方法"><a href="#setTimeout-amp-timeout-客户端的超时事件方法" class="headerlink" title="setTimeout &amp; timeout 客户端的超时事件方法"></a>setTimeout &amp; timeout 客户端的超时事件方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">socket.setTimeout(2000)</span><br><span class="line"><span class="comment"># 设置2秒，服务器不返回就触发超时事件</span></span><br><span class="line">socket.on(<span class="string">&#x27;connect&#x27;</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;已连接到服务器&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">socket.on(<span class="string">&#x27;timeout&#x27;</span>, <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;超时了&#x27;</span>)</span><br><span class="line">    socket.end()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="client四个属性"><a href="#client四个属性" class="headerlink" title="client四个属性"></a>client四个属性</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">socket.on(<span class="string">&#x27;connect&#x27;</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;已连接到服务器&#x27;</span>)</span><br><span class="line">    console.log(<span class="string">&#x27;远端地址：&#x27;</span>, socket.remoteAddress)</span><br><span class="line">    console.log(<span class="string">&#x27;远端端口:&#x27;</span>,socket.remotePort)</span><br><span class="line">    console.log(<span class="string">&#x27;远端地址：&#x27;</span>,socket.localAddress)</span><br><span class="line">    console.log(<span class="string">&#x27;远端端口：&#x27;</span>,socket.localPort)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="三、http协议"><a href="#三、http协议" class="headerlink" title="三、http协议"></a>三、http协议</h1><h2 id="http-amp-url"><a href="#http-amp-url" class="headerlink" title="http &amp; url"></a>http &amp; url</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> http = require(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="built_in">let</span> url = require(<span class="string">&#x27;url&#x27;</span>)</span><br><span class="line">http.createServer(<span class="keyword">function</span>(request, response) &#123;</span><br><span class="line">	<span class="built_in">let</span> pathName = url.parse(request.url).pathname</span><br><span class="line">	<span class="built_in">let</span> pathms = url.parse(request.url, <span class="literal">true</span>).query</span><br><span class="line">	console.log(pathName, pathms)</span><br><span class="line">	<span class="comment"># /index3.html,    &#123; a: &#x27;1&#x27;, b: &#x27;2&#x27; &#125;</span></span><br><span class="line">&#125;).listen(3000)</span><br></pre></td></tr></table></figure>
+<h1 id="四、mysql数据库"><a href="#四、mysql数据库" class="headerlink" title="四、mysql数据库"></a>四、mysql数据库</h1><h2 id="初次使用DataGrip软件连接"><a href="#初次使用DataGrip软件连接" class="headerlink" title="初次使用DataGrip软件连接"></a>初次使用DataGrip软件连接</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">show databases ;   <span class="comment"># 打开查看数据库</span></span><br><span class="line">use mysql;         <span class="comment"># 连接mysql库</span></span><br><span class="line">show tables ;      <span class="comment"># 打开显示mysql库里的表</span></span><br><span class="line">desc db;           <span class="comment"># 查看db表字段</span></span><br><span class="line">show create table db;  <span class="comment"># 查看创建db表的sql语句</span></span><br><span class="line"><span class="keyword">select</span> * from db;      <span class="comment"># 查看表</span></span><br><span class="line">create database school; <span class="comment"># 创建库</span></span><br></pre></td></tr></table></figure>
+<h2 id="字段类型"><a href="#字段类型" class="headerlink" title="字段类型"></a>字段类型</h2><ul>
+<li>整数 int</li>
+<li>长整数bigint(21)</li>
+<li>浮点数 float</li>
+<li>双精度浮点数double</li>
+<li>字符串 varchar()</li>
+<li>文本text</li>
+</ul>
+<h2 id="关于表的sql语句"><a href="#关于表的sql语句" class="headerlink" title="关于表的sql语句"></a>关于表的sql语句</h2><p>注：一般开发用工具创建，但是至少需要认识</p>
+<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `student` (</span><br><span class="line">  `<span class="built_in">id</span>`      int(11)     NOT NULL AUTO_INCREMENT COMMENT <span class="string">&#x27;student id&#x27;</span>,</span><br><span class="line">  `stu_num` int(11)     NOT NULL                COMMENT <span class="string">&#x27;student number&#x27;</span>,</span><br><span class="line">  `name`    varchar(32) NOT NULL                COMMENT <span class="string">&#x27;student name&#x27;</span>,</span><br><span class="line">  `age`     int(11)     NOT NULL                COMMENT <span class="string">&#x27;student age&#x27;</span>,</span><br><span class="line">  `class`   int(11)     NOT NULL                COMMENT <span class="string">&#x27;student class	&#x27;</span>,</span><br><span class="line">  PRIMARY KEY (`<span class="built_in">id</span>`),</span><br><span class="line">  UNIQUE KEY `student_stu_num_uindex` (`stu_num`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=latin1</span><br></pre></td></tr></table></figure>
+<h3 id="添加表的新字段"><a href="#添加表的新字段" class="headerlink" title="添加表的新字段"></a>添加表的新字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alter table student</span><br><span class="line">	add math int not null</span><br><span class="line">	COMMENT <span class="string">&#x27;student math&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="删除表的字段"><a href="#删除表的字段" class="headerlink" title="删除表的字段"></a>删除表的字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table student drop column math;</span><br></pre></td></tr></table></figure>
+<h2 id="关于sql字段的语句"><a href="#关于sql字段的语句" class="headerlink" title="关于sql字段的语句"></a>关于sql字段的语句</h2><h3 id="插入新数据"><a href="#插入新数据" class="headerlink" title="插入新数据"></a>插入新数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">insert into student (`stu_num`, `name`, `age`, `class`)</span><br><span class="line">       value(201307, <span class="string">&quot;猴子&quot;</span>, 18, 2);</span><br></pre></td></tr></table></figure>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update student <span class="built_in">set</span> age = 18, class = 3 <span class="built_in">where</span> <span class="built_in">id</span> = 2;</span><br></pre></td></tr></table></figure>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">delete from student <span class="built_in">where</span> name=<span class="string">&quot;小猫&quot;</span></span><br><span class="line">``` m</span><br><span class="line"><span class="comment">### 统计数量</span></span><br><span class="line">```bash</span><br><span class="line"><span class="keyword">select</span> count(*) from student <span class="built_in">where</span> age=18;</span><br></pre></td></tr></table></figure>
+<h3 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(age) from student</span><br></pre></td></tr></table></figure>
+<h3 id="平均数"><a href="#平均数" class="headerlink" title="平均数"></a>平均数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> avg(age) as avg_age from student</span><br></pre></td></tr></table></figure>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><p>注：分组的class前面查看的字段也只能是class<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> class, count(1) from student group by class;</span><br></pre></td></tr></table></figure></p>
+<h3 id="倒叙排序"><a href="#倒叙排序" class="headerlink" title="倒叙排序"></a>倒叙排序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from student order by <span class="built_in">id</span> desc;</span><br></pre></td></tr></table></figure>
+<h3 id="分页-偏移量"><a href="#分页-偏移量" class="headerlink" title="分页/偏移量"></a>分页/偏移量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># limit(第几页页数，每页数量)</span></span><br><span class="line"><span class="keyword">select</span> * from student <span class="built_in">limit</span> 2,2;</span><br></pre></td></tr></table></figure>
+<h1 id="五、node连接mysql"><a href="#五、node连接mysql" class="headerlink" title="五、node连接mysql"></a>五、node连接mysql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init <span class="comment"># 先初始化</span></span><br><span class="line">npm install mysql -save <span class="comment"># 安装数据库</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/node%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/" rel="tag"># node系统学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/11/11/%E9%9D%A2%E8%AF%95/%E5%A4%A7%E5%8E%82%E9%9D%A2%E8%AF%95%E4%B9%8B%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6/" rel="next" title="大厂面试之事件循环机制">
+                <i class="fa fa-chevron-left"></i> 大厂面试之事件循环机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/12/03/JavaScript/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%A5%E9%97%A8/" rel="prev" title="正则表达式入门">
+                正则表达式入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%90%8E%E7%AB%AF%E7%9A%84%E8%A7%84%E8%8C%83%E4%B8%8E%E6%80%9D%E6%83%B3"><span class="nav-number">1.</span> <span class="nav-text">一、后端的规范与思想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%86%E5%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">1.分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">2、模块化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81nodejs%E7%9A%84%E5%B1%95%E7%8E%B0%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">3、nodejs的展现形式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81TCP-id%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">二、TCP&#x2F;id协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Server%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">Server服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#client%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">2.2.</span> <span class="nav-text">client客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-amp-%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">事件&amp;方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#connect%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">connect事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">data事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#end%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%85%B3%E9%97%AD%E4%BA%8B%E4%BB%B6-amp-close%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">end客户端关闭事件 &amp; close服务的事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setTimeout-amp-timeout-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E8%B6%85%E6%97%B6%E4%BA%8B%E4%BB%B6%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.1.4.</span> <span class="nav-text">setTimeout &amp; timeout 客户端的超时事件方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#client%E5%9B%9B%E4%B8%AA%E5%B1%9E%E6%80%A7"><span class="nav-number">2.2.2.</span> <span class="nav-text">client四个属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81http%E5%8D%8F%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">三、http协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#http-amp-url"><span class="nav-number">3.1.</span> <span class="nav-text">http &amp; url</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81mysql%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">四、mysql数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8DataGrip%E8%BD%AF%E4%BB%B6%E8%BF%9E%E6%8E%A5"><span class="nav-number">4.1.</span> <span class="nav-text">初次使用DataGrip软件连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">字段类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%A1%A8%E7%9A%84sql%E8%AF%AD%E5%8F%A5"><span class="nav-number">4.3.</span> <span class="nav-text">关于表的sql语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-number">4.3.1.</span> <span class="nav-text">创建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%A1%A8%E7%9A%84%E6%96%B0%E5%AD%97%E6%AE%B5"><span class="nav-number">4.3.2.</span> <span class="nav-text">添加表的新字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5"><span class="nav-number">4.3.3.</span> <span class="nav-text">删除表的字段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Esql%E5%AD%97%E6%AE%B5%E7%9A%84%E8%AF%AD%E5%8F%A5"><span class="nav-number">4.4.</span> <span class="nav-text">关于sql字段的语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">4.4.1.</span> <span class="nav-text">插入新数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9"><span class="nav-number">4.4.2.</span> <span class="nav-text">修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">4.4.3.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%92%8C"><span class="nav-number">4.4.4.</span> <span class="nav-text">求和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B3%E5%9D%87%E6%95%B0"><span class="nav-number">4.4.5.</span> <span class="nav-text">平均数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84"><span class="nav-number">4.4.6.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%92%E5%8F%99%E6%8E%92%E5%BA%8F"><span class="nav-number">4.4.7.</span> <span class="nav-text">倒叙排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%A1%B5-%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="nav-number">4.4.8.</span> <span class="nav-text">分页&#x2F;偏移量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81node%E8%BF%9E%E6%8E%A5mysql"><span class="nav-number">5.</span> <span class="nav-text">五、node连接mysql</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/11/26/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/NodeLess%EF%BC%88%E4%B8%80%EF%BC%89/';
+          this.page.identifier = '2018/11/26/了解nodejs前世今生/NodeLess（一）/';
+          this.page.title = 'NodeLess（一）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

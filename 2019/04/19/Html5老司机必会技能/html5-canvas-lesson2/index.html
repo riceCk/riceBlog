@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTML5," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="先初始化画布和画笔（执行上下文）12let oCanvas &#x3D; document.getElementById(&#x27;cans&#x27;);let ctx &#x3D; oCanvas.getContext(&#x27;2d&#x27;) 绘制线段画线123456789let oCanvas &#x3D; document.getElementById(&#x27;cans&#x27;);let ctx &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5-canvas-lesson2">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-canvas-lesson2/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="先初始化画布和画笔（执行上下文）12let oCanvas &#x3D; document.getElementById(&#x27;cans&#x27;);let ctx &#x3D; oCanvas.getContext(&#x27;2d&#x27;) 绘制线段画线123456789let oCanvas &#x3D; document.getElementById(&#x27;cans&#x27;);let ctx &#x3D;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-04-19T02:45:03.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.730Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="HTML5">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/19/Html5老司机必会技能/html5-canvas-lesson2/"/>
+
+
+
+
+
+  <title>html5-canvas-lesson2 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2019/04/19/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-canvas-lesson2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">html5-canvas-lesson2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-19T10:45:03+08:00">
+                2019-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/" itemprop="url" rel="index">
+                    <span itemprop="name">Html5老司机必会技能</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2019/04/19/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-canvas-lesson2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/04/19/Html5老司机必会技能/html5-canvas-lesson2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="先初始化画布和画笔（执行上下文）"><a href="#先初始化画布和画笔（执行上下文）" class="headerlink" title="先初始化画布和画笔（执行上下文）"></a>先初始化画布和画笔（执行上下文）</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="绘制线段"><a href="#绘制线段" class="headerlink" title="绘制线段"></a>绘制线段</h1><h2 id="画线"><a href="#画线" class="headerlink" title="画线"></a>画线</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.moveTo(100, 100);  <span class="comment"># 起始坐标</span></span><br><span class="line">ctx.lineTo(200, 100);  <span class="comment"># 画</span></span><br><span class="line">ctx.lineTo(200, 200);  <span class="comment"># 坐标</span></span><br><span class="line">ctx.lineWidth = 10     <span class="comment"># 设置画笔粗细</span></span><br><span class="line">ctx.strokeStyle = <span class="string">&#x27;red&#x27;</span> <span class="comment"># 改变画笔颜色</span></span><br><span class="line">ctx.stroke();          <span class="comment"># 开始画线段</span></span><br><span class="line">ctx.beginPath();       <span class="comment"># 另起路径</span></span><br></pre></td></tr></table></figure>
+<h2 id="闭合路径-填充"><a href="#闭合路径-填充" class="headerlink" title="闭合路径,填充"></a>闭合路径,填充</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.moveTo(100, 100);  <span class="comment"># 起始坐标</span></span><br><span class="line">ctx.lineTo(200, 100);  <span class="comment"># 画</span></span><br><span class="line">ctx.lineTo(200, 200);  <span class="comment"># 坐标</span></span><br><span class="line">ctx.closePath()  <span class="comment">#闭合路径</span></span><br><span class="line">ctx.fill()       <span class="comment"># 填充</span></span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure>
+<h1 id="绘制矩形"><a href="#绘制矩形" class="headerlink" title="绘制矩形"></a>绘制矩形</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.rect(100, 100, 100, 100) <span class="comment">#(起始x坐标，起始y坐标, 宽， 高)</span></span><br><span class="line">ctx.stroke() <span class="comment"># 描边</span></span><br><span class="line">ctx.fill()  <span class="comment"># 填充</span></span><br></pre></td></tr></table></figure>
+<h2 id="fillRect-自动填充"><a href="#fillRect-自动填充" class="headerlink" title="fillRect 自动填充"></a>fillRect 自动填充</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillRect(x, y, dx, dy);</span><br></pre></td></tr></table></figure>
+<h2 id="strokeRect-自动描边"><a href="#strokeRect-自动描边" class="headerlink" title="strokeRect 自动描边"></a>strokeRect 自动描边</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.strokeRect(x, y, dx, dy)</span><br></pre></td></tr></table></figure>
+<h2 id="clearRect-橡皮擦"><a href="#clearRect-橡皮擦" class="headerlink" title="clearRect() 橡皮擦"></a>clearRect() 橡皮擦</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clearRect(x, y, dx, dy) <span class="comment"># (起始x位置， 起始y位置， 高度， 宽度)</span></span><br></pre></td></tr></table></figure>
+<h2 id="实例矩形落地的动画效果"><a href="#实例矩形落地的动画效果" class="headerlink" title="实例矩形落地的动画效果"></a>实例矩形落地的动画效果</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.fillRect(100, 100, 50, 50)</span><br><span class="line"><span class="built_in">let</span> y = 100;</span><br><span class="line"><span class="built_in">let</span> timer = setInterval(() =&gt; &#123;</span><br><span class="line">  ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">300</span>, <span class="number">300</span>);</span><br><span class="line">  ctx.fillRect(<span class="number">100</span>, y, <span class="number">50</span>, <span class="number">50</span>)</span><br><span class="line">  y += <span class="number">5</span></span><br><span class="line">  if (y &gt;= <span class="number">250</span>) &#123;</span><br><span class="line">    clearInterval(timer);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="绘制弧形"><a href="#绘制弧形" class="headerlink" title="绘制弧形"></a>绘制弧形</h1><h2 id="ctx-arc-x-y-r-起始弧度-结束弧度-弧度方向"><a href="#ctx-arc-x-y-r-起始弧度-结束弧度-弧度方向" class="headerlink" title="ctx.arc(x, y, r, 起始弧度, 结束弧度, 弧度方向)"></a>ctx.arc(x, y, r, 起始弧度, 结束弧度, 弧度方向)</h2><p><strong>弧度方向：</strong><code>0</code>表示顺时针，<code>1</code>表示逆时针<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.arc(100, 100, 50, 0, Math.PI * 2, 0);</span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure></p>
+<h2 id="arcTo-x1-y1-x2-y2-r-绘制圆角"><a href="#arcTo-x1-y1-x2-y2-r-绘制圆角" class="headerlink" title="arcTo(x1, y1, x2, y2, r) 绘制圆角"></a>arcTo(x1, y1, x2, y2, r) 绘制圆角</h2><p>画一个100px的正方形，弧度border-radius: 10px;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.moveTo(100, 110); <span class="comment"># 起始点</span></span><br><span class="line">ctx.arcTo(100, 200, 200, 200, 10);  </span><br><span class="line"><span class="comment"># 起始点连接(x1, y1), (x1, y1)连接(x2, y2), 做r的圆的切线弧</span></span><br><span class="line">ctx.arcTo(200, 200, 200, 100, 10);</span><br><span class="line">ctx.arcTo(200, 100, 100, 100, 10);</span><br><span class="line">ctx.arcTo(100, 100, 100, 200, 10);</span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure></p>
+<h1 id="贝塞尔曲线"><a href="#贝塞尔曲线" class="headerlink" title="贝塞尔曲线"></a>贝塞尔曲线</h1><h2 id="二次贝塞尔曲线"><a href="#二次贝塞尔曲线" class="headerlink" title="二次贝塞尔曲线"></a>二次贝塞尔曲线</h2><p>quadraticCurveTo(x, y, ex, ey);<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">ctx.moveTo(100, 100);</span><br><span class="line">ctx.quadraticCurveTo(200, 300, 400, 200);</span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure></p>
+<h2 id="三次贝塞尔曲线"><a href="#三次贝塞尔曲线" class="headerlink" title="三次贝塞尔曲线"></a>三次贝塞尔曲线</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let oCanvas = document.getElementById(&#x27;cans&#x27;);</span><br><span class="line">let ctx = oCanvas.getContext(&#x27;2d&#x27;)</span><br><span class="line">ctx.moveTo(100, 100);</span><br><span class="line">ctx.bezierCurveTo(200, 300, 400, 200, 450, 250);</span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure>
+<h1 id="坐标轴转换"><a href="#坐标轴转换" class="headerlink" title="坐标轴转换"></a>坐标轴转换</h1><h2 id="translate-dx-dy-重新映射画布上的-0-0-位置"><a href="#translate-dx-dy-重新映射画布上的-0-0-位置" class="headerlink" title="translate(dx, dy) 重新映射画布上的(0, 0)位置"></a>translate(dx, dy) 重新映射画布上的(0, 0)位置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.translate(100, 100); <span class="comment"># 将画布平移xy轴各100px</span></span><br><span class="line">ctx.fillRect(-100, -100, 100, 100);</span><br><span class="line">ctx.translate(-100, -100);</span><br><span class="line">ctx.fillStyle = <span class="string">&#x27;red&#x27;</span>;</span><br><span class="line">ctx.fillRect(0, 0, 50, 50);</span><br></pre></td></tr></table></figure>
+<h2 id="scale-sx-sy-缩放当前绘图"><a href="#scale-sx-sy-缩放当前绘图" class="headerlink" title="scale(sx, sy)缩放当前绘图"></a>scale(sx, sy)缩放当前绘图</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.translate(100, 100); <span class="comment"># 将画布平移xy轴各100px</span></span><br><span class="line">ctx.scale(2, .5);  <span class="comment"># x轴放大2倍，y轴缩小.5</span></span><br><span class="line">ctx.fillRect(0, 0, 100, 100);</span><br></pre></td></tr></table></figure>
+<h2 id="rotate-Math-PI-旋转当前绘图"><a href="#rotate-Math-PI-旋转当前绘图" class="headerlink" title="rotate(Math.PI) 旋转当前绘图"></a>rotate(Math.PI) 旋转当前绘图</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.translate(100, 100); <span class="comment"># 将画布平移xy轴各100px</span></span><br><span class="line">ctx.rotate(Math.PI / 4) <span class="comment"># 沿着(0, 0)画布当前坐标轴旋转</span></span><br><span class="line">ctx.fillRect(0, 0, 100, 100);</span><br></pre></td></tr></table></figure>
+<h2 id="save-restore"><a href="#save-restore" class="headerlink" title="save() restore()"></a>save() restore()</h2><p>保存当前图像状态的一份拷贝（保存画布状态），从栈中弹出存储的图形状态并恢复<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.save() <span class="comment"># 保存这个时刻的坐标轴状态，在一个栈中[tranlate(0,0)]</span></span><br><span class="line">ctx.translate(100, 100); <span class="comment"># 将画布平移xy轴各100px</span></span><br><span class="line">ctx.save()  </span><br><span class="line"><span class="comment"># 保存平移之后的一个坐标轴的状态[tranlate(0,0), translate(100, 100)]</span></span><br><span class="line">ctx.rotate(Math.PI / 4) <span class="comment"># 沿着(0, 0)画布当前坐标轴旋转</span></span><br><span class="line">ctx.fillRect(0, 0, 100, 100);</span><br><span class="line"></span><br><span class="line">ctx.restore();  </span><br><span class="line"><span class="comment"># 取离restore最近的save时刻的状态[tranlate(0,0), translate(100, 100)]</span></span><br><span class="line">ctx.fillStyle = <span class="string">&#x27;red&#x27;</span>;</span><br><span class="line">ctx.fillRect(0, 0, 50, 50);</span><br><span class="line"></span><br><span class="line">ctx.restore();  </span><br><span class="line"><span class="comment"># 现在取的就是第一次坐标轴的状态[tranlate(0,0)]</span></span><br><span class="line">ctx.fillStyle = <span class="string">&#x27;green&#x27;</span>;</span><br><span class="line">ctx.fillRect(0, 0, 50, 50);</span><br></pre></td></tr></table></figure></p>
+<h2 id="setTransform-a-b-c-d-e-f-先重置再变换"><a href="#setTransform-a-b-c-d-e-f-先重置再变换" class="headerlink" title="setTransform(a, b, c, d, e, f)先重置再变换"></a>setTransform(a, b, c, d, e, f)先重置再变换</h2><p><strong>参数：</strong>水平缩放、水平倾斜、垂直倾斜、垂直缩放、水平移动、垂直移动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.setTransform(1, Math.PI / 2, 0, .5, 100, 100);</span><br><span class="line">ctx.fillRect(0, 0, 100, 100);</span><br></pre></td></tr></table></figure></p>
+<h2 id="transform-a-b-d-e-f-在之前的基础上变换"><a href="#transform-a-b-d-e-f-在之前的基础上变换" class="headerlink" title="transform(a, b, d, e, f) 在之前的基础上变换"></a>transform(a, b, d, e, f) 在之前的基础上变换</h2><h1 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h1><h2 id="createLinearGradient-x1-y1-x2-y2"><a href="#createLinearGradient-x1-y1-x2-y2" class="headerlink" title="createLinearGradient(x1, y1, x2, y2)"></a>createLinearGradient(x1, y1, x2, y2)</h2><p>线性渐变，必须在填充渐变的区域里定义渐变，否则无效果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> <span class="built_in">bg</span> = ctx.createLinearGradient(0, 0, 500, 500)</span><br><span class="line">bg.addColorStop(0, <span class="string">&#x27;red&#x27;</span>);</span><br><span class="line">bg.addColorStop(.5, <span class="string">&#x27;green&#x27;</span>);</span><br><span class="line">bg.addColorStop(1, <span class="string">&#x27;yellow&#x27;</span>);</span><br><span class="line">ctx.fillStyle = <span class="built_in">bg</span>;</span><br><span class="line">ctx.fillRect(0, 0, 500, 500);</span><br></pre></td></tr></table></figure></p>
+<h2 id="createRadialGradient-x1-y1-r1-x2-y2-r2-径向渐变"><a href="#createRadialGradient-x1-y1-r1-x2-y2-r2-径向渐变" class="headerlink" title="createRadialGradient(x1, y1, r1, x2, y2, r2) 径向渐变"></a>createRadialGradient(x1, y1, r1, x2, y2, r2) 径向渐变</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> <span class="built_in">bg</span> = ctx.createRadialGradient(250, 250, 250, 250, 250, 500)</span><br><span class="line">bg.addColorStop(0, <span class="string">&#x27;red&#x27;</span>);</span><br><span class="line">bg.addColorStop(.5, <span class="string">&#x27;green&#x27;</span>);</span><br><span class="line">bg.addColorStop(1, <span class="string">&#x27;yellow&#x27;</span>);</span><br><span class="line">ctx.fillStyle = <span class="built_in">bg</span>;</span><br><span class="line">ctx.fillRect(0, 0, 500, 500);</span><br></pre></td></tr></table></figure>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><h3 id="径向"><a href="#径向" class="headerlink" title="径向"></a>径向</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> <span class="built_in">bg</span> = ctx.createRadialGradient(200, 200, 100, 200, 200, 200);</span><br><span class="line">bg.addColorStop(0, <span class="string">&#x27;#fff&#x27;</span>);</span><br><span class="line">bg.addColorStop(.5, <span class="string">&#x27;#000&#x27;</span>);</span><br><span class="line">bg.addColorStop(1, <span class="string">&#x27;#fff&#x27;</span>);</span><br><span class="line">ctx.fillStyle = <span class="built_in">bg</span>;</span><br><span class="line">ctx.fillRect(0, 0, 500, 500);</span><br></pre></td></tr></table></figure>
+<h1 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h1><p>这里的阴影偏移量不受坐标系变换的影响<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.shadowColor = <span class="string">&#x27;red&#x27;</span> <span class="comment"># 阴影颜色</span></span><br><span class="line">ctx.shadowBlur = 10;  <span class="comment"># 模糊程度</span></span><br><span class="line">ctx.shadowOffsetX = 10; <span class="comment"># 阴影x轴偏移量</span></span><br><span class="line">ctx.shadowOffsetY = 10; <span class="comment"># 阴影y轴偏移量</span></span><br><span class="line">ctx.fillRect(0, 0, 100, 100);</span><br></pre></td></tr></table></figure></p>
+<h1 id="文本-阴影"><a href="#文本-阴影" class="headerlink" title="文本+阴影"></a>文本+阴影</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.shadowColor = <span class="string">&#x27;red&#x27;</span> <span class="comment"># 阴影颜色</span></span><br><span class="line">ctx.shadowBlur = 10;  <span class="comment"># 模糊程度</span></span><br><span class="line">ctx.shadowOffsetX = 10; <span class="comment"># 阴影x轴偏移量</span></span><br><span class="line">ctx.shadowOffsetY = 10; <span class="comment"># 阴影y轴偏移量</span></span><br><span class="line">ctx.font = <span class="string">&#x27;20px sans-serif&#x27;</span></span><br><span class="line">ctx.fillText(<span class="string">&#x27;hello world&#x27;</span>, 100, 100) <span class="comment"># 填充</span></span><br><span class="line">ctx.strokeText(<span class="string">&#x27;hello world&#x27;</span>, 100, 100) <span class="comment"># 描边</span></span><br></pre></td></tr></table></figure>
+<h1 id="线段样式"><a href="#线段样式" class="headerlink" title="线段样式"></a>线段样式</h1><ul>
+<li>lineCap = ‘butt’ 初始没有帽子</li>
+<li>lineCap = ‘square’ 方形帽子</li>
+<li>lineCap = ‘round’  圆形帽子</li>
+<li>lineJoin = ‘miter’ 尖的</li>
+<li>lineJoin = ‘bevel’ 截断</li>
+<li>lineJOin = ‘round’ 椭圆的</li>
+</ul>
+<h2 id="ctx-miterLimit"><a href="#ctx-miterLimit" class="headerlink" title="ctx.miterLimit"></a>ctx.miterLimit</h2><p>当lineJoin是miter时，用户控制斜接部分的长度如果斜接长度超过miterLimit的值，变成bevel</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> oCanvas = document.getElementById(<span class="string">&#x27;cans&#x27;</span>);</span><br><span class="line"><span class="built_in">let</span> ctx = oCanvas.getContext(<span class="string">&#x27;2d&#x27;</span>);</span><br><span class="line">ctx.moveTo(100, 100);</span><br><span class="line">ctx.lineTo(100, 200);</span><br><span class="line">ctx.lineWidth = 10;</span><br><span class="line">// ctx.lineCap = <span class="string">&#x27;square&#x27;</span>;</span><br><span class="line">ctx.lineCap = <span class="string">&#x27;round&#x27;</span>;</span><br><span class="line">ctx.stroke();</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/HTML5/" rel="tag"># HTML5</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2019/04/19/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-%E5%86%85%E5%AE%B9%E5%88%9D%E6%8E%A2-lesson1/" rel="next" title="html5-内容初探-lesson1">
+                <i class="fa fa-chevron-left"></i> html5-内容初探-lesson1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2019/05/05/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-svg%E7%9F%A2%E9%87%8F%E5%9B%BE-less3/" rel="prev" title="html5-svg矢量图-lesson3">
+                html5-svg矢量图-lesson3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%88%E5%88%9D%E5%A7%8B%E5%8C%96%E7%94%BB%E5%B8%83%E5%92%8C%E7%94%BB%E7%AC%94%EF%BC%88%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">先初始化画布和画笔（执行上下文）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E7%BA%BF%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">绘制线段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%BB%E7%BA%BF"><span class="nav-number">2.1.</span> <span class="nav-text">画线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AD%E5%90%88%E8%B7%AF%E5%BE%84-%E5%A1%AB%E5%85%85"><span class="nav-number">2.2.</span> <span class="nav-text">闭合路径,填充</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E7%9F%A9%E5%BD%A2"><span class="nav-number">3.</span> <span class="nav-text">绘制矩形</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fillRect-%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85"><span class="nav-number">3.1.</span> <span class="nav-text">fillRect 自动填充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strokeRect-%E8%87%AA%E5%8A%A8%E6%8F%8F%E8%BE%B9"><span class="nav-number">3.2.</span> <span class="nav-text">strokeRect 自动描边</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clearRect-%E6%A9%A1%E7%9A%AE%E6%93%A6"><span class="nav-number">3.3.</span> <span class="nav-text">clearRect() 橡皮擦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E7%9F%A9%E5%BD%A2%E8%90%BD%E5%9C%B0%E7%9A%84%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="nav-number">3.4.</span> <span class="nav-text">实例矩形落地的动画效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E5%BC%A7%E5%BD%A2"><span class="nav-number">4.</span> <span class="nav-text">绘制弧形</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ctx-arc-x-y-r-%E8%B5%B7%E5%A7%8B%E5%BC%A7%E5%BA%A6-%E7%BB%93%E6%9D%9F%E5%BC%A7%E5%BA%A6-%E5%BC%A7%E5%BA%A6%E6%96%B9%E5%90%91"><span class="nav-number">4.1.</span> <span class="nav-text">ctx.arc(x, y, r, 起始弧度, 结束弧度, 弧度方向)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arcTo-x1-y1-x2-y2-r-%E7%BB%98%E5%88%B6%E5%9C%86%E8%A7%92"><span class="nav-number">4.2.</span> <span class="nav-text">arcTo(x1, y1, x2, y2, r) 绘制圆角</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF"><span class="nav-number">5.</span> <span class="nav-text">贝塞尔曲线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF"><span class="nav-number">5.1.</span> <span class="nav-text">二次贝塞尔曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF"><span class="nav-number">5.2.</span> <span class="nav-text">三次贝塞尔曲线</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E8%BD%B4%E8%BD%AC%E6%8D%A2"><span class="nav-number">6.</span> <span class="nav-text">坐标轴转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#translate-dx-dy-%E9%87%8D%E6%96%B0%E6%98%A0%E5%B0%84%E7%94%BB%E5%B8%83%E4%B8%8A%E7%9A%84-0-0-%E4%BD%8D%E7%BD%AE"><span class="nav-number">6.1.</span> <span class="nav-text">translate(dx, dy) 重新映射画布上的(0, 0)位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scale-sx-sy-%E7%BC%A9%E6%94%BE%E5%BD%93%E5%89%8D%E7%BB%98%E5%9B%BE"><span class="nav-number">6.2.</span> <span class="nav-text">scale(sx, sy)缩放当前绘图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rotate-Math-PI-%E6%97%8B%E8%BD%AC%E5%BD%93%E5%89%8D%E7%BB%98%E5%9B%BE"><span class="nav-number">6.3.</span> <span class="nav-text">rotate(Math.PI) 旋转当前绘图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#save-restore"><span class="nav-number">6.4.</span> <span class="nav-text">save() restore()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setTransform-a-b-c-d-e-f-%E5%85%88%E9%87%8D%E7%BD%AE%E5%86%8D%E5%8F%98%E6%8D%A2"><span class="nav-number">6.5.</span> <span class="nav-text">setTransform(a, b, c, d, e, f)先重置再变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transform-a-b-d-e-f-%E5%9C%A8%E4%B9%8B%E5%89%8D%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B8%8A%E5%8F%98%E6%8D%A2"><span class="nav-number">6.6.</span> <span class="nav-text">transform(a, b, d, e, f) 在之前的基础上变换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%90%E5%8F%98"><span class="nav-number">7.</span> <span class="nav-text">渐变</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#createLinearGradient-x1-y1-x2-y2"><span class="nav-number">7.1.</span> <span class="nav-text">createLinearGradient(x1, y1, x2, y2)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#createRadialGradient-x1-y1-r1-x2-y2-r2-%E5%BE%84%E5%90%91%E6%B8%90%E5%8F%98"><span class="nav-number">7.2.</span> <span class="nav-text">createRadialGradient(x1, y1, r1, x2, y2, r2) 径向渐变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-number">7.3.</span> <span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%84%E5%90%91"><span class="nav-number">7.3.1.</span> <span class="nav-text">径向</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B4%E5%BD%B1"><span class="nav-number">8.</span> <span class="nav-text">阴影</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC-%E9%98%B4%E5%BD%B1"><span class="nav-number">9.</span> <span class="nav-text">文本+阴影</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E6%AE%B5%E6%A0%B7%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">线段样式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ctx-miterLimit"><span class="nav-number">10.1.</span> <span class="nav-text">ctx.miterLimit</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2019/04/19/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-canvas-lesson2/';
+          this.page.identifier = '2019/04/19/Html5老司机必会技能/html5-canvas-lesson2/';
+          this.page.title = 'html5-canvas-lesson2';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

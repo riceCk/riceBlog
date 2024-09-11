@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、模块化的实现 函数 对象写法-命名空间 匿名函数、返回对象 依赖传入实参-闭包  1、函数123456function add(a,b)&#123;  return a + b;&#125;function a (a)&#123;  console.log(a);&#125; 2、对象-命名空间12345var ptt &#x3D; &#123;  len: 3,  init: function()&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端模块化">
+<meta property="og:url" content="http://yoursite.com/2020/01/08/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96Webpack/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="一、模块化的实现 函数 对象写法-命名空间 匿名函数、返回对象 依赖传入实参-闭包  1、函数123456function add(a,b)&#123;  return a + b;&#125;function a (a)&#123;  console.log(a);&#125; 2、对象-命名空间12345var ptt &#x3D; &#123;  len: 3,  init: function()&amp;#">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/MVC.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/MVP.jpg">
+<meta property="article:published_time" content="2020-01-08T08:36:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.744Z">
+<meta property="article:author" content="陈凯">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/MVC.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/08/前端模块化Webpack/前端模块化/"/>
+
+
+
+
+
+  <title>前端模块化 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2020/01/08/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96Webpack/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端模块化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-08T16:36:00+08:00">
+                2020-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96Webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">前端模块化Webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2020/01/08/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96Webpack/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/01/08/前端模块化Webpack/前端模块化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、模块化的实现"><a href="#一、模块化的实现" class="headerlink" title="一、模块化的实现"></a>一、模块化的实现</h1><ul>
+<li>函数</li>
+<li>对象写法-命名空间</li>
+<li>匿名函数、返回对象</li>
+<li>依赖传入实参-闭包</li>
+</ul>
+<h2 id="1、函数"><a href="#1、函数" class="headerlink" title="1、函数"></a>1、函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> add(a,b)&#123;</span><br><span class="line">  <span class="built_in">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> a (a)&#123;</span><br><span class="line">  console.log(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2、对象-命名空间"><a href="#2、对象-命名空间" class="headerlink" title="2、对象-命名空间"></a>2、对象-命名空间</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var ptt = &#123;</span><br><span class="line">  len: 3,</span><br><span class="line">  init: <span class="function"><span class="title">function</span></span>()&#123;&#125;,</span><br><span class="line">  ctrateDom: <span class="function"><span class="title">function</span></span>()&#123;&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3、匿名函数、返回对象"><a href="#3、匿名函数、返回对象" class="headerlink" title="3、匿名函数、返回对象"></a>3、匿名函数、返回对象</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#私有化变量</span></span><br><span class="line">(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  var len = 3;</span><br><span class="line">  <span class="keyword">function</span> add(a, b)&#123;</span><br><span class="line">    <span class="built_in">return</span> a + b;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    add: add</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<h2 id="4、依赖-闭包"><a href="#4、依赖-闭包" class="headerlink" title="4、依赖-闭包"></a>4、依赖-闭包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(a, b)&#123;</span><br><span class="line"></span><br><span class="line">&#125;)(window, <span class="keyword">function</span>(window)&#123;</span><br><span class="line">  window.jQuery = jQuery;</span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">jQuery</span></span>()&#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="二、CommonJs规范（node服务器语法）"><a href="#二、CommonJs规范（node服务器语法）" class="headerlink" title="二、CommonJs规范（node服务器语法）"></a>二、CommonJs规范（node服务器语法）</h1><p>根CommonJs规范，每一个文件就是一个模块，其内部定义的变量是属于这个模块的，不会对外暴露，也就是说不会污染全局变量</p>
+<h2 id="CommonJs思想"><a href="#CommonJs思想" class="headerlink" title="CommonJs思想"></a>CommonJs思想</h2><p>CommonJS的核心思想就是通过 require 方法来同步加载所要依赖的其他模块，然后通过 exports 或者 module.exports 来导出需要暴露的接口</p>
+<h2 id="CommonJs语法"><a href="#CommonJs语法" class="headerlink" title="CommonJs语法"></a>CommonJs语法</h2><h3 id="暴露接口方式"><a href="#暴露接口方式" class="headerlink" title="暴露接口方式"></a>暴露接口方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">module.exports = value</span><br><span class="line">exports.XXX = value</span><br></pre></td></tr></table></figure>
+<h3 id="暴露的模块是什么（exports的本质是什么）？"><a href="#暴露的模块是什么（exports的本质是什么）？" class="headerlink" title="暴露的模块是什么（exports的本质是什么）？"></a>暴露的模块是什么（exports的本质是什么）？</h3><p>exports本质是一个空对象<br>引入模块 require(xxx)</p>
+<h2 id="CommonJs实例"><a href="#CommonJs实例" class="headerlink" title="CommonJs实例"></a>CommonJs实例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># index.js</span></span><br><span class="line">var module = require(<span class="string">&#x27;module.js&#x27;</span>);</span><br><span class="line">moudule.add(<span class="string">&#x27;hell&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">#module.js</span></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  aa:<span class="keyword">function</span>(str)&#123;</span><br><span class="line">    console.log(str)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CommonJs缺点"><a href="#CommonJs缺点" class="headerlink" title="CommonJs缺点"></a>CommonJs缺点</h2><ul>
+<li>浏览器不兼容CommonJs，原因是浏览器缺少module、exports、require、global四个环境变量。如要使用需要工具转换</li>
+<li>CommonJS采用同步加载不同模块文件，适用于服务器端的。因为模块文件都存放在服务器的各个硬盘上，读取加载时间快，适合服务器端，不适应浏览器。</li>
+</ul>
+<h1 id="三、AMD与CMD（浏览器利用第三方库）"><a href="#三、AMD与CMD（浏览器利用第三方库）" class="headerlink" title="三、AMD与CMD（浏览器利用第三方库）"></a>三、AMD与CMD（浏览器利用第三方库）</h1><h2 id="下载require-js包"><a href="#下载require-js包" class="headerlink" title="下载require.js包"></a>下载require.js包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># main.js中 导入处理</span></span><br><span class="line"><span class="comment">#统一路径 </span></span><br><span class="line">require.config(&#123;  </span><br><span class="line">	baseUrl: <span class="string">&#x27;./js/tool&#x27;</span>,</span><br><span class="line">	paths: &#123;</span><br><span class="line">		<span class="string">&#x27;jquery&#x27;</span>: <span class="string">&#x27;jquery&#x27;</span>,</span><br><span class="line">		<span class="string">&#x27;math&#x27;</span>: <span class="string">&#x27;math&#x27;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">require([<span class="string">&#x27;jquery&#x27;</span>, <span class="string">&#x27;math&#x27;</span>], <span class="keyword">function</span>($, math)&#123;</span><br><span class="line">	<span class="comment">#模块导入</span></span><br><span class="line">	console.log($());  <span class="comment">#继续实现功能</span></span><br><span class="line">	console.log(math.add(1, 2));</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># math.js 子方法</span></span><br><span class="line">define([<span class="string">&#x27;myLib&#x27;</span>], <span class="keyword">function</span>(myLib)&#123;  </span><br><span class="line"> <span class="comment">#模块定义 + 模块导入</span></span><br><span class="line">    console.log(myLib.a);   <span class="comment">#获取模块myLib值</span></span><br><span class="line">    <span class="keyword">function</span> add(a, b)&#123;</span><br><span class="line">        <span class="built_in">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">        add : add</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># myLib.js 子方法</span></span><br><span class="line">define(<span class="function"><span class="title">function</span></span>()&#123;  //定义模块</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">        a: 123</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="四、ES6模块化"><a href="#四、ES6模块化" class="headerlink" title="四、ES6模块化"></a>四、ES6模块化</h1><h2 id="1-基本的导入导出"><a href="#1-基本的导入导出" class="headerlink" title="1.基本的导入导出"></a>1.基本的导入导出</h2><h3 id="1-1-基本的导出方式"><a href="#1-1-基本的导出方式" class="headerlink" title="1.1.基本的导出方式"></a>1.1.基本的导出方式</h3><p>基本的导出方式分为两种<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> 声明表达式</span><br></pre></td></tr></table></figure><br>或者<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> &#123;具名表达式&#125;</span><br></pre></td></tr></table></figure><br>由于基本导出必须具有名称，所以吧要求导出内容必须更上<strong>声明表达式</strong>或<strong>具名符号</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="built_in">export</span> var a = 1;</span><br><span class="line"><span class="built_in">export</span> <span class="keyword">function</span> <span class="function"><span class="title">test</span></span> () &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2</span></span><br><span class="line">var age = 18;</span><br><span class="line">var sex = 1</span><br><span class="line"><span class="built_in">export</span> &#123;</span><br><span class="line">    age,</span><br><span class="line">    sex</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h3 id="1-2-基本导入"><a href="#1-2-基本导入" class="headerlink" title="1.2 基本导入"></a>1.2 基本导入</h3><p>由于使用的是<strong>依赖预加载</strong>，因此，导入任何其他模块，导入代码必须放置到所有代码之前<br>对于基本导出，如果进行导入，使用下面的代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &#123;导入的符号列表&#125; from <span class="string">&#x27;模块路径&#x27;</span></span><br><span class="line">import &#123;b as b2&#125; from <span class="string">&#x27;模块路径&#x27;</span></span><br><span class="line">import * as from <span class="string">&#x27;模块路径&#x27;</span></span><br></pre></td></tr></table></figure><br>注意以下细节：</p>
+<ul>
+<li>导入时，可以通过关键字as对导入的符号进行重命名</li>
+<li>导入时使用的符号是常量，不可修改</li>
+<li>可以使用*号导入所有的基本导出，形成一个对象</li>
+</ul>
+<h2 id="2-默认的导入导出"><a href="#2-默认的导入导出" class="headerlink" title="2.默认的导入导出"></a>2.默认的导入导出</h2><h3 id="2-1-默认导出"><a href="#2-1-默认导出" class="headerlink" title="2.1 默认导出"></a>2.1 默认导出</h3><p>每个模块，除了允许有多个基本导出之外，还允许有一个默认导出<br>默认导出类似于CommonJS中的module.exports,由于只有一个，因此无需具有<br>具体的语法是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> default 默认导出的数据</span><br></pre></td></tr></table></figure><br>或<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> &#123;默认导出的数据 as default&#125;</span><br></pre></td></tr></table></figure><br>由于每个模块仅允许有一个默认导出，因此，每个模块不能出现多个默认导出语句</p>
+<h3 id="2-2-默认导入"><a href="#2-2-默认导入" class="headerlink" title="2.2 默认导入"></a>2.2 默认导入</h3><p>需要想要导入一个模块的默认导出，需要使用下面的语法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import 接受变量 from <span class="string">&#x27;模块路径&#x27;</span></span><br></pre></td></tr></table></figure><br>类似于CommonJS中的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var 接受变量名 = require(<span class="string">&#x27;模块路径&#x27;</span>)</span><br></pre></td></tr></table></figure><br>由于默认导出时变量名是自行定义的，因此没有别名一说<br>如果需要同时导入某个模块的默认导出和基本导出，可以使用下面的语法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import 接受默认导出的变量, &#123;接受基本导出的变量&#125; from <span class="string">&#x27;模块路径&#x27;</span></span><br></pre></td></tr></table></figure><br>注：如果使用*号，会将所有基本导出和默认导出聚合到一个对象中，默认导出会作为属性default存在</p>
+<h2 id="3-ES6模块化的其他细节"><a href="#3-ES6模块化的其他细节" class="headerlink" title="3.ES6模块化的其他细节"></a>3.ES6模块化的其他细节</h2><h3 id="3-1尽量导出不可变值"><a href="#3-1尽量导出不可变值" class="headerlink" title="3.1尽量导出不可变值"></a>3.1尽量导出不可变值</h3><p>当导出一个内容时，尽量保证该内容是不可变的（大部分情况都是如此）<br>因为，虽然导入后，无法改变导入内容，但是在导入的模块内部却有可能发生更改，这将导致一些无法预料的事情发生</p>
+<h3 id="3-2可以使用无绑定的导入用于执行一些初始代码"><a href="#3-2可以使用无绑定的导入用于执行一些初始代码" class="headerlink" title="3.2可以使用无绑定的导入用于执行一些初始代码"></a>3.2可以使用无绑定的导入用于执行一些初始代码</h3><p>如果我们只是想执行模块中的一些代码，而不需要导入他们的任何内容，可以使用无绑定的导入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 相当于模块中js立即执行</span></span><br><span class="line">import <span class="string">&#x27;模块路径&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3可以使用绑定在导出，来重新导出自另一个模块的内容"><a href="#3-3可以使用绑定在导出，来重新导出自另一个模块的内容" class="headerlink" title="3.3可以使用绑定在导出，来重新导出自另一个模块的内容"></a>3.3可以使用绑定在导出，来重新导出自另一个模块的内容</h3><p>有时候，我们可能需要用一个模块封装多个模块，然后有选择的将多个模块的内容分别导出，可以使用下面的语法轻松完成<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> &#123;绑定的标识符&#125; from <span class="string">&#x27;模块路径&#x27;</span></span><br><span class="line"><span class="built_in">export</span> const r = <span class="string">&#x27;m-r&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> &#123;a, b&#125; from <span class="string">&#x27;./m1.js&#x27;</span></span><br><span class="line"><span class="built_in">export</span> &#123;k, default as m2&#125; from <span class="string">&#x27;./m2.js&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="五、webpack自动化打包工具的配置"><a href="#五、webpack自动化打包工具的配置" class="headerlink" title="五、webpack自动化打包工具的配置"></a>五、webpack自动化打包工具的配置</h1><h2 id="webpack-命令行配置"><a href="#webpack-命令行配置" class="headerlink" title="webpack 命令行配置"></a>webpack 命令行配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#初始化</span></span><br><span class="line">npm init</span><br><span class="line"><span class="comment"># 在本地文件下载webpack定义开发环境</span></span><br><span class="line">npm install webpack --save-dev</span><br><span class="line"><span class="comment"># 下载webpack支架，webpack4之后需要单独下载</span></span><br><span class="line">cnpm install webpack-cli -g</span><br><span class="line"><span class="comment"># 自定义打包</span></span><br><span class="line">webpack demo.js -o bundle.js</span><br></pre></td></tr></table></figure>
+<h2 id="创建入口文件"><a href="#创建入口文件" class="headerlink" title="创建入口文件"></a>创建入口文件</h2><p>webpack4之后到这边必须创建一个src文件下index.js入口文件，webpack3之前没问题，基于4之后就必须创建否则报错，之后运行webpack命令会自动创建一个dist出口文件</p>
+<h2 id="四个核心模块及概念"><a href="#四个核心模块及概念" class="headerlink" title="四个核心模块及概念"></a>四个核心模块及概念</h2><ul>
+<li><p>入口 entry<br>入口起点指 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的</p>
+</li>
+<li><p>输出 output<br>告诉 webpack 在哪里输出它所创建的 bundles，以及如何命名这些文件，默认值为 ./dist。整个应用程序结构，都会被编译到你指定的输出路径的文件夹中。</p>
+</li>
+<li><p>依赖 loader<br>loader 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack 的打包能力，对它们进行处理。</p>
+</li>
+<li><p>插件 plugins<br>插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。插件接口功能极其强大，可以用来处理各种各样的任务。</p>
+</li>
+</ul>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 主入口文件中</span></span><br><span class="line">var demo = require(<span class="string">&#x27;./demo.js&#x27;</span>);</span><br><span class="line">demo.add(22, 33);</span><br><span class="line"></span><br><span class="line"><span class="comment">#模块化子组件</span></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  add: <span class="keyword">function</span>(a, b)&#123;</span><br><span class="line">    console.log(a + b);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="图片的打包"><a href="#图片的打包" class="headerlink" title="图片的打包"></a>图片的打包</h2><h3 id="webpack-config-js的配置"><a href="#webpack-config-js的配置" class="headerlink" title="webpack.config.js的配置"></a>webpack.config.js的配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  <span class="comment">#入口配置</span></span><br><span class="line">  entry:&#123;</span><br><span class="line">    demo: <span class="string">&#x27;./src/demo.js&#x27;</span>,</span><br><span class="line">    index: <span class="string">&#x27;./src/index.js&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">#输出配置</span></span><br><span class="line">  output: &#123;</span><br><span class="line">    path: __dirname + <span class="string">&#x27;/out&#x27;</span>,</span><br><span class="line">    filename: <span class="string">&#x27;[name].bundle.js&#x27;</span>,</span><br><span class="line">    publicPath: <span class="string">&#x27;./out&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;<span class="built_in">test</span>:/.jpg$/,use:[<span class="string">&#x27;url-loader?limit=10?&amp;name=/[name].[ext]&#x27;</span>]&#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">#开发环境</span></span><br><span class="line">  mode: <span class="string">&#x27;development&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="下载的依赖"><a href="#下载的依赖" class="headerlink" title="下载的依赖"></a>下载的依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install url-loader --save-dev</span><br><span class="line">npm install file-loader --save-dev</span><br></pre></td></tr></table></figure>
+<h3 id="入口文件的配置"><a href="#入口文件的配置" class="headerlink" title="入口文件的配置"></a>入口文件的配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 入口文件 index.js</span></span><br><span class="line">var img = new Image();</span><br><span class="line">img.src = require(<span class="string">&#x27;./img/7.jpg&#x27;</span>);</span><br><span class="line">document.body.appendChild(img);</span><br></pre></td></tr></table></figure>
+<h1 id="六、浅谈MVC、MVP及MVVM"><a href="#六、浅谈MVC、MVP及MVVM" class="headerlink" title="六、浅谈MVC、MVP及MVVM"></a>六、浅谈MVC、MVP及MVVM</h1><h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/MVC.jpg" alt="MVP"></p>
+<ul>
+<li>控制器负责管理视图和模型；</li>
+<li>视图负责展示模型中的内容；</li>
+</ul>
+<h2 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h2><p>MVP框架模型是MVC的一种变种，很多框架都自称遵循MVC框架模式，但是他们实际上却实现了MVP模式，<code>M</code>则是<strong>model</strong>模型，<code>M</code>则是<strong>View</strong>视图，<code>p</code>则是<strong>Presenter</strong>，模型和视图彼此一无所知，通过Presenter进行沟通。<br><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/MVP.jpg" alt="MVP"></p>
+<ul>
+<li>当视图接收到来自用户事件时，会将事件转交给Presenter进行处理；</li>
+<li>被动的视图向外界暴露接口，当需要更新视图时Presenter通过视图暴露的接口更新视图的内容</li>
+<li>Presenter负责对模型进行操作和更新，在需要时取出其中存储的信息；</li>
+<li>当模型改变时，可以将改变的信息发送给观察者Presenter；</li>
+</ul>
+<h2 id="MVVM-视图模式"><a href="#MVVM-视图模式" class="headerlink" title="MVVM:视图模式"></a>MVVM:视图模式</h2><p>Model-View-ViewModel，他由三个部分组成Model、View和ViewModel；其中视图模型（ViewModel）其实就是PM模式中的展示模型，在MVVM中叫做视图模型，除了我们非常属性的Model、View和ViewModel这三个部分，在MVVM的实现中，还引入了<strong>隐私</strong>一个Binder层，而声明式的数据和命令的绑定在MVVM模式中就通过它完成。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2019/05/26/Html5%E8%80%81%E5%8F%B8%E6%9C%BA%E5%BF%85%E4%BC%9A%E6%8A%80%E8%83%BD/html5-%E5%9C%B0%E5%9D%80%E4%BD%8D%E7%BD%AE_%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BA%8B%E4%BB%B6-lesson7/" rel="next" title="html5-地址位置_移动端事件-lesson7">
+                <i class="fa fa-chevron-left"></i> html5-地址位置_移动端事件-lesson7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/04/12/%E5%89%8D%E7%AB%AF%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%84/" rel="prev" title="线性结构">
+                线性结构 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">一、模块化的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1、函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AF%B9%E8%B1%A1-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-number">1.2.</span> <span class="nav-text">2、对象-命名空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E3%80%81%E8%BF%94%E5%9B%9E%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.</span> <span class="nav-text">3、匿名函数、返回对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E4%BE%9D%E8%B5%96-%E9%97%AD%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">4、依赖-闭包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81CommonJs%E8%A7%84%E8%8C%83%EF%BC%88node%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%AD%E6%B3%95%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、CommonJs规范（node服务器语法）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJs%E6%80%9D%E6%83%B3"><span class="nav-number">2.1.</span> <span class="nav-text">CommonJs思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJs%E8%AF%AD%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">CommonJs语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%B4%E9%9C%B2%E6%8E%A5%E5%8F%A3%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">暴露接口方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%B4%E9%9C%B2%E7%9A%84%E6%A8%A1%E5%9D%97%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%88exports%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%89%EF%BC%9F"><span class="nav-number">2.2.2.</span> <span class="nav-text">暴露的模块是什么（exports的本质是什么）？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJs%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">CommonJs实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJs%E7%BC%BA%E7%82%B9"><span class="nav-number">2.4.</span> <span class="nav-text">CommonJs缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81AMD%E4%B8%8ECMD%EF%BC%88%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%A9%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、AMD与CMD（浏览器利用第三方库）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDrequire-js%E5%8C%85"><span class="nav-number">3.1.</span> <span class="nav-text">下载require.js包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81ES6%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">四、ES6模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA"><span class="nav-number">4.1.</span> <span class="nav-text">1.基本的导入导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%AF%BC%E5%87%BA%E6%96%B9%E5%BC%8F"><span class="nav-number">4.1.1.</span> <span class="nav-text">1.1.基本的导出方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%9F%BA%E6%9C%AC%E5%AF%BC%E5%85%A5"><span class="nav-number">4.1.2.</span> <span class="nav-text">1.2 基本导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%BB%98%E8%AE%A4%E7%9A%84%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA"><span class="nav-number">4.2.</span> <span class="nav-text">2.默认的导入导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%87%BA"><span class="nav-number">4.2.1.</span> <span class="nav-text">2.1 默认导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%85%A5"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.2 默认导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-ES6%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%85%B6%E4%BB%96%E7%BB%86%E8%8A%82"><span class="nav-number">4.3.</span> <span class="nav-text">3.ES6模块化的其他细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1%E5%B0%BD%E9%87%8F%E5%AF%BC%E5%87%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%80%BC"><span class="nav-number">4.3.1.</span> <span class="nav-text">3.1尽量导出不可变值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%97%A0%E7%BB%91%E5%AE%9A%E7%9A%84%E5%AF%BC%E5%85%A5%E7%94%A8%E4%BA%8E%E6%89%A7%E8%A1%8C%E4%B8%80%E4%BA%9B%E5%88%9D%E5%A7%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">4.3.2.</span> <span class="nav-text">3.2可以使用无绑定的导入用于执行一些初始代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%BB%91%E5%AE%9A%E5%9C%A8%E5%AF%BC%E5%87%BA%EF%BC%8C%E6%9D%A5%E9%87%8D%E6%96%B0%E5%AF%BC%E5%87%BA%E8%87%AA%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">4.3.3.</span> <span class="nav-text">3.3可以使用绑定在导出，来重新导出自另一个模块的内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81webpack%E8%87%AA%E5%8A%A8%E5%8C%96%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">五、webpack自动化打包工具的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.</span> <span class="nav-text">webpack 命令行配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">创建入口文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%8F%8A%E6%A6%82%E5%BF%B5"><span class="nav-number">5.3.</span> <span class="nav-text">四个核心模块及概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">5.4.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E7%9A%84%E6%89%93%E5%8C%85"><span class="nav-number">5.5.</span> <span class="nav-text">图片的打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-config-js%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">5.5.1.</span> <span class="nav-text">webpack.config.js的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="nav-number">5.5.2.</span> <span class="nav-text">下载的依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">5.5.3.</span> <span class="nav-text">入口文件的配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%B5%85%E8%B0%88MVC%E3%80%81MVP%E5%8F%8AMVVM"><span class="nav-number">6.</span> <span class="nav-text">六、浅谈MVC、MVP及MVVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC"><span class="nav-number">6.1.</span> <span class="nav-text">MVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVP"><span class="nav-number">6.2.</span> <span class="nav-text">MVP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM-%E8%A7%86%E5%9B%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.3.</span> <span class="nav-text">MVVM:视图模式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2020/01/08/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96Webpack/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/';
+          this.page.identifier = '2020/01/08/前端模块化Webpack/前端模块化/';
+          this.page.title = '前端模块化';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

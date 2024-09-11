@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue3," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="1.响应式API之refref是最常用的一个响应式API，它可以用来定义所有类型的数据 类型声明12const msg &#x3D; ref&lt;string&gt;(&#x27;hello world!&#x27;)const phoneNumber &#x3D; ref&lt;number | string&gt;(12312312312); 基本类型12345678# 字符串const msg &#x3D; ref&#x3D;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1_vue3学习之单组件编写">
+<meta property="og:url" content="http://yoursite.com/2022/01/06/vue/1_vue3%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8D%95%E7%BB%84%E4%BB%B6%E7%BC%96%E5%86%99/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="1.响应式API之refref是最常用的一个响应式API，它可以用来定义所有类型的数据 类型声明12const msg &#x3D; ref&lt;string&gt;(&#x27;hello world!&#x27;)const phoneNumber &#x3D; ref&lt;number | string&gt;(12312312312); 基本类型12345678# 字符串const msg &#x3D; ref&#x3D;&amp;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-01-06T01:47:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="vue3">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/01/06/vue/1_vue3学习之单组件编写/"/>
+
+
+
+
+
+  <title>1_vue3学习之单组件编写 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2022/01/06/vue/1_vue3%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8D%95%E7%BB%84%E4%BB%B6%E7%BC%96%E5%86%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">1_vue3学习之单组件编写</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-01-06T09:47:00+08:00">
+                2022-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2022/01/06/vue/1_vue3%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8D%95%E7%BB%84%E4%BB%B6%E7%BC%96%E5%86%99/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/01/06/vue/1_vue3学习之单组件编写/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-响应式API之ref"><a href="#1-响应式API之ref" class="headerlink" title="1.响应式API之ref"></a>1.响应式API之ref</h1><p><strong>ref</strong>是最常用的一个响应式API，它可以用来定义所有类型的数据</p>
+<h3 id="类型声明"><a href="#类型声明" class="headerlink" title="类型声明"></a>类型声明</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const msg = ref&lt;string&gt;(<span class="string">&#x27;hello world!&#x27;</span>)</span><br><span class="line">const phoneNumber = ref&lt;number | string&gt;(12312312312);</span><br></pre></td></tr></table></figure>
+<h3 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串</span></span><br><span class="line">const msg = ref=&lt;string&gt;(<span class="string">&#x27;hello world!&#x27;</span>)</span><br><span class="line"><span class="comment"># 字符串或者数字</span></span><br><span class="line">const phoneNumber = ref&lt;number | string&gt;(12312312312);</span><br><span class="line"><span class="comment"># 数值</span></span><br><span class="line">const count = ref&lt;number&gt;(1);</span><br><span class="line"><span class="comment"># 布尔值</span></span><br><span class="line">const isVip = ref&lt;boolean&gt;(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 泛型</span></span><br><span class="line">interface Member &#123;</span><br><span class="line">  <span class="built_in">id</span>: number,</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 对象类型</span></span><br><span class="line">const userInfo = ref&lt;Member&gt;(&#123;</span><br><span class="line">  <span class="built_in">id</span>: 1,</span><br><span class="line">  name: <span class="string">&#x27;tom&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># 数字数组</span></span><br><span class="line">const uids = ref&lt;number[]&gt;([1, 2, 3, 4])</span><br><span class="line"><span class="comment"># 字符串数组</span></span><br><span class="line">const names = ref&lt;string[]&gt;([<span class="string">&#x27;Tom&#x27;</span>, <span class="string">&#x27;Petter&#x27;</span>, <span class="string">&#x27;Andy&#x27;</span>])</span><br><span class="line"><span class="comment"># 泛型对象数组</span></span><br><span class="line">const memberList = ref&lt;Member[]&gt;([</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">id</span>: 1,</span><br><span class="line">    name: <span class="string">&#x27;tom&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<h3 id="变量读取"><a href="#变量读取" class="headerlink" title="变量读取"></a>变量读取</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 读取一个字符串</span></span><br><span class="line">const msg = ref&lt;string&gt;(<span class="string">&#x27;Hello World!&#x27;</span>);</span><br><span class="line">console.log(<span class="string">&#x27;msg的值&#x27;</span>, msg.value);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取一个数组</span></span><br><span class="line">const uids = ref&lt;number[]&gt;([ 1, 2, 3 ]);</span><br><span class="line">console.log(<span class="string">&#x27;第二个uid&#x27;</span>, uids.value[1]);</span><br></pre></td></tr></table></figure>
+<h1 id="2-响应式API之reactive"><a href="#2-响应式API之reactive" class="headerlink" title="2.响应式API之reactive"></a>2.响应式API之reactive</h1><p><strong>reactive</strong>是继<strong>ref</strong>之后最常用的一个响应式API了，相当于<strong>ref</strong>,它的局限性在于只适合对象、数组<br><strong>特别注意：</strong><br>不要对通过<code>reactive</code>定义的对象进行解构，解构后得到的变量会失去响应性。</p>
+<h3 id="类型声明与定义"><a href="#类型声明与定义" class="headerlink" title="类型声明与定义"></a>类型声明与定义</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">interface Member &#123;</span><br><span class="line">  <span class="built_in">id</span>: number,</span><br><span class="line">  name: string</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 声明对象的格式</span></span><br><span class="line">const userInfo: Member = reactive(&#123;</span><br><span class="line">  <span class="built_in">id</span>: 1,</span><br><span class="line">  name: <span class="string">&#x27;tom&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># 对象数组</span></span><br><span class="line">const uids: number[] = [1, 2, 3];</span><br><span class="line"><span class="comment"># 定义一个成员对象数组</span></span><br><span class="line">const userList: Member[] = reactive([</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">id</span>: 1,</span><br><span class="line">    name: <span class="string">&#x27;tom&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<h3 id="变量的读取和赋值"><a href="#变量的读取和赋值" class="headerlink" title="变量的读取和赋值"></a>变量的读取和赋值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(userInfo.name);</span><br><span class="line">userInfo.name = <span class="string">&#x27;Petter&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="3-响应式API之toRef与toRefs"><a href="#3-响应式API之toRef与toRefs" class="headerlink" title="3.响应式API之toRef与toRefs"></a>3.响应式API之toRef与toRefs</h1><h3 id="各自的作用"><a href="#各自的作用" class="headerlink" title="各自的作用"></a>各自的作用</h3><p>两个api的拼写非常接近，顾名思义，一个是只转换一个字段，一个是转换所有字段。<br>| API | 作用|<br>|:—:|:—:|<br>|toRef|创建一个新的ref变量，转换reactive对象的某个字段为ref变量|<br>|toRef|创建一个新的对象，它的每个字段都是reactive对象各个字段的ref变量|</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">interface Member &#123;</span><br><span class="line">  <span class="built_in">id</span>: number,</span><br><span class="line">  name: string,</span><br><span class="line">&#125;</span><br><span class="line">const userInfo: Member = reactive(&#123;</span><br><span class="line">  <span class="built_in">id</span>: 1,</span><br><span class="line">  name: <span class="string">&#x27;Petter&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const name = toRef(userInfo, <span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">const userInfoRefs = toRefs(userInfo)</span><br></pre></td></tr></table></figure>
+<h3 id="在业务中的具体运用"><a href="#在业务中的具体运用" class="headerlink" title="在业务中的具体运用"></a>在业务中的具体运用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> default defineComponent(&#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span></span> () &#123;</span><br><span class="line">    <span class="comment"># 定义一个reactive对象</span></span><br><span class="line">    const userInfo = reactive(&#123;</span><br><span class="line">      <span class="built_in">id</span>: 1,</span><br><span class="line">      name: <span class="string">&#x27;Petter&#x27;</span>,</span><br><span class="line">      age: 18,</span><br><span class="line">      gender: <span class="string">&#x27;male&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义一个新的对象，它本身不具备响应性，但是它的字段全部是ref变量</span></span><br><span class="line">    const userInfoRefs = toRefs(userInfo);</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2s后更新userInfo</span></span><br><span class="line">    setTimeout( () =&gt; &#123;</span><br><span class="line">      userInfo.<span class="built_in">id</span> = 2;</span><br><span class="line">      userInfo.name = <span class="string">&#x27;Tom&#x27;</span>;</span><br><span class="line">      userInfo.age = 20;</span><br><span class="line">    &#125;, 2000);</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 在这里结构toRefs对象才能继续保持响应式</span></span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      ...userInfoRefs</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;ul class=<span class="string">&quot;user-info&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;li class=<span class="string">&quot;item&quot;</span>&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;key&quot;</span>&gt;ID:&lt;/span&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;value&quot;</span>&gt;&#123;&#123; <span class="built_in">id</span> &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line"></span><br><span class="line">    &lt;li class=<span class="string">&quot;item&quot;</span>&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;key&quot;</span>&gt;name:&lt;/span&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;value&quot;</span>&gt;&#123;&#123; name &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line"></span><br><span class="line">    &lt;li class=<span class="string">&quot;item&quot;</span>&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;key&quot;</span>&gt;age:&lt;/span&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;value&quot;</span>&gt;&#123;&#123; age &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line"></span><br><span class="line">    &lt;li class=<span class="string">&quot;item&quot;</span>&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;key&quot;</span>&gt;gender:&lt;/span&gt;</span><br><span class="line">      &lt;span class=<span class="string">&quot;value&quot;</span>&gt;&#123;&#123; gender &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line"></span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="4-函数的定义和使用"><a href="#4-函数的定义和使用" class="headerlink" title="4.函数的定义和使用"></a>4.函数的定义和使用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p&gt;&#123;&#123; msg &#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- 在这里点击执行<span class="built_in">return</span>出来的方法 --&gt;</span><br><span class="line">  &lt;button @click=<span class="string">&quot;changeMsg&quot;</span>&gt;修改MSG&lt;/button&gt;</span><br><span class="line">  &lt;!-- 在这里点击执行<span class="built_in">return</span>出来的方法 --&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line">import &#123; defineComponent, onMounted, ref &#125; from <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default defineComponent(&#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span></span> () &#123;</span><br><span class="line">    const msg = ref&lt;string&gt;(<span class="string">&#x27;Hello World!&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这个要暴露给模板使用，必须return才可以使用</span></span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">changeMsg</span></span> () &#123;</span><br><span class="line">      msg.value = <span class="string">&#x27;Hi World!&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这个要在页面载入时执行，无需return出去</span></span><br><span class="line">    const init = () =&gt; &#123;</span><br><span class="line">      console.log(<span class="string">&#x27;init&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 在这里执行init</span></span><br><span class="line">    onMounted( () =&gt; &#123;</span><br><span class="line">      init();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      <span class="comment"># 数据</span></span><br><span class="line">      msg,</span><br><span class="line"></span><br><span class="line">      <span class="comment"># 方法</span></span><br><span class="line">      changeMsg</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="5-数据监听"><a href="#5-数据监听" class="headerlink" title="5.数据监听"></a>5.数据监听</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import &#123; defineComponent, ref, watch &#125; from <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default defineComponent(&#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span></span> () &#123;</span><br><span class="line">    const name = ref&lt;string&gt;(<span class="string">&#x27;Petter&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2s后改变数据</span></span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      name.value = &#x27;Tom&#x27;;</span><br><span class="line">    &#125;, <span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">    # 你可以监听一个响应式对象</span><br><span class="line">    watch( name, () =&gt; &#123;</span><br><span class="line">      console.log(&#x27;监听整个 ref &#x27;, name.value);</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    # 也可以监听对象里面的某个值（此时需要写成 getter 函数）</span><br><span class="line">    watch( () =&gt; name.value, () =&gt; &#123;</span><br><span class="line">      console.log(&#x27;只监听 value &#x27;, name.value);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="6-CSS样式与预处理器"><a href="#6-CSS样式与预处理器" class="headerlink" title="6.CSS样式与预处理器"></a>6.CSS样式与预处理器</h1><h3 id="使用v-bind动态修改style"><a href="#使用v-bind动态修改style" class="headerlink" title="使用v-bind动态修改style"></a>使用v-bind动态修改style</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p class=<span class="string">&quot;msg&quot;</span>&gt;Hello World&lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line">import &#123;defineComponent, ref&#125; from <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default defineComponent(&#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">    const fontColor = ref&lt;string&gt;(<span class="string">&#x27;#ff0000&#x27;</span>)</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      fontColor</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .msg &#123;</span><br><span class="line">    color: v-bind(fontColor);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="样式表的组件作用域"><a href="#样式表的组件作用域" class="headerlink" title="样式表的组件作用域"></a>样式表的组件作用域</h3><h4 id="style-module"><a href="#style-module" class="headerlink" title="style module"></a>style module</h4><p><strong>默认</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p :class=<span class="string">&quot;<span class="variable">$style</span>.msg&quot;</span>&gt;Hello World&lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style module&gt;</span><br><span class="line">.msg &#123;</span><br><span class="line">  color: <span class="comment">#ff0000</span></span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure><br><strong>重命名</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p :class=<span class="string">&quot;classes.msg&quot;</span>&gt;Hello World!&lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style module=<span class="string">&quot;classes&quot;</span>&gt;</span><br><span class="line">.msg &#123;</span><br><span class="line">  color: <span class="comment">#ff0000;</span></span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="useCssModule"><a href="#useCssModule" class="headerlink" title="useCssModule"></a>useCssModule</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p :class=<span class="string">&quot;<span class="variable">$style</span>.msg&quot;</span>&gt;</span><br><span class="line">    &lt;span :class=<span class="string">&quot;<span class="variable">$style</span>.text&quot;</span>&gt;Hello World&lt;/span&gt;</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line">import &#123;defineComponent, useCssModule &#125; from <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default defineComponent(&#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">    const style = useCssModule();</span><br><span class="line">    console.log(style) <span class="comment"># &#123;msg: &#x27;App_msg_1tGa9&#x27;, text: &#x27;App_text_2AEnE&#x27;&#125;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&lt;style module&gt;</span><br><span class="line">.msg &#123;</span><br><span class="line">  color: <span class="comment">#ff0000;</span></span><br><span class="line">&#125;</span><br><span class="line">.text &#123;</span><br><span class="line">  font-size: 14px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/vue3/" rel="tag"># vue3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2021/07/27/flutter/1_%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87%E4%B8%8E%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="next" title="1_开发工具准备与开发环境搭建">
+                <i class="fa fa-chevron-left"></i> 1_开发工具准备与开发环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2022/01/12/vue/2_vue3%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF%E7%94%B1%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="2_vue3学习之路由的使用">
+                2_vue3学习之路由的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%93%8D%E5%BA%94%E5%BC%8FAPI%E4%B9%8Bref"><span class="nav-number">1.</span> <span class="nav-text">1.响应式API之ref</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E"><span class="nav-number">1.0.1.</span> <span class="nav-text">类型声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.0.2.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.0.3.</span> <span class="nav-text">引用类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E8%AF%BB%E5%8F%96"><span class="nav-number">1.0.4.</span> <span class="nav-text">变量读取</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%93%8D%E5%BA%94%E5%BC%8FAPI%E4%B9%8Breactive"><span class="nav-number">2.</span> <span class="nav-text">2.响应式API之reactive</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%AE%9A%E4%B9%89"><span class="nav-number">2.0.1.</span> <span class="nav-text">类型声明与定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E8%AF%BB%E5%8F%96%E5%92%8C%E8%B5%8B%E5%80%BC"><span class="nav-number">2.0.2.</span> <span class="nav-text">变量的读取和赋值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%93%8D%E5%BA%94%E5%BC%8FAPI%E4%B9%8BtoRef%E4%B8%8EtoRefs"><span class="nav-number">3.</span> <span class="nav-text">3.响应式API之toRef与toRefs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E8%87%AA%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">3.0.1.</span> <span class="nav-text">各自的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E4%B8%9A%E5%8A%A1%E4%B8%AD%E7%9A%84%E5%85%B7%E4%BD%93%E8%BF%90%E7%94%A8"><span class="nav-number">3.0.2.</span> <span class="nav-text">在业务中的具体运用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">4.函数的定义和使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E7%9B%91%E5%90%AC"><span class="nav-number">5.</span> <span class="nav-text">5.数据监听</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-CSS%E6%A0%B7%E5%BC%8F%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">6.CSS样式与预处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8v-bind%E5%8A%A8%E6%80%81%E4%BF%AE%E6%94%B9style"><span class="nav-number">6.0.1.</span> <span class="nav-text">使用v-bind动态修改style</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E8%A1%A8%E7%9A%84%E7%BB%84%E4%BB%B6%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">6.0.2.</span> <span class="nav-text">样式表的组件作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#style-module"><span class="nav-number">6.0.2.1.</span> <span class="nav-text">style module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useCssModule"><span class="nav-number">6.0.2.2.</span> <span class="nav-text">useCssModule</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2022/01/06/vue/1_vue3%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8D%95%E7%BB%84%E4%BB%B6%E7%BC%96%E5%86%99/';
+          this.page.identifier = '2022/01/06/vue/1_vue3学习之单组件编写/';
+          this.page.title = '1_vue3学习之单组件编写';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

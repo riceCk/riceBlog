@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ES6," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="块级作用域let 命令先申明在使用否则报错  不存在变量提升 暂时性死区 不允许重复声明  123456let i &#x3D; 10; # 全局作用域let arr &#x3D; [];for(let i &#x3D; 0; i &lt; 10; i++)&#123;     let i &#x3D; 12;    arr[i] &#x3D; i;&#125; 上面分别表示的三种不同的层级作用域。所以不存在重复声明，不会报错 constcons">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的ES6之上篇">
+<meta property="og:url" content="http://yoursite.com/2018/05/01/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%8A%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="块级作用域let 命令先申明在使用否则报错  不存在变量提升 暂时性死区 不允许重复声明  123456let i &#x3D; 10; # 全局作用域let arr &#x3D; [];for(let i &#x3D; 0; i &lt; 10; i++)&#123;     let i &#x3D; 12;    arr[i] &#x3D; i;&#125; 上面分别表示的三种不同的层级作用域。所以不存在重复声明，不会报错 constcons">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-05-01T01:10:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.740Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="ES6">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/01/你不知道的es6/你不知道的ES6（上）/"/>
+
+
+
+
+
+  <title>你不知道的ES6之上篇 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/05/01/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%8A%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你不知道的ES6之上篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-01T09:10:00+08:00">
+                2018-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6/" itemprop="url" rel="index">
+                    <span itemprop="name">你不知道的ES6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/05/01/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%8A%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/01/你不知道的es6/你不知道的ES6（上）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="块级作用域"><a href="#块级作用域" class="headerlink" title="块级作用域"></a>块级作用域</h1><h2 id="let-命令"><a href="#let-命令" class="headerlink" title="let 命令"></a>let 命令</h2><p>先申明在使用否则报错</p>
+<ul>
+<li>不存在变量提升</li>
+<li>暂时性死区</li>
+<li>不允许重复声明</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> i = 10; <span class="comment"># 全局作用域</span></span><br><span class="line"><span class="built_in">let</span> arr = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">let</span> i = 0; i &lt; 10; i++)&#123; </span><br><span class="line">    <span class="built_in">let</span> i = 12;</span><br><span class="line">    arr[i] = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面分别表示的三种不同的层级作用域。所以不存在<strong>重复声明</strong>，不会报错</p>
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><p>const 也是块级作用域。 不可以改变的变量是个常量；定义的是目标地址。所以不会改变。因此对象可以增添改查；<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const a = 123;</span><br><span class="line">a++ <span class="comment">#会报错</span></span><br><span class="line">const obj = &#123;&#125;</span><br><span class="line">obj.a = 123 <span class="comment">#不会报错</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="变量的结构赋值"><a href="#变量的结构赋值" class="headerlink" title="变量的结构赋值"></a>变量的结构赋值</h1><h2 id="数组的结构赋值"><a href="#数组的结构赋值" class="headerlink" title="数组的结构赋值"></a>数组的结构赋值</h2><ul>
+<li>实质：模式匹配</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> [a, b, c] = [1, 2, 3];</span><br><span class="line"><span class="built_in">let</span> [a, [b,[c]]] = [1, [2, [3]]]</span><br><span class="line"><span class="comment"># a = 1, b = 2, c = 3</span></span><br><span class="line"><span class="built_in">let</span> <span class="built_in">let</span> [a, b] = [2]</span><br><span class="line"><span class="comment"># =&gt; let [a, b] = [2, undefined] 称为结构失败</span></span><br><span class="line"><span class="built_in">let</span> [a, b] = [1, 2, 3]  <span class="comment">#称为不完全结构</span></span><br><span class="line"><span class="built_in">let</span> [x = 10] = [20]   <span class="comment">#支持默认值，对应结构匹配是否绝对等于undefined</span></span><br><span class="line"><span class="built_in">let</span> [a] = 1 <span class="comment">#会报错，右边不具备迭代器接口所以不行</span></span><br><span class="line"><span class="built_in">let</span> [x = 10] = [20]  <span class="comment">#支持默认值，先看右边有没有赋值，是否绝对等于undefined，再走左边，如nul就不行</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">fn</span></span> ()&#123;</span><br><span class="line">    console.log(<span class="string">&quot;xxxx&quot;</span>)</span><br><span class="line">    <span class="built_in">return</span> 2</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> [x = fn()] = [3]</span><br><span class="line">模式匹配属于惰性赋值，不走默认值的情况下不会执行fn。</span><br></pre></td></tr></table></figure>
+<h2 id="对象的结构赋值"><a href="#对象的结构赋值" class="headerlink" title="对象的结构赋值"></a>对象的结构赋值</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> &#123;bar, foo&#125; = &#123;foo: 234, bar: 123&#125;; </span><br><span class="line"><span class="built_in">let</span> &#123;bar: bar, foo: foo&#125; = &#123;foo: 234, bar: 123&#125;</span><br><span class="line"><span class="comment">#对象的结构赋值是无序的</span></span><br><span class="line"><span class="built_in">let</span> &#123;foo: bar&#125; = &#123;foo: 123&#125;;</span><br><span class="line"><span class="comment">#foo==&gt;undefined  </span></span><br><span class="line"><span class="comment">#bar ==&gt; 123</span></span><br><span class="line"><span class="comment">#foo只代表模式，，不具有真正的意义</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> obj = &#123;</span><br><span class="line">    p: [</span><br><span class="line">        <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">        &#123;y: 123&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> &#123;p:[x,&#123;y: aa&#125;]&#125; = obj;</span><br><span class="line"><span class="comment"># x =&gt; hello   aa =&gt; 123</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> &#123;pow, ceil, floor&#125; = Math;</span><br><span class="line"><span class="comment">#函数的结构赋值，提取Math中的方法</span></span><br><span class="line"><span class="comment">#Math = &#123;</span></span><br><span class="line"><span class="comment">#   pow: xxx,</span></span><br><span class="line"><span class="comment">#   ceil: xxx,</span></span><br><span class="line"><span class="comment">#   floor: xxx</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> &#123;toString&#125; = 123;</span><br><span class="line"><span class="built_in">let</span>&#123;toString: s&#125; = <span class="literal">false</span>;</span><br><span class="line">console.log(toString == Number.prototype.toString);  <span class="comment"># true</span></span><br><span class="line">console.log(s == Boolean.prototype.toString);       <span class="comment">#true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> arr = [[1,2], [3, 4]].map(<span class="keyword">function</span>([a, b])&#123;</span><br><span class="line">    <span class="built_in">return</span> a + b</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># arr = [3, 7]</span></span><br></pre></td></tr></table></figure>
+<h2 id="swap数据交换"><a href="#swap数据交换" class="headerlink" title="swap数据交换"></a>swap数据交换</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = 1, b = 2;</span><br><span class="line">[a, b] = [b, a];</span><br><span class="line"></span><br><span class="line"><span class="comment"># 函数返回值的结构</span></span><br><span class="line"> <span class="keyword">function</span> <span class="function"><span class="title">methods</span></span>()&#123;</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">        add: <span class="function"><span class="title">function</span></span>()&#123;&#125;,</span><br><span class="line">        <span class="built_in">sum</span>: <span class="function"><span class="title">function</span></span>()&#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> &#123;add, <span class="built_in">sum</span>&#125; = methods();</span><br></pre></td></tr></table></figure>
+<h2 id="reduce方法，消灭for循环"><a href="#reduce方法，消灭for循环" class="headerlink" title="reduce方法，消灭for循环"></a>reduce方法，消灭for循环</h2><h3 id="将多层数组转换成一层数组"><a href="#将多层数组转换成一层数组" class="headerlink" title="将多层数组转换成一层数组"></a>将多层数组转换成一层数组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const nestedArr = [1, 2, [3, 4, [5, 6]]];</span><br><span class="line">const flatten = arr =&gt;</span><br><span class="line">  arr.reduce(</span><br><span class="line">    (flat, next) =&gt; flat.concat(Array.isArray(next) ? flatten(next) : next),</span><br><span class="line">    []</span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
+<h3 id="将下面数组转成对象，key-value-对应里层数组的两个值"><a href="#将下面数组转成对象，key-value-对应里层数组的两个值" class="headerlink" title="将下面数组转成对象，key/value 对应里层数组的两个值"></a>将下面数组转成对象，key/value 对应里层数组的两个值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const objLikeArr = [[<span class="string">&quot;name&quot;</span>, <span class="string">&quot;Jim&quot;</span>], [<span class="string">&quot;age&quot;</span>, 18], [<span class="string">&quot;single&quot;</span>, <span class="literal">true</span>]];</span><br><span class="line">const fromPairs = pairs =&gt;</span><br><span class="line">  pairs.reduce((res, pair) =&gt; ((res[pair[<span class="number">0</span>]] = pair[<span class="number">1</span>]), res), &#123;&#125;);</span><br><span class="line"></span><br><span class="line">fromPairs(objLikeArr);</span><br><span class="line"># &#123;</span><br><span class="line">#   age: <span class="number">18</span></span><br><span class="line">#   name: &quot;Jim&quot;</span><br><span class="line">#   single: true</span><br><span class="line"># &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="将用户中的男性和女性分别放到不同的数组里："><a href="#将用户中的男性和女性分别放到不同的数组里：" class="headerlink" title="将用户中的男性和女性分别放到不同的数组里："></a>将用户中的男性和女性分别放到不同的数组里：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const <span class="built_in">users</span> = [</span><br><span class="line">  &#123; name: <span class="string">&quot;Adam&quot;</span>, age: 30, sex: <span class="string">&quot;male&quot;</span> &#125;,</span><br><span class="line">  &#123; name: <span class="string">&quot;Helen&quot;</span>, age: 27, sex: <span class="string">&quot;female&quot;</span> &#125;,</span><br><span class="line">  &#123; name: <span class="string">&quot;Amy&quot;</span>, age: 25, sex: <span class="string">&quot;female&quot;</span> &#125;,</span><br><span class="line">  &#123; name: <span class="string">&quot;Anthony&quot;</span>, age: 23, sex: <span class="string">&quot;male&quot;</span> &#125;,</span><br><span class="line">];</span><br><span class="line">const partition = (arr, isValid) =&gt;</span><br><span class="line">  arr.reduce(</span><br><span class="line">    ([pass, fail], elem) =&gt;</span><br><span class="line">      isValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]],</span><br><span class="line">    [[], []],</span><br><span class="line">  );</span><br><span class="line">  </span><br><span class="line">const isMale = person =&gt; person.sex === <span class="string">&quot;male&quot;</span>;</span><br><span class="line"></span><br><span class="line">const [maleUser, femaleUser] = partition(<span class="built_in">users</span>, isMale);</span><br></pre></td></tr></table></figure>
+<h2 id="数组方法实例"><a href="#数组方法实例" class="headerlink" title="数组方法实例"></a>数组方法实例</h2><h3 id="1-filter将数组中的false值去除"><a href="#1-filter将数组中的false值去除" class="headerlink" title="1.filter将数组中的false值去除"></a>1.filter将数组中的false值去除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const arrContainsEmptyVal = [3, 4, 5, 2, 3, undefined, null, 0, <span class="string">&quot;&quot;</span>];</span><br><span class="line">const compact = arr =&gt; arr.filter(Boolean); </span><br></pre></td></tr></table></figure>
+<h3 id="2-map将数组中的-VIP-用户余额加-10"><a href="#2-map将数组中的-VIP-用户余额加-10" class="headerlink" title="2.map将数组中的 VIP 用户余额加 10"></a>2.map将数组中的 VIP 用户余额加 10</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const <span class="built_in">users</span> = [   </span><br><span class="line">     &#123; username: <span class="string">&quot;Kelly&quot;</span>, isVIP: <span class="literal">true</span>, balance: 20 &#125;,   </span><br><span class="line">     &#123; username: <span class="string">&quot;Tom&quot;</span>, isVIP: <span class="literal">false</span>, balance: 19 &#125;,   </span><br><span class="line">     &#123; username: <span class="string">&quot;Stephanie&quot;</span>, isVIP: <span class="literal">true</span>, balance: 30 &#125; </span><br><span class="line">];</span><br><span class="line">users.map(   user =&gt;(user.isVIP ?&#123;...user, balance: user.balance +10&#125;: user));</span><br></pre></td></tr></table></figure>
+<h3 id="3-evert判断用户是否全部是成年人"><a href="#3-evert判断用户是否全部是成年人" class="headerlink" title="3.evert判断用户是否全部是成年人"></a>3.evert判断用户是否全部是成年人</h3><p>此方法返回true放在空数组上的任何条件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const <span class="built_in">users</span> = [</span><br><span class="line">  &#123; name: <span class="string">&quot;Jim&quot;</span>, age: 23 &#125;,</span><br><span class="line">  &#123; name: <span class="string">&quot;Lily&quot;</span>, age: 17 &#125;,</span><br><span class="line">  &#123; name: <span class="string">&quot;Will&quot;</span>, age: 25 &#125;</span><br><span class="line">];</span><br><span class="line">users.every(user =&gt; user.age &gt;= 18);</span><br><span class="line"><span class="comment">#  找出上面用户中的第一个未成年人</span></span><br><span class="line">const findTeen = <span class="built_in">users</span> =&gt; users.find(user =&gt; user.age &lt; 18);</span><br><span class="line">findTeen(<span class="built_in">users</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-Set将数组中重复项清除"><a href="#4-Set将数组中重复项清除" class="headerlink" title="4.Set将数组中重复项清除"></a>4.Set将数组中重复项清除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const dupArr = [1, 2, 3, 3, 3, 3, 6, 7];</span><br><span class="line">const <span class="built_in">uniq</span> = arr =&gt; [...new Set(arr)];</span><br><span class="line"></span><br><span class="line"><span class="built_in">uniq</span>(dupArr);</span><br></pre></td></tr></table></figure>
+<h1 id="字符串的扩展"><a href="#字符串的扩展" class="headerlink" title="字符串的扩展"></a>字符串的扩展</h1><h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><ul>
+<li>增强的字符串</li>
+<li>在字符串中添加变量（表达式）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#变量</span></span><br><span class="line">var xm = &#123;</span><br><span class="line">    age: 18,</span><br><span class="line">    height: 180,</span><br><span class="line">    name: <span class="string">&#x27;xiaoming&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">var &#123;age, nam, height&#125; = xm;</span><br><span class="line">var str = <span class="string">&#x27;name:&#x27;</span> + name + <span class="string">&#x27;age:&#x27;</span> + age + <span class="string">&#x27;height:&#x27;</span> + height  </span><br><span class="line">var newStr = `name:<span class="variable">$&#123;name&#125;</span> age:<span class="variable">$&#123;age&#125;</span> height: <span class="variable">$&#123;height&#125;</span>`      <span class="comment">#ES6语法</span></span><br><span class="line"><span class="comment"># 表达式</span></span><br><span class="line">var x = 3,</span><br><span class="line">    y = 5;</span><br><span class="line">str = `<span class="variable">$&#123;x&#125;</span> + <span class="variable">$&#123;y&#125;</span> = <span class="variable">$&#123;x + y&#125;</span> `;</span><br><span class="line"><span class="comment">#   =  3 + 5 = 8</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">get</span></span>()&#123;</span><br><span class="line">    <span class="built_in">return</span> <span class="string">&#x27;my is you fatter&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">var str = `<span class="variable">$&#123;get()&#125;</span> `  </span><br><span class="line"><span class="comment"># =&gt;my is you fatter</span></span><br><span class="line"><span class="comment"># 嵌套，模板字符串嵌套模板字符串</span></span><br><span class="line">var arr = [1, 2, 3, 4, 5];</span><br><span class="line">var resStr = `<span class="variable">$&#123;arr.map(function(item, index)&#123;</span></span><br><span class="line"><span class="variable">    return `<span class="variable">$&#123;item&#125;</span>: <span class="variable">$&#123;index&#125;</span>`</span></span><br><span class="line"><span class="variable">&#125;</span>)&#125;`</span><br></pre></td></tr></table></figure>
+<h2 id="标签模板"><a href="#标签模板" class="headerlink" title="标签模板"></a>标签模板</h2><ul>
+<li>标签模板实质————函数调用的特殊形式</li>
+<li>重要应用————过滤HTML字符串</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例1</span></span><br><span class="line"><span class="keyword">function</span> show(name)&#123;</span><br><span class="line">    console.log(name);</span><br><span class="line">&#125;</span><br><span class="line">show `xiaoming` <span class="comment">#=&gt; Array[1]的数组。0: &#x27;xiaoming&#x27;</span></span><br><span class="line"><span class="comment"># 例2</span></span><br><span class="line">var name = <span class="string">&quot;xiaoming&quot;</span></span><br><span class="line">var <span class="built_in">where</span> = <span class="string">&quot;BJ&quot;</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">show</span></span>()&#123;</span><br><span class="line">    console.log(arguments);</span><br><span class="line">&#125;</span><br><span class="line">show `hello <span class="variable">$&#123;name&#125;</span>, welcome to <span class="variable">$&#123;where&#125;</span> `;</span><br><span class="line"><span class="comment"># arguments =&gt; [[&quot;hello &quot;, &quot;, welcome to&quot;, &quot; &quot;], &quot;xiaoming&quot;, &quot;BJ&quot;]</span></span><br></pre></td></tr></table></figure>
+<h3 id="标签模板-1"><a href="#标签模板-1" class="headerlink" title="标签模板"></a>标签模板</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="built_in">print</span>(arg1, arg2)&#123;</span><br><span class="line">    console.log(arguments)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>`12<span class="variable">$&#123;3&#125;</span>4<span class="variable">$&#123;5&#125;</span>6`</span><br><span class="line"><span class="comment"># 安装模板分开  [&#x27;12&#x27;, &#x27;4&#x27;, &#x27;6&#x27;]</span></span><br><span class="line"><span class="comment"># 把模板中的内容当成若干参数</span></span><br><span class="line"><span class="keyword">function</span> <span class="built_in">print</span>(listArr, ...arg) &#123;</span><br><span class="line">    console.log(listArr)</span><br><span class="line">    console.log(arg)</span><br><span class="line">&#125;</span><br><span class="line">var a = 10</span><br><span class="line">var b = 10</span><br><span class="line"><span class="built_in">print</span>`<span class="variable">$&#123;a&#125;</span>*<span class="variable">$&#123;b&#125;</span>=<span class="variable">$&#123;a*b&#125;</span>`</span><br><span class="line"><span class="comment"># listArr =&gt; [&quot;&quot;, &quot;*&quot;, &quot;=&quot;, &quot;&quot;, raw: Array(4)]</span></span><br><span class="line"><span class="comment"># ...arg=&gt; [10, 10, 100]</span></span><br></pre></td></tr></table></figure>
+<h4 id="解决xxs攻击"><a href="#解决xxs攻击" class="headerlink" title="解决xxs攻击"></a>解决xxs攻击</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> name = <span class="string">&#x27;&lt;script&gt;console.log(&quot;你中招啦&quot;)&lt;\/script&gt;&#x27;</span></span><br><span class="line"><span class="keyword">function</span> safeHTML(arr, name)&#123;</span><br><span class="line">    console.log(arr) <span class="comment"># [&quot;&lt;p&gt;你好，&quot;, &quot;&lt;/p&gt;&quot;, raw: Array(2)]</span></span><br><span class="line">    console.log(name) <span class="comment"># &lt;script&gt;console.log(&quot;你中招啦&quot;)&lt;/script&gt;</span></span><br><span class="line">    <span class="built_in">return</span> `<span class="variable">$&#123;arr[0]&#125;</span><span class="variable">$&#123;name.replace(/&amp;/g, &#x27;&amp;amp&#x27;).replace(/&lt;/g,&#x27;&amp;lt&#x27;).replace(/&gt;/g,&#x27;&amp;gt;&#x27;)&#125;</span><span class="variable">$&#123;arr[1]&#125;</span>`</span><br><span class="line">&#125;</span><br><span class="line">document.write(safeHTML`&lt;p&gt;你好，<span class="variable">$&#123;name&#125;</span>&lt;/p&gt;`)</span><br></pre></td></tr></table></figure>
+<h3 id="例题：过滤HTML字符串"><a href="#例题：过滤HTML字符串" class="headerlink" title="例题：过滤HTML字符串"></a>例题：过滤HTML字符串</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var name = `&lt;script&gt;alter(<span class="string">&quot;aaa&quot;</span>)&lt;/\script&gt;`</span><br><span class="line">safeHTML `&lt;p&gt;<span class="variable">$&#123;name&#125;</span>Welcome to duyi!!!&lt;/p&gt; `</span><br><span class="line"><span class="keyword">function</span> safeHTML(data)&#123;</span><br><span class="line">    <span class="comment">#data =&gt;[&quot;&lt;p&gt;&quot;, &quot;welcomet to duyi!!!&lt;/p&gt;&quot;]</span></span><br><span class="line">    <span class="comment">#arguments =&gt; [[&quot;&lt;p&gt;&quot;, &quot;welcomet to duyi!!!&lt;/p&gt;&quot;], &#x27;&lt;script&gt;alter(&quot;aaa&quot;)&lt;/\script&gt;&#x27;]</span></span><br><span class="line">    var str = data[0];            </span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">let</span> i = 1; i &lt; arguments.length; i++)&#123;</span><br><span class="line">        var arg = String(arguments[i]);  </span><br><span class="line">    <span class="comment"># arg =&gt; &#x27;&lt;script&gt;alter(&quot;aaa&quot;)&lt;/\script&gt;&#x27;</span></span><br><span class="line">        str += arg.replace(/&amp;/g, <span class="string">&#x27;&amp;amp;&#x27;</span>).replace(/&lt;/g, <span class="string">&#x27;&amp;lt;&#x27;</span>).replace(/&gt;/, <span class="string">&#x27;&amp;gt;&#x27;</span>);</span><br><span class="line">        console.log(str)</span><br><span class="line">        str += data[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串的方法扩充"><a href="#字符串的方法扩充" class="headerlink" title="字符串的方法扩充"></a>字符串的方法扩充</h2><h4 id="repeat-padStart-padEnd-方法运用"><a href="#repeat-padStart-padEnd-方法运用" class="headerlink" title="repeat()  padStart()  padEnd() 方法运用"></a>repeat()  padStart()  padEnd() 方法运用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#repeat() 返回新的字符串，将原字符串重复n次</span></span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.repeat(3)            <span class="comment"># =&gt; &quot;xxx&quot;</span></span><br><span class="line"><span class="string">&#x27;hello&#x27;</span>.repeat(2)        <span class="comment"># =&gt; &#x27;hellohello&#x27;;</span></span><br><span class="line">padStart(), padEnd();</span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.padStart(5, <span class="string">&#x27;ab&#x27;</span>)    <span class="comment"># =&gt; &#x27;ababx&#x27;</span></span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.padStart(4, <span class="string">&#x27;ab&#x27;</span>)    <span class="comment"># =&gt; &#x27;abax&#x27;</span></span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.padEnd(5, <span class="string">&#x27;ab&#x27;</span>)      <span class="comment"># =&gt; &#x27;xabab&#x27;</span></span><br><span class="line"><span class="string">&#x27;x&#x27;</span>.padEnd(4, <span class="string">&#x27;ab&#x27;</span>)      <span class="comment"># =&gt; &#x27;xaba&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="charAt-num"><a href="#charAt-num" class="headerlink" title="charAt(num)"></a>charAt(num)</h3><p>返回当前字符串的第几个字符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&#x27;welcome to duyi&#x27;</span></span><br><span class="line">str.charAt(3) <span class="comment"># =&gt; c</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="charCodeAt"><a href="#charCodeAt" class="headerlink" title="charCodeAt"></a>charCodeAt</h3><p>unicode编码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&#x27;welcome to duyi&#x27;</span></span><br><span class="line">str.charCodeAt(3) <span class="comment"># =&gt; 99</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="slice（start-0-end-this-length）"><a href="#slice（start-0-end-this-length）" class="headerlink" title="slice（start=0, end=this.length）"></a>slice（start=0, end=this.length）</h3><p>字符串截取[start, this.length)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&#x27;welcome to duyi&#x27;</span></span><br><span class="line">str.slice(0, 4) <span class="comment">#=&gt; welc</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="indexOf-str-start-0"><a href="#indexOf-str-start-0" class="headerlink" title="indexOf(str, start=0)"></a>indexOf(str, start=0)</h3><p>判断是否有<code>str</code>所包含的字符串，如果有就以第一个索引返回，没有返回-1<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&#x27;welcome to duyi&#x27;</span></span><br><span class="line">str.slice(<span class="string">&#x27;com&#x27;</span>) <span class="comment"># =&gt; 3</span></span><br><span class="line"><span class="comment"># 第二个为索引从第几个开始匹配</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h3><p>安装规则拆分，如：split(‘,’),安装<code>,</code>好拆分</p>
+<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><p>与split方法互逆<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1,2,3,4,5].<span class="built_in">join</span>(<span class="string">&#x27;,&#x27;</span>) <span class="comment">#=&gt; &#x27;1,2,3,4,5&#x27;</span></span><br><span class="line">str=<span class="string">&#x27;1,2,3,4,5&#x27;</span></span><br><span class="line">str.spilt(<span class="string">&#x27;,&#x27;</span>) <span class="comment">#=&gt; [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;]</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="toUpperCase-toLowerCase"><a href="#toUpperCase-toLowerCase" class="headerlink" title="toUpperCase, toLowerCase"></a>toUpperCase, toLowerCase</h3><p>toUpperCase将所有无论大小变成大写字母<br>toLowerCase将所有变成小写字母</p>
+<h2 id="字符串方法实例"><a href="#字符串方法实例" class="headerlink" title="字符串方法实例"></a>字符串方法实例</h2><h3 id="1-判断字符串中是否含有元音字母"><a href="#1-判断字符串中是否含有元音字母" class="headerlink" title="1.判断字符串中是否含有元音字母"></a>1.判断字符串中是否含有元音字母</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const randomStr = <span class="string">&quot;hdjrwqpi&quot;</span>;</span><br><span class="line">const isVowel = char =&gt; [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;e&quot;</span>, <span class="string">&quot;o&quot;</span>, <span class="string">&quot;i&quot;</span>, <span class="string">&quot;u&quot;</span>].includes(char);</span><br><span class="line">const containsVowel = str =&gt; [...str].some(isVowel);</span><br><span class="line"></span><br><span class="line">containsVowel(randomStr);</span><br></pre></td></tr></table></figure>
+<h3 id="includes"><a href="#includes" class="headerlink" title="includes"></a>includes</h3><p>字符串识别，与indexOf类型es6强化的方法 返回true，false<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&#x27;you were, are and will be in my heart&#x27;</span></span><br><span class="line">str.includes(<span class="string">&#x27;heart&#x27;</span>) <span class="comment"># true</span></span><br><span class="line"><span class="comment"># 也支持第二个参数，从第几位开始</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="startsWith-str-endsWith-str"><a href="#startsWith-str-endsWith-str" class="headerlink" title="startsWith(str), endsWith(str)"></a>startsWith(str), endsWith(str)</h3><p>startsWith(str)是否从str开始<br>endsWith(str)是否从str结束<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&#x27;you were, are and will be in my heart&#x27;</span></span><br><span class="line">str.startsWith(<span class="string">&#x27;you&#x27;</span>)  <span class="comment"># true</span></span><br><span class="line">str.endsWith(<span class="string">&#x27;heart&#x27;</span>)  <span class="comment"># true</span></span><br><span class="line"><span class="comment"># 也支持第二个参数 [)</span></span><br><span class="line">str.startsWith(<span class="string">&#x27;w&#x27;</span>,4)  <span class="comment"># true</span></span><br><span class="line">str.endsWith(<span class="string">&#x27;you w&#x27;</span>, 5) <span class="comment">#true</span></span><br><span class="line"><span class="comment"># 实例用于筛选</span></span><br><span class="line"><span class="built_in">let</span> stuffLists = [</span><br><span class="line">    <span class="string">&#x27;goole-page&#x27;</span>, </span><br><span class="line">    <span class="string">&#x27;alibaba-mahuateng&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;facebook-zuckerberg&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;duyi-ding&#x27;</span></span><br><span class="line">    <span class="string">&#x27;duyi-song&#x27;</span></span><br><span class="line">    <span class="string">&#x27;duyi-cheng&#x27;</span></span><br><span class="line">]</span><br><span class="line"><span class="built_in">let</span> duyistuffs = stuffLists.filter(stuff=&gt;stuff.startsWith(<span class="string">&#x27;duyi-&#x27;</span>))</span><br><span class="line"><span class="comment">## 帅选出来以&#x27;duyi&#x27;为开头的数组字符串 </span></span><br></pre></td></tr></table></figure></p>
+<h3 id="repeat重组"><a href="#repeat重组" class="headerlink" title="repeat重组"></a>repeat重组</h3><p>将当前字符重复机制<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&#x27;*&#x27;</span>.repeat(10)</span><br><span class="line"><span class="comment"># **********</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="函数的扩展"><a href="#函数的扩展" class="headerlink" title="函数的扩展"></a>函数的扩展</h1><h2 id="函数参数的默认值"><a href="#函数参数的默认值" class="headerlink" title="函数参数的默认值"></a>函数参数的默认值</h2><ul>
+<li>基本使用</li>
+<li>结构赋值结合使用</li>
+<li>参数作用域以及注意事项</li>
+</ul>
+<h3 id="基本使用例题"><a href="#基本使用例题" class="headerlink" title="基本使用例题"></a>基本使用例题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> Person(name, age=18)&#123;</span><br><span class="line">    console.log(name, age)</span><br><span class="line">&#125;</span><br><span class="line">Person(<span class="string">&#x27;xm&#x27;</span>, undefined);  <span class="comment">#除非是undefined走默认值，否则赋值什么弄什么</span></span><br><span class="line">Person(<span class="string">&#x27;xm&#x27;</span>, 12);         <span class="comment"># xm, 12</span></span><br><span class="line">Person(<span class="string">&#x27;xm&#x27;</span>, 0);          <span class="comment"># xm, 0</span></span><br><span class="line">Person(<span class="string">&#x27;xm&#x27;</span>, null);       <span class="comment"># xm, null</span></span><br><span class="line">Person(<span class="string">&#x27;xm&#x27;</span>, <span class="literal">false</span>);      <span class="comment"># xm, false</span></span><br></pre></td></tr></table></figure>
+<h3 id="结构赋值例题"><a href="#结构赋值例题" class="headerlink" title="结构赋值例题"></a>结构赋值例题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例题1：</span></span><br><span class="line"><span class="keyword">function</span> fn(&#123;x, y=5&#125;)&#123;</span><br><span class="line">    console.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line">fn(&#123;&#125;);                   <span class="comment"># undefined, 5</span></span><br><span class="line">fn(&#123;x:1&#125;);                <span class="comment"># 1, 5</span></span><br><span class="line">fn(&#123;x:1, y: 2&#125;);          <span class="comment"># 1, 2</span></span><br><span class="line">fn();                     <span class="comment"># 报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例题2：</span></span><br><span class="line"><span class="keyword">function</span> f1(&#123;x=0, y=0&#125; = &#123;&#125;)&#123;       <span class="comment">#有默认值</span></span><br><span class="line">    console.log(x, y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> f2(&#123;x, y&#125; = &#123;x:0, y:0&#125;)&#123;   <span class="comment">#提前赋值</span></span><br><span class="line">    console.log(x, y)</span><br><span class="line">&#125;</span><br><span class="line">f1()                                        <span class="comment"># =&gt; 0, 1</span></span><br><span class="line">f2()                                        <span class="comment"># =&gt; 0, 1</span></span><br><span class="line">f1(&#123;x:1, y: 2&#125;);                            <span class="comment"># =&gt; 1, 2</span></span><br><span class="line">f2(&#123;x:1, y: 2&#125;);                            <span class="comment"># =&gt; 1, 2</span></span><br><span class="line">f1(&#123;x:1&#125;);                                  <span class="comment"># =&gt; 1, 0</span></span><br><span class="line">f2(&#123;x:1&#125;);   <span class="comment"># ==&gt; function f2(&#123;x, y&#125; = &#123;x:1&#125;)   1, undefined;</span></span><br></pre></td></tr></table></figure>
+<h3 id="参数作用域以及注意事项"><a href="#参数作用域以及注意事项" class="headerlink" title="参数作用域以及注意事项"></a>参数作用域以及注意事项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> fn(x=10)&#123;        <span class="comment"># =&gt;let x = 10</span></span><br><span class="line">    <span class="built_in">let</span> x = 2;</span><br><span class="line">&#125;</span><br><span class="line">fn()                     <span class="comment"># =&gt;报错x已经被定义不能重复定义</span></span><br></pre></td></tr></table></figure>
+<h2 id="rest参数（扩展运算符）"><a href="#rest参数（扩展运算符）" class="headerlink" title="rest参数（扩展运算符）"></a>rest参数（扩展运算符）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> fn(...arg)&#123;  </span><br><span class="line">    console.log(...arg)  </span><br><span class="line">    <span class="comment"># arg =&gt; [1, 2, 3, 4, 5]  数组</span></span><br><span class="line">    <span class="comment"># ...arg =&gt; 1, 2, 3, 4, 5 ...arg相当于把把[]给去掉</span></span><br><span class="line">&#125;</span><br><span class="line">fn(1, 2, 3, 4, 5);</span><br><span class="line"><span class="comment"># 例题 </span></span><br><span class="line">var arr = [1, 2, 3, 4, 5];</span><br><span class="line">fn.call(null, ...arr)  <span class="comment"># =&gt;... 去掉[]</span></span><br><span class="line">fn.apply(null, arr)</span><br><span class="line"><span class="keyword">function</span> fn(...args)&#123;</span><br><span class="line">    console.log(args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><ul>
+<li>基本使用方法</li>
+<li>注意事项</li>
+<li>嵌套的箭头函数</li>
+</ul>
+<h3 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fn = (num1, num2) =&gt; (num1 + num2) <span class="comment"># 返回的参数</span></span><br><span class="line"><span class="comment"># 等价于</span></span><br><span class="line"><span class="keyword">function</span> fn(num1, num2)&#123;</span><br><span class="line">    <span class="built_in">return</span> num1 + num2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var f = () =&gt; (&#123;name: 123&#125;)  <span class="comment"># 返回的一个对象。比须加（）</span></span><br><span class="line"><span class="comment">#大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错。</span></span><br><span class="line"><span class="built_in">let</span> getTempItem = <span class="built_in">id</span> =&gt; (&#123;<span class="built_in">id</span>: <span class="built_in">id</span>, name: <span class="string">&#x27;Temp&#x27;</span>&#125;)</span><br><span class="line">[1, 2, 3].map(x =&gt; x*x);</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项-this的指向问题"><a href="#注意事项-this的指向问题" class="headerlink" title="注意事项 this的指向问题"></a>注意事项 this的指向问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">var age = <span class="string">&quot;window 18&quot;</span></span><br><span class="line">var obj = &#123;</span><br><span class="line">    age: 18,</span><br><span class="line">    getAge: () =&gt; this.age,  <span class="comment">#==&gt; this.age = window 18</span></span><br><span class="line">    setAge: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        console.log(this.age)  <span class="comment">#  this.age = 18</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 箭头函数中没有this的概念，只会一次找他的父级，并且没有arguments。</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Timer</span></span>() &#123;</span><br><span class="line">    this.s1 = 0;</span><br><span class="line">    this.s2 = 0;</span><br><span class="line">    <span class="comment"># 箭头函数 this指向Timer</span></span><br><span class="line">    setInterval(() =&gt; &#123;</span><br><span class="line">        this.s1++ ,</span><br><span class="line">        console.log(this)  #=&gt; Timer</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">    # 普通函数 this指向window</span><br><span class="line">    setInterval(function () &#123;</span><br><span class="line">        this.s2++;</span><br><span class="line">        console.log(this)  #=&gt; window</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line">var timer = new Timer();</span><br></pre></td></tr></table></figure>
+<h3 id="嵌套的箭头函数"><a href="#嵌套的箭头函数" class="headerlink" title="嵌套的箭头函数"></a>嵌套的箭头函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> fn(str)&#123;</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        <span class="built_in">return</span> str.split(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">fn(<span class="string">&#x27;12&#x27;</span>)()</span><br><span class="line"><span class="comment"># 等同于</span></span><br><span class="line"><span class="built_in">let</span> fn = str =&gt; () =&gt; str.split(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">fn(<span class="string">&#x27;123&#x27;</span>)();</span><br></pre></td></tr></table></figure>
+<h1 id="数组的扩展"><a href="#数组的扩展" class="headerlink" title="数组的扩展"></a>数组的扩展</h1><ul>
+<li>数组的扩展运算符（…）</li>
+<li>Array.from() Array.of()</li>
+<li>数组是实例方法  copyWithin</li>
+<li>数组实例的方法  fill(),entries(), keys() values()</li>
+<li>数组实例的方法  includes() find() findIndex()</li>
+</ul>
+<h2 id="数组扩展运算符"><a href="#数组扩展运算符" class="headerlink" title="数组扩展运算符"></a>数组扩展运算符</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 功能利用push方法实现arr的数组添加，三种方式</span></span><br><span class="line">var arr = [];</span><br><span class="line">var arr1 = [1, 2, 3, 4, 5];</span><br><span class="line"><span class="comment"># 1、apply调用数组方法</span></span><br><span class="line">Array.prototype.push.apply(arr, arr1);</span><br><span class="line"><span class="comment"># 2、直接利用push方法走参数</span></span><br><span class="line">arr.push(1, 2, 3, 4, 5)</span><br><span class="line"><span class="comment"># 3、...扩展运算符</span></span><br><span class="line">arr.push(...arr1);</span><br><span class="line"><span class="comment"># 4、利用cancat数组拼接的方法</span></span><br><span class="line">arr.concat(arr1) </span><br><span class="line">var x = [1] ; var y = [2,3,4,5]</span><br><span class="line">var newArray =  [x, ...y] </span><br><span class="line"><span class="comment"># 模式匹配</span></span><br><span class="line">var [x, ...y] = [1, 2, 3, 4, 5]</span><br><span class="line"><span class="comment"># =&gt;x-&gt;1 ; y-&gt;2,3,4,5</span></span><br><span class="line"><span class="comment"># 字符串的空数组 -&gt; 隐形的将类数组转换成字符串数组</span></span><br><span class="line">var strArr = [...<span class="string">&#x27;chenkai&#x27;</span>]</span><br><span class="line"><span class="comment"># -&gt; [c,h,e,n,k,a,i]</span></span><br></pre></td></tr></table></figure>
+<h2 id="Array-from-Array-of"><a href="#Array-from-Array-of" class="headerlink" title="Array.from() Array.of()"></a>Array.from() Array.of()</h2><ul>
+<li>Array.from() 类数组转换成数组</li>
+<li>Array.of()   将一组 数转换为数组</li>
+</ul>
+<h3 id="Array-from-类数组转换成数组应用-并且支持回调"><a href="#Array-from-类数组转换成数组应用-并且支持回调" class="headerlink" title="Array.from 类数组转换成数组应用,并且支持回调"></a>Array.from 类数组转换成数组应用,并且支持回调</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;   <span class="comment">#类数组</span></span><br><span class="line">    <span class="string">&#x27;0&#x27;</span>: <span class="string">&#x27;d&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;1&#x27;</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;2&#x27;</span>: <span class="string">&#x27;d&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;3&#x27;</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">    length: 4</span><br><span class="line">&#125;</span><br><span class="line">var arr = Array.from(obj, <span class="keyword">function</span>(item, index)&#123;</span><br><span class="line">    <span class="built_in">return</span> item + index;  <span class="comment">#支持回调函数</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">#类似与map</span></span><br><span class="line">var arr1 = Array.from(obj).map((item, index) =&gt; item + index)</span><br><span class="line">var divs = document.getElementsByTagName(&#x27;div&#x27;);</span><br><span class="line"># ES6 小应用分装typeOf</span><br><span class="line">function typeOf()&#123;</span><br><span class="line">    return Array.from(arguments, item =&gt; typeof item)</span><br><span class="line">&#125;</span><br><span class="line">console.log(typeOf(<span class="number">2</span>, &#x27;dsfs&#x27;, false, [], undefined, null))</span><br><span class="line"><span class="comment"># ES5 一样的效果</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">arrayOf</span></span>()&#123;</span><br><span class="line">    <span class="built_in">return</span> Array.prototype.slice.call(arguments);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(arrayOf(1, 2, 3 ,4 ,5)); <span class="comment"># -&gt; [1, 2, 3, 4, 5]</span></span><br><span class="line">console.log(arrayOf(1))              <span class="comment"># -&gt; [1]</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组的构造方法"><a href="#数组的构造方法" class="headerlink" title="数组的构造方法"></a>数组的构造方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var arr = new Array(9) </span><br><span class="line"><span class="comment"># 数组而且只有一个参数的时候，创建长度为n的数组</span></span><br><span class="line">var arr1 = new Array(<span class="string">&quot;7&quot;</span>)</span><br><span class="line"><span class="comment"># 非数字m，创建数组[m]</span></span><br><span class="line">var arr2 = new Array(<span class="string">&#x27;1&#x27;</span>, 2, 3)</span><br><span class="line"><span class="comment"># 多个参数的时候，返回多个参数构成的数组</span></span><br></pre></td></tr></table></figure>
+<h3 id="Array-of-统一返回由参数构成的数组"><a href="#Array-of-统一返回由参数构成的数组" class="headerlink" title="Array.of() 统一返回由参数构成的数组"></a>Array.of() 统一返回由参数构成的数组</h3><p>将一组数转换为数组<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var arr3 = Array.of(9)</span><br><span class="line">var arr4 = Array.of(<span class="string">&quot;5&quot;</span>)</span><br><span class="line">var arr5 = Array.of(<span class="string">&#x27;1&#x27;</span>, 2, 3)</span><br><span class="line"></span><br><span class="line">var arr = Array.of(1, 2, 3, 4, 5);</span><br><span class="line"><span class="comment"># =&gt; [1,2,3,4,5];</span></span><br><span class="line"><span class="comment">#等同于</span></span><br><span class="line">var arr1 = new Array(1, 2, 3, 4, 5);</span><br><span class="line"><span class="comment">#不过new Array写一个参数的表示特定长度length的数组都是空的，Arrgy.of写一个参数表示一位的数组</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">arrayOf</span></span>()&#123;</span><br><span class="line">    console.log(arguments)    <span class="comment">#类数组</span></span><br><span class="line">    <span class="built_in">return</span> Array.from(arguments)   <span class="comment">#类数组转换成数组</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="数组是实例方法-copyWithin-废话不多想看例题"><a href="#数组是实例方法-copyWithin-废话不多想看例题" class="headerlink" title="数组是实例方法  copyWithin 废话不多想看例题"></a>数组是实例方法  copyWithin 废话不多想看例题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例1</span></span><br><span class="line">var arr = [1, 2, 3, 4, 5]</span><br><span class="line">         <span class="comment">#[3, 4, 3, 4, 5]</span></span><br><span class="line">arr.copyWithin(0, 3)</span><br><span class="line"><span class="comment"># 例2</span></span><br><span class="line">var arr1 = [1, 2, 3, 4, 5, 6, 7];</span><br><span class="line">          <span class="comment">#[4, 5, 3, 4, 5, 6, 7]</span></span><br><span class="line">arr1.copyWithin(0, 3, 5))</span><br><span class="line"><span class="comment">#从第几个开始，截取[3,5)之间的数覆盖</span></span><br><span class="line">         <span class="comment"># [6, 2, 3, 4, 5, 6, 7]</span></span><br><span class="line">arr1.copyWithin(0, -2, -1));  </span><br></pre></td></tr></table></figure>
+<h3 id="数组实例的方法-fill-entries-keys-values"><a href="#数组实例的方法-fill-entries-keys-values" class="headerlink" title="数组实例的方法  fill(),entries(), keys() values()"></a>数组实例的方法  fill(),entries(), keys() values()</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fill 方法</span></span><br><span class="line">var arr = new Array(5)   <span class="comment">#建立一个5位的空数组</span></span><br><span class="line">arr.fill(7)              <span class="comment">#自动填充7到arr中</span></span><br><span class="line">arr.fill(7, 3, 4)        <span class="comment">#自动在[3,4)中填充7</span></span><br><span class="line"><span class="comment"># entries(), keys() values() </span></span><br><span class="line">var arr = [<span class="string">&#x27;2&#x27;</span>, 2, 4, 5, 6]</span><br><span class="line"><span class="keyword">for</span> (item of arr.keys())&#123;  <span class="comment">#遍历数组索引</span></span><br><span class="line">    console.log(item) <span class="comment"># =&gt;  0, 1, 2, 3, 4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (item of arr.values())&#123;  <span class="comment">#遍历数组内部值</span></span><br><span class="line">    console.log(item) <span class="comment"># =&gt; &#x27;2&#x27;, 2, 4, 5, 6</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> ([index, item] of arr.entries())&#123;  </span><br><span class="line">    <span class="comment">#遍历数组索引 内部值 </span></span><br><span class="line">    console.log(index, item)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#单独取值</span></span><br><span class="line">var a = arr.values();</span><br><span class="line">a.next().value  <span class="comment">#=&gt; 2  第一个数组</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组实例的方法-includes-find"><a href="#数组实例的方法-includes-find" class="headerlink" title="数组实例的方法 includes() find()  ()"></a>数组实例的方法 includes() find()  ()</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#第一个符合条件的数组成员</span></span><br><span class="line">var arr = [2, 2, 1, 5, 4];</span><br><span class="line">var num = arr.findIndex(item =&gt; item &gt; 2)</span><br><span class="line"><span class="comment"># 从数组左往右找到大于2的第一个数的索引 -&gt; 1</span></span><br><span class="line">var num1 = arr.find(item =&gt; item &gt; 2) </span><br><span class="line"><span class="comment"># 从数组左往右找到大于2的第一个数的值  -&gt;  3</span></span><br><span class="line"></span><br><span class="line">var arr = [NaN];</span><br><span class="line">var num = arr.indexOf(NaN)   </span><br><span class="line"><span class="comment"># 判断数组是否有参数的值，有返回索引，没有返回-1,不能判定出NaN</span></span><br><span class="line">var num1 = arr.includes(NaN)  </span><br><span class="line"><span class="comment"># 判断数组是否有参数的值，Boolean输出，可以判定出NaN   </span></span><br></pre></td></tr></table></figure>
+<h1 id="对象的扩展"><a href="#对象的扩展" class="headerlink" title="对象的扩展"></a>对象的扩展</h1><ul>
+<li>对象的Object.defineProperty</li>
+<li>属性的简洁表示方式以及属性名表达式 </li>
+<li>属性的可枚举型以及属性的遍历</li>
+<li>新的API: Object.is()、Object.assign()、Object.keys()、Object.values()、Object.entries()</li>
+<li>对象的扩展运算符（…）</li>
+</ul>
+<h2 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h2><p><strong>注意：</strong>如果描述符中同时出现，value、writble,和set、get两组的话，会出现异常，切记不要同事使用<br><strong>作用：</strong>双向数据绑定的核心方法，主要做数据劫持操作（监控属性变化），同时是后期ES6中很多语法糖底层实现的核心方法。</p>
+<h3 id="数据描述"><a href="#数据描述" class="headerlink" title="数据描述"></a>数据描述</h3><ul>
+<li>value ‘xxx’ 属性值。默认’’</li>
+<li>writable: true 是否可写，默认值false</li>
+<li>configurable: true 是否可配置。默认false</li>
+<li>enumerable: true 是否可枚举，默认false</li>
+</ul>
+<h3 id="存储描述符"><a href="#存储描述符" class="headerlink" title="存储描述符"></a>存储描述符</h3><ul>
+<li>set: function() {} 属性访问器 进行写操作时调用该方法</li>
+<li>get: function() {} 属性访问器 进行读操作时调用该方法</li>
+</ul>
+<p>两种写法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">  tempValue: <span class="string">&#x27;ck&#x27;</span>,</span><br><span class="line">  get <span class="function"><span class="title">name</span></span> () &#123;</span><br><span class="line">    console.log(123)</span><br><span class="line">    <span class="built_in">return</span> this.tempValue</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">set</span> name (newValue) &#123;</span><br><span class="line">    console.log(321)</span><br><span class="line">    this.tempValue = newValue</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var tempValue = <span class="string">&#x27;&#x27;</span></span><br><span class="line">var obj = &#123;&#125;</span><br><span class="line">Object.defineProperty(obj, <span class="string">&#x27;name&#x27;</span>, &#123;</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">  enumerable: <span class="literal">false</span>,</span><br><span class="line">  <span class="function"><span class="title">get</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;1231&#x27;</span>)</span><br><span class="line">    <span class="built_in">return</span> tempValue</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">set</span> (newValue) &#123;</span><br><span class="line">    console.log(111111)</span><br><span class="line">    tempValue = newValue</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="属性的简洁表示方式以及属性名表达式"><a href="#属性的简洁表示方式以及属性名表达式" class="headerlink" title="属性的简洁表示方式以及属性名表达式"></a>属性的简洁表示方式以及属性名表达式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#属性的简洁表示方式</span></span><br><span class="line">var foo = <span class="string">&#x27;123&#x27;</span>;</span><br><span class="line">var obj = &#123;foo&#125;; </span><br><span class="line"><span class="comment"># ==&gt; obj = &#123;foo: &#x27;123&#x27;&#125; 属性的简洁表示方法</span></span><br><span class="line"><span class="keyword">function</span> fn(x, y)&#123;</span><br><span class="line">    <span class="built_in">return</span> &#123;x, y&#125;  <span class="comment"># ==&gt;&#123;x = x, y=y&#125;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># ES6 函数表达式</span></span><br><span class="line">var fn1 = (x, y) =&gt; &#123;x, y&#125;</span><br><span class="line">var fn1 = <span class="keyword">function</span>(x, y)&#123;</span><br><span class="line">    <span class="built_in">return</span> &#123;x, y&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 属性名表达式 </span></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name: <span class="string">&#x27;xm&#x27;</span>,</span><br><span class="line">    age: 18,</span><br><span class="line">    getMsg: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        console.log(this.age, this.name);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">get</span></span>()&#123;   <span class="comment"># 方法简写</span></span><br><span class="line">        console.log(this.age, this.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 实例</span></span><br><span class="line"><span class="built_in">let</span> birth = <span class="string">&#x27;2000/01/01&#x27;</span>;</span><br><span class="line">const person = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    birth,   <span class="comment"># 等同于 birth: birth</span></span><br><span class="line">    <span class="function"><span class="title">bello</span></span>()&#123;console.log(<span class="string">&#x27;我的名字&#x27;</span>, this.name)&#125; </span><br><span class="line">     <span class="comment"># 等同于 hello : function()&#123;....&#125;</span></span><br><span class="line">&#125;</span><br><span class="line">var name = <span class="string">&#x27;name&#x27;</span>,</span><br><span class="line">    age = <span class="string">&#x27;age&#x27;</span></span><br><span class="line">var obj = &#123;</span><br><span class="line">    [name]: <span class="string">&#x27;xiaoming&#x27;</span>,</span><br><span class="line">    [age]: <span class="string">&#x27;15&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="属性的可枚举型以及属性的遍历"><a href="#属性的可枚举型以及属性的遍历" class="headerlink" title="属性的可枚举型以及属性的遍历"></a>属性的可枚举型以及属性的遍历</h2><h3 id="枚举的重要两种方法"><a href="#枚举的重要两种方法" class="headerlink" title="枚举的重要两种方法"></a>枚举的重要两种方法</h3><ul>
+<li>for…in </li>
+<li>Object.keys</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Object.getOwnPropertyDescriptor 方法</span></span><br><span class="line">var obj = &#123;</span><br><span class="line">    age: 18,</span><br><span class="line">    name: <span class="string">&#x27;xm&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">Object.getOwnPropertyDescriptor(obj, <span class="string">&#x27;age&#x27;</span>)</span><br><span class="line"><span class="comment"># 返回对象属性方法的属性</span></span><br><span class="line"><span class="comment"># &#123;</span></span><br><span class="line"><span class="comment">#    value: 18, </span></span><br><span class="line"><span class="comment">#    writable: true, </span></span><br><span class="line"><span class="comment">#    enumerable: true,    =&gt; 是否可枚举</span></span><br><span class="line"><span class="comment">#    configurable: true</span></span><br><span class="line"><span class="comment">#&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="新的API-Object-is-、Object-assign-、Object-keys-、Object-values-、Object-entries"><a href="#新的API-Object-is-、Object-assign-、Object-keys-、Object-values-、Object-entries" class="headerlink" title="新的API: Object.is()、Object.assign()、Object.keys()、Object.values()、Object.entries()"></a>新的API: Object.is()、Object.assign()、Object.keys()、Object.values()、Object.entries()</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Object.is</span></span><br><span class="line"><span class="comment"># 增强版的 &#x27;===&#x27; 应用</span></span><br><span class="line">Object.is(<span class="string">&#x27;123&#x27;</span>, <span class="string">&#x27;123&#x27;</span>)     <span class="comment"># true </span></span><br><span class="line"><span class="string">&#x27;123&#x27;</span> === <span class="string">&#x27;123&#x27;</span>             <span class="comment"># true</span></span><br><span class="line">Object.is(+0, -0)           <span class="comment"># false</span></span><br><span class="line">+0 === -0                   <span class="comment"># true</span></span><br><span class="line">Object.is(NaN, NaN)         <span class="comment"># true</span></span><br><span class="line">NaN === NaN                 <span class="comment"># true</span></span><br><span class="line"><span class="comment"># Object.assign() </span></span><br><span class="line"><span class="comment"># 将若干个可枚举属性放在一个对象中去</span></span><br><span class="line">var obj = &#123;&#125;</span><br><span class="line">var obj1 = &#123;name: <span class="string">&#x27;xm&#x27;</span>&#125;</span><br><span class="line">var obj2 = &#123;age: 19&#125;;</span><br><span class="line">var obj3 = &#123;<span class="function"><span class="title">getName</span></span>()&#123;console.log(<span class="string">&#x27;allalalalal&#x27;</span>)&#125;&#125;</span><br><span class="line">var newObj = Object.assign(obj, obj1, obj2, obj3);</span><br><span class="line"><span class="comment"># obj === newObj 将obj1 obj2 obj3 可枚举的属性全部添加到obj和newObj中去了</span></span><br><span class="line">var newObj = Object.assign(2);</span><br><span class="line"><span class="comment"># 隐示把参数转换成对象，但是undefined和null不行，将后几个可枚举性参数赋给第一个参数</span></span><br><span class="line"><span class="comment"># Object.keys()、Object.values()、Object.entries()</span></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name: <span class="string">&#x27;xm&#x27;</span>,</span><br><span class="line">    age: 18,</span><br><span class="line">    <span class="function"><span class="title">getMsg</span></span>()&#123;</span><br><span class="line">        <span class="built_in">return</span> this.name + this.age</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var keys = Object.keys(obj);          <span class="comment">#遍历属性索引名</span></span><br><span class="line"><span class="comment"># keys = [name, age, getMsg]</span></span><br><span class="line">var values = Object.values(obj);      <span class="comment">#遍历属性值</span></span><br><span class="line"><span class="comment"># values = [&quot;xm&quot;, 18, f]</span></span><br><span class="line">var entries = Object.entries(obj);    <span class="comment">#两个都遍历</span></span><br><span class="line"><span class="comment"># [[&quot;name&quot;, &quot;xm&quot;], [&quot;age&quot;, 18], [&quot;getMsg&quot;, f]]</span></span><br></pre></td></tr></table></figure>
+<h2 id="对象的扩展运算符（…）"><a href="#对象的扩展运算符（…）" class="headerlink" title="对象的扩展运算符（…）"></a>对象的扩展运算符（…）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 合并多个对象的可枚举属性, 与Object.assign有异曲同工之处</span></span><br><span class="line">var obj1 = &#123;name: <span class="string">&#x27;xm&#x27;</span>&#125;</span><br><span class="line">var obj2 = &#123;age: 19&#125;;</span><br><span class="line">var obj3 = &#123;<span class="function"><span class="title">getName</span></span>()&#123;console.log(<span class="string">&#x27;allalalalal&#x27;</span>)&#125;&#125;</span><br><span class="line">var newObj = &#123;...obj1, ...obj2, ...obj3&#125; </span><br><span class="line"><span class="comment"># 扩展运算符与Object.assign配合将多个对象的可枚举熟悉添加到前一个对象</span></span><br><span class="line"><span class="built_in">let</span> merge = (target, ...sources) =&gt; Object.assign(target, ...sources);  </span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/04/13/webpack/webpack%E9%85%8D%E7%BD%AE/" rel="next" title="webpack4配置">
+                <i class="fa fa-chevron-left"></i> webpack4配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/05/02/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%AD%EF%BC%89/" rel="prev" title="你不知道的ES6之中篇">
+                你不知道的ES6之中篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">块级作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#let-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">let 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const"><span class="nav-number">1.2.</span> <span class="nav-text">const</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E7%BB%93%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">变量的结构赋值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E7%BB%93%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-number">2.1.</span> <span class="nav-text">数组的结构赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%93%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">对象的结构赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#swap%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2"><span class="nav-number">2.3.</span> <span class="nav-text">swap数据交换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reduce%E6%96%B9%E6%B3%95%EF%BC%8C%E6%B6%88%E7%81%ADfor%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.4.</span> <span class="nav-text">reduce方法，消灭for循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%A4%9A%E5%B1%82%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E6%88%90%E4%B8%80%E5%B1%82%E6%95%B0%E7%BB%84"><span class="nav-number">2.4.1.</span> <span class="nav-text">将多层数组转换成一层数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E4%B8%8B%E9%9D%A2%E6%95%B0%E7%BB%84%E8%BD%AC%E6%88%90%E5%AF%B9%E8%B1%A1%EF%BC%8Ckey-value-%E5%AF%B9%E5%BA%94%E9%87%8C%E5%B1%82%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%80%BC"><span class="nav-number">2.4.2.</span> <span class="nav-text">将下面数组转成对象，key&#x2F;value 对应里层数组的两个值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E7%94%A8%E6%88%B7%E4%B8%AD%E7%9A%84%E7%94%B7%E6%80%A7%E5%92%8C%E5%A5%B3%E6%80%A7%E5%88%86%E5%88%AB%E6%94%BE%E5%88%B0%E4%B8%8D%E5%90%8C%E7%9A%84%E6%95%B0%E7%BB%84%E9%87%8C%EF%BC%9A"><span class="nav-number">2.4.3.</span> <span class="nav-text">将用户中的男性和女性分别放到不同的数组里：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E5%AE%9E%E4%BE%8B"><span class="nav-number">2.5.</span> <span class="nav-text">数组方法实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-filter%E5%B0%86%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84false%E5%80%BC%E5%8E%BB%E9%99%A4"><span class="nav-number">2.5.1.</span> <span class="nav-text">1.filter将数组中的false值去除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-map%E5%B0%86%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84-VIP-%E7%94%A8%E6%88%B7%E4%BD%99%E9%A2%9D%E5%8A%A0-10"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.map将数组中的 VIP 用户余额加 10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-evert%E5%88%A4%E6%96%AD%E7%94%A8%E6%88%B7%E6%98%AF%E5%90%A6%E5%85%A8%E9%83%A8%E6%98%AF%E6%88%90%E5%B9%B4%E4%BA%BA"><span class="nav-number">2.5.3.</span> <span class="nav-text">3.evert判断用户是否全部是成年人</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Set%E5%B0%86%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E9%A1%B9%E6%B8%85%E9%99%A4"><span class="nav-number">2.5.4.</span> <span class="nav-text">4.Set将数组中重复项清除</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%89%A9%E5%B1%95"><span class="nav-number">3.</span> <span class="nav-text">字符串的扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.1.</span> <span class="nav-text">模板字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.2.</span> <span class="nav-text">标签模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E6%A8%A1%E6%9D%BF-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">标签模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3xxs%E6%94%BB%E5%87%BB"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">解决xxs攻击</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98%EF%BC%9A%E8%BF%87%E6%BB%A4HTML%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.2.2.</span> <span class="nav-text">例题：过滤HTML字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B9%E6%B3%95%E6%89%A9%E5%85%85"><span class="nav-number">3.3.</span> <span class="nav-text">字符串的方法扩充</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#repeat-padStart-padEnd-%E6%96%B9%E6%B3%95%E8%BF%90%E7%94%A8"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">repeat()  padStart()  padEnd() 方法运用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#charAt-num"><span class="nav-number">3.3.1.</span> <span class="nav-text">charAt(num)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#charCodeAt"><span class="nav-number">3.3.2.</span> <span class="nav-text">charCodeAt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slice%EF%BC%88start-0-end-this-length%EF%BC%89"><span class="nav-number">3.3.3.</span> <span class="nav-text">slice（start&#x3D;0, end&#x3D;this.length）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#indexOf-str-start-0"><span class="nav-number">3.3.4.</span> <span class="nav-text">indexOf(str, start&#x3D;0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#split"><span class="nav-number">3.3.5.</span> <span class="nav-text">split()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join"><span class="nav-number">3.3.6.</span> <span class="nav-text">join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toUpperCase-toLowerCase"><span class="nav-number">3.3.7.</span> <span class="nav-text">toUpperCase, toLowerCase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%B9%E6%B3%95%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.4.</span> <span class="nav-text">字符串方法实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%98%AF%E5%90%A6%E5%90%AB%E6%9C%89%E5%85%83%E9%9F%B3%E5%AD%97%E6%AF%8D"><span class="nav-number">3.4.1.</span> <span class="nav-text">1.判断字符串中是否含有元音字母</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#includes"><span class="nav-number">3.4.2.</span> <span class="nav-text">includes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#startsWith-str-endsWith-str"><span class="nav-number">3.4.3.</span> <span class="nav-text">startsWith(str), endsWith(str)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repeat%E9%87%8D%E7%BB%84"><span class="nav-number">3.4.4.</span> <span class="nav-text">repeat重组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E6%89%A9%E5%B1%95"><span class="nav-number">4.</span> <span class="nav-text">函数的扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">函数参数的默认值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E4%BE%8B%E9%A2%98"><span class="nav-number">4.1.1.</span> <span class="nav-text">基本使用例题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E8%B5%8B%E5%80%BC%E4%BE%8B%E9%A2%98"><span class="nav-number">4.1.2.</span> <span class="nav-text">结构赋值例题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%BB%A5%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">4.1.3.</span> <span class="nav-text">参数作用域以及注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rest%E5%8F%82%E6%95%B0%EF%BC%88%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">rest参数（扩展运算符）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">箭头函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.3.1.</span> <span class="nav-text">基本使用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-this%E7%9A%84%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98"><span class="nav-number">4.3.2.</span> <span class="nav-text">注意事项 this的指向问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E7%9A%84%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.3.</span> <span class="nav-text">嵌套的箭头函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%89%A9%E5%B1%95"><span class="nav-number">5.</span> <span class="nav-text">数组的扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">5.1.</span> <span class="nav-text">数组扩展运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-from-Array-of"><span class="nav-number">5.2.</span> <span class="nav-text">Array.from() Array.of()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-from-%E7%B1%BB%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E6%88%90%E6%95%B0%E7%BB%84%E5%BA%94%E7%94%A8-%E5%B9%B6%E4%B8%94%E6%94%AF%E6%8C%81%E5%9B%9E%E8%B0%83"><span class="nav-number">5.2.1.</span> <span class="nav-text">Array.from 类数组转换成数组应用,并且支持回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-number">5.2.2.</span> <span class="nav-text">数组的构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array-of-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E7%94%B1%E5%8F%82%E6%95%B0%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84"><span class="nav-number">5.2.3.</span> <span class="nav-text">Array.of() 统一返回由参数构成的数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%98%AF%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95-copyWithin-%E5%BA%9F%E8%AF%9D%E4%B8%8D%E5%A4%9A%E6%83%B3%E7%9C%8B%E4%BE%8B%E9%A2%98"><span class="nav-number">5.2.4.</span> <span class="nav-text">数组是实例方法  copyWithin 废话不多想看例题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95-fill-entries-keys-values"><span class="nav-number">5.2.5.</span> <span class="nav-text">数组实例的方法  fill(),entries(), keys() values()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95-includes-find"><span class="nav-number">5.2.6.</span> <span class="nav-text">数组实例的方法 includes() find()  ()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%89%A9%E5%B1%95"><span class="nav-number">6.</span> <span class="nav-text">对象的扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-defineProperty"><span class="nav-number">6.1.</span> <span class="nav-text">Object.defineProperty</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">6.1.1.</span> <span class="nav-text">数据描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">6.1.2.</span> <span class="nav-text">存储描述符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E7%AE%80%E6%B4%81%E8%A1%A8%E7%A4%BA%E6%96%B9%E5%BC%8F%E4%BB%A5%E5%8F%8A%E5%B1%9E%E6%80%A7%E5%90%8D%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">6.2.</span> <span class="nav-text">属性的简洁表示方式以及属性名表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E7%9A%84%E5%8F%AF%E6%9E%9A%E4%B8%BE%E5%9E%8B%E4%BB%A5%E5%8F%8A%E5%B1%9E%E6%80%A7%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">6.3.</span> <span class="nav-text">属性的可枚举型以及属性的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E7%9A%84%E9%87%8D%E8%A6%81%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">6.3.1.</span> <span class="nav-text">枚举的重要两种方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%9A%84API-Object-is-%E3%80%81Object-assign-%E3%80%81Object-keys-%E3%80%81Object-values-%E3%80%81Object-entries"><span class="nav-number">6.4.</span> <span class="nav-text">新的API: Object.is()、Object.assign()、Object.keys()、Object.values()、Object.entries()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88%E2%80%A6%EF%BC%89"><span class="nav-number">6.5.</span> <span class="nav-text">对象的扩展运算符（…）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/05/01/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%8A%EF%BC%89/';
+          this.page.identifier = '2018/05/01/你不知道的es6/你不知道的ES6（上）/';
+          this.page.title = '你不知道的ES6之上篇';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

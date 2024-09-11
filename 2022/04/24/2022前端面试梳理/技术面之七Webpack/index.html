@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="前端随笔," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="webpack 面试题汇总1.你知道webpack的作用是什么吗？ (1) 模块打包。 可以将不同模块的文件打包整合在一起，并且保证他们之间的引用正确，执行有序，利用打包我们就可以在开发的时候根据我们自己的业务自由划分文件模块，保证项目结构的清晰和可读性 (2) 编译兼容。 通过“webpack”的loader机制，不不仅仅可以帮助我们对代码做“polyfill”，还可以进行斌阿姨转换如“.les">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端随笔之七Webpack">
+<meta property="og:url" content="http://yoursite.com/2022/04/24/2022%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E4%B8%83Webpack/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="webpack 面试题汇总1.你知道webpack的作用是什么吗？ (1) 模块打包。 可以将不同模块的文件打包整合在一起，并且保证他们之间的引用正确，执行有序，利用打包我们就可以在开发的时候根据我们自己的业务自由划分文件模块，保证项目结构的清晰和可读性 (2) 编译兼容。 通过“webpack”的loader机制，不不仅仅可以帮助我们对代码做“polyfill”，还可以进行斌阿姨转换如“.les">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-04-24T01:48:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.728Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="前端随笔">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/04/24/2022前端面试梳理/技术面之七Webpack/"/>
+
+
+
+
+
+  <title>前端随笔之七Webpack | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2022/04/24/2022%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E4%B8%83Webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端随笔之七Webpack</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-24T09:48:00+08:00">
+                2022-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/2022%E5%89%8D%E7%AB%AF%E9%9A%8F%E7%AC%94%E6%B1%87%E6%80%BB/" itemprop="url" rel="index">
+                    <span itemprop="name">2022前端随笔汇总</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2022/04/24/2022%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E4%B8%83Webpack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/04/24/2022前端面试梳理/技术面之七Webpack/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="webpack-面试题汇总"><a href="#webpack-面试题汇总" class="headerlink" title="webpack 面试题汇总"></a>webpack 面试题汇总</h2><h3 id="1-你知道webpack的作用是什么吗？"><a href="#1-你知道webpack的作用是什么吗？" class="headerlink" title="1.你知道webpack的作用是什么吗？"></a>1.你知道webpack的作用是什么吗？</h3><ul>
+<li>(1) <strong>模块打包。</strong> 可以将不同模块的文件打包整合在一起，并且保证他们之间的引用正确，执行有序，利用打包我们就可以在开发的时候根据我们自己的业务自由划分文件模块，保证项目结构的清晰和可读性</li>
+<li>(2) <strong>编译兼容。</strong> 通过“webpack”的loader机制，不不仅仅可以帮助我们对代码做“polyfill”，还可以进行斌阿姨转换如“.less”，“.vue”,”.jsx”这类在浏览器无法识别的格式文件，让我们在开发时候可以使用新特性和新语法开发，提高开发效率</li>
+<li>(3) <strong>能力扩展。</strong> 通过webpack的plugin（插件）机制，在我们实现模块化打包和编译兼容的基础上，可以进一步实现诸如按需加载，代码压缩等一系列功能，帮助我们进一步提高自动化程度，工程效率以及打包输出的质量</li>
+</ul>
+<h3 id="2-模块打包运行原理"><a href="#2-模块打包运行原理" class="headerlink" title="2.模块打包运行原理"></a>2.模块打包运行原理</h3><p>webpack的整个打包流程：</p>
+<blockquote>
+<ul>
+<li>1.<strong>初始化参数：</strong>从配置文件和Shell语句中读取与合并参数，得到最终的参数</li>
+<li>2.<strong>开始编译：</strong>用上一步得到的参数初始化Compiler对象，加载所有配置的插件，执行对象<code>run</code>方法开始执行编译</li>
+<li>3.<strong>确定入口：</strong>根据配置中的<code>entry</code>找出所有的入口文件</li>
+<li>4.<strong>编译模块：</strong>从入口文件出发，调用所有配置的<code>loader</code>对模块进行翻译，再把翻译后的内容转成AST，通过对AST的分析找出该模块依赖的模块，在<code>递归</code>本步骤直到所有入口依赖的文件都经过了本步骤的处理</li>
+<li>5.<strong>完成模块编译：</strong>经过第4步使用<code>loader</code>翻译完所有模块后，得到了每个模块被翻译后的最终内容以及他们之间的<code>依赖关系图</code></li>
+<li>6.<strong>输出资源：</strong>根据入口和模块之间的依赖关系，组装成一个个包含多个模块的<code>Chunk</code>，再把每个<code>Chunk</code>转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会</li>
+<li>7.<strong>输出完成：</strong>在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
+</ul>
+</blockquote>
+<h3 id="3-webpack-和-gulp-的区别是什么"><a href="#3-webpack-和-gulp-的区别是什么" class="headerlink" title="3.webpack 和 gulp 的区别是什么"></a>3.webpack 和 gulp 的区别是什么</h3><blockquote>
+<p>webpack是基于模块化构建工具，gulp是基于工作流的构建工具<br>webpack是打包器，它以一个入口为起点，构建出整个项目的依赖关系图，然后进行打包合并，生成打包结果<br>gulp是一个过程管理器，每一步做什么完全看开发人员如何配置，把每一步骤连接起来形成一个完整的构建流水线<br>两这不矛盾，完全可以在一个工程中同时使用webpack 和 gulp，将webpack作为gulp流水线中的一环</p>
+</blockquote>
+<h3 id="4-webpack中loader属性和plugins属性区别是什么"><a href="#4-webpack中loader属性和plugins属性区别是什么" class="headerlink" title="4.webpack中loader属性和plugins属性区别是什么"></a>4.webpack中loader属性和plugins属性区别是什么</h3><blockquote>
+<p>他们都是webpack功能的扩展点<br>loader是加载器，主要用于代码转换，比如js代码降级，css预编译，模块化等<br>plugins是插件，webpack打包流程中每一个环节都提供了钩子函数，可以利用这些钩子函数参与打包生命周期中，更改或增加webpack的某些功能，比如生成页面和css文件，压缩打包结果</p>
+</blockquote>
+<h3 id="5-webpack核心概念都有那些"><a href="#5-webpack核心概念都有那些" class="headerlink" title="5.webpack核心概念都有那些"></a>5.webpack核心概念都有那些</h3><blockquote>
+<ul>
+<li>loader<br>加载器，主要用于代码转换，比如js代码降级，css预编译，模块化等</li>
+<li>plugin<br>插件，webpack打包流程中每一个环节都提供了钩子函数，可以利用这些钩子函数参与打包生命周期中，更改或增加webpack的某些功能，比如生成页面和css文件，压缩打包结果</li>
+<li>module<br>模块。webpack将所有依赖均视为模块，无论是js，css，html，图片，统统都是模块</li>
+<li>entry<br>入口。打包过程中的概念，webpack以一个或多个文件为入口，分析整个依赖关系</li>
+<li>bundle<br>webpack 打包结果</li>
+</ul>
+</blockquote>
+<h3 id="6-常用webpack-Loader都有那些"><a href="#6-常用webpack-Loader都有那些" class="headerlink" title="6.常用webpack Loader都有那些"></a>6.常用webpack Loader都有那些</h3><blockquote>
+<ul>
+<li>cache-loader：启用编译缓存</li>
+<li>thread-loader：启用多线程编译</li>
+<li>css-loader：编译 css 代码为 js</li>
+<li>file-loader：保存文件到输出目录，将文件内容转换成文件路径</li>
+<li>postcss-loader：将 css 代码使用 postcss 进行编译</li>
+<li>url-loader：将文件内容转换成 dataurl</li>
+<li>less-loader：将 less 代码转换成 css 代码</li>
+<li>sass-loader：将 sass 代码转换成 css 代码</li>
+<li>ue-loader：编译单文件组件</li>
+<li>babel-loader：对 JS 代码进行降级处理</li>
+</ul>
+</blockquote>
+<h3 id="7-说一下-webpack-常用插件都有哪些？"><a href="#7-说一下-webpack-常用插件都有哪些？" class="headerlink" title="7.说一下 webpack 常用插件都有哪些？"></a>7.说一下 webpack 常用插件都有哪些？</h3><blockquote>
+<ul>
+<li>clean-webpack-plugin：清除输出目录</li>
+<li>copy-webpack-plugin：复制文件到输出目录</li>
+<li>html-webpack-plugin：生成 HTML 文件</li>
+<li>mini-css-extract-plugin：将 css 打包成单独文件的插件</li>
+<li>HotModuleReplacementPlugin：热更新的插件</li>
+<li>purifycss-webpack：去除无用的 css 代码</li>
+<li>optimize-css-assets-webpack-plugin：优化 css 打包体积</li>
+<li>uglify-js-plugin：对 JS 代码进行压缩、混淆</li>
+<li>compression-webpack-plugin：gzip 压缩</li>
+<li>webpack-bundle-analyzer：分析打包结果</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/%E5%89%8D%E7%AB%AF%E9%9A%8F%E7%AC%94/" rel="tag"># 前端随笔</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2022/04/22/2022%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E4%B9%9D%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="next" title="前端随笔之九小程序">
+                <i class="fa fa-chevron-left"></i> 前端随笔之九小程序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2022/04/25/2022%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E5%85%ADTS/" rel="prev" title="前端随笔之六TS">
+                前端随笔之六TS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB"><span class="nav-number">1.</span> <span class="nav-text">webpack 面试题汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BD%A0%E7%9F%A5%E9%81%93webpack%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%E5%90%97%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">1.你知道webpack的作用是什么吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%9D%97%E6%89%93%E5%8C%85%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">2.模块打包运行原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-webpack-%E5%92%8C-gulp-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.</span> <span class="nav-text">3.webpack 和 gulp 的区别是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-webpack%E4%B8%ADloader%E5%B1%9E%E6%80%A7%E5%92%8Cplugins%E5%B1%9E%E6%80%A7%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.4.</span> <span class="nav-text">4.webpack中loader属性和plugins属性区别是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-webpack%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E9%83%BD%E6%9C%89%E9%82%A3%E4%BA%9B"><span class="nav-number">1.5.</span> <span class="nav-text">5.webpack核心概念都有那些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%B8%B8%E7%94%A8webpack-Loader%E9%83%BD%E6%9C%89%E9%82%A3%E4%BA%9B"><span class="nav-number">1.6.</span> <span class="nav-text">6.常用webpack Loader都有那些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E8%AF%B4%E4%B8%80%E4%B8%8B-webpack-%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">1.7.</span> <span class="nav-text">7.说一下 webpack 常用插件都有哪些？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2022/04/24/2022%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E4%B8%83Webpack/';
+          this.page.identifier = '2022/04/24/2022前端面试梳理/技术面之七Webpack/';
+          this.page.title = '前端随笔之七Webpack';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

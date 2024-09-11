@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试题," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="h5语义化标签 title：简短、描述性、唯一（提升搜索引擎排名） hn：h1~h6分级标题，用于创建页面信息的层级关系。对于搜索引擎而言，如果标题与搜索词匹配，这些标题就会被赋予很高的权重，尤其是h1。 header：页眉通常包括网站标志、主导航、全站链接以及搜索框，也适合对页面内部一组介绍性或导航性内容进行标记。 nav：标记导航，仅对文档中重要的链接群使用。html5规范不推荐对辅助性页脚链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础系统复习">
+<meta property="og:url" content="http://yoursite.com/2018/08/11/%E6%A0%87%E7%AD%BE/%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="h5语义化标签 title：简短、描述性、唯一（提升搜索引擎排名） hn：h1~h6分级标题，用于创建页面信息的层级关系。对于搜索引擎而言，如果标题与搜索词匹配，这些标题就会被赋予很高的权重，尤其是h1。 header：页眉通常包括网站标志、主导航、全站链接以及搜索框，也适合对页面内部一组介绍性或导航性内容进行标记。 nav：标记导航，仅对文档中重要的链接群使用。html5规范不推荐对辅助性页脚链">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/html5-layout.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/margin.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/margin-top.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/float.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/prototype.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/display.png">
+<meta property="article:published_time" content="2018-08-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.748Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="面试题">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/html5-layout.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/11/标签/基础系统复习/"/>
+
+
+
+
+
+  <title>基础系统复习 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/08/11/%E6%A0%87%E7%AD%BE/%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基础系统复习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-11T00:00:00+08:00">
+                2018-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/08/11/%E6%A0%87%E7%AD%BE/%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%B9%A0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/08/11/标签/基础系统复习/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="h5语义化标签"><a href="#h5语义化标签" class="headerlink" title="h5语义化标签"></a>h5语义化标签</h1><p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/html5-layout.jpg" alt="h5语义化标签"></p>
+<h2 id="title："><a href="#title：" class="headerlink" title="title："></a>title：</h2><p>简短、描述性、唯一（提升搜索引擎排名）</p>
+<h2 id="hn："><a href="#hn：" class="headerlink" title="hn："></a>hn：</h2><p>h1~h6分级标题，用于创建页面信息的层级关系。对于搜索引擎而言，如果标题与搜索词匹配，这些标题就会被赋予很高的权重，尤其是h1。</p>
+<h2 id="header："><a href="#header：" class="headerlink" title="header："></a>header：</h2><p>页眉通常包括网站标志、主导航、全站链接以及搜索框，也适合对页面内部一组介绍性或导航性内容进行标记。</p>
+<h2 id="nav："><a href="#nav：" class="headerlink" title="nav："></a>nav：</h2><p>标记导航，仅对文档中重要的链接群使用。html5规范不推荐对辅助性页脚链接使用nav，除非页脚再次显示顶级全局导航、或者包含招聘信息等重要链接。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;nav&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;HTML 5&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;CSS3&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;JavaScript&lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/nav&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="main："><a href="#main：" class="headerlink" title="main："></a>main：</h2><p>页面主要内容，一个页面只能使用一次。如果是web应用，则包围其主要功能。</p>
+<h2 id="article："><a href="#article：" class="headerlink" title="article："></a>article：</h2><p>包含像报纸一样的内容= =||是这么理解的，表示文档、页面、应用或一个独立的容器。article可以嵌套article，只要里面的article与外面的是部分与整体的关系。</p>
+<h2 id="section："><a href="#section：" class="headerlink" title="section："></a>section：</h2><p>具有相似主题的一组内容，比如网站的主页可以分成介绍、新闻条目、联系信息等条块。</p>
+<h2 id="aside："><a href="#aside：" class="headerlink" title="aside："></a>aside：</h2><p>指定附注栏，包括引述、侧栏、指向文章的一组链接、广告、友情链接、相关产品列表等。如果放在main内，应该与所在内容密切相关。</p>
+<h2 id="footer："><a href="#footer：" class="headerlink" title="footer："></a>footer：</h2><p>页脚，只有当父级是body时，才是整个页面的页脚。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;footer&gt;</span><br><span class="line">    COPYRIGHT@小北</span><br><span class="line">&lt;/footer&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="small："><a href="#small：" class="headerlink" title="small："></a>small：</h2><p>指定细则，输入免责声明、注解、署名、版权。</p>
+<h1 id="三栏布局，左右顶宽高，中间自适应"><a href="#三栏布局，左右顶宽高，中间自适应" class="headerlink" title="三栏布局，左右顶宽高，中间自适应"></a>三栏布局，左右顶宽高，中间自适应</h1><h2 id="1-float布局"><a href="#1-float布局" class="headerlink" title="1.float布局"></a>1.float布局</h2><p><strong>兼容性好，但需要清除浮动</strong></p>
+<h3 id="bfc"><a href="#bfc" class="headerlink" title="bfc"></a>bfc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#css样式</span></span><br><span class="line">*&#123;</span><br><span class="line">  padding: 0;</span><br><span class="line">  margin: 0;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper&#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">  <span class="built_in">float</span>: right;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background-color: red;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">  <span class="built_in">float</span>: left;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background-color: gray;</span><br><span class="line">&#125;</span><br><span class="line">.center&#123;</span><br><span class="line">  background-color: green;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#html布局</span></span><br><span class="line">&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;left&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;right&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;center&quot;</span>&gt;</span><br><span class="line">    &lt;h1&gt;<span class="built_in">float</span>布局&lt;/h1&gt;</span><br><span class="line">    1.三栏布局的中间</span><br><span class="line">    2.三栏布局的中间</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>优点：</strong><br>实现简单，做好清除浮动即可；兼容性比较好；网页缩放时能够正常布局<br><strong>缺点：</strong><br>浮动元素脱离文档流；如果没有做好清除浮动，父元素容易出现高度塌陷；无法优先加载重要内容</p>
+<h2 id="2-绝对定位布局"><a href="#2-绝对定位布局" class="headerlink" title="2.绝对定位布局"></a>2.绝对定位布局</h2><p><strong>快捷，但有效性不行</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># css样式</span></span><br><span class="line">.wrapper&#123;</span><br><span class="line">  position: relative;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  right: 0;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background-color: red;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  left: 0;</span><br><span class="line">  width: 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background-color: gray;</span><br><span class="line">&#125;</span><br><span class="line">.center&#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  right: 300px;</span><br><span class="line">  left: 300px;</span><br><span class="line">  background-color: green;</span><br><span class="line">  height: 300px;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#html:</span></span><br><span class="line">&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;left&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;center&quot;</span>&gt;</span><br><span class="line">    &lt;h1&gt;<span class="built_in">float</span>布局&lt;/h1&gt;</span><br><span class="line">    1.三栏布局的中间</span><br><span class="line">    2.三栏布局的中间</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;right&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure><br><strong>优点：</strong><br>绝对定位布局简单方便，不容易出问题；能够优先加载重要内容；网页缩放时能保持正常布局。<br><strong>缺点：</strong><br>只适用固定高度的布局。绝对定位元素脱离文档流，父元素会出现高度塌陷，只能通过给父元素设置固定高度才能解决这一问题。</p>
+<h2 id="3-flex布局"><a href="#3-flex布局" class="headerlink" title="3.flex布局"></a>3.flex布局</h2><p><strong>比较完美的</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.wrapper&#123;</span><br><span class="line">  display: flex;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">  flex: 0 0 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background-color: blue;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">  flex: 0 0 300px;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background-color: red;</span><br><span class="line">&#125;</span><br><span class="line">.center&#123;</span><br><span class="line">  flex: 1;</span><br><span class="line">  height: 300px;</span><br><span class="line">  background-color: yellow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>优点：</strong><br>绝对定位和相对定位都会引起元素脱离文档流，flex布局能够避免这个问题。flex布局实现简单，可以实现各种布局。flex是一个比较完美的方案。目前移动端的布局也都是用flexbox。 flex布局是未来的趋势。<br><strong>缺点：</strong><br>不能兼容IE9及以下浏览器。</p>
+<h2 id="4-表格布局"><a href="#4-表格布局" class="headerlink" title="4.表格布局"></a>4.表格布局</h2><p><strong>兼容性高，ie8兼容性也可以</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">.wrapper&#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 300px;</span><br><span class="line">  display: table;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper div&#123;</span><br><span class="line">  display: table-cell;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  background: red;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">  background: blue;</span><br><span class="line">&#125;</span><br><span class="line">.center&#123;</span><br><span class="line">  background: yellow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>优点：</strong><br>实现容易，兼容性好；网页缩放时能保持正常布局<br><strong>缺点：</strong><br>一栏超出高度，其他栏也跟着变高，可能并不是我们期待的效果；无法设置栏间距；不能优先加载重要内容</p>
+<h2 id="5-网格布局"><a href="#5-网格布局" class="headerlink" title="5.网格布局"></a>5.网格布局</h2><p><strong>新知识点符合珊栏布局的思想</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.wrapper&#123;</span><br><span class="line">  display: grid;</span><br><span class="line">  width: 100%;</span><br><span class="line">  grid-template-rows: 100px;</span><br><span class="line">  grid-template-columns: 300px auto 300px;</span><br><span class="line">  &#125;</span><br><span class="line">.left&#123;</span><br><span class="line">  background: red;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">  background: blue;</span><br><span class="line">&#125;</span><br><span class="line">.center&#123;</span><br><span class="line">  background: yellow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><strong>优点：</strong><br>绝对定位和相对定位都会引起元素脱离文档流，flex布局能够避免这个问题。grid布局实现简单，可以实现各种布局。目前虽然只支持高版本的浏览器，相信不久的将来会流行起来。<br><strong>缺点：</strong><br>A.一栏超出高度，其他栏也跟着变高。可能并不是我们期待的效果。<br>B.只支持高版本的浏览器，IE不支持（IE11支持，但需提供前缀），其他大部分需要较新版本的浏览器才支持。</p>
+<h2 id="6、圣杯模式"><a href="#6、圣杯模式" class="headerlink" title="6、圣杯模式"></a>6、圣杯模式</h2><ul>
+<li>三栏包括在一个容器中，空容器的左padding、右padding分别设置为左栏宽度值、右栏宽度值。</li>
+<li>三栏全部设置为左浮动。左右两栏加上负margin让其跟中间栏div并排为一行。<br>（浮动元素可以设置负值，如果浮动元素B前面有浮动元素A，如果设置margin-left之后，上一行能够容纳下B，那B会跑到上一行。但因为浮动元素有条规则：浮动元素高度不会超过之前的浮动元素。所以如果B的margin-left的绝对值即使很大，也不可能超过A的高度。）</li>
+<li>设置完B后，左栏、右栏和中间栏都有重叠，设置左右为相对定位，并设置left、right值去除重叠。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#css</span></span><br><span class="line">.left-sidebar,.right-sidebar,.main&#123;</span><br><span class="line">  <span class="built_in">float</span>:left; </span><br><span class="line">  min-height: 50px;</span><br><span class="line">&#125;</span><br><span class="line">.main&#123;</span><br><span class="line">  width:100%;</span><br><span class="line">&#125;</span><br><span class="line">.mainContent&#123;</span><br><span class="line">  margin-left:190px; </span><br><span class="line">  margin-right:300px; </span><br><span class="line">  background: <span class="comment">#2894ff;</span></span><br><span class="line">&#125;</span><br><span class="line">.left-sidebar&#123;</span><br><span class="line">  margin-left:-100%; </span><br><span class="line">  width:190px; b</span><br><span class="line">  ackground: <span class="comment">#c2ff68; </span></span><br><span class="line">&#125;</span><br><span class="line">.right-sidebar&#123;</span><br><span class="line">  width:300px; </span><br><span class="line">  margin-left:-300px; </span><br><span class="line">  background: <span class="comment">#ffff37;</span></span><br><span class="line">&#125;</span><br><span class="line">.clear&#123;</span><br><span class="line">  clear:both;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#html</span></span><br><span class="line">&lt;div class=<span class="string">&#x27;container&#x27;</span>&gt;</span><br><span class="line"> &lt;div class=<span class="string">&#x27;main&#x27;</span>&gt;</span><br><span class="line">    &lt;div class=<span class="string">&#x27;mainContent&#x27;</span>&gt;</span><br><span class="line">      主体内容区域：&lt;br/&gt;</span><br><span class="line">      这是通过浮动方案来解决的。&lt;br/&gt;这是通过浮动方案来解决的。&lt;br/&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&#x27;left-sidebar&#x27;</span>&gt;左边栏&lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&#x27;right-sidebar&#x27;</span>&gt;右边栏&lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;clear&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="7、双飞翼布局"><a href="#7、双飞翼布局" class="headerlink" title="7、双飞翼布局"></a>7、双飞翼布局</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#css</span></span><br><span class="line">.container&#123;</span><br><span class="line">  padding-left:190px;</span><br><span class="line">  padding-right:300px; </span><br><span class="line">&#125;</span><br><span class="line">.left-sidebar,.right-sidebar, .main&#123;</span><br><span class="line">  <span class="built_in">float</span>:left; </span><br><span class="line">  min-height: 50px;</span><br><span class="line">&#125;</span><br><span class="line">.main&#123;</span><br><span class="line">  box-sizing:border-box; </span><br><span class="line">  width:100%; </span><br><span class="line">  background:#2894ff;</span><br><span class="line">&#125;</span><br><span class="line">.left-sidebar&#123;</span><br><span class="line">  margin-left:-100%; </span><br><span class="line">  width:190px; </span><br><span class="line">  position:relative; </span><br><span class="line">  left:-190px; </span><br><span class="line">  background: <span class="comment">#c2ff68; </span></span><br><span class="line">&#125;</span><br><span class="line">.right-sidebar&#123;</span><br><span class="line">  width:300px; </span><br><span class="line">  margin-left:-300px; </span><br><span class="line">  position:relative; </span><br><span class="line">  right:-300px;</span><br><span class="line">  background: <span class="comment">#ffff37;</span></span><br><span class="line">&#125;</span><br><span class="line">.clear&#123;</span><br><span class="line">  clear:both;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#html</span></span><br><span class="line">&lt;div class=<span class="string">&#x27;container&#x27;</span>&gt;</span><br><span class="line">&lt;div class=<span class="string">&#x27;main&#x27;</span>&gt;</span><br><span class="line">主要内容</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div class=<span class="string">&#x27;left-sidebar&#x27;</span>&gt;左边栏&lt;/div&gt;</span><br><span class="line">&lt;div class=<span class="string">&#x27;right-sidebar&#x27;</span>&gt;右边栏&lt;/div&gt;</span><br><span class="line">&lt;div class=<span class="string">&quot;clear&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>优点：</strong><br>能够先加载重要内容；允许任何列是最高的；DOM结构简单<br><strong>缺点：</strong><br>同双飞翼布局相比，圣杯布局的样式复杂些；圣杯布局在缩放的时候，如果中间宽度小于左侧宽度，布局混乱，如下图所示。</p>
+<h1 id="css盒模型"><a href="#css盒模型" class="headerlink" title="css盒模型"></a>css盒模型</h1><p>具体的计算及类型（IE和标准）我就不一一说啦</p>
+<h2 id="如何获得盒模型宽高"><a href="#如何获得盒模型宽高" class="headerlink" title="如何获得盒模型宽高"></a>如何获得盒模型宽高</h2><h3 id="1、style样式"><a href="#1、style样式" class="headerlink" title="1、style样式"></a>1、style样式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dom.style.width/height</span><br></pre></td></tr></table></figure>
+<h3 id="2、常规的-只计算conten的值"><a href="#2、常规的-只计算conten的值" class="headerlink" title="2、常规的(只计算conten的值))"></a>2、常规的(只计算conten的值))</h3><p><strong>IE</strong> dom.currentStyle.width/height<br><strong>w3c</strong> dom.getComputedStyle(dom,null).width/height</p>
+<h4 id="封装一下"><a href="#封装一下" class="headerlink" title="封装一下"></a>封装一下</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> getStyle(elem, prop)&#123;</span><br><span class="line">  <span class="keyword">if</span>(window.getComputedStyle)&#123;</span><br><span class="line">    <span class="built_in">return</span> window.getComputedStyle(elem, null)[<span class="string">&#x27;prop&#x27;</span>];</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">return</span> elem.currentStyle[<span class="string">&#x27;prop&#x27;</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3、通过定位原理"><a href="#3、通过定位原理" class="headerlink" title="3、通过定位原理"></a>3、通过定位原理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dom.getBoundingCilentKect().width/height</span><br></pre></td></tr></table></figure>
+<h3 id="4、offset-包含margin和padding"><a href="#4、offset-包含margin和padding" class="headerlink" title="4、offset(包含margin和padding)"></a>4、offset(包含margin和padding)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">div.offsetWidth/offsetHeight</span><br></pre></td></tr></table></figure>
+<h2 id="BFC-块级格式化上下文"><a href="#BFC-块级格式化上下文" class="headerlink" title="BFC 块级格式化上下文"></a>BFC 块级格式化上下文</h2><h3 id="触发的场景"><a href="#触发的场景" class="headerlink" title="触发的场景"></a>触发的场景</h3><ul>
+<li>position 定位</li>
+<li>display 转换内部</li>
+<li>float 浮动</li>
+<li>overflow不为visible其他皆可 </li>
+</ul>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><h4 id="1、兄弟结构元素垂直方向的margin重叠"><a href="#1、兄弟结构元素垂直方向的margin重叠" class="headerlink" title="1、兄弟结构元素垂直方向的margin重叠"></a>1、兄弟结构元素垂直方向的margin重叠</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#css</span></span><br><span class="line">.wrapper&#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  background-color: red;</span><br><span class="line">  overflow: hidden;</span><br><span class="line">&#125;</span><br><span class="line">p&#123;</span><br><span class="line">  margin: 5px auto 25px;</span><br><span class="line">  background-color: pink;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#html</span></span><br><span class="line">&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">  &lt;p&gt;1&lt;/p&gt;</span><br><span class="line">  &lt;p&gt;2&lt;/p&gt;</span><br><span class="line">  &lt;p&gt;3&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>兄弟元素中margin取最大的25px作为最终渲染</strong><br><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/margin.jpg" alt="样式示意图"></p>
+<h5 id="margin重叠解决"><a href="#margin重叠解决" class="headerlink" title="margin重叠解决"></a>margin重叠解决</h5><p>了解一下即可，日常开发中其实可以不需要解决之类问题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">  &lt;p&gt;1&lt;/p&gt;</span><br><span class="line">  &lt;div style=<span class="string">&quot;overflow: hidden;&quot;</span>&gt;</span><br><span class="line">    &lt;p&gt;2&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;    </span><br><span class="line">  &lt;p&gt;3&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2、父子级中垂直方向的margin子级会和父级元素结合在一起取最大值（塌陷）"><a href="#2、父子级中垂直方向的margin子级会和父级元素结合在一起取最大值（塌陷）" class="headerlink" title="2、父子级中垂直方向的margin子级会和父级元素结合在一起取最大值（塌陷）"></a>2、父子级中垂直方向的margin子级会和父级元素结合在一起取最大值（塌陷）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#css</span></span><br><span class="line">.wrapper&#123;</span><br><span class="line">  width: 100px;</span><br><span class="line">  height: 100px;</span><br><span class="line">  background-color: red;</span><br><span class="line">  margin-top: 100px;</span><br><span class="line">&#125;</span><br><span class="line">.content&#123;</span><br><span class="line">  width: 100px;</span><br><span class="line">  height: 50px;</span><br><span class="line">  margin-top: 110px;</span><br><span class="line">  background-color: gray;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#html</span></span><br><span class="line">&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;content&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/margin-top.png" alt="塌陷"></p>
+<h4 id="3、BFC不于folat重叠"><a href="#3、BFC不于folat重叠" class="headerlink" title="3、BFC不于folat重叠"></a>3、BFC不于folat重叠</h4><p>但没有创建BFC的时候，右边的溢出的部分会填充到左侧，我们是不希望有这样效果的，BFC的创建正好可以解决这个问题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#css</span></span><br><span class="line">.wrapper&#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">  <span class="built_in">float</span>: left;</span><br><span class="line">  width: 100px;</span><br><span class="line">  height: 100px;</span><br><span class="line">  background-color: red;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">  height: 120px;</span><br><span class="line">  background: gray;</span><br><span class="line">  overflow: auto; <span class="comment">#创建BFC解决</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#html</span></span><br><span class="line">&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;left&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;right&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure><br><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/float.png" alt="float的处理"></p>
+<h4 id="4、BFC子元素即使float也可以参与高度计算"><a href="#4、BFC子元素即使float也可以参与高度计算" class="headerlink" title="4、BFC子元素即使float也可以参与高度计算"></a>4、BFC子元素即使float也可以参与高度计算</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#css</span></span><br><span class="line">.left&#123;</span><br><span class="line">  <span class="built_in">float</span>: left;</span><br><span class="line">&#125;</span><br><span class="line">html</span><br><span class="line">&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">  &lt;div class=<span class="string">&quot;float&quot;</span>&gt;aaaa&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>但上述样式不多解释就知道父级高度并没有撑开，怎么做呢，<strong>创建BFC</strong>，<strong>父级添加float、overflo、position等都可以</strong></p>
+<h1 id="DOM事件类"><a href="#DOM事件类" class="headerlink" title="DOM事件类"></a>DOM事件类</h1><h2 id="DOM事件级别的绑定与解绑"><a href="#DOM事件级别的绑定与解绑" class="headerlink" title="DOM事件级别的绑定与解绑"></a>DOM事件级别的绑定与解绑</h2><h3 id="DOM0"><a href="#DOM0" class="headerlink" title="DOM0"></a>DOM0</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#绑定</span></span><br><span class="line">dom.onclick = <span class="function"><span class="title">function</span></span>()&#123;&#125;</span><br><span class="line"><span class="comment">#解绑</span></span><br><span class="line">dom.onclick = null</span><br></pre></td></tr></table></figure>
+<h3 id="DOM2"><a href="#DOM2" class="headerlink" title="DOM2"></a>DOM2</h3><h4 id="W3C标准"><a href="#W3C标准" class="headerlink" title="W3C标准"></a>W3C标准</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#绑定 test函数、当false时冒泡事件，当true时捕获事件</span></span><br><span class="line">dom.addEventListener(<span class="string">&#x27;click&#x27;</span>,<span class="built_in">test</span>,<span class="literal">false</span>)</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">test</span></span>()&#123;&#125;</span><br><span class="line"><span class="comment"># 解绑</span></span><br><span class="line">dom.removeEventListener(<span class="string">&#x27;click&#x27;</span>,<span class="built_in">test</span>,<span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="IE"><a href="#IE" class="headerlink" title="IE"></a>IE</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#绑定</span></span><br><span class="line">dom.attachEvent(onclick, <span class="built_in">test</span>);</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">test</span></span>() &#123;&#125;</span><br><span class="line"><span class="comment"># 解绑</span></span><br><span class="line">dom.detachEvent(onClick, <span class="built_in">test</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="封装一下-1"><a href="#封装一下-1" class="headerlink" title="封装一下"></a>封装一下</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> addEvent(elem, <span class="built_in">type</span>, handle)&#123;</span><br><span class="line">  <span class="keyword">if</span>(elem.addEventListener)&#123;</span><br><span class="line">    elem.addEventListener(<span class="built_in">type</span>, handle, <span class="literal">false</span>)</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(elem.attachEvent)&#123;</span><br><span class="line">    elem.attchEvent(<span class="string">&#x27;on&#x27;</span> + <span class="built_in">type</span>, <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">      handle.call(elem);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    elem[<span class="string">&#x27;on&#x27;</span> + <span class="built_in">type</span>] = handle</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DOM3"><a href="#DOM3" class="headerlink" title="DOM3"></a>DOM3</h3><p>DOM3和DOM2绑定的规则一样，只是这时候多了很多事件，如mousemove、keydown等事件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dom.attachEvent(onclick, <span class="built_in">test</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="事件模型"><a href="#事件模型" class="headerlink" title="事件模型"></a>事件模型</h2><p>捕获和冒泡</p>
+<h3 id="取消冒泡事件"><a href="#取消冒泡事件" class="headerlink" title="取消冒泡事件"></a>取消冒泡事件</h3><p>捕获的取消就不讲了，定义的时候最后一个参数false就行啦,封装一下，<strong>IE和w3c标准</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> stopBubble(event)&#123;</span><br><span class="line">  <span class="keyword">if</span>(event.stopPropagation)&#123;</span><br><span class="line">    event.stopPropagation();</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    event.cancelBubble = <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># stopBubble(e)</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>捕获 -&gt; 目标阶段 -&gt; 冒泡</p>
+<h2 id="描述DOM事件捕获的具体流程"><a href="#描述DOM事件捕获的具体流程" class="headerlink" title="描述DOM事件捕获的具体流程"></a>描述DOM事件捕获的具体流程</h2><p>window -&gt; document -&gt; html标签 -&gt; body -&gt; … -&gt;目标元素<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var div = document.getElementsByClassName(<span class="string">&#x27;wrapper&#x27;</span>)[0];</span><br><span class="line">window.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">&#x27;window captrue&#x27;</span>)</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">document.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">&#x27;document captrue&#x27;</span>);</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">document.documentElement.addEventListener(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">&#x27;html captrue&#x27;</span>);</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">document.body.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">&#x27;body captrue&#x27;</span>);</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br><span class="line">div.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">&#x27;div captrue&#x27;</span>)</span><br><span class="line">&#125;, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure><br>触发的顺序就是标题上的意思，就不做过多解释啦</p>
+<h2 id="Event对象常见的应用"><a href="#Event对象常见的应用" class="headerlink" title="Event对象常见的应用"></a>Event对象常见的应用</h2><ul>
+<li>event.preventDefault()    阻止默认事件</li>
+<li>event.stopPropagation()   阻止冒泡事件</li>
+<li>event.stopImmediatePropagation()<br>事件响应优先级，但同一个dom绑定多个事件的时候，调用一个事件之后但不希望在触发其他事件，就可以在里面加这一句话</li>
+<li>event.currentTarget       </li>
+<li>event.target              事件委托      </li>
+</ul>
+<h3 id="target事件委托与currentTarget区别实例"><a href="#target事件委托与currentTarget区别实例" class="headerlink" title="target事件委托与currentTarget区别实例"></a>target事件委托与currentTarget区别实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ul.onclick = <span class="keyword">function</span>(e)&#123;</span><br><span class="line">  var event = e || window.event;</span><br><span class="line">  var target = event.target || event.srcElement;</span><br><span class="line">  console.log(target.innerText);</span><br><span class="line">  console.log(event.currentTarget.tagName) <span class="comment">#ul</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>target点击事件为触发相应的li事假，而currentTarget只会触发父级的</p>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建事件对象</span></span><br><span class="line">var evt = document.createEvent(<span class="string">&#x27;Event&#x27;</span>);</span><br><span class="line"><span class="comment"># 定义事件类型</span></span><br><span class="line">evt.initEvent(<span class="string">&#x27;customEvent&#x27;</span>, <span class="literal">true</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="comment"># 在元素上监听事件</span></span><br><span class="line">var obj = document.getElementById(<span class="string">&#x27;testBox&#x27;</span>);</span><br><span class="line">obj.addEventListener(<span class="string">&#x27;customEvent&#x27;</span>, <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    console.log(<span class="string">&#x27;customEvent 事件触发了&#x27;</span>);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<p><code>createEvent</code> 方法创建了一个空事件 <code>evt</code>，然后使用<code>initEvent</code>方法定义事件的类型为约定好的自定义事件，再对相应的元素进行监听，接着，就是使用<code>dispatchEvent</code>触发事件了。</p>
+<h1 id="http协议类"><a href="#http协议类" class="headerlink" title="http协议类"></a>http协议类</h1><h2 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h2><p>GET、HEAD、POST、PUT、DELETE、CONNECT、OPTIONS、TRACE</p>
+<h2 id="POST和GET的区别"><a href="#POST和GET的区别" class="headerlink" title="POST和GET的区别"></a>POST和GET的区别</h2><ul>
+<li>GET在浏览器回退时是无害的，而POST会再次提交请求</li>
+<li>GET产生的URL地址可以被收藏，而POST不可以</li>
+<li>GET请求会被浏览器主动缓存，而POST不会，除非手动设置</li>
+<li>GET请求只能进行url编码，而POST支持多种编码方式</li>
+<li>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留</li>
+<li>GET请求在URL中传送的参数是有长度限制的，而POST没有限制</li>
+<li>对参数的数据类型，GET只接受ASCLL字符，而POST没有限制</li>
+<li>GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息</li>
+<li>GET参数通过URL传递，POST放在Request body中 </li>
+</ul>
+<h2 id="http状态码"><a href="#http状态码" class="headerlink" title="http状态码"></a>http状态码</h2><ul>
+<li>1xx：指示信息-表示请求已接收，继续处理</li>
+<li>2xx：成功-表示请求已被成功接收</li>
+<li>3xx：重定向-要完成请求必须进行跟进一步的操作</li>
+<li>4xx：客户端错误-请求有语法错误或者请求无法实现</li>
+<li>5xx：服务器错误-服务器未能实现合法的请求</li>
+</ul>
+<h2 id="http持久连接"><a href="#http持久连接" class="headerlink" title="http持久连接"></a>http持久连接</h2><p>http在使用普通模式下，Keep-Alive模式时，每一个请求/应答客户和服务器都要新建一个连接，完成之后立刻断开连接（http协议无连接的协议）。<br>当使用Keep-Alive模式（持久连接、连接重用）时，Keep-Alive功能使客户端到服务器端的连接持续有效，当出现对服务器的后续请求是，Keep-Alive功能避免了建立或者重新建立连接<br><strong>持续连接只在http1.1版本下支持</strong></p>
+<h2 id="管线化"><a href="#管线化" class="headerlink" title="管线化"></a>管线化</h2><p><strong>在持久化情况下</strong><br>正常情况下：<br>请求1-&gt;响应1-&gt;请求2-&gt;响应2-&gt;请求3-&gt;响应3<br>在管道化情况下<br>请求1-&gt;请求2-&gt;请求3-&gt;响应1-&gt;响应2-&gt;响应3-&gt;<br><strong>打包所有的请求集合在一起然后在请求</strong></p>
+<h3 id="管线化特点"><a href="#管线化特点" class="headerlink" title="管线化特点"></a>管线化特点</h3><ul>
+<li>管线化机制通过持久连接完成，仅http/1.1支持此技术</li>
+<li>只有GET和HEAD请求可以进行管线化，而POST则有所限制</li>
+<li>初次创建连接时不应启动管线机制，因为对方（服务器）不一定支持HTTP/1.1版本的协议</li>
+</ul>
+<h1 id="原型链类"><a href="#原型链类" class="headerlink" title="原型链类"></a>原型链类</h1><ul>
+<li>创建对象有几种方法</li>
+<li>原型、构造函数、实例、原型链</li>
+<li>instanceof原理</li>
+<li>new运算符</li>
+</ul>
+<h2 id="创建对象几种方法"><a href="#创建对象几种方法" class="headerlink" title="创建对象几种方法"></a>创建对象几种方法</h2><h3 id="第一类字面量对象"><a href="#第一类字面量对象" class="headerlink" title="第一类字面量对象"></a>第一类字面量对象</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一种</span></span><br><span class="line">var obj1 = &#123;name: <span class="string">&#x27;obj1&#x27;</span>&#125;</span><br><span class="line"><span class="comment"># 第二种</span></span><br><span class="line">var obj2 = new Object(&#123;name: <span class="string">&#x27;obj2&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="第二类显示构造函数"><a href="#第二类显示构造函数" class="headerlink" title="第二类显示构造函数"></a>第二类显示构造函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var Obj = <span class="function"><span class="title">function</span></span>()&#123;this.name=<span class="string">&#x27;obj&#x27;</span>&#125;</span><br><span class="line">var obj = new Obj();</span><br></pre></td></tr></table></figure>
+<h3 id="第三类定义父级原型的构造"><a href="#第三类定义父级原型的构造" class="headerlink" title="第三类定义父级原型的构造"></a>第三类定义父级原型的构造</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var Farther = &#123;name: <span class="string">&#x27;farther&#x27;</span>&#125;</span><br><span class="line">var Son = Object.create(Farther)</span><br></pre></td></tr></table></figure>
+<h2 id="原型链原理"><a href="#原型链原理" class="headerlink" title="原型链原理"></a>原型链原理</h2><p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/prototype.png" alt="原型链"></p>
+<h3 id="以jQuer源码中为例"><a href="#以jQuer源码中为例" class="headerlink" title="以jQuer源码中为例"></a>以jQuer源码中为例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">window.jQuer = window.$ = jQuery;</span><br><span class="line"><span class="keyword">function</span> jQuery(str)&#123;</span><br><span class="line">  <span class="built_in">return</span> new jQuery.prototype.init(str);</span><br><span class="line">&#125;</span><br><span class="line">jQuery.prototype.init = <span class="keyword">function</span>(str)&#123;</span><br><span class="line">  ....</span><br><span class="line">  <span class="built_in">return</span> this;</span><br><span class="line">&#125;</span><br><span class="line">jQuery.prototype.css = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="built_in">return</span> this;</span><br><span class="line">&#125;</span><br><span class="line">jQuery.protoype.html = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="built_in">return</span> this;</span><br><span class="line">&#125;</span><br><span class="line">jQuery.prototype.init.prototype = jQuery.prototype</span><br></pre></td></tr></table></figure>
+<h2 id="instanceof原理与constructor"><a href="#instanceof原理与constructor" class="headerlink" title="instanceof原理与constructor"></a>instanceof原理与constructor</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Person</span></span>()&#123;&#125;</span><br><span class="line">var person = new Person()</span><br><span class="line">console.log(person instanceof Person)     <span class="comment"># true</span></span><br><span class="line">console.log(person instanceof Object)     <span class="comment"># true </span></span><br><span class="line">console.log(obj.constructor === Obj)      <span class="comment"># true</span></span><br><span class="line">console.log(obj.constructor === Object)   <span class="comment">#false</span></span><br></pre></td></tr></table></figure>
+<p><strong>分析</strong>：</p>
+<ul>
+<li>person对象 是不是 Person构造函数构造出的对象</li>
+<li>只有person所在的原型链<code>instanceof</code>都会返回true</li>
+<li><code>constructor</code>判定直接构成函数的父级笔记严谨</li>
+</ul>
+<h1 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h1><h2 id="声明与实例化"><a href="#声明与实例化" class="headerlink" title="声明与实例化"></a>声明与实例化</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 类的声明</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Animal</span></span>()&#123;</span><br><span class="line">  this.name = <span class="string">&#x27;name&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># ES6中的class的声明</span></span><br><span class="line">class <span class="function"><span class="title">Animal2</span></span>()&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span></span>()&#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 实例化</span></span><br><span class="line">new Animal();</span><br><span class="line">new Animal2();</span><br></pre></td></tr></table></figure>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><h3 id="1、借助构造函数实现继承"><a href="#1、借助构造函数实现继承" class="headerlink" title="1、借助构造函数实现继承"></a>1、借助构造函数实现继承</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Parent.prototype.lasName = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Parent</span></span>()&#123;</span><br><span class="line">  this.name = <span class="string">&#x27;parent&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype.newName = <span class="string">&#x27;bbb&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Child</span></span>()&#123;</span><br><span class="line">  Parent.call(this);</span><br><span class="line">  this.type = <span class="string">&#x27;child&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>特点</strong></p>
+<ul>
+<li>call/apply能改函数运行的上下文，从而实现继承，但是<code>Parent</code>如果定义原型上的方法，<code>Child</code>是无法取到的</li>
+<li><code>Child</code>只能取到<code>Parent</code>函数中的属性，但是取不到<code>Parent</code>的原型属性</li>
+</ul>
+<h3 id="2、正则共享原型"><a href="#2、正则共享原型" class="headerlink" title="2、正则共享原型"></a>2、正则共享原型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Parent.prototype.lasName = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Parent</span></span>()&#123;</span><br><span class="line">  this.name = <span class="string">&#x27;parent&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype.newName = <span class="string">&#x27;bbb&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Child</span></span>()&#123;</span><br><span class="line">  this.type = <span class="string">&#x27;child&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype = new Parent();</span><br><span class="line">var child = new Child()</span><br><span class="line">var parent = new Parent()</span><br><span class="line">parent.name = <span class="string">&#x27;ccc&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><strong>特点：</strong><br>1、改变<code>Child</code>原型从而继承<code>parent</code>原型上的属性<br>2、Child上定义的原型，在实例上就取不到了，因为已经改变了自身的原型指向。<br>3、此继承了<code>Parent</code>上的原型方法和函数自身属性，<code>child</code>修改原型上面属性时，<code>Parent</code>原型上方法会随之也改变，这是我们不希望的。</p>
+<h3 id="3、复合方法"><a href="#3、复合方法" class="headerlink" title="3、复合方法"></a>3、复合方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Parent</span></span>()&#123;</span><br><span class="line">  this.name = <span class="string">&#x27;parent&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Child</span></span>()&#123;</span><br><span class="line">  Parent.call(this);</span><br><span class="line">  this.type = <span class="string">&#x27;child&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">Child.prototype = new Parent;</span><br></pre></td></tr></table></figure>
+<p><strong>特点：</strong><br>1、<code>Parent</code>被new执行了两次，没有必要的事<br>2、<code>Child</code>改变原型的方法，<code>Parent</code>不会随之改变</p>
+<h3 id="4、圣杯模式"><a href="#4、圣杯模式" class="headerlink" title="4、圣杯模式"></a>4、圣杯模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Parent.prototype.lasName = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Parent</span></span>()&#123;</span><br><span class="line">  this.name = <span class="string">&#x27;parent&#x27;</span>;</span><br><span class="line">  this.play = [1,2]</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype.newName = <span class="string">&#x27;bbb&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Child</span></span>()&#123;</span><br><span class="line">  Parent.call(this);</span><br><span class="line">  this.type = <span class="string">&#x27;child&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> inherit (Target, Origin)&#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">F</span></span>()&#123;&#125;;</span><br><span class="line">  F.prototype = Origin.prototype;</span><br><span class="line">  Target.prototype = new F;</span><br><span class="line">  Target.prototype.constructor = Target</span><br><span class="line">  Target.prototype.uber = Object.prototype;</span><br><span class="line">&#125;</span><br><span class="line">inherit(Child, Parent);</span><br><span class="line">var a = new Child()</span><br><span class="line">Child.prototype.lasName=<span class="string">&#x27;ccc&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><strong>特点</strong><br><code>Child</code>定义的自身原型无效的，实例无法访问</p>
+<h3 id="5、Es6语法"><a href="#5、Es6语法" class="headerlink" title="5、Es6语法"></a>5、Es6语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Parent.prototype.lasName = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">Parent.prototype.set = <span class="string">&#x27;set&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Parent</span></span>()&#123;</span><br><span class="line">  this.name = <span class="string">&#x27;parent&#x27;</span>;</span><br><span class="line">  this.play = [1,2]</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype.newName = <span class="string">&#x27;bbb&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Child</span></span>()&#123;</span><br><span class="line">  Parent.call(this);</span><br><span class="line">  this.type = <span class="string">&#x27;child&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> inherit (Target, Origin)&#123;</span><br><span class="line">  Object.assign(Target,Parent.prototype)</span><br><span class="line">&#125;</span><br><span class="line">inherit(Child, Parent);</span><br><span class="line">var a = new Child()</span><br><span class="line">Child.prototype.lasName=<span class="string">&#x27;ccc&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><strong>特点</strong><br><code>assign</code>是es6语法糖，将<code>Parent.prototype</code>可枚举的属性全部添加到<code>Target</code>中</p>
+<h2 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h2><p><strong>思路</strong><br>1、遍历对象for(var prop in obj)；<br>2、判断是不是原始值；<br>3、判断数组还是对象；<br>4、简历相应的数组或对象<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> deepClone(origin, target)&#123;</span><br><span class="line">  var target = target || &#123;&#125;,</span><br><span class="line">      toStr = Object.prototype.toString,</span><br><span class="line">      arrStr = <span class="string">&quot;[object Array]&quot;</span>;</span><br><span class="line">  <span class="keyword">for</span>(var prop <span class="keyword">in</span> origin)&#123;</span><br><span class="line">    <span class="keyword">if</span>(origin.hasOwnProperty(prop))&#123;</span><br><span class="line">      <span class="keyword">if</span>(origin[prop] !== <span class="string">&#x27;null&#x27;</span> &amp;&amp; <span class="built_in">type</span>(origin[prop]) == <span class="string">&#x27;object&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(toStr.call(origin[prop]) === arrStr)&#123;</span><br><span class="line">          target[prop] = [];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          target[prop] = &#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        deepClone(origin[prop], target[prop]);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        target[prop] = origin[prop]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> target;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="通信类"><a href="#通信类" class="headerlink" title="通信类"></a>通信类</h1><ul>
+<li>什么同源策略及限制</li>
+<li>前后端如何通信</li>
+<li>如何创建Ajax</li>
+<li>跨域通信的几种方式</li>
+</ul>
+<h2 id="什么是同源策略及限制"><a href="#什么是同源策略及限制" class="headerlink" title="什么是同源策略及限制"></a>什么是同源策略及限制</h2><p>同源策略限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的关键的安全机制<br><strong>注：</strong><br>源：协议、域名、端口<br><strong>非同源策略下的限制</strong></p>
+<ul>
+<li>Cookie、LocalStorage和IndexDB无法读取</li>
+<li>DOM无法获取</li>
+<li>Ajax请求不能发送</li>
+</ul>
+<h2 id="前后端如何通信"><a href="#前后端如何通信" class="headerlink" title="前后端如何通信"></a>前后端如何通信</h2><ul>
+<li>Ajax</li>
+<li>WebSocket</li>
+<li>CORS</li>
+</ul>
+<h2 id="如何创建Ajax"><a href="#如何创建Ajax" class="headerlink" title="如何创建Ajax"></a>如何创建Ajax</h2><h3 id="定外卖的思想"><a href="#定外卖的思想" class="headerlink" title="定外卖的思想"></a>定外卖的思想</h3><ul>
+<li>手机、电脑—————–&gt;浏览器</li>
+<li>美团外卖、饿了么等——–&gt;ajax对象</li>
+<li>打开APP 商家、商品——–&gt;ajax.open(method,url,true)</li>
+<li>下单（……）—————&gt;ajax.send()</li>
+<li>监听外卖信息————–&gt;onreadystatechage 4</li>
+<li>开门、验货、处理———-&gt;status == 200 403 503</li>
+</ul>
+<h3 id="封装一下-2"><a href="#封装一下-2" class="headerlink" title="封装一下"></a>封装一下</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> ajaxFunc(method, url, data,callback, flag)&#123;</span><br><span class="line">  var xhr = null;</span><br><span class="line">  <span class="comment">#创建ajax对象</span></span><br><span class="line">  <span class="keyword">if</span>(window.XMLHttpRequest)&#123;</span><br><span class="line">    xhr = new XMLHttpRequest();</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;# ie兼容</span><br><span class="line">    xhr = new ActiveXObject(<span class="string">&#x27;Microsoft.XMLHttp&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">#兼容小写，统一转换成大写‘GET’、‘POST’</span></span><br><span class="line">  method = method.toUpperCase();</span><br><span class="line">  <span class="keyword">if</span>(method == <span class="string">&#x27;GET&#x27;</span>)&#123;</span><br><span class="line">    xhr.open(method, url + <span class="string">&#x27;?&#x27;</span> + data, flag);</span><br><span class="line">    xhr.send();</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(method == <span class="string">&#x27;POST&#x27;</span>)&#123;</span><br><span class="line">    xhr.open(method, url, flag);</span><br><span class="line">    xhr.setRequestHeader(<span class="string">&#x27;Content-type&#x27;</span>, <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>);</span><br><span class="line">    xhr.send(data);</span><br><span class="line">  &#125;</span><br><span class="line">  xhr.onreadystatechange = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span>(xhr.readyState == 4)&#123;</span><br><span class="line">      <span class="keyword">if</span>(xhr.status == 200 || xhr.status == 304)&#123;</span><br><span class="line">        callback(xhr.reponseText);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        console.log(<span class="string">&#x27;error&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="跨域通信的几种方式"><a href="#跨域通信的几种方式" class="headerlink" title="跨域通信的几种方式"></a>跨域通信的几种方式</h2><ul>
+<li>JSONP</li>
+<li>服务中转站</li>
+<li>doucument.domain（针对基础域名相同的情况下）</li>
+<li>Hash：url中#之后的参数</li>
+<li>postMessage: h5</li>
+<li>WebSocket</li>
+<li>CORS</li>
+</ul>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><p><code>src</code>不受同源策略的限制。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var oScript = document.createElement(<span class="string">&#x27;script&#x27;</span>);</span><br><span class="line">oScript.src = <span class="string">&#x27;https://......?wd=&#x27;</span> + value + <span class="string">&#x27;&amp;cb=doJson&#x27;</span>;</span><br><span class="line">document.body.appendChild(oScript)</span><br><span class="line"><span class="keyword">function</span> doJson(data)&#123;console.log(data)&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="CORS通信"><a href="#CORS通信" class="headerlink" title="CORS通信"></a>CORS通信</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">&#x27;/some/url&#x27;</span>,&#123;</span><br><span class="line">  method: <span class="string">&#x27;get&#x27;</span></span><br><span class="line">&#125;).<span class="keyword">then</span>(<span class="keyword">function</span>(response)&#123;</span><br><span class="line"></span><br><span class="line">&#125;).catch(<span class="keyword">function</span>(err)&#123;</span><br><span class="line">  <span class="comment">#出错啦：等价于then的第二个参数，这样比较直观</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="安全类"><a href="#安全类" class="headerlink" title="安全类"></a>安全类</h1><ul>
+<li>CSRF</li>
+<li>XSS</li>
+</ul>
+<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><h3 id="基本概念和缩写"><a href="#基本概念和缩写" class="headerlink" title="基本概念和缩写"></a>基本概念和缩写</h3><p>跨站请求伪造</p>
+<h3 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h3><h3 id="防御措施"><a href="#防御措施" class="headerlink" title="防御措施"></a>防御措施</h3><ul>
+<li>Token验证</li>
+<li>Referer验证</li>
+<li>隐藏令牌</li>
+</ul>
+<h1 id="渲染机制类"><a href="#渲染机制类" class="headerlink" title="渲染机制类"></a>渲染机制类</h1><ul>
+<li>什么是DOCTYPE及作用</li>
+<li>浏览器渲染过程</li>
+<li>重排Reflow</li>
+<li>重绘Repaint</li>
+<li>Layout</li>
+</ul>
+<h2 id="什么是DOCTYPE及作用"><a href="#什么是DOCTYPE及作用" class="headerlink" title="什么是DOCTYPE及作用"></a>什么是DOCTYPE及作用</h2><h3 id="DTD文档类型定义"><a href="#DTD文档类型定义" class="headerlink" title="DTD文档类型定义"></a>DTD文档类型定义</h3><p>DTD就是就是告诉浏览器我是什么文档类型，让浏览器知道需要用什么解析</p>
+<h3 id="DOCTYPE定义"><a href="#DOCTYPE定义" class="headerlink" title="DOCTYPE定义"></a>DOCTYPE定义</h3><p>用来声明文档类型和DTD规定的，主要用途便是文件的合法性验证。如果文件代码不合法，那么浏览器解析时便会出差错（直接告诉浏览器什么时候DTD，告诉浏览器是什么文档类型）</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>HTML5 &lt;!DOCTYPE html&gt;</li>
+<li>HTML4.0.1 Strict 严格模式</li>
+<li>HTML4.0.1 Transitional 普通模式</li>
+</ul>
+<h2 id="浏览器的渲染过程"><a href="#浏览器的渲染过程" class="headerlink" title="浏览器的渲染过程"></a>浏览器的渲染过程</h2><p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/display.png" alt="浏览器"></p>
+<h2 id="重排Reflow"><a href="#重排Reflow" class="headerlink" title="重排Reflow"></a>重排Reflow</h2><p>dom结构中的各个元素都有自己的盒子（模型），这些都需要浏览器根据各种样式来设计并根据计算结果将元素放到它改出现的位置，这个过程称之为reflow</p>
+<ul>
+<li>当你操作dom，增加、删除、修改DOM结点时，导致Reflow或、Repaint</li>
+<li>当你移动DOM的位置，或是搞个动画的时候</li>
+<li>当你修改CSS样式的时候</li>
+<li>当你Reaize窗口的时候（移动端没有这个问题），或者滚动的时候</li>
+<li>当你修改页面的默认字体时</li>
+<li>当你窗口大小、字体大小、内容改变、输入框输入文字</li>
+<li>当你激活伪类，如：hover</li>
+<li>当你操作class属性</li>
+<li>当你计算offsetWidth和offsetHeight</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 让浏览器开启gpu加速，监听tranform属性加速 </span></span><br><span class="line">div &#123;</span><br><span class="line">  width: 100px;</span><br><span class="line">  height: 100px;</span><br><span class="line">&#125;</span><br><span class="line">div:hover &#123;</span><br><span class="line">  will-change: tranform</span><br><span class="line">&#125;</span><br><span class="line">div:active &#123;</span><br><span class="line">  transform: scale(2, 3)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重绘Repaint"><a href="#重绘Repaint" class="headerlink" title="重绘Repaint"></a>重绘Repaint</h2><p>当各种盒子的位置、大小以及其他属性，列如颜色、字体大小等都确定下来后，浏览器于是便把这些元素都按照各自的特性绘制一遍，于是页面的内容出现啦</p>
+<ul>
+<li>DOM改动</li>
+<li>CSS改动</li>
+</ul>
+<h2 id="js运行机制（js单线程）"><a href="#js运行机制（js单线程）" class="headerlink" title="js运行机制（js单线程）"></a>js运行机制（js单线程）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">console.log(<span class="string">&#x27;A&#x27;</span>)</span><br><span class="line">setTimeout(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">&#x27;B&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">while</span>(1)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只会输出A，在单线程队列中只要还未加载完，异步<code>setTimeout</code>是不会进行的</p>
+<h1 id="页面性能类"><a href="#页面性能类" class="headerlink" title="页面性能类"></a>页面性能类</h1><h2 id="提升页面性能的方法有哪些？"><a href="#提升页面性能的方法有哪些？" class="headerlink" title="提升页面性能的方法有哪些？"></a>提升页面性能的方法有哪些？</h2><ul>
+<li>资源压缩合并，减少HTTP请求</li>
+<li>非核心代码异步加载——&gt;异步加载方式——&gt;异步加载的区别</li>
+<li>利用浏览器缓存——&gt;缓存的分类——&gt;缓存的原理</li>
+<li>使用CDN</li>
+<li>与解析DNS<br><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="//host_name_to_prefetch.com">
+
+</li>
+</ul>
+<h2 id="异步加载"><a href="#异步加载" class="headerlink" title="异步加载"></a>异步加载</h2><h3 id="1-异步加载方式"><a href="#1-异步加载方式" class="headerlink" title="1.异步加载方式"></a>1.异步加载方式</h3><ul>
+<li>动态脚本加载</li>
+<li>defer</li>
+<li>async</li>
+</ul>
+<h3 id="2-异步加载的区别"><a href="#2-异步加载的区别" class="headerlink" title="2.异步加载的区别"></a>2.异步加载的区别</h3><ul>
+<li>defer是在HTML解析完之后才会执行，如果是多个，按照加载的顺序依次执行</li>
+<li>async是在加载完之后立即执行，如果是多个，执行顺序和加载顺序无关</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag"># 面试题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/08/09/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="next" title="前端模块化">
+                <i class="fa fa-chevron-left"></i> 前端模块化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/08/27/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/Express%E6%A1%86%E6%9E%B6/" rel="prev" title="详解express框架">
+                详解express框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#h5%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE"><span class="nav-number">1.</span> <span class="nav-text">h5语义化标签</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#title%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">title：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hn%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">hn：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#header%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">header：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nav%EF%BC%9A"><span class="nav-number">1.4.</span> <span class="nav-text">nav：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main%EF%BC%9A"><span class="nav-number">1.5.</span> <span class="nav-text">main：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#article%EF%BC%9A"><span class="nav-number">1.6.</span> <span class="nav-text">article：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section%EF%BC%9A"><span class="nav-number">1.7.</span> <span class="nav-text">section：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aside%EF%BC%9A"><span class="nav-number">1.8.</span> <span class="nav-text">aside：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#footer%EF%BC%9A"><span class="nav-number">1.9.</span> <span class="nav-text">footer：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#small%EF%BC%9A"><span class="nav-number">1.10.</span> <span class="nav-text">small：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E6%A0%8F%E5%B8%83%E5%B1%80%EF%BC%8C%E5%B7%A6%E5%8F%B3%E9%A1%B6%E5%AE%BD%E9%AB%98%EF%BC%8C%E4%B8%AD%E9%97%B4%E8%87%AA%E9%80%82%E5%BA%94"><span class="nav-number">2.</span> <span class="nav-text">三栏布局，左右顶宽高，中间自适应</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-float%E5%B8%83%E5%B1%80"><span class="nav-number">2.1.</span> <span class="nav-text">1.float布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bfc"><span class="nav-number">2.1.1.</span> <span class="nav-text">bfc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%E5%B8%83%E5%B1%80"><span class="nav-number">2.2.</span> <span class="nav-text">2.绝对定位布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-flex%E5%B8%83%E5%B1%80"><span class="nav-number">2.3.</span> <span class="nav-text">3.flex布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%A1%A8%E6%A0%BC%E5%B8%83%E5%B1%80"><span class="nav-number">2.4.</span> <span class="nav-text">4.表格布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80"><span class="nav-number">2.5.</span> <span class="nav-text">5.网格布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E5%9C%A3%E6%9D%AF%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.6.</span> <span class="nav-text">6、圣杯模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81%E5%8F%8C%E9%A3%9E%E7%BF%BC%E5%B8%83%E5%B1%80"><span class="nav-number">2.7.</span> <span class="nav-text">7、双飞翼布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#css%E7%9B%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">css盒模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%BE%97%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%AE%BD%E9%AB%98"><span class="nav-number">3.1.</span> <span class="nav-text">如何获得盒模型宽高</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81style%E6%A0%B7%E5%BC%8F"><span class="nav-number">3.1.1.</span> <span class="nav-text">1、style样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%B8%B8%E8%A7%84%E7%9A%84-%E5%8F%AA%E8%AE%A1%E7%AE%97conten%E7%9A%84%E5%80%BC"><span class="nav-number">3.1.2.</span> <span class="nav-text">2、常规的(只计算conten的值))</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%8B"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">封装一下</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%80%9A%E8%BF%87%E5%AE%9A%E4%BD%8D%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.3.</span> <span class="nav-text">3、通过定位原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81offset-%E5%8C%85%E5%90%ABmargin%E5%92%8Cpadding"><span class="nav-number">3.1.4.</span> <span class="nav-text">4、offset(包含margin和padding)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC-%E5%9D%97%E7%BA%A7%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-number">3.2.</span> <span class="nav-text">BFC 块级格式化上下文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-number">3.2.1.</span> <span class="nav-text">触发的场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.2.2.</span> <span class="nav-text">应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%85%84%E5%BC%9F%E7%BB%93%E6%9E%84%E5%85%83%E7%B4%A0%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84margin%E9%87%8D%E5%8F%A0"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">1、兄弟结构元素垂直方向的margin重叠</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#margin%E9%87%8D%E5%8F%A0%E8%A7%A3%E5%86%B3"><span class="nav-number">3.2.2.1.1.</span> <span class="nav-text">margin重叠解决</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E7%88%B6%E5%AD%90%E7%BA%A7%E4%B8%AD%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E7%9A%84margin%E5%AD%90%E7%BA%A7%E4%BC%9A%E5%92%8C%E7%88%B6%E7%BA%A7%E5%85%83%E7%B4%A0%E7%BB%93%E5%90%88%E5%9C%A8%E4%B8%80%E8%B5%B7%E5%8F%96%E6%9C%80%E5%A4%A7%E5%80%BC%EF%BC%88%E5%A1%8C%E9%99%B7%EF%BC%89"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">2、父子级中垂直方向的margin子级会和父级元素结合在一起取最大值（塌陷）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81BFC%E4%B8%8D%E4%BA%8Efolat%E9%87%8D%E5%8F%A0"><span class="nav-number">3.2.2.3.</span> <span class="nav-text">3、BFC不于folat重叠</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81BFC%E5%AD%90%E5%85%83%E7%B4%A0%E5%8D%B3%E4%BD%BFfloat%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%8F%82%E4%B8%8E%E9%AB%98%E5%BA%A6%E8%AE%A1%E7%AE%97"><span class="nav-number">3.2.2.4.</span> <span class="nav-text">4、BFC子元素即使float也可以参与高度计算</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DOM%E4%BA%8B%E4%BB%B6%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">DOM事件类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB%E7%9A%84%E7%BB%91%E5%AE%9A%E4%B8%8E%E8%A7%A3%E7%BB%91"><span class="nav-number">4.1.</span> <span class="nav-text">DOM事件级别的绑定与解绑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM0"><span class="nav-number">4.1.1.</span> <span class="nav-text">DOM0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM2"><span class="nav-number">4.1.2.</span> <span class="nav-text">DOM2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#W3C%E6%A0%87%E5%87%86"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">W3C标准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IE"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">IE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%8B-1"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">封装一下</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM3"><span class="nav-number">4.1.3.</span> <span class="nav-text">DOM3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">事件模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%96%E6%B6%88%E5%86%92%E6%B3%A1%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.2.1.</span> <span class="nav-text">取消冒泡事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="nav-number">4.3.</span> <span class="nav-text">事件流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0DOM%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7%E7%9A%84%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-number">4.4.</span> <span class="nav-text">描述DOM事件捕获的具体流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Event%E5%AF%B9%E8%B1%A1%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">4.5.</span> <span class="nav-text">Event对象常见的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#target%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98%E4%B8%8EcurrentTarget%E5%8C%BA%E5%88%AB%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.5.1.</span> <span class="nav-text">target事件委托与currentTarget区别实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.6.</span> <span class="nav-text">自定义事件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http%E5%8D%8F%E8%AE%AE%E7%B1%BB"><span class="nav-number">5.</span> <span class="nav-text">http协议类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="nav-number">5.1.</span> <span class="nav-text">HTTP请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST%E5%92%8CGET%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.2.</span> <span class="nav-text">POST和GET的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">5.3.</span> <span class="nav-text">http状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.4.</span> <span class="nav-text">http持久连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E7%BA%BF%E5%8C%96"><span class="nav-number">5.5.</span> <span class="nav-text">管线化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E7%BA%BF%E5%8C%96%E7%89%B9%E7%82%B9"><span class="nav-number">5.5.1.</span> <span class="nav-text">管线化特点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E7%B1%BB"><span class="nav-number">6.</span> <span class="nav-text">原型链类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">6.1.</span> <span class="nav-text">创建对象几种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%E5%AD%97%E9%9D%A2%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="nav-number">6.1.1.</span> <span class="nav-text">第一类字面量对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%B1%BB%E6%98%BE%E7%A4%BA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">6.1.2.</span> <span class="nav-text">第二类显示构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%B1%BB%E5%AE%9A%E4%B9%89%E7%88%B6%E7%BA%A7%E5%8E%9F%E5%9E%8B%E7%9A%84%E6%9E%84%E9%80%A0"><span class="nav-number">6.1.3.</span> <span class="nav-text">第三类定义父级原型的构造</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E5%8E%9F%E7%90%86"><span class="nav-number">6.2.</span> <span class="nav-text">原型链原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5jQuer%E6%BA%90%E7%A0%81%E4%B8%AD%E4%B8%BA%E4%BE%8B"><span class="nav-number">6.2.1.</span> <span class="nav-text">以jQuer源码中为例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instanceof%E5%8E%9F%E7%90%86%E4%B8%8Econstructor"><span class="nav-number">6.3.</span> <span class="nav-text">instanceof原理与constructor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">7.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%AE%9E%E4%BE%8B%E5%8C%96"><span class="nav-number">7.1.</span> <span class="nav-text">声明与实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">7.2.</span> <span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%80%9F%E5%8A%A9%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF"><span class="nav-number">7.2.1.</span> <span class="nav-text">1、借助构造函数实现继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%AD%A3%E5%88%99%E5%85%B1%E4%BA%AB%E5%8E%9F%E5%9E%8B"><span class="nav-number">7.2.2.</span> <span class="nav-text">2、正则共享原型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%A4%8D%E5%90%88%E6%96%B9%E6%B3%95"><span class="nav-number">7.2.3.</span> <span class="nav-text">3、复合方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%9C%A3%E6%9D%AF%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.2.4.</span> <span class="nav-text">4、圣杯模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81Es6%E8%AF%AD%E6%B3%95"><span class="nav-number">7.2.5.</span> <span class="nav-text">5、Es6语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%8B%E9%9A%86"><span class="nav-number">7.3.</span> <span class="nav-text">克隆</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text">通信类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5%E5%8F%8A%E9%99%90%E5%88%B6"><span class="nav-number">8.1.</span> <span class="nav-text">什么是同源策略及限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1"><span class="nav-number">8.2.</span> <span class="nav-text">前后端如何通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BAAjax"><span class="nav-number">8.3.</span> <span class="nav-text">如何创建Ajax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%A4%96%E5%8D%96%E7%9A%84%E6%80%9D%E6%83%B3"><span class="nav-number">8.3.1.</span> <span class="nav-text">定外卖的思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%8B-2"><span class="nav-number">8.3.2.</span> <span class="nav-text">封装一下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">8.4.</span> <span class="nav-text">跨域通信的几种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSONP"><span class="nav-number">8.4.1.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CORS%E9%80%9A%E4%BF%A1"><span class="nav-number">8.4.2.</span> <span class="nav-text">CORS通信</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E7%B1%BB"><span class="nav-number">9.</span> <span class="nav-text">安全类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CSRF"><span class="nav-number">9.1.</span> <span class="nav-text">CSRF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%92%8C%E7%BC%A9%E5%86%99"><span class="nav-number">9.1.1.</span> <span class="nav-text">基本概念和缩写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86"><span class="nav-number">9.1.2.</span> <span class="nav-text">攻击原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E5%BE%A1%E6%8E%AA%E6%96%BD"><span class="nav-number">9.1.3.</span> <span class="nav-text">防御措施</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6%E7%B1%BB"><span class="nav-number">10.</span> <span class="nav-text">渲染机制类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFDOCTYPE%E5%8F%8A%E4%BD%9C%E7%94%A8"><span class="nav-number">10.1.</span> <span class="nav-text">什么是DOCTYPE及作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DTD%E6%96%87%E6%A1%A3%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="nav-number">10.1.1.</span> <span class="nav-text">DTD文档类型定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOCTYPE%E5%AE%9A%E4%B9%89"><span class="nav-number">10.1.2.</span> <span class="nav-text">DOCTYPE定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">10.1.3.</span> <span class="nav-text">作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B"><span class="nav-number">10.2.</span> <span class="nav-text">浏览器的渲染过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%8E%92Reflow"><span class="nav-number">10.3.</span> <span class="nav-text">重排Reflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E7%BB%98Repaint"><span class="nav-number">10.4.</span> <span class="nav-text">重绘Repaint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%EF%BC%88js%E5%8D%95%E7%BA%BF%E7%A8%8B%EF%BC%89"><span class="nav-number">10.5.</span> <span class="nav-text">js运行机制（js单线程）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E7%B1%BB"><span class="nav-number">11.</span> <span class="nav-text">页面性能类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E9%A1%B5%E9%9D%A2%E6%80%A7%E8%83%BD%E7%9A%84%E6%96%B9%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-number">11.1.</span> <span class="nav-text">提升页面性能的方法有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD"><span class="nav-number">11.2.</span> <span class="nav-text">异步加载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F"><span class="nav-number">11.2.1.</span> <span class="nav-text">1.异步加载方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">11.2.2.</span> <span class="nav-text">2.异步加载的区别</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/08/11/%E6%A0%87%E7%AD%BE/%E5%9F%BA%E7%A1%80%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%B9%A0/';
+          this.page.identifier = '2018/08/11/标签/基础系统复习/';
+          this.page.title = '基础系统复习';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

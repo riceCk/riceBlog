@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据库," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、数据库基础1、数据库数据库：一个以某种有组织的方式存储的数据集合，保存有组织的数据的容器 2、表表：某种特定类型数据的结构化清单表是一种结构化文件，可用来存储某种特定类型的数据数据库中每个表都有唯一的一个名字，用来标识自己，表名的唯一性取决于多个因素：如数据库名等结合（相同数据库不能出现名字相同的表，但不同数据库可以使用相同的表名）表具有一些特性，其定义了数据在表中如何存储，比如：存储什么类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql数据库">
+<meta property="og:url" content="http://yoursite.com/2018/09/06/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/MySql%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="一、数据库基础1、数据库数据库：一个以某种有组织的方式存储的数据集合，保存有组织的数据的容器 2、表表：某种特定类型数据的结构化清单表是一种结构化文件，可用来存储某种特定类型的数据数据库中每个表都有唯一的一个名字，用来标识自己，表名的唯一性取决于多个因素：如数据库名等结合（相同数据库不能出现名字相同的表，但不同数据库可以使用相同的表名）表具有一些特性，其定义了数据在表中如何存储，比如：存储什么类型">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-09-06T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.740Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/06/了解nodejs前世今生/MySql数据库/"/>
+
+
+
+
+
+  <title>MySql数据库 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/09/06/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/MySql%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySql数据库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-06T22:00:00+08:00">
+                2018-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">了解nodejs前世今生</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/09/06/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/MySql%E6%95%B0%E6%8D%AE%E5%BA%93/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/06/了解nodejs前世今生/MySql数据库/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、数据库基础"><a href="#一、数据库基础" class="headerlink" title="一、数据库基础"></a>一、数据库基础</h1><h3 id="1、数据库"><a href="#1、数据库" class="headerlink" title="1、数据库"></a>1、数据库</h3><p><strong>数据库：</strong>一个以某种有组织的方式存储的数据集合，保存有组织的数据的容器</p>
+<h3 id="2、表"><a href="#2、表" class="headerlink" title="2、表"></a>2、表</h3><p><strong>表：</strong>某种特定类型数据的结构化清单<br>表是一种结构化文件，可用来存储某种特定类型的数据<br>数据库中每个表都有唯一的一个名字，用来标识自己，表名的唯一性取决于多个因素：如数据库名等结合（相同数据库不能出现名字相同的表，但不同数据库可以使用相同的表名）表具有一些特性，其定义了数据在表中如何存储，比如：存储什么类型的数据，数据如何分解，各部分信息如何命名等描述表的这组信息可以称为“模式”，其用来描述数据库中特定的表以及整个数据库（和其中表的关系）<br><strong>模式（schema）：</strong>关于数据库和表的布局及特性的信息，一般指给予表的一些定义</p>
+<h3 id="3、列和数据类型"><a href="#3、列和数据类型" class="headerlink" title="3、列和数据类型"></a>3、列和数据类型</h3><p>表由列组成，列中存储着表中某部分的信息<br><strong>列（column）：</strong>表中的一个字段；所有表都有由一个或多个列组成的<br>分解数据：正确的将数据分解为多个列极为重要：例如省市县应该是独立的列，通过分解，才可能利用特定的列对数据进行排序和过滤，使得检索和访问更加方便（例如找出特定市县的相关数据等）<br><strong>数据类型（datatype）：</strong>所容许的数据的类型：数据库中每个列都有相应的数据类型，其定义列可存储的数据种类（限制/容许该列中存储的数据）<br><strong>作用：</strong></p>
+<ul>
+<li>限制可存储在列中的数据种类（例如防止在数值字段中录入字符值）</li>
+<li>帮助正确的排序数据</li>
+<li>对优化磁盘使用有重要作用</li>
+</ul>
+<h3 id="4、行"><a href="#4、行" class="headerlink" title="4、行"></a>4、行</h3><p><strong>行（row）：</strong>表中的一个记录<br>表中的数据是按行存储的，保存的每个记录存储在自己的行内；如果将表想象为网格，网格中垂直的列为表列，水平行为表行</p>
+<h3 id="5、主键"><a href="#5、主键" class="headerlink" title="5、主键"></a>5、主键</h3><p><strong>主键（primary key）：</strong>一列或一组列，其值能够唯一区分表中的每一行；唯一标识表中每行的这个列（或这组列）称为主键<br>主键用来表示一个特定的行；没有主键，更新或删除表中特定行很困难，因为没有安全的方法保证操作只涉及相关的行<br>主键并不总是需要，但大多数情况下都应保证每个表具有一个主键，以便于数据操作和管理表中任何列都可以作为主键，只要满足以下2个条件：</p>
+<ul>
+<li>任意两行都不具有相同的主键值；</li>
+<li>每个行都必须具有一个主键值（主键列不允许NULL值）；</li>
+</ul>
+<p>主键值规则:主键通常定义于表的一列上，但也可以一起使用多个列作为主键，这种情况下，上述2个条件必须应用到构成主键的所有列，所有列值的组合必须是唯一的（单个列可以不唯一）</p>
+<p>设置主键的几个好习惯：</p>
+<ul>
+<li>不更新主键列中的值；</li>
+<li>不重用主键列的值；</li>
+<li>不在主键中使用可能会更改的值（例如使用电话号码作为主键以标识某个人，当该人更改电话号码时，必须更改这个键）</li>
+</ul>
+<h2 id="SQL简介"><a href="#SQL简介" class="headerlink" title="SQL简介"></a>SQL简介</h2><p><strong>SQL：</strong>结构化查询语言（Structured Query Language）缩写，一种专门用来与数据库<br>通信的语言<br>设计SQL的目的是很好的完成一项任务，即提供一种从数据库中读写数据的简单有效的方法<br><strong>优点如下：</strong></p>
+<ul>
+<li>几乎所有的DBMS都支持SQL，关系型数据库</li>
+<li>SQL简单易学，语句由描述性很强的英语单词构成，而且单词的数目并不多</li>
+<li>一门强有力的语言，灵活使用其语言元素，可进行非常复杂和高级的数据库操作</li>
+</ul>
+<h2 id="MySQL简介"><a href="#MySQL简介" class="headerlink" title="MySQL简介"></a>MySQL简介</h2><p>MySQL是一种DBMS，即它是一种数据库软件<br><strong>MySQL优点：</strong></p>
+<ul>
+<li>成本低，MySQL开放源代码，一般都可以免费使用甚至免费修改</li>
+<li>性能好，MySQL执行效率很快</li>
+<li>很多大型公司（包括一些全世界知名的互联网企业）使用MySQL来处理自己的重要数据</li>
+<li>简安装使用非常容易</li>
+</ul>
+<h1 id="二、数据的检索和过滤"><a href="#二、数据的检索和过滤" class="headerlink" title="二、数据的检索和过滤"></a>二、数据的检索和过滤</h1><h2 id="1、检索数据"><a href="#1、检索数据" class="headerlink" title="1、检索数据"></a>1、检索数据</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> column from table</span><br><span class="line"><span class="keyword">select</span> * from actor</span><br><span class="line"><span class="keyword">select</span> t.actor_id, t.first_name from actor t</span><br><span class="line"><span class="comment"># distinct自动过滤重复的数据</span></span><br><span class="line"><span class="keyword">select</span> distinct first_name from actor</span><br><span class="line"><span class="comment"># 限制结果</span></span><br><span class="line"><span class="keyword">select</span> * from actor LIMIT 5 <span class="comment">#查询前五的数据</span></span><br><span class="line"><span class="keyword">select</span> * from actor LIMIT 5,5 <span class="comment">#查询从第六行开始的后五行数据</span></span><br></pre></td></tr></table></figure>
+<h2 id="2、排序检索数据"><a href="#2、排序检索数据" class="headerlink" title="2、排序检索数据"></a>2、排序检索数据</h2><h3 id="排序单个列：order-by子句"><a href="#排序单个列：order-by子句" class="headerlink" title="排序单个列：order by子句"></a>排序单个列：order by子句</h3><p>select column from table order by column<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据名开始排序，默认正序 asc</span></span><br><span class="line"><span class="keyword">select</span> * from actor ORDER BY last_name</span><br><span class="line"><span class="comment"># 倒叙 desc</span></span><br><span class="line"><span class="keyword">select</span> * from actor ORDER BY last_name DESC</span><br></pre></td></tr></table></figure></p>
+<h3 id="按多个列排序"><a href="#按多个列排序" class="headerlink" title="按多个列排序"></a>按多个列排序</h3><p>select column1，column2，column3 from table order by column1， column2<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from actor ORDER BY last_name DESC, first_name</span><br></pre></td></tr></table></figure></p>
+<h3 id="检索最高或最低值"><a href="#检索最高或最低值" class="headerlink" title="检索最高或最低值"></a>检索最高或最低值</h3><p>limit 1告诉MySQL只返回一行的数据<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按actor_id检索最高</span></span><br><span class="line"><span class="keyword">select</span> * from actor ORDER BY actor_id DESC LIMIT 1</span><br><span class="line"><span class="comment"># 按actor_id检索最低</span></span><br><span class="line"><span class="keyword">select</span> * from actor ORDER BY actor_id (asc) LIMIT 1</span><br></pre></td></tr></table></figure></p>
+<h2 id="3、过滤数据"><a href="#3、过滤数据" class="headerlink" title="3、过滤数据"></a>3、过滤数据</h2><h3 id="where子句"><a href="#where子句" class="headerlink" title="where子句"></a>where子句</h3><p>使用order by和where子句，order by位于where之后（否则会出错）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 条件查询，查询名字为ed的列，并且以倒叙排</span></span><br><span class="line"><span class="keyword">select</span> * from actor <span class="built_in">where</span> first_name = <span class="string">&#x27;ED&#x27;</span> ORDER BY last_name DESC</span><br></pre></td></tr></table></figure></p>
+<h3 id="where子句操作符"><a href="#where子句操作符" class="headerlink" title="where子句操作符"></a>where子句操作符</h3><p>=：等于      &lt;&gt;：不等于       &lt;:小于<br>&lt;=:小于等于   &gt;:大于          &gt;=:大于等于between：在指定的两个值之间<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 筛选 id 150-180的数据</span></span><br><span class="line"><span class="keyword">select</span> * from actor <span class="built_in">where</span> actor_id &gt; 150 AND actor_id &lt; 188 ORDER BY actor_id</span><br><span class="line"><span class="keyword">select</span> * from actor WHERE actor_id BETWEEN 150 AND 180 ORDER BY actor_id </span><br></pre></td></tr></table></figure></p>
+<h3 id="不匹配检查"><a href="#不匹配检查" class="headerlink" title="不匹配检查"></a>不匹配检查</h3><p>select column from table where column &lt;&gt; N； select column from table where column != N； </p>
+<h3 id="范围值检查"><a href="#范围值检查" class="headerlink" title="范围值检查"></a>范围值检查</h3><p>select column from table where column between X and Y；</p>
+<h3 id="空值检查"><a href="#空值检查" class="headerlink" title="空值检查"></a>空值检查</h3><p>select column from table where column1 is null</p>
+<h2 id="4、使用操作符过滤数据"><a href="#4、使用操作符过滤数据" class="headerlink" title="4、使用操作符过滤数据"></a>4、使用操作符过滤数据</h2><p><strong>操作符（operator）：</strong>用来联结或改变where子句中的子句的关键字。也称为逻辑操作符 </p>
+<h3 id="and操作符"><a href="#and操作符" class="headerlink" title="and操作符"></a>and操作符</h3><p>select column1， column2，column3 from table where column1 = X and  column &lt;=Y；</p>
+<h3 id="or操作符"><a href="#or操作符" class="headerlink" title="or操作符"></a>or操作符</h3><p>select column1， column2 from table where column1 = X or column  &lt;=Y</p>
+<h3 id="计算次序"><a href="#计算次序" class="headerlink" title="计算次序"></a>计算次序</h3><p>select column1，column2 from table where column1 =X or column1 = Y  and column2 &gt;= N<br>从table表中过滤出column2为N（含）以上且column1=X或Y的的所 有行<code>（实际中是先计算column1 = Y and column2 &gt;= N然后计算column1 =X）</code> where可包含任意数目的and和or操作符；允许两者结合以进行复杂和高级的过滤（需要说 明的是：<strong>and在计算次序中优先级高于or</strong>） </p>
+<h3 id="in操作符"><a href="#in操作符" class="headerlink" title="in操作符"></a>in操作符</h3><p>in操作符用来 指定匹配值的清单的关键字，功能和or相当<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 筛选出id为1和4的数据</span></span><br><span class="line"><span class="keyword">select</span> * from actor WHERE actor_id <span class="keyword">in</span> (1, 4)</span><br></pre></td></tr></table></figure></p>
+<h3 id="not操作符"><a href="#not操作符" class="headerlink" title="not操作符"></a>not操作符</h3><p>not操作符用来否定后跟条件的关键字<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from actor WHERE actor_id not <span class="keyword">in</span> (1, 4, 5)</span><br></pre></td></tr></table></figure></p>
+<h2 id="5、使用通配符过滤数据"><a href="#5、使用通配符过滤数据" class="headerlink" title="5、使用通配符过滤数据"></a>5、使用通配符过滤数据</h2><p><strong>通配符（wildcard）：</strong>用来匹配值的一部分的特殊字符，利用通配符可以创建比较特定数 据的搜索模式（实际上是SQL的where子句中带有特殊含义的字符）<br><strong>搜索模式（search pattern）：</strong>由字面值、通配符或两者组合构成的搜索条件 为在搜索子句中使用通配符，必须使用like操作符；like指示MySQL后跟的搜索模式利用 通配符匹配而不是直接相等匹配进行比较</p>
+<h3 id="百分号（-）通配符"><a href="#百分号（-）通配符" class="headerlink" title="百分号（%）通配符"></a>百分号（%）通配符</h3><p>select column1， column2 from table where column1 like ‘test%’<br>表示任意以test起头的词；%告诉MySQL接受test之后的任意字符，不管它有多少字符,test%：所有以test起头的值,%test%：匹配任何包含test的值,te%st：所有 以te开头以st结尾的值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找名字带da的数据，模糊查询</span></span><br><span class="line">SELECT * FROM actor WHERE first_name LIKE <span class="string">&#x27;%da%&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="下划线（-）通配符"><a href="#下划线（-）通配符" class="headerlink" title="下划线（_）通配符"></a>下划线（_）通配符</h3><p>下划线通配符作用和%一样，但下划线通配符只匹配单个字符而不是多个字符（与%能匹配0 个字符不一样，总是匹配一个字符）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from actor <span class="built_in">where</span> first_name like <span class="string">&#x27;da_&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="使用通配符的技巧"><a href="#使用通配符的技巧" class="headerlink" title="使用通配符的技巧"></a>使用通配符的技巧</h3><ul>
+<li>不要过度使用通配符（如果其他操作符能达到同样目的，应使用其他操作符） </li>
+<li>在确实需要使用通配符时，除非绝对有必要，否则不要把通配符用在搜索模式开始处（这样做是最慢的） </li>
+<li>注意通配符所在的位置</li>
+</ul>
+<h1 id="三、插入和更新"><a href="#三、插入和更新" class="headerlink" title="三、插入和更新"></a>三、插入和更新</h1><h2 id="1、insert"><a href="#1、insert" class="headerlink" title="1、insert"></a>1、insert</h2><p><strong>insert：</strong>用来插入（或添加）行到数据库中，常见方式有以下几种： </p>
+<ul>
+<li>插入完整的行； </li>
+<li>插入行的一部分； </li>
+<li>插入多行； </li>
+<li>插入某些查询的结果</li>
+</ul>
+<h3 id="插入完整的行"><a href="#插入完整的行" class="headerlink" title="插入完整的行"></a>插入完整的行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">insert into usertable(user_id,      </span><br><span class="line">    user_name,      </span><br><span class="line">    user_year，      </span><br><span class="line">    user_birthday,      </span><br><span class="line">    user_address,      </span><br><span class="line">    user_email) </span><br><span class="line">values(null,      </span><br><span class="line">    <span class="string">&#x27;zhangsan&#x27;</span>,      </span><br><span class="line">    <span class="string">&#x27;25&#x27;</span>,      </span><br><span class="line">    <span class="string">&#x27;1992­05­20&#x27;</span>,      </span><br><span class="line">    null,      </span><br><span class="line">    null);</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insert into actor values (201, <span class="string">&#x27;ck&#x27;</span>, <span class="string">&#x27;kk&#x27;</span>, <span class="string">&#x27;2018-09-11 17:10:11&#x27;</span>)</span><br><span class="line">insert into </span><br><span class="line">    actor(actor_id, first_name, last_name, last_update) </span><br><span class="line">    values (202, <span class="string">&#x27;ckk&#x27;</span>, <span class="string">&#x27;kkk&#x27;</span>, <span class="string">&#x27;2018-09-11 17:20:11&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="插入多行"><a href="#插入多行" class="headerlink" title="插入多行"></a>插入多行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insert into actor(actor_id, first_name, last_name, last_update) </span><br><span class="line">    values (202, <span class="string">&#x27;ckk&#x27;</span>, <span class="string">&#x27;kkk&#x27;</span>, <span class="string">&#x27;2018-09-11 17:20:11&#x27;</span>),</span><br><span class="line">           (203, <span class="string">&#x27;ck&#x27;</span>, <span class="string">&#x27;kk&#x27;</span>, <span class="string">&#x27;2018-09-11 17:20:11&#x27;</span>),</span><br><span class="line">           (204, <span class="string">&#x27;xkk&#x27;</span>, <span class="string">&#x27;k&#x27;</span>, <span class="string">&#x27;2018-09-11 17:20:11&#x27;</span>),</span><br></pre></td></tr></table></figure>
+<h2 id="2、update更新数据"><a href="#2、update更新数据" class="headerlink" title="2、update更新数据"></a>2、update更新数据</h2><h3 id="update语句由三部分构成："><a href="#update语句由三部分构成：" class="headerlink" title="update语句由三部分构成："></a>update语句由三部分构成：</h3><ul>
+<li>要更新的表； </li>
+<li>列名和它们的新值； </li>
+<li>确定要更新行的过滤条件； </li>
+</ul>
+<p>例如：update usertable set user_email = <a href="mailto:&#39;3033310371@qq.com">&#39;3033310371@qq.com</a>‘ where user_id = ‘10086’<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update actor <span class="built_in">set</span> first_name = <span class="string">&#x27;xiaoming&#x27;</span> <span class="built_in">where</span> actor_id = 202</span><br></pre></td></tr></table></figure><br><strong>ps：</strong>如果用update更新多个行，且更新中一行或多行出现错误，则update操作将被取消 （错误发生前执行的动作将被回滚到最初状态。即已更新的被恢复原来的值）；如果希望出错误，更新继续执行，可以使用ignore关键字：<br>update ignore  tablebase……</p>
+<h2 id="3、delete删除数据"><a href="#3、delete删除数据" class="headerlink" title="3、delete删除数据"></a>3、delete删除数据</h2><p>如果想删除表中所有行，可使用<code>truncate table</code>语句，它的执行效率比delete更快 （truncate实际上是删除原来表并重新新建一个表，而不是逐行删除表中数据）。<br>delete from usertable where user_id = ‘10086’;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete from actor <span class="built_in">where</span> actor_id = 202</span><br><span class="line"><span class="built_in">truncate</span> table actor</span><br></pre></td></tr></table></figure></p>
+<h1 id="四、汇总和分组"><a href="#四、汇总和分组" class="headerlink" title="四、汇总和分组"></a>四、汇总和分组</h1><h2 id="1、汇总数据"><a href="#1、汇总数据" class="headerlink" title="1、汇总数据"></a>1、汇总数据</h2><p>SQL汇聚函数,ps:as(XXX) 自定义列名</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">AVG()</td>
+<td style="text-align:center">返回某列的平均数</td>
+</tr>
+<tr>
+<td style="text-align:center">COUNT()</td>
+<td style="text-align:center">返回某列的行数</td>
+</tr>
+<tr>
+<td style="text-align:center">MAX()</td>
+<td style="text-align:center">返回某列的最大值 </td>
+</tr>
+<tr>
+<td style="text-align:center">MIN()</td>
+<td style="text-align:center">返回某列的最小值</td>
+</tr>
+<tr>
+<td style="text-align:center">SUM()</td>
+<td style="text-align:center">返回某列值之和</td>
+</tr>
+</tbody>
+</table>
+<h3 id="avg-函数"><a href="#avg-函数" class="headerlink" title="avg()函数"></a>avg()函数</h3><p>avg（）通过对表中行数计数并计算特定列值之和，求得该列的平均值<br>avg（）可用来返 回所有列平均值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT avg(rental_rate) AS rental_rate FROM film</span><br><span class="line"><span class="comment"># rental_rate =&gt; 2.98</span></span><br></pre></td></tr></table></figure><br>可用来返回特定列的平均值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">    avg(rental_rate) </span><br><span class="line">AS </span><br><span class="line">    rental_rate </span><br><span class="line">FROM </span><br><span class="line">    film </span><br><span class="line"><span class="built_in">where</span> </span><br><span class="line">    rental_duration = 6</span><br></pre></td></tr></table></figure></p>
+<h3 id="count-函数"><a href="#count-函数" class="headerlink" title="count()函数"></a>count()函数</h3><p>count()函数进行计数，可利用count()确定表中行的数目或符合特定条件的行的数目<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对rental_rate所有行进行合计</span></span><br><span class="line">SELECT count(*) AS rental_rate FROM film </span><br><span class="line"><span class="comment"># 对有rental_duration有值的rental_rate进行合计，没值的忽略</span></span><br><span class="line">SELECT </span><br><span class="line">    count(rental_duration) </span><br><span class="line">AS </span><br><span class="line">    rental_rate </span><br><span class="line">FROM </span><br><span class="line">    film </span><br></pre></td></tr></table></figure></p>
+<h3 id="max-函数"><a href="#max-函数" class="headerlink" title="max()函数"></a>max()函数</h3><p>max（）返回指定列中的大值，max（）要求指定列名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT MAX(rental_rate) AS rental_rate FROM film</span><br></pre></td></tr></table></figure></p>
+<h3 id="sum"><a href="#sum" class="headerlink" title="sum()"></a>sum()</h3><p>函数 sum()函数用来返回指定列值的和（总计）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(rental_duration) AS rental_duration合计 FROM film</span><br></pre></td></tr></table></figure></p>
+<h3 id="distinct与聚集函数"><a href="#distinct与聚集函数" class="headerlink" title="distinct与聚集函数"></a>distinct与聚集函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计数：计数条件为rental_duration=6的ranting不重复的数据列</span></span><br><span class="line">SELECT </span><br><span class="line">    COUNT(DISTINCT rating) </span><br><span class="line">as rating </span><br><span class="line">from </span><br><span class="line">    film </span><br><span class="line">WHERE rental_duration = 6</span><br></pre></td></tr></table></figure>
+<h3 id="组合聚集函数"><a href="#组合聚集函数" class="headerlink" title="组合聚集函数"></a>组合聚集函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> count(*) as 计数,</span><br><span class="line">    min(rental_rate) as rete列最小,</span><br><span class="line">    max(rental_duration) as duration列最大,</span><br><span class="line">    avg(replacement_cost) as cost列平均</span><br><span class="line">from film</span><br></pre></td></tr></table></figure>
+<p>案例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">    t2.first_name,</span><br><span class="line">    t2.last_name,</span><br><span class="line">    MAX(t1.amount) AS 最高花费,</span><br><span class="line">    MIN(t1.amount) AS 最低花费,</span><br><span class="line">    SUM(t1.amount) AS 总花费,</span><br><span class="line">    AVG(t1.amount) AS 平均花费,</span><br><span class="line">    COUNT(t2.first_name) AS 租借次数，</span><br><span class="line">FROM</span><br><span class="line">    payment t1</span><br><span class="line">JOIN customer t2 ON t1.customer_id = t2.customer_id</span><br><span class="line">JOIN rental t3 ON t1.rental_id = t3.rental_id</span><br><span class="line">JOIN inventory t4 ON t3.inventory_id = t4.inventory_id</span><br><span class="line">WHERE</span><br><span class="line">    t4.store_id = 1</span><br><span class="line">GROUP BY</span><br><span class="line">    t2.first_name,</span><br><span class="line">    t2.last_name,</span><br><span class="line">    t4.store_id</span><br></pre></td></tr></table></figure><br>first_name|last_name|最高花费|最低花费|总花费|平均花费|租借次数<br>:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:<br>AARON|SELBY|8.99|0.99|49.89|4.535455|11<br>ADAM|GOOCH|8.99|0.99|47.89|4.353636|11<br>ADRIAN|CLARY|5.99|0.99|33.89|3.080909|11<br>AGNES|BISHOP|8.99|2.99|49.89|4.535455|11<br>ALAN|KAHN|8.99|2.99|68.85|4.59|15<br>ALBERT|CROUSE|6.99|0.99|34.91|3.878889|9<br>ALBERTO|HENNING|6.99|0.99|23.94|3.99|6<br>ALEX|GRESHAM|9.99|0.99|64.86|4.632857|14<br>ALEXANDER|FENNELL|6.99|0.99|54.84|3.4275|16<br>ALFRED|CASILLAS|9.99|0.99|37.90|3.79|10</p>
+<h2 id="2、分组数据"><a href="#2、分组数据" class="headerlink" title="2、分组数据"></a>2、分组数据</h2><h3 id="group-by创建分组"><a href="#group-by创建分组" class="headerlink" title="group by创建分组"></a>group by创建分组</h3><p>进行分组整合，下例则是整合rental_duration进行数据相同的整合，同时进行对整合的数据进行计数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    rental_duration,count(*) </span><br><span class="line">as </span><br><span class="line">    num_prods </span><br><span class="line">from </span><br><span class="line">    film </span><br><span class="line">group by </span><br><span class="line">    rental_duration</span><br></pre></td></tr></table></figure><br>rental_duration|num_prods<br>:—-:|:—-:<br>3|203<br>4|203<br>5| 191<br>6| 212<br>7| 191</p>
+<ul>
+<li>group by子句可以包含任意数目的列（使得对分组进行嵌套，为数据分组提供更细致的 控制）</li>
+<li>如果在group by子句中嵌套分组，数据将在后规定的分组上进行汇总，即：建立分组 时，指定的所有列都一起计算（所以不能从个别列取回数据）</li>
+<li>group by子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）， 如果在select中使用表达式，则必须在group by子句中指定相同的表达式（不能使用别 名）</li>
+<li>除了聚集计算语句外，select中每个列都必须在group by子句中给出</li>
+<li>如果分组列中具有null值，则null将作为一个分组返回（如果列中有多行null值，他 们将分为一组）</li>
+<li>group by子句必须出现在where子句之后，order by子句之前</li>
+</ul>
+<p>PS：使用with rollup关键字，可以得到每个分组以及每个分组汇总级别（针对每个分组）的值。 </p>
+<h3 id="having过滤分组"><a href="#having过滤分组" class="headerlink" title="having过滤分组"></a>having过滤分组</h3><p>where子句都可以用having代替，区别在于where过滤行，having过滤分组；having支持所有的where操作符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line">    rental_duration,count(*) </span><br><span class="line">as </span><br><span class="line">    计数</span><br><span class="line">from </span><br><span class="line">    film </span><br><span class="line">group by </span><br><span class="line">    rental_duration</span><br><span class="line">having count(*) &gt;= 200</span><br></pre></td></tr></table></figure><br>where在数据分组前进行过滤，having在数据分组后进行过滤；where排除的行不包括在 分组中（这可能会改变计算值，从而影响having子句中基于这些值过滤掉的分组）<br>having和where可以同时使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    rental_duration,count(*) </span><br><span class="line">as </span><br><span class="line">    计数</span><br><span class="line">from </span><br><span class="line">    film </span><br><span class="line">WHERE</span><br><span class="line">    rental_duration &gt; 4</span><br><span class="line">group by </span><br><span class="line">    rental_duration</span><br><span class="line">having count(*) &gt; 200</span><br></pre></td></tr></table></figure></p>
+<h3 id="分组和排序"><a href="#分组和排序" class="headerlink" title="分组和排序"></a>分组和排序</h3><p>group by和order by的区别：<br>order by|group by<br>:—-:|:—-:<br>排列产生的输出|分组行，但输出可能不是分组的排序<br>任意列都可以用（甚至非选择的列也可以使用）|只可能使用选择列或表达式列，而且必须使用每个选择列表达式<br>不一定需要|如果与聚集函数一起使用列（或表达式），则必须使用<br>order by的重要性：一般使用group by子句时，应该也给出order by子句，这是保证 数据正确性的唯一方法（千万不要依赖group by排序数据</p>
+<h3 id="select子句顺序"><a href="#select子句顺序" class="headerlink" title="select子句顺序"></a>select子句顺序</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">子句</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">是否必须使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">select</td>
+<td style="text-align:center">要返回的列或表达式</td>
+<td style="text-align:center">是否必须使用</td>
+</tr>
+<tr>
+<td style="text-align:center">from</td>
+<td style="text-align:center">从中检索数据的表</td>
+<td style="text-align:center">仅在从表选择数据时使用</td>
+</tr>
+<tr>
+<td style="text-align:center">where</td>
+<td style="text-align:center">行级过滤</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:center">group by</td>
+<td style="text-align:center">分组说明</td>
+<td style="text-align:center">仅在按组计算聚集时使用</td>
+</tr>
+<tr>
+<td style="text-align:center">having</td>
+<td style="text-align:center">组级过滤</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:center">order by</td>
+<td style="text-align:center">输出排列顺序</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:center">limit</td>
+<td style="text-align:center">要检索的行数</td>
+<td style="text-align:center">否</td>
+</tr>
+</tbody>
+</table>
+<h1 id="五、表连接"><a href="#五、表连接" class="headerlink" title="五、表连接"></a>五、表连接</h1><h2 id="1、连接表基础知识"><a href="#1、连接表基础知识" class="headerlink" title="1、连接表基础知识"></a>1、连接表基础知识</h2><h3 id="关系表"><a href="#关系表" class="headerlink" title="关系表"></a>关系表</h3><p>把信息分解成多个表，一类数据一个表，各表通过某些常用值（即关系设计中的关系 （relational））互相关联； 关系型数据库中常用关系为三种：</p>
+<ul>
+<li>一对一 用户 身份证</li>
+<li>一对多（多对一）</li>
+<li>多对多 </li>
+</ul>
+<h3 id="外键"><a href="#外键" class="headerlink" title="外键"></a>外键</h3><p>外键为某个表中的一列，它包含另一个表的主键值，定义了 两个表之间的关系 </p>
+<h3 id="连接表的优点："><a href="#连接表的优点：" class="headerlink" title="连接表的优点："></a>连接表的优点：</h3><ul>
+<li>数据信息不重复，从而不浪费时间和空间 </li>
+<li>如果某个数据信息变动，可以只更新该表中的某个记录，相关表数据不用变更 </li>
+<li>数据无重复，可以更有效的存储和方便的处理，伸缩性强（能够适应不断增加的工作量而 不失败，设计良好的数据库或者应用程序称为可伸缩性好（scale well））</li>
+</ul>
+<p>PS：连接是一种机制，用来在一条select语句中关联表，因此称之为连接（连接在运行时 关联表中正确的行） </p>
+<h2 id="2、创建连接"><a href="#2、创建连接" class="headerlink" title="2、创建连接"></a>2、创建连接</h2><p>连接address, city表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    address.district, city.city, city.last_update</span><br><span class="line">from </span><br><span class="line">    address, city</span><br><span class="line"><span class="built_in">where</span> </span><br><span class="line">    address.city_id = city.country_id</span><br><span class="line">order by </span><br><span class="line">    district, city</span><br></pre></td></tr></table></figure><br>连接 <strong>address</strong>和 <strong>city</strong>两个表，以id相同为公共列，district和city为排序参数<br><strong>PS：</strong>where子句的重要性 在一条select语句中连接几个表时，相应的关系是在运行中构造的；在连接两个甚至多个 表时，实际上是将第一个表中的每一行与第二个表中的每一行配对，where子句作为过滤条<br>件，它只包含匹配的给定条件的行。 没有where子句，第一个表中每个行将与第二个表中的每个行匹配，而不管逻辑上是否可以 配在一起</p>
+<h3 id="笛卡尔积"><a href="#笛卡尔积" class="headerlink" title="笛卡尔积"></a>笛卡尔积</h3><p>由没有连接条件的表关系返回的结果称为笛卡尔积（检索出的行的数目将是第一个表中的行数乘以第二个表中的行数）； 例如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    A_name,B_name,B_mobile     </span><br><span class="line">from </span><br><span class="line">    A, B     </span><br><span class="line">order</span><br><span class="line">    by A_name, B_name</span><br></pre></td></tr></table></figure><br><strong>PS:</strong>应保证所有连接都有where子句，否则MySQL将返回比想要的数据多得多的数据，还应 保证where子句的正确性。</p>
+<h3 id="内部连接"><a href="#内部连接" class="headerlink" title="内部连接"></a>内部连接</h3><p>等值连接（equijoin）：基于两个表之间的相等测试，也称为内部连接<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    A_name,B_name,B_mobile     </span><br><span class="line">from </span><br><span class="line">    A innter <span class="built_in">join</span> B     </span><br><span class="line">on </span><br><span class="line">    A_name = B_name; </span><br></pre></td></tr></table></figure><br>这条SQL语句中，select语句与之前的相同，相较于上面的from，这里使用了inner join指定（当使用inner join时，连接条件用on子句而不是where子句，在这里on等同于where）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">    t1.first_name,</span><br><span class="line">    t1.last_name,</span><br><span class="line">    t3.title,</span><br><span class="line">    t3.description</span><br><span class="line">FROM</span><br><span class="line">    actor t1</span><br><span class="line">INNER JOIN film_actor t2 ON t1.actor_id = t2.actor_id</span><br><span class="line">INNER JOIN film t3 ON t3.film_id = t2.film_id</span><br></pre></td></tr></table></figure></p>
+<h3 id="连接多个表"><a href="#连接多个表" class="headerlink" title="连接多个表"></a>连接多个表</h3><p>SQL对一条select语句中可以连接的表的数目没有限制，创建规则也基本相同（首先列出所有表，然后定义表之间的关系）<br><strong>PS：</strong>MySQL在运行时关联指定的每个表以处理连接，这样很耗费资源，因此使用中应注意，不要连接不必要的表。</p>
+<h2 id="3、创建高级连接"><a href="#3、创建高级连接" class="headerlink" title="3、创建高级连接"></a>3、创建高级连接</h2><h3 id="使用表别名"><a href="#使用表别名" class="headerlink" title="使用表别名"></a>使用表别名</h3><p>别名除了允许用于列名和计算字段外，SQL还允许给表名起列名，好处在于： </p>
+<ul>
+<li>缩短SQL语句</li>
+<li>允许在单条select语句中多次使用相同的</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    a.district, b.city, b.last_update</span><br><span class="line">from </span><br><span class="line">    address as a , city as b</span><br><span class="line"><span class="built_in">where</span> a.city_id = b.country_id</span><br></pre></td></tr></table></figure>
+<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>自连接通常作为外部语句用来替代从相同表中检索数据时使用的子查询语句<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    p1.user_id, p1.user_name </span><br><span class="line">from</span><br><span class="line">    usertable as p1, usertable as p2</span><br><span class="line"><span class="built_in">where</span> </span><br><span class="line">    p1.user_id = p2.user_id</span><br><span class="line">and </span><br><span class="line">    p2.user_id = <span class="string">&#x27;10086&#x27;</span></span><br></pre></td></tr></table></figure><br>这条SQL语句中，usertable表第一次出现为别名p1，第二次为别名p2，在select语句中明确使用p1前缀给出所需列名，否则MySQL将返回错误，因为其无法正确区分想要的具体为哪一列</p>
+<h3 id="外部连接"><a href="#外部连接" class="headerlink" title="外部连接"></a>外部连接</h3><p>用来检索包含了在相关表中没有关联行的行，这种类型的连接称为外部连接<br><strong>外部连接的类型：</strong><br><code>left join</code>and<code>right join</code><br>分为左外部连接和右外部连接，唯一差别是关联表的顺序不同，左外部连接可以通过颠倒 from或where子句中的表顺序转换为右外部连接，两种类型可以互换使用（聚集函数也可 和连接一起使用）。<br>左连接<br><strong>PS：</strong>连接使用要点 </p>
+<ul>
+<li>注意使用的连接类型 </li>
+<li>保证使用正确的连接条件，否则将返回不正确的数据 </li>
+<li>应该总是提供连接条件，否则会得到笛卡尔积</li>
+<li>同一个连接下可包含多个表，甚至对每个连接采用不同的连接类</li>
+</ul>
+<h1 id="六、实战"><a href="#六、实战" class="headerlink" title="六、实战"></a>六、实战</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">show databases ;   <span class="comment"># 打开查看数据库</span></span><br><span class="line">use my_blog;         <span class="comment"># 连接mysql库</span></span><br><span class="line">show tables ;      <span class="comment"># 打开显示mysql库里的表</span></span><br><span class="line">desc db;           <span class="comment"># 查看db表字段</span></span><br><span class="line">show create table db;  <span class="comment"># 查看创建db表的sql语句</span></span><br><span class="line"><span class="keyword">select</span> * from db;      <span class="comment"># 查看表</span></span><br><span class="line">create database school; <span class="comment"># 创建库</span></span><br><span class="line">show databases;</span><br><span class="line">alter database school character <span class="built_in">set</span> utf8;  <span class="comment"># 设置school库为utf8格式</span></span><br><span class="line">alter table student default character <span class="built_in">set</span> utf8; <span class="comment"># 设置表为utf8格式</span></span><br><span class="line">alter table student convert to character <span class="built_in">set</span> utf8;  <span class="comment"># 设置表字段为utf8格式</span></span><br><span class="line"></span><br><span class="line">delete from `blog` <span class="built_in">where</span> `<span class="built_in">id</span>` = 16;</span><br><span class="line"></span><br><span class="line">insert into blog (`title`, `content`, `tags`, `views`, `ctime`, `utime`)</span><br><span class="line">      value(<span class="string">&#x27;这是标题&#x27;</span>, <span class="string">&#x27;&lt;h1&gt;这是内容标题&lt;/h1&gt;&lt;h2&gt;这是内容标签&lt;/h2&gt;&lt;p&gt;这是内容&lt;/p&gt;&#x27;</span>, <span class="string">&#x27;这是标签&#x27;</span>, 0, <span class="string">&#x27;2019-02-19 09:25:31&#x27;</span>, <span class="string">&#x27;2019-02-19 09:25:31&#x27;</span>);      <span class="comment"># 增加内容</span></span><br><span class="line">insert into every_day(`ctime`, `content`) value (<span class="string">&#x27;2019-02-19 09:25:31&#x27;</span>, <span class="string">&#x27;21312312&#x27;</span>);</span><br><span class="line"><span class="keyword">select</span> * from blog <span class="built_in">where</span> tags=<span class="string">&#x27;123&#x27;</span>  order by <span class="built_in">id</span> desc <span class="built_in">limit</span> 0, 5;</span><br><span class="line">update student <span class="built_in">set</span> age = 18, class = 3 <span class="built_in">where</span> <span class="built_in">id</span> = 2; <span class="comment"># 修改</span></span><br><span class="line"><span class="keyword">select</span> content from every_day;          <span class="comment"># 查看</span></span><br><span class="line"><span class="keyword">select</span> count(*) as count1 from blog;  <span class="comment"># 统计</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> count(1) as count from blog <span class="built_in">where</span> tags = <span class="string">&#x27;123&#x27;</span>;</span><br><span class="line"></span><br><span class="line">SELECT * FROM blog GROUP BY ctime;</span><br><span class="line">update blog <span class="built_in">set</span> views = views + 1 <span class="built_in">where</span> <span class="built_in">id</span> = 13;</span><br><span class="line"><span class="keyword">select</span> * from blog order by views desc <span class="built_in">limit</span> 7;</span><br><span class="line"><span class="keyword">select</span> * from blog <span class="built_in">where</span> tags = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * from blog <span class="built_in">where</span> <span class="built_in">id</span> = (<span class="keyword">select</span> <span class="built_in">id</span>,title from blog <span class="built_in">where</span> <span class="built_in">id</span> &lt; 22 order by <span class="built_in">id</span> desc <span class="built_in">limit</span> 1);</span><br><span class="line"><span class="keyword">select</span> * from blog <span class="built_in">where</span> <span class="built_in">id</span> = (<span class="keyword">select</span> <span class="built_in">id</span>,title from blog <span class="built_in">where</span> <span class="built_in">id</span> &gt; 22 order by <span class="built_in">id</span> asc <span class="built_in">limit</span> 1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(age) from student;               <span class="comment"># 求和</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(age) / count(1) as <span class="string">&#x27;平均值&#x27;</span> from student;  <span class="comment"># 计算平均数</span></span><br><span class="line"><span class="keyword">select</span> class, count(1) from student group by class;   <span class="comment"># 分组</span></span><br><span class="line"><span class="keyword">select</span> * from student <span class="built_in">limit</span> 2,2; <span class="comment"># 分页偏移量</span></span><br><span class="line"><span class="keyword">select</span> * from student order by <span class="built_in">id</span> desc; <span class="comment"># 倒叙</span></span><br><span class="line">delete from student <span class="built_in">where</span> name=<span class="string">&quot;小猫&quot;</span>;</span><br><span class="line"><span class="keyword">select</span> * from student <span class="built_in">limit</span> 6,3;</span><br><span class="line"><span class="keyword">select</span> stu_num from student;</span><br><span class="line"><span class="keyword">select</span> ctime, content from every_day order by <span class="built_in">id</span> desc <span class="built_in">limit</span> 1;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置其他服务连接</span></span><br><span class="line">show databases;  <span class="comment"># 打开查看数据库</span></span><br><span class="line">use mysql;   <span class="comment"># 连接mysql</span></span><br><span class="line"><span class="keyword">select</span> host, user from user; <span class="comment"># 查询user的用户名</span></span><br><span class="line">update user <span class="built_in">set</span> host=<span class="string">&quot;%&quot;</span> <span class="built_in">where</span> host = <span class="string">&quot;localhost&quot;</span> and user=<span class="string">&quot;root&quot;</span>;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/08/27/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/Express%E6%A1%86%E6%9E%B6/" rel="next" title="详解express框架">
+                <i class="fa fa-chevron-left"></i> 详解express框架
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/09/13/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/mongodb%E7%AE%80%E4%BB%8B/" rel="prev" title="mongoDB简介">
+                mongoDB简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">一、数据库基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.0.1.</span> <span class="nav-text">1、数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E8%A1%A8"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%88%97%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.0.3.</span> <span class="nav-text">3、列和数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E8%A1%8C"><span class="nav-number">1.0.4.</span> <span class="nav-text">4、行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E4%B8%BB%E9%94%AE"><span class="nav-number">1.0.5.</span> <span class="nav-text">5、主键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">SQL简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E7%AE%80%E4%BB%8B"><span class="nav-number">1.2.</span> <span class="nav-text">MySQL简介</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A3%80%E7%B4%A2%E5%92%8C%E8%BF%87%E6%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">二、数据的检索和过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">2.1.</span> <span class="nav-text">1、检索数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%8E%92%E5%BA%8F%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2、排序检索数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F%E5%8D%95%E4%B8%AA%E5%88%97%EF%BC%9Aorder-by%E5%AD%90%E5%8F%A5"><span class="nav-number">2.2.1.</span> <span class="nav-text">排序单个列：order by子句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E5%A4%9A%E4%B8%AA%E5%88%97%E6%8E%92%E5%BA%8F"><span class="nav-number">2.2.2.</span> <span class="nav-text">按多个列排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E7%B4%A2%E6%9C%80%E9%AB%98%E6%88%96%E6%9C%80%E4%BD%8E%E5%80%BC"><span class="nav-number">2.2.3.</span> <span class="nav-text">检索最高或最低值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">2.3.</span> <span class="nav-text">3、过滤数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#where%E5%AD%90%E5%8F%A5"><span class="nav-number">2.3.1.</span> <span class="nav-text">where子句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#where%E5%AD%90%E5%8F%A5%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.3.2.</span> <span class="nav-text">where子句操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%8C%B9%E9%85%8D%E6%A3%80%E6%9F%A5"><span class="nav-number">2.3.3.</span> <span class="nav-text">不匹配检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E5%9B%B4%E5%80%BC%E6%A3%80%E6%9F%A5"><span class="nav-number">2.3.4.</span> <span class="nav-text">范围值检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E5%80%BC%E6%A3%80%E6%9F%A5"><span class="nav-number">2.3.5.</span> <span class="nav-text">空值检查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">2.4.</span> <span class="nav-text">4、使用操作符过滤数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#and%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.4.1.</span> <span class="nav-text">and操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#or%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.4.2.</span> <span class="nav-text">or操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%AC%A1%E5%BA%8F"><span class="nav-number">2.4.3.</span> <span class="nav-text">计算次序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#in%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.4.4.</span> <span class="nav-text">in操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#not%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">2.4.5.</span> <span class="nav-text">not操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E4%BD%BF%E7%94%A8%E9%80%9A%E9%85%8D%E7%AC%A6%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">2.5.</span> <span class="nav-text">5、使用通配符过滤数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BE%E5%88%86%E5%8F%B7%EF%BC%88-%EF%BC%89%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">2.5.1.</span> <span class="nav-text">百分号（%）通配符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E5%88%92%E7%BA%BF%EF%BC%88-%EF%BC%89%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">2.5.2.</span> <span class="nav-text">下划线（_）通配符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%80%9A%E9%85%8D%E7%AC%A6%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="nav-number">2.5.3.</span> <span class="nav-text">使用通配符的技巧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%8F%92%E5%85%A5%E5%92%8C%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">三、插入和更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81insert"><span class="nav-number">3.1.</span> <span class="nav-text">1、insert</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%AE%8C%E6%95%B4%E7%9A%84%E8%A1%8C"><span class="nav-number">3.1.1.</span> <span class="nav-text">插入完整的行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%A4%9A%E8%A1%8C"><span class="nav-number">3.1.2.</span> <span class="nav-text">插入多行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81update%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">3.2.</span> <span class="nav-text">2、update更新数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#update%E8%AF%AD%E5%8F%A5%E7%94%B1%E4%B8%89%E9%83%A8%E5%88%86%E6%9E%84%E6%88%90%EF%BC%9A"><span class="nav-number">3.2.1.</span> <span class="nav-text">update语句由三部分构成：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81delete%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">3.3.</span> <span class="nav-text">3、delete删除数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%B1%87%E6%80%BB%E5%92%8C%E5%88%86%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">四、汇总和分组</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%B1%87%E6%80%BB%E6%95%B0%E6%8D%AE"><span class="nav-number">4.1.</span> <span class="nav-text">1、汇总数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#avg-%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.1.</span> <span class="nav-text">avg()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count-%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.2.</span> <span class="nav-text">count()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.3.</span> <span class="nav-text">max()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sum"><span class="nav-number">4.1.4.</span> <span class="nav-text">sum()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distinct%E4%B8%8E%E8%81%9A%E9%9B%86%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.5.</span> <span class="nav-text">distinct与聚集函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E8%81%9A%E9%9B%86%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.6.</span> <span class="nav-text">组合聚集函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%88%86%E7%BB%84%E6%95%B0%E6%8D%AE"><span class="nav-number">4.2.</span> <span class="nav-text">2、分组数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#group-by%E5%88%9B%E5%BB%BA%E5%88%86%E7%BB%84"><span class="nav-number">4.2.1.</span> <span class="nav-text">group by创建分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#having%E8%BF%87%E6%BB%A4%E5%88%86%E7%BB%84"><span class="nav-number">4.2.2.</span> <span class="nav-text">having过滤分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E5%92%8C%E6%8E%92%E5%BA%8F"><span class="nav-number">4.2.3.</span> <span class="nav-text">分组和排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select%E5%AD%90%E5%8F%A5%E9%A1%BA%E5%BA%8F"><span class="nav-number">4.2.4.</span> <span class="nav-text">select子句顺序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%A1%A8%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">五、表连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E8%BF%9E%E6%8E%A5%E8%A1%A8%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">5.1.</span> <span class="nav-text">1、连接表基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%A1%A8"><span class="nav-number">5.1.1.</span> <span class="nav-text">关系表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE"><span class="nav-number">5.1.2.</span> <span class="nav-text">外键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%A1%A8%E7%9A%84%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="nav-number">5.1.3.</span> <span class="nav-text">连接表的优点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%88%9B%E5%BB%BA%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.2.</span> <span class="nav-text">2、创建连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%9B%E5%8D%A1%E5%B0%94%E7%A7%AF"><span class="nav-number">5.2.1.</span> <span class="nav-text">笛卡尔积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.2.2.</span> <span class="nav-text">内部连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8"><span class="nav-number">5.2.3.</span> <span class="nav-text">连接多个表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%88%9B%E5%BB%BA%E9%AB%98%E7%BA%A7%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.3.</span> <span class="nav-text">3、创建高级连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%A1%A8%E5%88%AB%E5%90%8D"><span class="nav-number">5.3.1.</span> <span class="nav-text">使用表别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.3.2.</span> <span class="nav-text">自连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.3.3.</span> <span class="nav-text">外部连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%AE%9E%E6%88%98"><span class="nav-number">6.</span> <span class="nav-text">六、实战</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/09/06/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/MySql%E6%95%B0%E6%8D%AE%E5%BA%93/';
+          this.page.identifier = '2018/09/06/了解nodejs前世今生/MySql数据库/';
+          this.page.title = 'MySql数据库';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

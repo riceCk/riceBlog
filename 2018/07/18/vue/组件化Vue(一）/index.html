@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Vue简单语法糖Vue引用首先先引入Vue1&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;vue@2.5.16&#x2F;dist&#x2F;vue.js&quot;&gt;&lt;&#x2F;script&gt; 然后建立html标签1234567&lt;div id&#x3D;&quot;app&quot;&gt;    &lt;input type&#x3D;&quot;0&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="组件化Vue(一)">
+<meta property="og:url" content="http://yoursite.com/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue(%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="Vue简单语法糖Vue引用首先先引入Vue1&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;vue@2.5.16&#x2F;dist&#x2F;vue.js&quot;&gt;&lt;&#x2F;script&gt; 然后建立html标签1234567&lt;div id&#x3D;&quot;app&quot;&gt;    &lt;input type&#x3D;&quot;0&quot;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-07-18T01:47:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/18/vue/组件化Vue(一）/"/>
+
+
+
+
+
+  <title>组件化Vue(一) | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue(%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">组件化Vue(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-18T09:47:00+08:00">
+                2018-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue(%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/18/vue/组件化Vue(一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Vue简单语法糖"><a href="#Vue简单语法糖" class="headerlink" title="Vue简单语法糖"></a>Vue简单语法糖</h1><h2 id="Vue引用"><a href="#Vue引用" class="headerlink" title="Vue引用"></a>Vue引用</h2><h3 id="首先先引入Vue"><a href="#首先先引入Vue" class="headerlink" title="首先先引入Vue"></a>首先先引入Vue</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="然后建立html标签"><a href="#然后建立html标签" class="headerlink" title="然后建立html标签"></a>然后建立html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;input <span class="built_in">type</span>=<span class="string">&quot;0&quot;</span> v-on:input=<span class="string">&quot;changeTitle&quot;</span>&gt; <span class="comment">#`事件绑定`</span></span><br><span class="line">    &lt;p v-once&gt;&#123;&#123;title&#125;&#125;&lt;/p&gt;   <span class="comment">#只绑定一次=&gt;hello world </span></span><br><span class="line">    &lt;p&gt;&#123;&#123;sayHello()&#125;&#125; &lt;a v-bind:href=<span class="string">&quot;link&quot;</span>&gt;baidu&lt;/a&gt; &lt;/p&gt;     </span><br><span class="line">    <span class="comment"># hello</span></span><br><span class="line">    &lt;p v-html=<span class="string">&quot;linkBaidu&quot;</span>&gt; &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;  </span><br></pre></td></tr></table></figure>
+<p>v-bind 绑定数值</p>
+<h3 id="js语法"><a href="#js语法" class="headerlink" title="js语法"></a>js语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el : <span class="string">&quot;#app&quot;</span>,  <span class="comment">#选择器</span></span><br><span class="line">    data : &#123;      <span class="comment">#数据绑定</span></span><br><span class="line">        title: <span class="string">&quot;hello world!!!!&quot;</span>,</span><br><span class="line">        <span class="built_in">link</span>: <span class="string">&quot;http://www.baidu.com&quot;</span>,</span><br><span class="line">        linkBaidu: <span class="string">&quot;&lt;a href = &#x27;httm://www.baidu.con&#x27;&gt;baidu&lt;/a&gt;&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods : &#123;   <span class="comment">#函数保管</span></span><br><span class="line">        changeTitle: <span class="keyword">function</span>(event)&#123;  <span class="comment">#事件</span></span><br><span class="line">            this.title = event.target.value;</span><br><span class="line">        &#125;,</span><br><span class="line">        sayHello: <span class="function"><span class="title">function</span></span>()&#123;   <span class="comment">#方法</span></span><br><span class="line">            this.title = <span class="string">&quot;hello&quot;</span></span><br><span class="line">            <span class="built_in">return</span> this.title</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>Vue支持数据绑定，通过 <strong>new</strong> 建立Vue对象，<strong>el</strong> 选择，<strong>data</strong> 数据绑定，<strong>methods</strong> 函数集合多方面配合。标签中还设有多种组件，<strong>v-on:input=”xxx”</strong> 是input事件绑定，小程序也采用这种方式。<br><strong>v-once</strong>  只绑定一次数据，即为初始值，不根据后面的变化而变化， 双大括号只渲染成字符串， <strong>v-html</strong> 将后面的参数渲染成dom节点，可以不是使用这种组件尽量不使用，容易遭到脚本跨域攻击</p>
+<h2 id="关于事件问题"><a href="#关于事件问题" class="headerlink" title="关于事件问题"></a>关于事件问题</h2><h3 id="关于html标签的设置"><a href="#关于html标签的设置" class="headerlink" title="关于html标签的设置"></a>关于html标签的设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> &lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;button v-on:click = <span class="string">&quot;increase(2, <span class="variable">$event</span>)&quot;</span>&gt;click me!!!&lt;/button&gt;</span><br><span class="line">        //手动传参之后用<span class="variable">$event</span>传入代表事件源对象</span><br><span class="line">    &lt;p&gt;</span><br><span class="line">        &#123;&#123; count &#125;&#125;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">    &lt;p v-on:mousemove = <span class="string">&quot;setXY&quot;</span>&gt;x/y: &#123;&#123;x&#125;&#125; / &#123;&#123;y&#125;&#125; </span><br><span class="line">        &lt;span v-on:mousemove.stop.prevent = <span class="string">&quot;&quot;</span> &gt;stop&lt;/span&gt;</span><br><span class="line">                    //.stop事件修饰符取消默认事件(如冒泡) </span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">                </span><br><span class="line">    &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-on:keyup.enter = <span class="string">&quot;aliert&quot;</span> &gt;</span><br><span class="line">        //.enter 事件回车修饰符 。space空格事件。 es键盘去事件。 </span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="关于js脚本的设置"><a href="#关于js脚本的设置" class="headerlink" title="关于js脚本的设置"></a>关于js脚本的设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        count : 0,</span><br><span class="line">        x : 0,</span><br><span class="line">        y : 0</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        increase: <span class="keyword">function</span>(step, event)&#123;</span><br><span class="line">            this.count += step</span><br><span class="line">        &#125;,</span><br><span class="line">        setXY: <span class="keyword">function</span>(event)&#123;</span><br><span class="line">            this.x = event.clientX,</span><br><span class="line">            this.y = event.clientY</span><br><span class="line">        &#125;,</span><br><span class="line">        aliert: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            alert(111)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>标签中支持 <strong>v-on:</strong> 加各类事件，函数可添加参数，添加参数之后，需要用上事件源event的时候，必须传 <strong>$event</strong> ,还有事件修饰符可支持链式调用</p>
+<h2 id="v-on和v-bind与v-model的关系"><a href="#v-on和v-bind与v-model的关系" class="headerlink" title="v-on和v-bind与v-model的关系"></a>v-on和v-bind与v-model的关系</h2><h3 id="html标签"><a href="#html标签" class="headerlink" title="html标签"></a>html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-bind:value = <span class="string">&quot;name&quot;</span> v-on:input = <span class="string">&quot;changeName&quot;</span> &gt; </span><br><span class="line">    &lt;p&gt; &#123;&#123;name&#125;&#125; &lt;/p&gt;</span><br><span class="line"></span><br><span class="line">    &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model = <span class="string">&quot;model&quot;</span> &gt;</span><br><span class="line">    &lt;p&gt; &#123;&#123;model&#125;&#125; &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="js脚本"><a href="#js脚本" class="headerlink" title="js脚本"></a>js脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        name: <span class="string">&quot;change&quot;</span>,</span><br><span class="line">        model: <span class="string">&quot;model&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        changeName: <span class="keyword">function</span>(e)&#123;</span><br><span class="line">            this.name = e.target.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>两种方式的数据双向绑定，<strong>v-on</strong> 监听浏览器改变js脚本，<strong>v-bind</strong> js脚本改变浏览器，这两种形成数据绑定。Vue之后提供了一个便捷的数据绑定  <strong>v-model</strong></p>
+<h2 id="Vue-computed和methods以及watch"><a href="#Vue-computed和methods以及watch" class="headerlink" title="Vue computed和methods以及watch"></a>Vue computed和methods以及watch</h2><h3 id="html标签-1"><a href="#html标签-1" class="headerlink" title="html标签"></a>html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;increase++&quot;</span>&gt;increase&lt;/button&gt;</span><br><span class="line">    &lt;button v-on:click=<span class="string">&quot;increase--&quot;</span>&gt;decrease&lt;/button&gt;</span><br><span class="line">    &lt;button v-on:click=<span class="string">&quot;increaseSecond++&quot;</span>&gt;increaseSecond&lt;/button&gt;</span><br><span class="line">    &lt;p&gt; &#123;&#123;increase&#125;&#125; &lt;/p&gt;</span><br><span class="line">    &lt;p&gt; &#123;&#123;increaseSecond&#125;&#125; &lt;/p&gt;</span><br><span class="line">    &lt;p&gt; &#123;&#123; result()&#125;&#125; | &#123;&#123;resultCom &#125;&#125; &lt;/p&gt;</span><br><span class="line">            &lt;!-- result() 是一个函数执行的形式 --&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>其中result() 是一个函数执行的形式，Vue对于事件的<strong> v-on: </strong> 缩写形式<code>@</code>，<strong>v-bin：</strong>缩写成<code>:</code>只需要一个冒号就行了。并且其中的<strong>increase++</strong>、<strong>increase–</strong>是直接改变data中的值。</p>
+<h3 id="js脚本代码"><a href="#js脚本代码" class="headerlink" title="js脚本代码"></a>js脚本代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        increase: 0,</span><br><span class="line">        increaseSecond: 0</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;  //计算属性</span><br><span class="line">    </span><br><span class="line">        resultCom: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            <span class="built_in">return</span>  this.increase &gt; 5 ? <span class="string">&quot;greater than 5&quot;</span> : <span class="string">&quot;less than 5&quot;</span>                    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    methods: &#123;</span><br><span class="line">        result : <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            <span class="built_in">return</span>  this.increase &gt; 5 ? <span class="string">&quot;greater than 5&quot;</span> : <span class="string">&quot;less than 5&quot;</span>            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    watch: &#123;</span><br><span class="line">        increase: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            var vm = this;</span><br><span class="line">            setTimeout(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">                vm.increase = 0</span><br><span class="line">            &#125;, 2000)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>computed</code>和<code>methods</code>应用一样都是执行dom中的函数，但是computed他可以检测到内部变化此例中<strong>increase</strong>的属性。只有当<strong>increase</strong>的属性变化才会执行computed,但是methods不一样他不分析其中的逻辑代码，只要上面dom变化他就运行,这是一个性能问题，之后的运用之还主要以<strong>computed</strong>为主<br><code>watch</code>是一个监听属性，不会创建新的属性，只用于监听已有属性，此例题中是用来监听<strong>increase</strong> 这个变量，当<strong>increase</strong>这个变量改变了，就会执行下面的函数，这样可以异步操作了</p>
+<h2 id="v-click-事件"><a href="#v-click-事件" class="headerlink" title="v-click 事件"></a>v-click 事件</h2><h3 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 阻止单击事件继续传播 </span></span><br><span class="line">&lt;a v-on:click.stop=<span class="string">&quot;doThis&quot;</span>&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交事件不再重载页面 </span></span><br><span class="line">&lt;form v-on:submit.prevent=<span class="string">&quot;onSubmit&quot;</span>&gt;&lt;/form&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修饰符可以串联 </span></span><br><span class="line">&lt;a v-on:click.stop.prevent=<span class="string">&quot;doThat&quot;</span>&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只有修饰符 </span></span><br><span class="line">&lt;form v-on:submit.prevent&gt;&lt;/form&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加事件监听器时使用事件捕获模式 </span></span><br><span class="line"><span class="comment"># 即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理 </span></span><br><span class="line">&lt;div v-on:click.capture=<span class="string">&quot;doThis&quot;</span>&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只当在 event.target 是当前元素自身时触发处理函数 </span></span><br><span class="line"><span class="comment"># 即事件不是从内部元素触发的 </span></span><br><span class="line">&lt;div v-on:click.self=<span class="string">&quot;doThat&quot;</span>&gt;...&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。</p>
+<h1 id="更多vue属性查询请点击-vue文档"><a href="#更多vue属性查询请点击-vue文档" class="headerlink" title="更多vue属性查询请点击 vue文档"></a>更多vue属性查询请点击 <a href="https://cn.vuejs.org/v2/guide/events.html">vue文档</a></h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/05/19/JavaScript/javaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="javascript设计模式（二）">
+                <i class="fa fa-chevron-left"></i> javascript设计模式（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/07/18/vue/Vue%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE/" rel="prev" title="Vue的简单配置">
+                Vue的简单配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue%E7%AE%80%E5%8D%95%E8%AF%AD%E6%B3%95%E7%B3%96"><span class="nav-number">1.</span> <span class="nav-text">Vue简单语法糖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue%E5%BC%95%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">Vue引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E5%85%88%E5%BC%95%E5%85%A5Vue"><span class="nav-number">1.1.1.</span> <span class="nav-text">首先先引入Vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%84%B6%E5%90%8E%E5%BB%BA%E7%AB%8Bhtml%E6%A0%87%E7%AD%BE"><span class="nav-number">1.1.2.</span> <span class="nav-text">然后建立html标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">js语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%BA%8B%E4%BB%B6%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">关于事件问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ehtml%E6%A0%87%E7%AD%BE%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">关于html标签的设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Ejs%E8%84%9A%E6%9C%AC%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">关于js脚本的设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-on%E5%92%8Cv-bind%E4%B8%8Ev-model%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.3.</span> <span class="nav-text">v-on和v-bind与v-model的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.1.</span> <span class="nav-text">html标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%84%9A%E6%9C%AC"><span class="nav-number">1.3.2.</span> <span class="nav-text">js脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-computed%E5%92%8Cmethods%E4%BB%A5%E5%8F%8Awatch"><span class="nav-number">1.4.</span> <span class="nav-text">Vue computed和methods以及watch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E6%A0%87%E7%AD%BE-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">html标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.2.</span> <span class="nav-text">js脚本代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-click-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">v-click 事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.5.1.</span> <span class="nav-text">事件修饰符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9Avue%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E8%AF%B7%E7%82%B9%E5%87%BB-vue%E6%96%87%E6%A1%A3"><span class="nav-number">2.</span> <span class="nav-text">更多vue属性查询请点击 vue文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue(%E4%B8%80%EF%BC%89/';
+          this.page.identifier = '2018/07/18/vue/组件化Vue(一）/';
+          this.page.title = '组件化Vue(一)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

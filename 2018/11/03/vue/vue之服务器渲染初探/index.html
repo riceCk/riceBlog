@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue ssr服务器端渲染," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="为什么要用ssr呢服务器端渲染的发展史12345678910111213141516171819* 1990年产生万维网，学术第一个浏览器，编译器 web服务器* 1994年创建万维网联盟，在麻省理工建立了计算机研究室* 用途：方便资料快速传输，方便大家看* 1994 大众认知的 第一个浏览器“网景导航”* 问题：     - 所有页面只有html，静态页面    - 页面的相关运算，都在服务器端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue之服务器渲染初探">
+<meta property="og:url" content="http://yoursite.com/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%B2%E6%9F%93%E5%88%9D%E6%8E%A2/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="为什么要用ssr呢服务器端渲染的发展史12345678910111213141516171819* 1990年产生万维网，学术第一个浏览器，编译器 web服务器* 1994年创建万维网联盟，在麻省理工建立了计算机研究室* 用途：方便资料快速传输，方便大家看* 1994 大众认知的 第一个浏览器“网景导航”* 问题：     - 所有页面只有html，静态页面    - 页面的相关运算，都在服务器端">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-11-03T02:45:14.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="vue ssr服务器端渲染">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/03/vue/vue之服务器渲染初探/"/>
+
+
+
+
+
+  <title>vue之服务器渲染初探 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%B2%E6%9F%93%E5%88%9D%E6%8E%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue之服务器渲染初探</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-03T10:45:14+08:00">
+                2018-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%B2%E6%9F%93%E5%88%9D%E6%8E%A2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/03/vue/vue之服务器渲染初探/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="为什么要用ssr呢"><a href="#为什么要用ssr呢" class="headerlink" title="为什么要用ssr呢"></a>为什么要用ssr呢</h1><h2 id="服务器端渲染的发展史"><a href="#服务器端渲染的发展史" class="headerlink" title="服务器端渲染的发展史"></a>服务器端渲染的发展史</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">* 1990年产生万维网，学术第一个浏览器，编译器 web服务器</span><br><span class="line">* 1994年创建万维网联盟，在麻省理工建立了计算机研究室</span><br><span class="line">* 用途：方便资料快速传输，方便大家看</span><br><span class="line">* 1994 大众认知的 第一个浏览器“网景导航”</span><br><span class="line">* 问题： </span><br><span class="line">    - 所有页面只有html，静态页面</span><br><span class="line">    - 页面的相关运算，都在服务器端进行 </span><br><span class="line">* 1994产生PHP Person Home Page（超文本预处理器）</span><br><span class="line">* 模板引擎</span><br><span class="line">    - &lt;p&gt;&#123;&#125;&lt;/p&gt; 魔板字符串</span><br><span class="line">* 1995 javascript 用于客户端进行计算的脚步</span><br><span class="line">* 1999 异步传输对象 ActiveX XMHttpRequst</span><br><span class="line">* Web2.0 异步加载数据</span><br><span class="line">* 前端是由后端分生出来的职业</span><br><span class="line">* 2008 Chrom谷歌浏览器的出现，浏览器页面运算速度超快</span><br><span class="line">* 现在的前端</span><br><span class="line">    - 通过Ajax请求数据，根据特定逻辑生成对应的DOM页面</span><br><span class="line">    - 写哈数据库，做好接口</span><br><span class="line">* 2009 Node的出来</span><br></pre></td></tr></table></figure>
+<h2 id="开始我们的代码"><a href="#开始我们的代码" class="headerlink" title="开始我们的代码"></a>开始我们的代码</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h3 id="下载vue及vue-server-renderer"><a href="#下载vue及vue-server-renderer" class="headerlink" title="下载vue及vue-server-renderer"></a>下载vue及vue-server-renderer</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install vue -vueserver-renderer --save</span><br></pre></td></tr></table></figure>
+<h3 id="创建demo-js配置文件"><a href="#创建demo-js配置文件" class="headerlink" title="创建demo.js配置文件"></a>创建demo.js配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">var Vue = require(<span class="string">&#x27;vue&#x27;</span>);</span><br><span class="line">var ServerRenderer = require(<span class="string">&#x27;vue-server-renderer&#x27;</span>);</span><br><span class="line">var http = require(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="comment"># 创建Vye实例</span></span><br><span class="line">var app = new Vue(&#123;</span><br><span class="line">    template: `&lt;div class=<span class="string">&quot;wrapper&quot;</span>&gt;</span><br><span class="line">                &lt;show-msg&gt;&lt;/show-msg&gt;</span><br><span class="line">                &lt;div&gt;</span><br><span class="line">                    &lt;input v-model=<span class="string">&quot;val&quot;</span>&gt;</span><br><span class="line">                    &lt;div&gt;&#123;&#123;val&#125;&#125;&lt;/div&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">               &lt;/div&gt;`,</span><br><span class="line">    data: &#123;</span><br><span class="line">        val: <span class="string">&#x27;you were, are an will be in my heart&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    components: &#123;</span><br><span class="line">        showMsg: &#123;</span><br><span class="line">            template: `&lt;h1&gt;&#123;&#123;value&#125;&#125;&lt;/h1&gt;`,</span><br><span class="line">            <span class="function"><span class="title">data</span></span>() &#123;</span><br><span class="line">                <span class="built_in">return</span> &#123;</span><br><span class="line">                    value: <span class="string">&#x27;welcome 2 tydk&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># 创建Render实例（将vue实例转化成html字符串）</span></span><br><span class="line">var renderer = ServerRenderer.createRenderer(&#123;</span><br><span class="line">    <span class="comment"># 创建一个html模板</span></span><br><span class="line">    template: require(<span class="string">&#x27;fs&#x27;</span>).readFileSync(<span class="string">&#x27;./index.template.html&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">// ddd</span><br><span class="line"><span class="comment"># 跑服务</span></span><br><span class="line">http.createServer((req, res) =&gt; &#123;</span><br><span class="line">    # 通过renderToString（Vue实例）转化成HTML字符串</span><br><span class="line">    renderer.renderToString(app, &#123;</span><br><span class="line">        start: &#x27;&lt;script&gt;console.log(&#x27;start&#x27;)&lt;/script&gt;&#x27;,</span><br><span class="line">        end: &#x27;&lt;script&gt;console.log(&#x27;end&#x27;)&lt;/script&gt;&#x27;</span><br><span class="line">    &#125;, (err, html) =&gt; &#123;</span><br><span class="line">        res.end(html) # 将 Vue 实例渲染为字符串html</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).listen(&#x27;<span class="number">3000</span>&#x27;);</span><br></pre></td></tr></table></figure>
+<h3 id="创建index-template-html的模板html"><a href="#创建index-template-html的模板html" class="headerlink" title="创建index.template.html的模板html"></a>创建index.template.html的模板html</h3><p><strong><!--vue-ssr-outlet--></strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span></span><br><span class="line">          content=<span class="string">&quot;width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;I am is a template <span class="keyword">for</span> SSR&lt;/h1&gt;</span><br><span class="line">    &lt;!--vue-ssr-outlet--&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/vue-ssr%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%B8%B2%E6%9F%93/" rel="tag"># vue ssr服务器端渲染</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/11/03/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E7%B3%BB%E5%88%97%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="你不知道到JavaScript系列二">
+                <i class="fa fa-chevron-left"></i> 你不知道到JavaScript系列二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8/" rel="prev" title="vue之服务器单页面应用">
+                vue之服务器单页面应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8ssr%E5%91%A2"><span class="nav-number">1.</span> <span class="nav-text">为什么要用ssr呢</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%B8%B2%E6%9F%93%E7%9A%84%E5%8F%91%E5%B1%95%E5%8F%B2"><span class="nav-number">1.1.</span> <span class="nav-text">服务器端渲染的发展史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%88%91%E4%BB%AC%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">开始我们的代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDvue%E5%8F%8Avue-server-renderer"><span class="nav-number">1.2.2.</span> <span class="nav-text">下载vue及vue-server-renderer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAdemo-js%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">创建demo.js配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAindex-template-html%E7%9A%84%E6%A8%A1%E6%9D%BFhtml"><span class="nav-number">1.2.4.</span> <span class="nav-text">创建index.template.html的模板html</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%B2%E6%9F%93%E5%88%9D%E6%8E%A2/';
+          this.page.identifier = '2018/11/03/vue/vue之服务器渲染初探/';
+          this.page.title = 'vue之服务器渲染初探';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

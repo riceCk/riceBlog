@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="程序的分支结构分支结构123ifif-elseif-elif-else  浮点数的比较1234560.2 &#x3D;&#x3D; 0.2 # True0.3 &#x3D;&#x3D; 0.1 + 0.2 # Falsea &#x3D; 0.1 + 0.2abs(a - 0.3) &lt; 0.00001 # Truemath.isclose(a, 0.3) # True not,or,and12345678910111213a &#x3D; trueno">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.Python控制结构、函数与代码复用">
+<meta property="og:url" content="http://yoursite.com/2020/06/16/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/3.python%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="程序的分支结构分支结构123ifif-elseif-elif-else  浮点数的比较1234560.2 &#x3D;&#x3D; 0.2 # True0.3 &#x3D;&#x3D; 0.1 + 0.2 # Falsea &#x3D; 0.1 + 0.2abs(a - 0.3) &lt; 0.00001 # Truemath.isclose(a, 0.3) # True not,or,and12345678910111213a &#x3D; trueno">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-06-16T11:36:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/16/python-人工智能“深度学习”/3.python控制结构、函数与代码复用/"/>
+
+
+
+
+
+  <title>3.Python控制结构、函数与代码复用 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2020/06/16/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/3.python%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">3.Python控制结构、函数与代码复用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-16T19:36:00+08:00">
+                2020-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2020/06/16/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/3.python%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/06/16/python-人工智能“深度学习”/3.python控制结构、函数与代码复用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="程序的分支结构"><a href="#程序的分支结构" class="headerlink" title="程序的分支结构"></a>程序的分支结构</h1><h2 id="分支结构"><a href="#分支结构" class="headerlink" title="分支结构"></a>分支结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span></span><br><span class="line">if-else</span><br><span class="line">if-elif-else </span><br></pre></td></tr></table></figure>
+<h2 id="浮点数的比较"><a href="#浮点数的比较" class="headerlink" title="浮点数的比较"></a>浮点数的比较</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0.2 == 0.2 <span class="comment"># True</span></span><br><span class="line">0.3 == 0.1 + 0.2 <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line">a = 0.1 + 0.2</span><br><span class="line">abs(a - 0.3) &lt; 0.00001 <span class="comment"># True</span></span><br><span class="line">math.isclose(a, 0.3) <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+<h2 id="not-or-and"><a href="#not-or-and" class="headerlink" title="not,or,and"></a>not,or,and</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="literal">true</span></span><br><span class="line">not a <span class="comment"># False</span></span><br><span class="line">not not a <span class="comment"># True </span></span><br><span class="line"></span><br><span class="line">b1 = True</span><br><span class="line">b2 = False</span><br><span class="line">b1 or b2 <span class="comment"># True</span></span><br><span class="line">b3 = False</span><br><span class="line">b2 or b3 <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line">b1 and b2 <span class="comment"># False</span></span><br><span class="line">b4 = True</span><br><span class="line">b1 and b4 <span class="comment"># True </span></span><br></pre></td></tr></table></figure>
+<h2 id="分支结构单行表达式"><a href="#分支结构单行表达式" class="headerlink" title="分支结构单行表达式"></a>分支结构单行表达式</h2><p>二分支结构还有一种更简洁表达式，适合通过判断返回特定的值，语法格式如下：<br>&lt;表达式1&gt; if &lt;条件&gt; else &lt;表达式2&gt;<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Temp = <span class="built_in">eval</span>(input(<span class="string">&quot;请输入你的体温：&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;体温&#123;&#125;异常！&quot;</span>.format(<span class="string">&quot;存在&quot;</span><span class="keyword">if</span> Temp &gt;= 37.2 <span class="keyword">else</span> <span class="string">&quot;没有&quot;</span>))</span><br></pre></td></tr></table></figure></p>
+<h2 id="多分支结构：if-elif-else语言"><a href="#多分支结构：if-elif-else语言" class="headerlink" title="多分支结构：if-elif-else语言"></a>多分支结构：if-elif-else语言</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BMI = <span class="built_in">eval</span>(input(<span class="string">&quot;请输入你的BMI数值：&quot;</span>))</span><br><span class="line"><span class="keyword">if</span> 0 &lt;= BMI &lt; 15:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;你太瘦了&quot;</span>)</span><br><span class="line"><span class="keyword">elif</span> 15 &lt;= BMI &lt; 25:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;你的身材很好了&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;你有点超重了，J减减肥&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="程序的循环机构"><a href="#程序的循环机构" class="headerlink" title="程序的循环机构"></a>程序的循环机构</h1><h2 id="range函数"><a href="#range函数" class="headerlink" title="range函数"></a>range函数</h2><p>range()是一个计数函数，实现循环从一个数字开始计数到另一个数字，一旦达到最后一个数字或者某一个条件不在满足就立刻退出循环：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">list(range(1, 10, 1)) </span><br><span class="line">list(range(1, 10)) </span><br><span class="line">list(range(10)) </span><br><span class="line"><span class="comment"># [1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line"></span><br><span class="line">list(range(1, 10, 2))</span><br><span class="line"><span class="comment"># [1, 3, 5, 7, 9]</span></span><br><span class="line"></span><br><span class="line">list(range(1, 10, 3))</span><br><span class="line"><span class="comment"># [1, 4, 7]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="enumerate枚举函数"><a href="#enumerate枚举函数" class="headerlink" title="enumerate枚举函数"></a>enumerate枚举函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> index, name <span class="keyword">in</span> enumerate(names):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%d %s&quot;</span>%(index, name))</span><br><span class="line"><span class="comment"># 0 a</span></span><br><span class="line"><span class="comment"># 1 b</span></span><br><span class="line"><span class="comment"># 2 c</span></span><br></pre></td></tr></table></figure>
+<h2 id="zip函数"><a href="#zip函数" class="headerlink" title="zip函数"></a>zip函数</h2><p>zip函数接受任意多个（包括0个和1个）序列作为参数，返回一个tuple列表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]</span><br><span class="line">ages = [15, 16, 14]</span><br><span class="line"><span class="keyword">for</span> name, age <span class="keyword">in</span> zip(names, ages):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%s %d&quot;</span>%(name, age))</span><br><span class="line"><span class="comment"># a 15</span></span><br><span class="line"><span class="comment"># b 16</span></span><br><span class="line"><span class="comment"># c 14</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="reversed-函数"><a href="#reversed-函数" class="headerlink" title="reversed 函数"></a>reversed 函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">list(reversed(range(10)))</span><br><span class="line"><span class="comment"># [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> reversed(range(10)):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
+<h2 id="for-in"><a href="#for-in" class="headerlink" title="for..in"></a>for..in</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">&#x27;sky&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;循环进行中: &quot;</span>+ c)</span><br><span class="line"><span class="keyword">else</span>: </span><br><span class="line">    c = <span class="string">&quot;循环正常结束&quot;</span></span><br><span class="line"><span class="built_in">print</span>(c)</span><br></pre></td></tr></table></figure>
+<h2 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h2><p>while循环：<br>while循环一直保持循环操作指导特定循环条件不被满足才结束，不需要提前知道确定循环次数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s, index = <span class="string">&quot;sky&quot;</span>, 0</span><br><span class="line"><span class="keyword">while</span> index &lt; len(s):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;循环进行中&quot;</span> + s[index])</span><br><span class="line">    index += 1</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    s = <span class="string">&quot;这句话输出是不满足while条件&quot;</span></span><br><span class="line"><span class="built_in">print</span>(s)</span><br></pre></td></tr></table></figure></p>
+<h2 id="循环保留字：break和continue"><a href="#循环保留字：break和continue" class="headerlink" title="循环保留字：break和continue"></a>循环保留字：break和continue</h2><ul>
+<li>循环结构有两个辅助保留字：break和continue，它们用来辅助控制循环执行</li>
+<li>break用来跳出最内层for或while循环，脱离改循环后程序从循环后代吗继续执行</li>
+<li>continue用来结束当前当次循环，即跳出循环体中下面尚未执行的语句，当不跳出当前循环</li>
+<li>对于while循环，继续求解循环条件，对于for循环，程序流程接着遍历循环列表</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> <span class="string">&quot;SKY&quot;</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(6):</span><br><span class="line">        <span class="built_in">print</span>(s, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> s==<span class="string">&quot;K&quot;</span>:</span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line"><span class="comment"># SSSSSSKYYYYYY</span></span><br></pre></td></tr></table></figure>
+<h2 id="random-库概述"><a href="#random-库概述" class="headerlink" title="random 库概述"></a>random 库概述</h2><p>rangdom库Python用于<br>| 函数 | 描述 |<br>| :—: | :—: |<br>|random()|生成一个[0.0, 1.0)之间的随机小数|<br>|randint(a, b) |生成一个[a,b]之间的整数|<br>|getrandbits(k) |生成一个k比特长度的随机整数|<br>|randrange(start, stop[, step]) |生成一个[start, stop)之间以step为步数的随机整数|<br>|uniform(a, b) |生成一个[a, b]之间的随机小数|<br>|choice(seq)|从序列类型(例如：列表)中随机返回一个元素|<br>|shuffle(seq)|将序列类型中元素随机排列，返回打乱后的序列|<br>|sample(pop, k)|从pop类型中随机选取k个元素，以列表类型返回|</p>
+<h1 id="程序的异常处理"><a href="#程序的异常处理" class="headerlink" title="程序的异常处理"></a>程序的异常处理</h1><p>异常处理：try-exceopt语句<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    num = <span class="built_in">eval</span>(input(<span class="string">&quot;请输入一个整数：&quot;</span>))</span><br><span class="line">    <span class="built_in">print</span>(num ** 2)</span><br><span class="line">except NameError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;输入一个错误，请输入一个整数！&quot;</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    letters = <span class="string">&quot;ASDFGHJKLLLLLQWERTYUIOPZXCVBNM&quot;</span></span><br><span class="line">    indx = <span class="built_in">eval</span>(input(<span class="string">&quot;请输入一个整数：&quot;</span>))</span><br><span class="line">    <span class="built_in">print</span>(letters(indx))</span><br><span class="line">except NameError: <span class="comment"># 非数字走着</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;输入一个错误，请输入一个整数！&quot;</span>)</span><br><span class="line">except: <span class="comment"># 小数，浮点型走这</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;其他错误&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="异常的高级用法"><a href="#异常的高级用法" class="headerlink" title="异常的高级用法"></a>异常的高级用法</h2><h4 id="采用else和finally修改代码如下："><a href="#采用else和finally修改代码如下：" class="headerlink" title="采用else和finally修改代码如下："></a>采用else和finally修改代码如下：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    letters = <span class="string">&quot;ASDFGHJKLLLLLQWERTYUIOPZXCVBNM&quot;</span></span><br><span class="line">    indx = <span class="built_in">eval</span>(input(<span class="string">&quot;请输入一个整数：&quot;</span>))</span><br><span class="line">    <span class="built_in">print</span>(letters(indx))</span><br><span class="line">except NameError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;输入一个错误，请输入一个整数！&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;没有发生异常&quot;</span>)</span><br><span class="line">finally:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序执行完毕，不知道是否发生了异常&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="先特殊后万能"><a href="#先特殊后万能" class="headerlink" title="先特殊后万能"></a>先特殊后万能</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    letters = <span class="string">&quot;ASDFGHJKLQWERTYUIOZXCVBNM&quot;</span></span><br><span class="line">    idx = <span class="built_in">eval</span>(input(<span class="string">&quot;请输入一个整数：&quot;</span>))</span><br><span class="line">    <span class="built_in">print</span>(letters[idx])</span><br><span class="line">except NameError: <span class="comment"># 异常时，执行该块</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;请输入错误，请输入一个整数&quot;</span>)</span><br><span class="line">except IndexError: <span class="comment"># 异常时，执行该块</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;输入错误，请输入0-25中的一个整数！&quot;</span>)</span><br><span class="line">except Exception: <span class="comment"># 异常时，执行该块</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;其他错误！请重新输入&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>: <span class="comment"># 主代码快执行完，执行该块</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;没有发生异常&quot;</span>)</span><br><span class="line">finally: <span class="comment"># 无论异常与否，最终执行该块</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序执行完毕&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="重命名报错信息"><a href="#重命名报错信息" class="headerlink" title="重命名报错信息"></a>重命名报错信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">try: </span><br><span class="line">    int(s1)</span><br><span class="line">except KeyError as ke:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;键错误:&quot;</span>, ke)</span><br><span class="line">except IndexError as ie:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;索引错误:&quot;</span>, ie)</span><br><span class="line">except Exception as e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;其他错误:&quot;</span>, e)</span><br></pre></td></tr></table></figure>
+<h3 id="raise主动抛出异常"><a href="#raise主动抛出异常" class="headerlink" title="raise主动抛出异常"></a>raise主动抛出异常</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    s = None</span><br><span class="line">    <span class="keyword">if</span> s <span class="keyword">in</span> None:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;s是空对象&quot;</span>)</span><br><span class="line">        raise NameError</span><br><span class="line">    <span class="built_in">print</span>(len(s))</span><br><span class="line">except TypeError as te:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;类型错误：&quot;</span>, te)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;空对象没有长度&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h2 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def happy(name):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;新年快乐！&#123;&#125;总&quot;</span>.format(name))</span><br><span class="line">happy(<span class="string">&quot;王&quot;</span>)</span><br><span class="line">happy(<span class="string">&quot;李&quot;</span>)  </span><br></pre></td></tr></table></figure>
+<h2 id="函数调用的过程"><a href="#函数调用的过程" class="headerlink" title="函数调用的过程"></a>函数调用的过程</h2><ul>
+<li>调用程序在调用处暂定执行；</li>
+<li>在调用时将实参复制给函数的形参</li>
+<li>执行函数体语句</li>
+<li>函数调用结束给出返回值，程序回到调用前的暂停处继续执行</li>
+</ul>
+<h2 id="函数的参数"><a href="#函数的参数" class="headerlink" title="函数的参数"></a>函数的参数</h2><h3 id="在定义函数时，有些参数可以存在默认值"><a href="#在定义函数时，有些参数可以存在默认值" class="headerlink" title="在定义函数时，有些参数可以存在默认值"></a>在定义函数时，有些参数可以存在默认值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def repeat(str, <span class="built_in">times</span> = 2):</span><br><span class="line">    <span class="built_in">print</span>(str * <span class="built_in">times</span>)</span><br><span class="line">    </span><br><span class="line">repeat(<span class="string">&#x27;hello&#x27;</span>)</span><br><span class="line">repeat(<span class="string">&quot;hello&quot;</span>, 4)</span><br><span class="line">```  </span><br><span class="line"><span class="comment">### 在定义函数时，有默认值的参数必须写在没有默认值的参数后面</span></span><br><span class="line">```bash</span><br><span class="line">def repeat(str, <span class="built_in">times</span> = 2, name) <span class="comment"># 报错</span></span><br><span class="line">    <span class="built_in">print</span>(str * <span class="built_in">times</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="在函数定义时，可以设计可变数量参数，通过参数前增加星号（-）实现"><a href="#在函数定义时，可以设计可变数量参数，通过参数前增加星号（-）实现" class="headerlink" title="在函数定义时，可以设计可变数量参数，通过参数前增加星号（*）实现"></a>在函数定义时，可以设计可变数量参数，通过参数前增加星号（*）实现</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def func(x, *y):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;y:&quot;</span>, y)</span><br><span class="line">    <span class="built_in">print</span>(max(y))</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> y:</span><br><span class="line">        x += n</span><br><span class="line">    <span class="built_in">return</span> x</span><br><span class="line"></span><br><span class="line">func(1, 2, 3, 4)</span><br></pre></td></tr></table></figure>
+<p>在调用函数是也能够使用*语法，在这种情况下，它与函数定义的意思相反，它会解包参数的集合，而不是创建参数的集合<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def func(a, b, c)</span><br><span class="line">    <span class="built_in">print</span>(a + b + c)</span><br><span class="line">args = (1, 2, 3)</span><br><span class="line">func(*args)</span><br></pre></td></tr></table></figure></p>
+<h3 id="在python中，还有可以将定义好的函数作为参数传给另一个函数"><a href="#在python中，还有可以将定义好的函数作为参数传给另一个函数" class="headerlink" title="在python中，还有可以将定义好的函数作为参数传给另一个函数"></a>在python中，还有可以将定义好的函数作为参数传给另一个函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def fun1(x):</span><br><span class="line">    <span class="built_in">return</span> x * x</span><br><span class="line">def fun2(a, fun):</span><br><span class="line">    <span class="built_in">return</span> fun(a)</span><br><span class="line"><span class="built_in">print</span>(fun2(3, fun1))</span><br></pre></td></tr></table></figure>
+<h2 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h2><ul>
+<li>return语言用来退出函数并将程序返回到函数调用的位置继续执行</li>
+<li>retrun语言同时可以将0个、1个或多个函数运算完的结果返回给函数被调用的变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import math</span><br><span class="line">def move(x, y, step, angle = 0):</span><br><span class="line">    nx = x + step * math.cos(angle)</span><br><span class="line">    ny = y - step * math.sin(angle)</span><br><span class="line">    <span class="built_in">return</span> nx, ny</span><br><span class="line">x, y = move(100, 100, 60, math.pi / 6)</span><br><span class="line"><span class="built_in">print</span>(x, y)</span><br></pre></td></tr></table></figure>
+<h2 id="函数的定义嵌套"><a href="#函数的定义嵌套" class="headerlink" title="函数的定义嵌套"></a>函数的定义嵌套</h2><p>函数内部可以在定义函数，这些函数只能在函数内部使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def fun1(x, y):</span><br><span class="line">    def fun2(a):</span><br><span class="line">        <span class="built_in">return</span> a * a</span><br><span class="line">    def fun3(b):</span><br><span class="line">        <span class="built_in">return</span> pow(b, 0.5)</span><br><span class="line">    <span class="built_in">return</span> fun3(fun2(x) + fun2(y))</span><br><span class="line">fun1(3, 40)</span><br></pre></td></tr></table></figure></p>
+<h2 id="全局变量和局部变量"><a href="#全局变量和局部变量" class="headerlink" title="全局变量和局部变量"></a>全局变量和局部变量</h2><p>如果希望在func()函数将x当做全局变量，需要在变量x使用前global关键字声明该变量为全局变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = 1</span><br><span class="line">def func(a, b):</span><br><span class="line">    global x</span><br><span class="line">    x = a + b</span><br><span class="line">    <span class="built_in">return</span> x</span><br><span class="line">func(3, 4)</span><br><span class="line">x <span class="comment"># 5</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="如果此时全局变量不是整数x，而是列表类型l如下"><a href="#如果此时全局变量不是整数x，而是列表类型l如下" class="headerlink" title="如果此时全局变量不是整数x，而是列表类型l如下"></a>如果此时全局变量不是整数x，而是列表类型l如下</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">l = []</span><br><span class="line">def func(x, y):</span><br><span class="line">    l.append(x + y)</span><br><span class="line">    <span class="built_in">return</span> x * y</span><br><span class="line">func(2, 3)</span><br></pre></td></tr></table></figure>
+<h3 id="嵌套函数中的全局变量和局部变量"><a href="#嵌套函数中的全局变量和局部变量" class="headerlink" title="嵌套函数中的全局变量和局部变量"></a>嵌套函数中的全局变量和局部变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">x = 1</span><br><span class="line">def fun1():</span><br><span class="line">    x = 2</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;fun1的局部变量x：&quot;</span>, x)</span><br><span class="line">    def fun2():</span><br><span class="line">        global x</span><br><span class="line">        x = 3</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;全局变量x：&quot;</span>, x)</span><br><span class="line">    fun2()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;fun1最后的x值：&quot;</span>, x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;最开始的x值：&quot;</span>, x)</span><br><span class="line">fun1()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;最后的x值：&quot;</span>, x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最开始的x值： 1</span></span><br><span class="line"><span class="comment"># fun1的局部变量x： 2</span></span><br><span class="line"><span class="comment"># 全局变量x： 3</span></span><br><span class="line"><span class="comment"># fun1最后的x值： 2</span></span><br><span class="line"><span class="comment"># 最后的x值： 3</span></span><br></pre></td></tr></table></figure>
+<h2 id="lambda函数"><a href="#lambda函数" class="headerlink" title="lambda函数"></a>lambda函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = lambda x, y, z: x * y * z</span><br><span class="line">c(2, 3, 4)</span><br></pre></td></tr></table></figure>
+<h2 id="map和lambda函数组合使用"><a href="#map和lambda函数组合使用" class="headerlink" title="map和lambda函数组合使用"></a>map和lambda函数组合使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def sq(x):</span><br><span class="line">    <span class="built_in">return</span> x * x</span><br><span class="line">list(map(sq, [y <span class="keyword">for</span> y <span class="keyword">in</span> range(5)]))</span><br><span class="line"><span class="comment"># [0, 1, 4, 9, 16]</span></span><br><span class="line">list(map(lambda x: x * x, [y <span class="keyword">for</span> y <span class="keyword">in</span> range(5)]))</span><br></pre></td></tr></table></figure>
+<h1 id="Python迭代器和生成器"><a href="#Python迭代器和生成器" class="headerlink" title="Python迭代器和生成器"></a>Python迭代器和生成器</h1><h2 id="迭代器和生成器同一例子不同方式"><a href="#迭代器和生成器同一例子不同方式" class="headerlink" title="迭代器和生成器同一例子不同方式"></a>迭代器和生成器同一例子不同方式</h2><p>普通函数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def gensquares(N):</span><br><span class="line">    res = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">        res.append(i * i)</span><br><span class="line">    <span class="built_in">return</span> res</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> gensquares(5):</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure><br>生成器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def gensquares(N):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">        yield i ** 2</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> gensquares(5):</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2020/06/11/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/2.python%E8%AF%AD%E6%B3%95%E5%85%83%E7%B4%A0%E5%88%86%E6%9E%90/" rel="next" title="2.python语法元素分析">
+                <i class="fa fa-chevron-left"></i> 2.python语法元素分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/06/29/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/4.python%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="prev" title="4.Python组合数据类型">
+                4.Python组合数据类型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">程序的分支结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">分支结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">1.2.</span> <span class="nav-text">浮点数的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#not-or-and"><span class="nav-number">1.3.</span> <span class="nav-text">not,or,and</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%E5%8D%95%E8%A1%8C%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">分支结构单行表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%EF%BC%9Aif-elif-else%E8%AF%AD%E8%A8%80"><span class="nav-number">1.5.</span> <span class="nav-text">多分支结构：if-elif-else语言</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%BE%AA%E7%8E%AF%E6%9C%BA%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">程序的循环机构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#range%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">range函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#enumerate%E6%9E%9A%E4%B8%BE%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">enumerate枚举函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zip%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.</span> <span class="nav-text">zip函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reversed-%E5%87%BD%E6%95%B0"><span class="nav-number">2.4.</span> <span class="nav-text">reversed 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for-in"><span class="nav-number">2.5.</span> <span class="nav-text">for..in</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.6.</span> <span class="nav-text">while循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E4%BF%9D%E7%95%99%E5%AD%97%EF%BC%9Abreak%E5%92%8Ccontinue"><span class="nav-number">2.7.</span> <span class="nav-text">循环保留字：break和continue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#random-%E5%BA%93%E6%A6%82%E8%BF%B0"><span class="nav-number">2.8.</span> <span class="nav-text">random 库概述</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">程序的异常处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">高级用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">异常的高级用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%87%E7%94%A8else%E5%92%8Cfinally%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">采用else和finally修改代码如下：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E7%89%B9%E6%AE%8A%E5%90%8E%E4%B8%87%E8%83%BD"><span class="nav-number">3.2.1.</span> <span class="nav-text">先特殊后万能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF"><span class="nav-number">3.2.2.</span> <span class="nav-text">重命名报错信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raise%E4%B8%BB%E5%8A%A8%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8"><span class="nav-number">3.2.3.</span> <span class="nav-text">raise主动抛出异常</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">函数定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">函数调用的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">函数的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0%E6%97%B6%EF%BC%8C%E6%9C%89%E4%BA%9B%E5%8F%82%E6%95%B0%E5%8F%AF%E4%BB%A5%E5%AD%98%E5%9C%A8%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="nav-number">4.3.1.</span> <span class="nav-text">在定义函数时，有些参数可以存在默认值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89%E6%97%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%AE%BE%E8%AE%A1%E5%8F%AF%E5%8F%98%E6%95%B0%E9%87%8F%E5%8F%82%E6%95%B0%EF%BC%8C%E9%80%9A%E8%BF%87%E5%8F%82%E6%95%B0%E5%89%8D%E5%A2%9E%E5%8A%A0%E6%98%9F%E5%8F%B7%EF%BC%88-%EF%BC%89%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.3.2.</span> <span class="nav-text">在函数定义时，可以设计可变数量参数，通过参数前增加星号（*）实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8python%E4%B8%AD%EF%BC%8C%E8%BF%98%E6%9C%89%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%AE%9A%E4%B9%89%E5%A5%BD%E7%9A%84%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%E4%BC%A0%E7%BB%99%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.3.</span> <span class="nav-text">在python中，还有可以将定义好的函数作为参数传给另一个函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">4.4.</span> <span class="nav-text">函数返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E5%B5%8C%E5%A5%97"><span class="nav-number">4.5.</span> <span class="nav-text">函数的定义嵌套</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">4.6.</span> <span class="nav-text">全局变量和局部变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E6%AD%A4%E6%97%B6%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%B8%8D%E6%98%AF%E6%95%B4%E6%95%B0x%EF%BC%8C%E8%80%8C%E6%98%AF%E5%88%97%E8%A1%A8%E7%B1%BB%E5%9E%8Bl%E5%A6%82%E4%B8%8B"><span class="nav-number">4.6.1.</span> <span class="nav-text">如果此时全局变量不是整数x，而是列表类型l如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">4.6.2.</span> <span class="nav-text">嵌套函数中的全局变量和局部变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda%E5%87%BD%E6%95%B0"><span class="nav-number">4.7.</span> <span class="nav-text">lambda函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map%E5%92%8Clambda%E5%87%BD%E6%95%B0%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">4.8.</span> <span class="nav-text">map和lambda函数组合使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">Python迭代器和生成器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8%E5%90%8C%E4%B8%80%E4%BE%8B%E5%AD%90%E4%B8%8D%E5%90%8C%E6%96%B9%E5%BC%8F"><span class="nav-number">5.1.</span> <span class="nav-text">迭代器和生成器同一例子不同方式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2020/06/16/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/3.python%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/';
+          this.page.identifier = '2020/06/16/python-人工智能“深度学习”/3.python控制结构、函数与代码复用/';
+          this.page.title = '3.Python控制结构、函数与代码复用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

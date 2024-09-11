@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux指令," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="文档学习引用鸟叔的Linux私房菜 档案与目录管理创建目录123mkdir testmkdir -p test1&#x2F;test2&#x2F;test3&#x2F;test4mkdir -m 711 test2 修改文件权限详情12345678910mkdir -m 723 test1 &#x2F;&#x2F; drwx-w--wx test1chmod 777 test1&#x2F;&#x2F; drwxrwxrwx test1chmod u&#x3D;rwx,g&#x3D;rx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统学习壹">
+<meta property="og:url" content="http://yoursite.com/2018/10/18/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/Linux%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A01/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="文档学习引用鸟叔的Linux私房菜 档案与目录管理创建目录123mkdir testmkdir -p test1&#x2F;test2&#x2F;test3&#x2F;test4mkdir -m 711 test2 修改文件权限详情12345678910mkdir -m 723 test1 &#x2F;&#x2F; drwx-w--wx test1chmod 777 test1&#x2F;&#x2F; drwxrwxrwx test1chmod u&#x3D;rwx,g&#x3D;rx">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-10-18T14:32:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.733Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Linux指令">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/18/Linux从入门到精通/Linux系统学习1/"/>
+
+
+
+
+
+  <title>Linux系统学习壹 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/10/18/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/Linux%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux系统学习壹</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-18T22:32:00+08:00">
+                2018-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux从入门到精通</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/10/18/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/Linux%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/10/18/Linux从入门到精通/Linux系统学习1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://linux.vbird.org/new_linux.php">文档学习引用鸟叔的Linux私房菜</a></p>
+<h1 id="档案与目录管理"><a href="#档案与目录管理" class="headerlink" title="档案与目录管理"></a>档案与目录管理</h1><h2 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> <span class="built_in">test</span></span><br><span class="line"><span class="built_in">mkdir</span> -p test1/test2/test3/test4</span><br><span class="line"><span class="built_in">mkdir</span> -m 711 test2</span><br></pre></td></tr></table></figure>
+<h2 id="修改文件权限详情"><a href="#修改文件权限详情" class="headerlink" title="修改文件权限详情"></a>修改文件权限详情</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mkdir -m 723 test1 </span><br><span class="line">// drwx-w--wx test1</span><br><span class="line">chmod 777 test1</span><br><span class="line">// drwxrwxrwx test1</span><br><span class="line">chmod u=rwx,g=rx,o=r test1</span><br><span class="line">// drwxr-xr-- text1</span><br><span class="line">chmod o+w test1</span><br><span class="line">// drwxr-xrw- text1</span><br><span class="line">chmod a-r test1</span><br><span class="line">// d-wx--x-w- text1</span><br></pre></td></tr></table></figure>
+<h2 id="cp-文件的复制"><a href="#cp-文件的复制" class="headerlink" title="cp:文件的复制"></a>cp:文件的复制</h2><p><strong>例题资料来自鸟哥Linux私房菜，感谢！</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">范例一：用root身份，将家目录下的.bashrc复制到/ tmp下，并更名为bashrc</span><br><span class="line">[root@study ~]# <span class="built_in">cp</span> ~/.bashrc /tmp/bashrc</span><br><span class="line">[root@study ~]# <span class="built_in">cp</span> -i ~/.bashrc /tmp/bashrc</span><br><span class="line"><span class="built_in">cp</span>: overwrite `/tmp/bashrc<span class="string">&#x27;? n  &lt;==n不覆盖，y为覆盖</span></span><br><span class="line"><span class="string"># 重复做两次动作，由于/tmp地下已经存在bashrc了，加上 -i 选项之后，</span></span><br><span class="line"><span class="string"># 则在覆盖前会询问使用者是否确定！可以按下n或者y来二次确认！</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">范例二：变换目录到/tmp，并将/var/log/wtmp复制到/tmp且观察属性：</span></span><br><span class="line"><span class="string">[root@study ~]# cd /tmp</span></span><br><span class="line"><span class="string">[root@study tmp]# cp /var/log/wtmp . &lt;==想要复制到目前的目录，最后的 . 不要忘</span></span><br><span class="line"><span class="string">[root@study tmp]# ls -l /var/log/wtmp wtmp</span></span><br><span class="line"><span class="string">-rw-rw-r--. 1 root utmp 28416 Jun 11 18:56 /var/log/wtmp</span></span><br><span class="line"><span class="string">-rw-r--r--. 1 root root 28416 Jun 11 19:01 wtmp</span></span><br><span class="line"><span class="string"># 注意上面的特殊字体，在不加任何选项的情况下，档案的某些属性/权限会改变；</span></span><br><span class="line"><span class="string"># 这是个很重要的特性！要注意喔！还有，连档案建立的时间也不一样了！</span></span><br><span class="line"><span class="string"># 那如果你想要将档案的所有特性都一起复制过来该怎办？可以加上 -a 喔！如下所示：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[root@study tmp]# cp -a /var/log/wtmp wtmp_2</span></span><br><span class="line"><span class="string">[root@study tmp]# ls -l /var/log/wtmp wtmp_2</span></span><br><span class="line"><span class="string">-rw-rw-r--. 1 root utmp 28416 Jun 11 18:56 /var/log/wtmp</span></span><br><span class="line"><span class="string">-rw-rw-r--. 1 root utmp 28416 Jun 11 18:56 wtmp_2</span></span><br><span class="line"><span class="string"># 整个资料特性完全一模一样ㄟ！真是不赖～这就是 -a 的特性！</span></span><br></pre></td></tr></table></figure><br>这个 cp 的功能很多，由于我们常常会进行一些资料的复制，所以也会常常用到这个指令的。一般来说，我们如果去复制别人的资料(当然，该档案你必须要有read 的权限才行啊！ ^<em>^) 时， 总是希望复制到的资料最后是我们自己的，所以，在预设的条件中， cp 的来源档与目的档的权限是不同的，目的档的拥有者通常会是指令操作者本身。举例来说， 上面的范例二中，由于我是 root 的身份，因此复制过来的档案拥有者与群组就改变成为 root 所有了！这样说，可以明白吗？ ^</em>^</p>
+<p>由于具有这个特性，因此当我们在进行备份的时候，某些需要特别注意的特殊权限档案， 例如密码档(/etc/shadow) 以及一些设定档，就不能直接以cp 来复制，而必须要加上-a 或者是-p 等等可以完整复制档案权限的选项才行！另外，如果你想要复制档案给其他的使用者， 也必须要注意到档案的权限(包含读、写、执行以及档案拥有者等等)， 否则，其他人还是无法针对你给予的档案进行修订的动作喔！注意注意！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">范例三：复制 /etc/ 这个目录下的所有内容到 /tmp 底下</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> /etc/ /tmp</span><br><span class="line"><span class="comment"># cp: omitting directory /etc   &lt;== 如果是目录则不能直接复制，要加上 -r 的选项</span></span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> -r /etc/ /tmp</span><br><span class="line"><span class="comment"># 还是要再次的强调喔！ -r 是可以复制目录，但是，档案与目录的权限可能会被改变</span></span><br><span class="line"><span class="comment"># 所以，也可以利用『 cp -a /etc /tmp 』来下达指令喔！尤其是在备份的情况下！</span></span><br><span class="line"></span><br><span class="line">范例四：将范例一复制的 bashrc 建立一个连结档 (symbolic <span class="built_in">link</span>)</span><br><span class="line">[root@study tmp]# <span class="built_in">ls</span> -l bashrc</span><br><span class="line">-rw-r--r--. 1 root root 176 Jun 11 19:01 bashrc  &lt;==先观察一下档案情况</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> -s bashrc bashrc_slink</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> -l bashrc bashrc_hlink</span><br><span class="line">[root@study tmp]# <span class="built_in">ls</span> -l bashrc*</span><br><span class="line">-rw-r--r--. 2 root root 176 Jun 11 19:01 bashrc         &lt;==与原始档案不太一样了！</span><br><span class="line">-rw-r--r--. 2 root root 176 Jun 11 19:01 bashrc_hlink</span><br><span class="line">lrwxrwxrwx. 1 root root   6 Jun 11 19:06 bashrc_slink -&gt; bashrc</span><br></pre></td></tr></table></figure><br>范例四可有趣了！使用 -l 及 -s 都会建立所谓的连结档(link file)，但是这两种连结档却有不一样的情况。这是怎么一回事啊？那个 -l 就是所谓的实体连结(hard link)，至于 -s 则是符号连结(symbolic link)， 简单来说，bashrc_slink 是一个『捷径』，这个捷径会连结到bashrc去！所以你会看到档名右侧会有个指向(-&gt;)的符号！</p>
+<p>至于bashrc_hlink档案与bashrc的属性与权限完全一模一样，与尚未进行连结前的差异则是第二栏的link数由1变成2了！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">范例五：若 ~/.bashrc 比 /tmp/bashrc 新才复制过来</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> -u ~/.bashrc /tmp/bashrc</span><br><span class="line"><span class="comment"># 这个 -u 的特性，是在目标档案与来源档案有差异时，才会复制的。</span></span><br><span class="line"><span class="comment"># 所以，比较常被用于『备份』的工作当中喔！ ^_^</span></span><br><span class="line"></span><br><span class="line">范例六：将范例四造成的 bashrc_slink 复制成为 bashrc_slink_1 与bashrc_slink_2</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> bashrc_slink bashrc_slink_1</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> -d bashrc_slink bashrc_slink_2</span><br><span class="line">[root@study tmp]# <span class="built_in">ls</span> -l bashrc bashrc_slink*</span><br><span class="line">-rw-r--r--. 2 root root 176 Jun 11 19:01 bashrc</span><br><span class="line">lrwxrwxrwx. 1 root root   6 Jun 11 19:06 bashrc_slink -&gt; bashrc</span><br><span class="line">-rw-r--r--. 1 root root 176 Jun 11 19:09 bashrc_slink_1            &lt;==与原始档案相同</span><br><span class="line">lrwxrwxrwx. 1 root root   6 Jun 11 19:10 bashrc_slink_2 -&gt; bashrc  &lt;==是连结档！</span><br><span class="line"><span class="comment"># 这个例子也是很有趣喔！原本复制的是连结档，但是却将连结档的实际档案复制过来了</span></span><br><span class="line"><span class="comment"># 也就是说，如果没有加上任何选项时，cp复制的是原始档案，而非连结档的属性！</span></span><br><span class="line"><span class="comment"># 若要复制连结档的属性，就得要使用 -d 的选项了！如 bashrc_slink_2 所示。</span></span><br><span class="line"></span><br><span class="line">范例七：将家目录的 .bashrc 及 .bash_history 复制到 /tmp 底下</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> ~/.bashrc ~/.bash_history /tmp</span><br><span class="line"><span class="comment"># 可以将多个资料一次复制到同一个目录去！最后面一定是目录！</span></span><br></pre></td></tr></table></figure>
+<h2 id="MV-移动档案与目录，或者更名"><a href="#MV-移动档案与目录，或者更名" class="headerlink" title="MV:移动档案与目录，或者更名"></a>MV:移动档案与目录，或者更名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# <span class="built_in">mv</span> [-fiu] <span class="built_in">source</span> destination</span><br><span class="line">[root@study ~]# <span class="built_in">mv</span> [options] source1 source2 source3 .... directory</span><br><span class="line">选项与参数：</span><br><span class="line">-f ：force 强制的意思，如果目标档案已经存在，不会询问而直接覆盖；</span><br><span class="line">-i ：若目标档案 (destination) 已经存在时，就会询问是否覆盖！</span><br><span class="line">-u ：若目标档案已经存在，且 <span class="built_in">source</span> 比较新，才会更新 (update)</span><br><span class="line"></span><br><span class="line">范例一：复制一档案，建立一目录，将档案移动到目录中</span><br><span class="line">[root@study ~]# <span class="built_in">cd</span> /tmp</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> ~/.bashrc bashrc</span><br><span class="line">[root@study tmp]# <span class="built_in">mkdir</span> mvtest</span><br><span class="line">[root@study tmp]# <span class="built_in">mv</span> bashrc mvtest</span><br><span class="line"><span class="comment"># 将某个档案移动到某个目录去，就是这样做！</span></span><br><span class="line"></span><br><span class="line">范例二：将刚刚的目录名称更名为 mvtest2</span><br><span class="line">[root@study tmp]# <span class="built_in">mv</span> mvtest mvtest2 &lt;== 这样就更名了！简单～</span><br><span class="line"><span class="comment"># 其实在 Linux 底下还有个有趣的指令，名称为 rename ，</span></span><br><span class="line"><span class="comment"># 该指令专职进行多个档名的同时更名，并非针对单一档名变更，与mv不同。请man rename。</span></span><br><span class="line"></span><br><span class="line">范例三：再建立两个档案，再全部移动到 /tmp/mvtest2 当中</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> ~/.bashrc bashrc1</span><br><span class="line">[root@study tmp]# <span class="built_in">cp</span> ~/.bashrc bashrc2</span><br><span class="line">[root@study tmp]# <span class="built_in">mv</span> bashrc1 bashrc2 mvtest2</span><br><span class="line"><span class="comment"># 注意到这边，如果有多个来源档案或目录，则最后一个目标档一定是『目录！ 』</span></span><br><span class="line"><span class="comment"># 意思是说，将所有的资料移动到该目录的意思！</span></span><br></pre></td></tr></table></figure>
+<p>这是搬移 (move) 的意思！当你要移动档案或目录的时后，呵呵！这个指令就很重要啦！同样的，你也可以使用 -u ( update )来测试新旧档案，看看是否需要搬移啰！另外一个用途就是『变更档名！ 』，我们可以很轻易的使用 mv 来变更一个档案的档名呢！不过，在 Linux 才有的指令当中，有个 rename ， 可以用来更改大量档案的档名，你可以利用 man rename 来查阅一下，也是挺有趣的指令喔！</p>
+<h1 id="档案内容查阅"><a href="#档案内容查阅" class="headerlink" title="档案内容查阅"></a>档案内容查阅</h1><ul>
+<li>cat由第一行开始显示档案内容</li>
+<li>tac从最后一行开始显示，可以看出tac是cat的倒着写</li>
+<li>nl显示的时候，顺道输出行号</li>
+<li>more一页一页的显示档案内容</li>
+<li>less与more类似，但是比more更好的是，他可以往前翻页</li>
+<li>head只看都几行</li>
+<li>tail只看尾巴几行</li>
+<li>od以二进位的方式读取档案内容</li>
+</ul>
+<h2 id="直接监视档案内容"><a href="#直接监视档案内容" class="headerlink" title="直接监视档案内容"></a>直接监视档案内容</h2><h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>[root@study ~]# cat [-AbEnTv]<br>选项与参数：<br>-A ：相当于-vET 的整合选项，可列出一些特殊字符而不是空白而已；<br>-b ：列出行号，仅针对非空白行做行号显示，空白行不标行号！<br>-E ：将结尾的断行字元$ 显示出来；<br>-n ：列印出行号，连同空白行也会有行号，与-b 的选项不同；<br>-T ：将[tab] 按键以^I 显示出来；<br>-v ：列出一些看不出来的特殊字符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">范例一：检阅/etc/issue这个档案的内容 </span><br><span class="line">[root@study ~]# <span class="built_in">cat</span> /etc/issue</span><br><span class="line">\S</span><br><span class="line">Kernel \r on an \m</span><br><span class="line"></span><br><span class="line">范例二：承上题，如果还要加印行号呢？</span><br><span class="line">[root@study ~]# <span class="built_in">cat</span> -n /etc/issue</span><br><span class="line">     1 \S</span><br><span class="line">     2 Kernel \r on an \m</span><br><span class="line">     3</span><br></pre></td></tr></table></figure></p>
+<h3 id="tac（反向列式）"><a href="#tac（反向列式）" class="headerlink" title="tac（反向列式）"></a>tac（反向列式）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# <span class="built_in">tac</span> /etc/issue</span><br><span class="line"></span><br><span class="line">Kernel \r on an \m</span><br><span class="line">\S</span><br></pre></td></tr></table></figure>
+<h3 id="nl（添加行号列印）"><a href="#nl（添加行号列印）" class="headerlink" title="nl（添加行号列印）"></a>nl（添加行号列印）</h3><p>[root@study ~]# nl [-bnw]档案<br>选项与参数：<br>-b: 指定行号指定的方式，主要有两种<br>    -ba：表示不论是否为空行，也同样列出行号（类似cat -n）<br>    -bt：如果有空行，空的哪一行不要列出行号（预设值）<br>-n: 列出行号表示的方法，主要有三种：<br>    -n ln：行号在荧幕的最左方显示<br>    -n rn: 行号在自己栏位最右方显示，且不加0<br>    -n rz：行号在自己栏位的最右方显示，且加0<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">范例一：用<span class="built_in">nl</span>列出/etc/issue的内容 </span><br><span class="line">[root@study ~]# <span class="built_in">nl</span> /etc/issue</span><br><span class="line">     1 \S</span><br><span class="line">     2 Kernel \r on an \m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意看，这个档案其实有三行，第三行为空白(没有任何字元)，</span></span><br><span class="line"><span class="comment"># 因为他是空白行，所以nl 不会加上行号喔！如果确定要加上行号，可以这样做：</span></span><br><span class="line"></span><br><span class="line">[root@study ~]# <span class="built_in">nl</span> -ba /etc/issue</span><br><span class="line">     1 \S</span><br><span class="line">     2 Kernel \r on an \m</span><br><span class="line">     3</span><br><span class="line"><span class="comment"># 呵呵！行号加上来啰～那么如果要让行号前面自动补上0 呢？可这样</span></span><br><span class="line"></span><br><span class="line">[root@study ~]# <span class="built_in">nl</span> -ba -n rz /etc/issue</span><br><span class="line">000001 \S</span><br><span class="line">000002 Kernel \r on an \m</span><br><span class="line">000003</span><br><span class="line"><span class="comment"># 嘿嘿！自动在自己栏位的地方补上0 了～预设栏位是六位数，如果想要改成3 位数？</span></span><br><span class="line"></span><br><span class="line">[root@study ~]# <span class="built_in">nl</span> -ba -n rz -w 3 /etc/issue</span><br><span class="line">001 \S</span><br><span class="line">002 Kernel \r on an \m</span><br><span class="line">003</span><br><span class="line"><span class="comment"># 变成仅有3 位数啰～</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="可翻页检视"><a href="#可翻页检视" class="headerlink" title="可翻页检视"></a>可翻页检视</h2><h3 id="more-（一页一页翻动）"><a href="#more-（一页一页翻动）" class="headerlink" title="more （一页一页翻动）"></a>more （一页一页翻动）</h3><ul>
+<li>空白键（space）：代表向下翻一页</li>
+<li>Enter：代表向下翻一行</li>
+<li>/字符：代表在这个显示的内容当中，向下搜寻字符这个关键词</li>
+<li>:f：立刻显示出档名以及目前显示的行数</li>
+<li>q：代表立刻离开more，不再显示该档案内容</li>
+<li>b：代表往回翻页，不过这个动作只对档案有用，对管线没用</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# more /etc/man_db.conf</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># This file is used by the man-db package to configure the man and cat paths.</span></span><br><span class="line"><span class="comment"># It is also used to provide a manpath for those without one by examining</span></span><br><span class="line"><span class="comment"># their PATH environment variable. For details see the manpath(5) man page.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">.....(中间省略)..... </span><br><span class="line">--More--(28%)   &lt;==重点在这一行喔！你的游标也会在这里等待你的指令</span><br></pre></td></tr></table></figure>
+<h3 id="less（一页一页翻动）"><a href="#less（一页一页翻动）" class="headerlink" title="less（一页一页翻动）"></a>less（一页一页翻动）</h3><ul>
+<li>空格键：向下翻动一页</li>
+<li>【pagedown】: 向下翻动一页</li>
+<li>【pageup】：向上翻动一页</li>
+<li>/字串：向下搜寻字串的功能</li>
+<li>？字串：向上搜寻字串功能</li>
+<li>n：重复前一个搜寻（与/或？有关！）</li>
+<li>N：反向的重复前一个搜寻（与/或？有关！）</li>
+<li>g：前进的这一个资料的第一行去</li>
+<li>G：前进到这个资料的最后一行去（注意大小写）</li>
+<li>q：离开less这个程式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# less /etc/man_db.conf</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># This file is used by the man-db package to configure the man and cat paths.</span></span><br><span class="line"><span class="comment"># It is also used to provide a manpath for those without one by examining</span></span><br><span class="line"><span class="comment"># their PATH environment variable. For details see the manpath(5) man page.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">.....(中间省略)..... </span><br><span class="line">: &lt;==这里可以等待你输入指令！   </span><br></pre></td></tr></table></figure>
+<h2 id="资料撷取"><a href="#资料撷取" class="headerlink" title="资料撷取"></a>资料撷取</h2><h3 id="head（取出前面几行）"><a href="#head（取出前面几行）" class="headerlink" title="head（取出前面几行）"></a>head（取出前面几行）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# <span class="built_in">head</span> [-n number]档案</span><br><span class="line">选项与参数：</span><br><span class="line">-n ：后面接数字，代表显示几行的意思</span><br><span class="line"></span><br><span class="line">[root@study ~]# <span class="built_in">head</span> /etc/man_db.conf </span><br><span class="line"><span class="comment">#预设的情况中，显示前面十行！若要显示前20行，就得要这样： </span></span><br><span class="line">[root@study ~]# <span class="built_in">head</span> -n 20 /etc/man_db.conf</span><br><span class="line"></span><br><span class="line">范例：如果后面100行的资料都不列印，只列印/etc/man_db.conf的前面几行，该如何是好？</span><br><span class="line">[root@study ~]# <span class="built_in">head</span> -n -100 /etc/man_db.conf</span><br></pre></td></tr></table></figure>
+<h3 id="tail（取出后面几行）"><a href="#tail（取出后面几行）" class="headerlink" title="tail（取出后面几行）"></a>tail（取出后面几行）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# <span class="built_in">tail</span> [-n number]档案</span><br><span class="line">选项与参数：</span><br><span class="line">-n ：后面接数字，代表显示几行的意思</span><br><span class="line">-f ：表示持续侦测后面所接的档名，要等到按下[ctrl]-c才会结束<span class="built_in">tail</span>的侦测</span><br><span class="line"></span><br><span class="line">[root@study ~]# <span class="built_in">tail</span> /etc/man_db.conf </span><br><span class="line"><span class="comment">#预设的情况中，显示最后的十行！若要显示最后的20行，就得要这样： </span></span><br><span class="line">[root@study ~]# <span class="built_in">tail</span> -n 20 /etc/man_db.conf</span><br><span class="line"></span><br><span class="line">范例一：如果不知道/etc/man_db.conf有几行，却只想列出100行以后的资料时？</span><br><span class="line">[root@study ~]# <span class="built_in">tail</span> -n +100 /etc/man_db.conf</span><br><span class="line"></span><br><span class="line">范例二：持续侦测/var/log/messages的内容 </span><br><span class="line">[root@study ~]# <span class="built_in">tail</span> -f /var/log/messages </span><br><span class="line">  &lt;==要等到输入[ctrl]-c之后才会离开<span class="built_in">tail</span>这个指令的侦测！</span><br></pre></td></tr></table></figure>
+<h1 id="档案与档案系统的压缩-打包与备份"><a href="#档案与档案系统的压缩-打包与备份" class="headerlink" title="档案与档案系统的压缩,打包与备份"></a>档案与档案系统的压缩,打包与备份</h1><h2 id="压缩档案的用途与技术"><a href="#压缩档案的用途与技术" class="headerlink" title="压缩档案的用途与技术"></a>压缩档案的用途与技术</h2><ul>
+<li>Z compress 程式压缩的档案；</li>
+<li>zip zip 程式压缩的档案；</li>
+<li>gz gzip 程式压缩的档案；</li>
+<li>bz2 bzip2 程式压缩的档案；</li>
+<li>xz xz 程式压缩的档案；</li>
+<li>tar tar 程式打包的资料，并没有压缩过；</li>
+<li>tar.gz tar 程式打包的档案，其中并且经过gzip 的压缩</li>
+<li>tar.bz2 tar 程式打包的档案，其中并且经过bzip2 的压缩</li>
+<li>tar.xz tar 程式打包的档案，其中并且经过xz 的压缩</li>
+</ul>
+<h3 id="gzip-zcat-zmore-zless-zgrep"><a href="#gzip-zcat-zmore-zless-zgrep" class="headerlink" title="gzip, zcat/zmore/zless/zgrep"></a>gzip, zcat/zmore/zless/zgrep</h3><p>方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ gzip [-cdtv#]档名 </span><br><span class="line">[dmtsai@study ~]$ zcat档名.gz </span><br><span class="line">选项与参数：</span><br><span class="line">-c ：将压缩的资料输出到萤幕上，可透过资料流重导向来处理；</span><br><span class="line">-d ：解压缩的参数；</span><br><span class="line">-t ：可以用来检验一个压缩档的一致性～看看档案有无错误；</span><br><span class="line">-v ：可以显示出原档案/压缩档案的压缩比等资讯；</span><br><span class="line">-# ：# 为数字的意思，代表压缩等级，-1 最快，但是压缩比最差、-9 最慢，但是压缩比最好！预设是-6</span><br></pre></td></tr></table></figure><br>范例一：找出/etc底下(不含子目录)容量最大的档案，并将它复制到/tmp ，然后以gzip压缩<br><code>-v</code>压缩会替换掉原本的文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">cd</span> /tmp </span><br><span class="line">[dmtsai@study tmp]$ <span class="built_in">cp</span> /etc/services . </span><br><span class="line">[dmtsai@study tmp]$ gzip -v services   <span class="comment">#压缩指令</span></span><br><span class="line">services: 79.7% -- replaced with services.gz</span><br><span class="line">[dmtsai@study tmp]$ ll /etc/services /tmp/services* </span><br><span class="line">-rw-r--r--. 1 root root    670293 Jun 7 2013 /etc/services</span><br><span class="line">-rw-r--r--. 1 dmtsai dmtsai 136088 Jun 30 18:40 /tmp/services.gz</span><br></pre></td></tr></table></figure><br>范例二：由于services是文字档，请将范例一的压缩档的内容读出来！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ zcat services.gz </span><br><span class="line"><span class="comment">#由于services这个原本的档案是是文字档，因此我们可以尝试使用zcat/zmore/zless去读取！</span></span><br><span class="line"><span class="comment"># 此时萤幕上会显示servcies.gz 解压缩之后的原始档案内容！</span></span><br></pre></td></tr></table></figure><br>范例三：将范例一的档案解压缩<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ gzip -d services.gz </span><br><span class="line"><span class="comment"># 不要使用gunzip这个指令，不好背！使用gzip -d来进行解压缩！</span></span><br><span class="line"><span class="comment"># 与gzip 相反， gzip -d 会将原本的.gz 删除，回复到原本的services 档案。</span></span><br></pre></td></tr></table></figure><br>范例四：将范例三解开的services用最佳的压缩比压缩，并保留原本的档案<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ gzip -9 -c services &gt; services.gz</span><br></pre></td></tr></table></figure></p>
+<h3 id="bzip2-bzcat-bzmore-bzless-bzgrep"><a href="#bzip2-bzcat-bzmore-bzless-bzgrep" class="headerlink" title="bzip2, bzcat/bzmore/bzless/bzgrep"></a>bzip2, bzcat/bzmore/bzless/bzgrep</h3><p>先下载bzip2<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install bzip2</span><br></pre></td></tr></table></figure><br>方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ bzip2 [-cdkzv#]档名 </span><br><span class="line">[dmtsai@study ~]$ bzcat档名.bz2 </span><br><span class="line">选项与参数：</span><br><span class="line">-c ：将压缩的过程产生的资料输出到萤幕上！</span><br><span class="line">-d ：解压缩的参数</span><br><span class="line">-k ：保留原始档案，而不会删除原始的档案喔！</span><br><span class="line">-z ：压缩的参数(预设值，可以不加)</span><br><span class="line">-v ：可以显示出原档案/压缩档案的压缩比等资讯；</span><br><span class="line">-# ：与gzip 同样的，都是在计算压缩比的参数， -9 最佳， -1 最快！</span><br></pre></td></tr></table></figure><br>范例一：将刚刚gzip范例留下来的/tmp/services以bzip2压缩<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ bzip2 -v services</span><br><span class="line">  services: 5.409:1, 1.479 bits/byte, 81.51% saved, 670293 <span class="keyword">in</span>, 123932 out.</span><br><span class="line">[dmtsai@study tmp]$ <span class="built_in">ls</span> -l services* </span><br><span class="line">-rw-r--r--. 1 dmtsai dmtsai 123932 Jun 30 18:40 services.bz2</span><br><span class="line">-rw-rw-r--. 1 dmtsai dmtsai 135489 Jun 30 18:46 services.gz</span><br><span class="line"> <span class="comment">#此时services会变成services.bz2之外，你也可以发现bzip2的压缩比要较gzip好喔！！</span></span><br><span class="line"><span class="comment"># 压缩率由gzip 的79% 提升到bzip2 的81% 哩！</span></span><br></pre></td></tr></table></figure><br>范例二：将范例一的档案内容读出来！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ bzcat services.bz2</span><br></pre></td></tr></table></figure><br>范例三：将范例一的档案解压缩<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ bzip2 -d services.bz2</span><br></pre></td></tr></table></figure><br>范例四：将范例三解开的services用最佳的压缩比压缩，并保留原本的档案<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ bzip2 -9 -c services &gt; services.bz2</span><br></pre></td></tr></table></figure></p>
+<h3 id="xz-xzcat-xzmore-xzless-xzgrep"><a href="#xz-xzcat-xzmore-xzless-xzgrep" class="headerlink" title="xz, xzcat/xzmore/xzless/xzgrep"></a>xz, xzcat/xzmore/xzless/xzgrep</h3><p>方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ xz [-dtlkc#]档名 </span><br><span class="line">[dmtsai@study ~]$ xcat档名.xz </span><br><span class="line">选项与参数：</span><br><span class="line">-d ：就是解压缩啊！</span><br><span class="line">-t ：测试压缩档的完整性，看有没有错误</span><br><span class="line">-l ：列出压缩档的相关资讯</span><br><span class="line">-k ：保留原本的档案不删除～</span><br><span class="line">-c ：同样的，就是将资料由萤幕上输出的意思！</span><br><span class="line">-# ：同样的，也有较佳的压缩比的意思！</span><br></pre></td></tr></table></figure><br>范例一：将刚刚由bzip2所遗留下来的/tmp/services透过xz来压缩！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ xz -v services</span><br><span class="line">services (1/1)</span><br><span class="line">  100 % 97.3 KiB / 654.6 KiB = 0.149</span><br><span class="line"></span><br><span class="line">[dmtsai@study tmp]$ <span class="built_in">ls</span> -l services* </span><br><span class="line">-rw-rw-r--. 1 dmtsai dmtsai 123932 Jun 30 19:09 services.bz2</span><br><span class="line">-rw-rw-r--. 1 dmtsai dmtsai 135489 Jun 30 18:46 services.gz</span><br><span class="line">-rw-r--r--. 1 dmtsai dmtsai 99608 Jun 30 18:40 services.xz</span><br><span class="line"> <span class="comment">#容量又进一步下降的更多耶！好棒的压缩比！</span></span><br></pre></td></tr></table></figure><br>范例二：列出这个压缩档的资讯，然后读出这个压缩档的内容<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ xz -l services.xz</span><br><span class="line">Strms Blocks Compressed Uncompressed Ratio Check Filename</span><br><span class="line">    1 1 97.3 KiB 654.6 KiB 0.149 CRC64 services.xz</span><br><span class="line"><span class="comment"># 竟然可以列出这个档案的压缩前后的容量，真是太人性化了！这样观察就方便多了！</span></span><br><span class="line"></span><br><span class="line">[dmtsai@study tmp]$ xzcat services.xz</span><br></pre></td></tr></table></figure><br>范例三：将他解压缩吧！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ xz -d services.xz</span><br></pre></td></tr></table></figure></p>
+<p>范例四：保留原档案的档名，并且建立压缩档！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study tmp]$ xz -k services</span><br></pre></td></tr></table></figure></p>
+<h2 id="打包指令：-tar"><a href="#打包指令：-tar" class="headerlink" title="打包指令： tar"></a>打包指令： tar</h2><h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><p>选项与参数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ tar [-z|-j|-J] [cv] [-f待建立的新档名] filename...  &lt;==打包与压缩 </span><br><span class="line">[dmtsai@study ~]$ tar [ -z|-j|-J] [tv] [-f既有的tar档名]              &lt;==察看档名 </span><br><span class="line">[dmtsai@study ~]$ tar [-z|-j|-J] [xv] [ -f既有的tar档名] [-C目录]     &lt;==解压缩</span><br><span class="line">-c ：建立打包档案，可搭配-v 来察看过程中被打包的档名(filename)</span><br><span class="line">-t ：察看打包档案的内容含有哪些档名，重点在察看『档名』就是了；</span><br><span class="line">-x ：解打包或解压缩的功能，可以搭配-C (大写) 在特定目录解开</span><br><span class="line">      特别留意的是， -c, -t, -x 不可同时出现在一串指令列中。</span><br><span class="line">-z ：透过gzip 的支援进行压缩/解压缩：此时档名最好为*.tar.gz</span><br><span class="line">-j ：透过bzip2 的支援进行压缩/解压缩：此时档名最好为*.tar.bz2</span><br><span class="line">-J ：透过xz 的支援进行压缩/解压缩：此时档名最好为*.tar.xz</span><br><span class="line">      特别留意， -z, -j, -J 不可以同时出现在一串指令列中</span><br><span class="line">-v ：在压缩/解压缩的过程中，将正在处理的档名显示出来！</span><br><span class="line">-f filename：-f 后面要立刻接要被处理的档名！建议-f 单独写一个选项啰！(比较不会忘记)</span><br><span class="line">-C 目录：这个选项用在解压缩，若要在特定目录解压缩，可以使用这个选项。</span><br><span class="line"></span><br><span class="line">其他后续练习会使用到的选项介绍：</span><br><span class="line">-p(小写) ：保留备份资料的原本权限与属性，常用于备份(-c)重要的设定档</span><br><span class="line">-P(大写) ：保留绝对路径，亦即允许备份资料中含有根目录存在之意；</span><br><span class="line">--exclude=FILE：在压缩的过程中，不要将FILE 打包！ </span><br></pre></td></tr></table></figure></p>
+<h3 id="使用tar-加入-z-j-或-J-的参数备份-etc-目录"><a href="#使用tar-加入-z-j-或-J-的参数备份-etc-目录" class="headerlink" title="使用tar 加入-z, -j 或-J 的参数备份/etc/ 目录"></a>使用tar 加入-z, -j 或-J 的参数备份/etc/ 目录</h3><p>打包gz格式 &amp; 查看<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ su -   <span class="comment">#因为备份/etc需要root的权限，否则会出现一堆错误 </span></span><br><span class="line">[root@study ~]# time tar -zpcv -f /root/etc.tar.gz /etc </span><br><span class="line"><span class="comment"># 打包</span></span><br><span class="line">[root@study ~]# tar -ztv -f /root/etc.tar.gz</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 由于加上-v 这个选项，因此正在作用中的档名就会显示在萤幕上。</span></span><br><span class="line"><span class="comment"># 如果你可以翻到第一页，会发现出现上面的错误讯息！底下会讲解。</span></span><br><span class="line"><span class="comment"># 至于-p 的选项，重点在于『保留原本档案的权限与属性』之意。</span></span><br></pre></td></tr></table></figure><br>打包bz2 &amp; 查看<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# time tar -jpcv -f /root/etc.tar.bz2 /etc </span><br><span class="line"><span class="comment"># 打包</span></span><br><span class="line">[root@study ~]# tar -jtv -f /root/etc.tar.bz2 </span><br><span class="line"><span class="comment"># 查看</span></span><br></pre></td></tr></table></figure><br>打包xz &amp; 查看<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# time tar -Jpcv -f /root/etc.tar.xz /etc </span><br><span class="line"><span class="comment"># 显示的讯息会跟上面一模一样啰！不过时间会花比较多！使用了-J 时，会花更多时间</span></span><br><span class="line">[root@study ~]# tar -Jtv -f /root/etc.tar.xz</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line"></span><br><span class="line">[root@study ~]# ll /root/etc* </span><br><span class="line">-rw-r--r--. 1 root root 6721809 Jul 1 00:16 /root/etc.tar.bz2</span><br><span class="line">-rw-r--r--. 1 root root 7758826 Jul 1 00:14 /root/etc.tar.gz</span><br><span class="line">-rw-r--r--. 1 root root 5511500 Jul 1 00:16 /root/etc.tar.xz</span><br><span class="line">[root@study ~]# <span class="built_in">du</span> -sm /etc </span><br><span class="line">28 /etc   <span class="comment">#实际目录约占有28MB的意思！</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="将备份的资料解压缩，并考虑特定目录的解压缩动作-C-选项的应用）"><a href="#将备份的资料解压缩，并考虑特定目录的解压缩动作-C-选项的应用）" class="headerlink" title="将备份的资料解压缩，并考虑特定目录的解压缩动作(-C 选项的应用）"></a>将备份的资料解压缩，并考虑特定目录的解压缩动作(-C 选项的应用）</h3><p>压缩在当前目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# tar -jxv -f /root/etc.tar.bz2 </span><br></pre></td></tr></table></figure><br>压缩到tmp目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# tar -jxv -f /root/etc.tar.bz2 -C /tmp </span><br></pre></td></tr></table></figure><br>压缩文件其中一个文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# tar -jxv -f /root/etc.tar.bz2 etc /shadow</span><br></pre></td></tr></table></figure></p>
+<h1 id="vim-程式编辑器"><a href="#vim-程式编辑器" class="headerlink" title="vim 程式编辑器"></a>vim 程式编辑器</h1><h2 id="按键说明"><a href="#按键说明" class="headerlink" title="按键说明"></a>按键说明</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">按键</th>
+<th style="text-align:center">移动游标的方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">h 或向左方向键(←)</td>
+<td style="text-align:center">游标向左移动一个字元</td>
+</tr>
+<tr>
+<td style="text-align:center">j 或向下方向键(↓)</td>
+<td style="text-align:center">游标向下移动一个字元</td>
+</tr>
+<tr>
+<td style="text-align:center">k 或向上方向键(↑)</td>
+<td style="text-align:center">游标向上移动一个字元</td>
+</tr>
+<tr>
+<td style="text-align:center">l 或向右方向键(→)</td>
+<td style="text-align:center">游标向右移动一个字元</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl] + [f]</td>
+<td style="text-align:center">萤幕『向下』移动一页，相当于[Page Down]按键</td>
+</tr>
+<tr>
+<td style="text-align:center">[Ctrl] + [b]</td>
+<td style="text-align:center">萤幕『向上』移动一页，相当于[Page Up]按键</td>
+</tr>
+<tr>
+<td style="text-align:center">0 或功能键[Home]</td>
+<td style="text-align:center">这是数字『 0 』：移动到这一列的最前面字元处</td>
+</tr>
+<tr>
+<td style="text-align:center">$ 或功能键[End]</td>
+<td style="text-align:center">移动到这一列的最后面字元处</td>
+</tr>
+<tr>
+<td style="text-align:center">G</td>
+<td style="text-align:center">移动到这个档案的最后一列</td>
+</tr>
+<tr>
+<td style="text-align:center">gg</td>
+<td style="text-align:center">移动到这个档案的第一列，相当于1G啊！</td>
+</tr>
+<tr>
+<td style="text-align:center">n<Enter></td>
+<td style="text-align:center">n为数字。游标向下移动n列</td>
+</tr>
+<tr>
+<td style="text-align:center">:n1,n2s/word1/word2/g</td>
+<td style="text-align:center">n1与n2为数字。在第n1与n2列之间寻找word1这个字串，并将该字串取代为word2 ！举例来说，在100到200列之间搜寻vbird并取代为VBIRD则：『:100,200s/vbird/VBIRD/g』。</td>
+</tr>
+<tr>
+<td style="text-align:center">:1,$s/word1/word2/g</td>
+<td style="text-align:center">从第一列到最后一列寻找word1字串，并将该字串取代为word2 ！</td>
+</tr>
+<tr>
+<td style="text-align:center">:1,$s/word1/word2/gc</td>
+<td style="text-align:center">从第一列到最后一列寻找word1字串，并将该字串取代为word2 ！且在取代前显示提示字元给使用者确认(confirm)是否需要取代！</td>
+</tr>
+</tbody>
+</table>
+<h1 id="正规表示法与文件格式化处理"><a href="#正规表示法与文件格式化处理" class="headerlink" title="正规表示法与文件格式化处理"></a>正规表示法与文件格式化处理</h1><h2 id="grep的一些进阶选项"><a href="#grep的一些进阶选项" class="headerlink" title="grep的一些进阶选项"></a>grep的一些进阶选项</h2><h4 id="范例一：搜索regular-express-txt中的the的语句"><a href="#范例一：搜索regular-express-txt中的the的语句" class="headerlink" title="范例一：搜索regular_express.txt中的the的语句"></a>范例一：搜索regular_express.txt中的the的语句</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;the&#x27;</span> regular_express.txt </span><br><span class="line">8:I can<span class="string">&#x27;t finish the test.</span></span><br><span class="line"><span class="string">12: the symbol &#x27;</span>*<span class="string">&#x27; is represented as start.</span></span><br><span class="line"><span class="string">15:You are the best is mean you are the no. 1.</span></span><br><span class="line"><span class="string">16:The world &lt;Happy&gt; is the same with &quot;glad&quot;.</span></span><br><span class="line"><span class="string">18:google is the best tools for search keyword.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[dmtsai@study ~]$ cat regular_express.txt | grep &#x27;</span>the<span class="string">&#x27;</span></span><br><span class="line"><span class="string">I can&#x27;</span>t finish the <span class="built_in">test</span>.</span><br><span class="line">the symbol <span class="string">&#x27;*&#x27;</span> is represented as start.</span><br><span class="line">You are the best is mean you are the no. 1.</span><br><span class="line">The world &lt;Happy&gt; is the same with <span class="string">&quot;glad&quot;</span>.</span><br><span class="line">google is the best tools <span class="keyword">for</span> search keyword.</span><br></pre></td></tr></table></figure>
+<h4 id="范例二：不分大小写的筛选关键词the"><a href="#范例二：不分大小写的筛选关键词the" class="headerlink" title="范例二：不分大小写的筛选关键词the"></a>范例二：不分大小写的筛选关键词the</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ grep -<span class="keyword">in</span> <span class="string">&#x27;the&#x27;</span> regular_express.txt </span><br><span class="line">8:I can<span class="string">&#x27;t finish the test.</span></span><br><span class="line"><span class="string">9:Oh! The soup taste good.</span></span><br><span class="line"><span class="string">12: the symbol &#x27;</span>*<span class="string">&#x27; is represented as start.</span></span><br><span class="line"><span class="string">14: The gd software is a library for drafting programs.</span></span><br><span class="line"><span class="string">15:You are the best is mean you are the no. 1.</span></span><br><span class="line"><span class="string">16: The world &lt;Happy&gt; is the same with &quot;glad&quot;.</span></span><br><span class="line"><span class="string">18:google is the best tools for search keyword.</span></span><br></pre></td></tr></table></figure>
+<h4 id="范例三：利用中括号-来搜寻集合字元"><a href="#范例三：利用中括号-来搜寻集合字元" class="headerlink" title="范例三：利用中括号[]来搜寻集合字元"></a>范例三：利用中括号[]来搜寻集合字元</h4><p>可以匹配正则类型<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;t[ae]st&#x27;</span> regular_express.txt </span><br><span class="line">8:I can<span class="string">&#x27;t finish the test .</span></span><br><span class="line"><span class="string">9:Oh! The soup tast e good.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[dmtsai@study ~]$ grep -n &#x27;</span>oo<span class="string">&#x27; regular_express.txt</span></span><br><span class="line"><span class="string">1:&quot;Open Source&quot; is a good mechanism to develop programs.</span></span><br><span class="line"><span class="string">2:apple is my favorite food.</span></span><br><span class="line"><span class="string">3:Football game is not use feet only.</span></span><br><span class="line"><span class="string">9:Oh! The soup taste good.</span></span><br><span class="line"><span class="string">18:google is the best tools for search keyword.</span></span><br><span class="line"><span class="string">19:goooooogle yes!</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[dmtsai@study ~]$ grep -n &#x27;</span>[^g]oo<span class="string">&#x27; regular_express.txt</span></span><br><span class="line"><span class="string">2:apple is my favorite food.</span></span><br><span class="line"><span class="string">3:Football game is not use feet only.</span></span><br><span class="line"><span class="string">18:google is the best tools for search keyword.</span></span><br><span class="line"><span class="string">19:goooooogle yes!</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="范例四：行首與行尾字元"><a href="#范例四：行首與行尾字元" class="headerlink" title="范例四：行首與行尾字元 ^ $"></a>范例四：行首與行尾字元 ^ $</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;^the&#x27;</span> regular_express.txt</span><br><span class="line">12:the symbol <span class="string">&#x27;*&#x27;</span> is represented as start.</span><br><span class="line"></span><br><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;^[a-z]&#x27;</span> regular_express.txt</span><br><span class="line">2:apple is my favorite food.</span><br><span class="line">4:this dress doesn<span class="string">&#x27;t fit me.</span></span><br><span class="line"><span class="string">10:motorcycle is cheap than car.</span></span><br><span class="line"><span class="string">12:the symbol &#x27;</span>*<span class="string">&#x27; is represented as start.</span></span><br><span class="line"><span class="string">18:google is the best tools for search keyword.</span></span><br><span class="line"><span class="string">19:goooooogle yes!</span></span><br><span class="line"><span class="string">20:go! go! Let&#x27;</span>s go.</span><br><span class="line"></span><br><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;^[^a-zA-Z]&#x27;</span> regular_express.txt</span><br><span class="line">1:<span class="string">&quot;Open Source&quot;</span> is a good mechanism to develop programs.</span><br><span class="line">21:# I am VBird</span><br><span class="line"><span class="comment"># 指令也可以是： grep -n &#x27;^[^[:alpha:]]&#x27; regular_express.txt</span></span><br></pre></td></tr></table></figure>
+<h4 id="范例五：-任意一個字元-與重複字元"><a href="#范例五：-任意一個字元-與重複字元" class="headerlink" title="范例五： 任意一個字元 . 與重複字元 *"></a>范例五： 任意一個字元 . 與重複字元 *</h4><ul>
+<li>.（小数点）：代表‘一定有一个任意字元’的意思</li>
+<li>*（星星号）：代表‘重复前一个字元，0到无穷多次’的意思，组合形态 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;g..d&#x27;</span> regular_express.txt</span><br><span class="line">1:<span class="string">&quot;Open Source&quot;</span> is a good mechanism to develop programs.</span><br><span class="line">9:Oh! The soup taste good.</span><br><span class="line">16:The world &lt;Happy&gt; is the same with <span class="string">&quot;glad&quot;</span>.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当我们需要‘至少两个o以上的字串’时，就需要ooo*</span></span><br><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;ooo*&#x27;</span> regular_express.txt</span><br><span class="line">1:<span class="string">&quot;Open Source&quot;</span> is a good mechanism to develop programs.</span><br><span class="line">2:apple is my favorite food.</span><br><span class="line">3:Football game is not use feet only.</span><br><span class="line">9:Oh! The soup taste good.</span><br><span class="line">18:google is the best tools <span class="keyword">for</span> search keyword.</span><br><span class="line">19:goooooogle <span class="built_in">yes</span>!</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当我们需要找到g开头与g结尾的字串，当中的可有可无</span></span><br><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;g.*g&#x27;</span> regular_express.txt</span><br><span class="line">1:<span class="string">&quot;Open Source&quot;</span> is a good mechanism to develop programs.</span><br><span class="line">14:The gd software is a library <span class="keyword">for</span> drafting programs.</span><br><span class="line">18:google is the best tools <span class="keyword">for</span> search keyword.</span><br><span class="line">19:goooooogle <span class="built_in">yes</span>!</span><br><span class="line">20:go! go! Let<span class="string">&#x27;s go.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 当我们想要找出‘任意数字’的行列</span></span><br><span class="line"><span class="string">[dmtsai@study ~]$ grep -n &#x27;</span>[0-9][0-9]*<span class="string">&#x27; regular_express.txt</span></span><br><span class="line"><span class="string">5:However, this dress is about $ 3183 dollars.</span></span><br><span class="line"><span class="string">15:You are the best is mean you are the no. 1.</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="范例六：限定连续RE字符范围"><a href="#范例六：限定连续RE字符范围" class="headerlink" title="范例六：限定连续RE字符范围{}"></a>范例六：限定连续RE字符范围{}</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;go\&#123;2,5\&#125;g&#x27;</span> regular_express.txt </span><br><span class="line">18: goog le is the best tools <span class="keyword">for</span> search keyword.</span><br><span class="line"></span><br><span class="line">[dmtsai@study ~]$ grep -n <span class="string">&#x27;go\&#123;2,\&#125;g&#x27;</span> regular_express.txt </span><br><span class="line">18: goog le is the best tools <span class="keyword">for</span> search keyword.</span><br><span class="line">19: goooooog le <span class="built_in">yes</span>!</span><br></pre></td></tr></table></figure>
+<h2 id="sed-工具"><a href="#sed-工具" class="headerlink" title="sed 工具"></a>sed 工具</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mtsai@study ~]$ sed [-nefr] [动作] </span><br><span class="line">选项与参数：</span><br><span class="line">-n ：使用安静(silent)模式。在一般sed 的用法中，所有来自STDIN 的资料一般都会被列出到萤幕上。</span><br><span class="line">      但如果加上-n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。</span><br><span class="line">-e ：直接在指令列模式上进行sed 的动作编辑；</span><br><span class="line">-f ：直接将sed 的动作写在一个档案内， -f filename 则可以执行filename 内的sed 动作；</span><br><span class="line">-r ：sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)</span><br><span class="line">-i ：直接修改读取的档案内容，而不是由萤幕输出。</span><br><span class="line"></span><br><span class="line">动作说明： [n1[,n2]]<span class="keyword">function</span></span><br><span class="line">n1, n2 ：不见得会存在，一般代表『选择进行动作的行数』，举例来说，如果我的动作</span><br><span class="line">         是需要在10 到20 行之间进行的，则『 10,20[动作行为] 』</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> 有底下这些咚咚：</span><br><span class="line">a ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～</span><br><span class="line">c ：取代， c 的后面可以接字串，这些字串可以取代n1,n2 之间的行！</span><br><span class="line">d ：删除，因为是删除啊，所以d 后面通常不接任何咚咚；</span><br><span class="line">i ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；</span><br><span class="line">p ：列印，亦即将某个选择的资料印出。通常p 会与参数sed -n 一起运作～</span><br><span class="line">s ：取代，可以直接进行取代的工作哩！通常这个s 的动作可以搭配正规表示法！</span><br><span class="line">      例如1,20s/old/new/g 就是啦</span><br></pre></td></tr></table></figure>
+<h3 id="以行为单位的新增-删除功能"><a href="#以行为单位的新增-删除功能" class="headerlink" title="以行为单位的新增/删除功能"></a>以行为单位的新增/删除功能</h3><h4 id="范例一：将-etc-passwd的内容列出并且列印行号，同时，请将第2-5行删除"><a href="#范例一：将-etc-passwd的内容列出并且列印行号，同时，请将第2-5行删除" class="headerlink" title="范例一：将/etc/passwd的内容列出并且列印行号，同时，请将第2~5行删除"></a>范例一：将/etc/passwd的内容列出并且列印行号，同时，请将第2~5行删除</h4><p>如果只要删除第2行，可以使用『 nl /etc/passwd | sed ‘2d’ 』来达成，至于若是要删除第3到最后一行，则是『 nl /etc /passwd | sed ‘3,$d’ 』的啦，那个钱字号『 $ 』代表最后一行！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2,5d&#x27;</span> </span><br><span class="line">     1   root : x : 0:0 : root:/root :/bin/bash</span><br><span class="line">     6 <span class="built_in">sync</span>:x:5:0:<span class="built_in">sync</span>:/sbin:/bin/sync</span><br><span class="line">     7 shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure></p>
+<h4 id="范例二：在第二行后-亦即是加在第三行-加上『drink-tea-』字样！"><a href="#范例二：在第二行后-亦即是加在第三行-加上『drink-tea-』字样！" class="headerlink" title="范例二：在第二行后(亦即是加在第三行)加上『drink tea?』字样！"></a>范例二：在第二行后(亦即是加在第三行)加上『drink tea?』字样！</h4><p>如果是要在第二行前呢？『 nl /etc/passwd | sed ‘2i drink tea’ 』就对啦！就是将『 a 』变成『 i 』即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2a drink tea&#x27;</span> </span><br><span class="line">     1   root : x : 0:0 : root:/root :/bin/bash</span><br><span class="line">     2 bin:x:1:1:bin:/bin:/sbin/nologin</span><br><span class="line">drink tea</span><br><span class="line">     3 daemon:x:2:2:daemon:/sbin:/sbin/nologin</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure></p>
+<h4 id="范例三：在第二行后面加入两行字"><a href="#范例三：在第二行后面加入两行字" class="headerlink" title="范例三：在第二行后面加入两行字"></a>范例三：在第二行后面加入两行字</h4><p>我们可以发现在第一行的最后面就有\ 存在啦！在多行新增的情况下， \ 是一定要的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2a Drink tea or . .....\ </span></span><br><span class="line"><span class="string">&gt; drink beer ?&#x27;</span> </span><br><span class="line">     1   root : x : 0:0 : root:/root :/bin/bash</span><br><span class="line">     2 bin:x:1:1:bin:/bin:/sbin/nologin</span><br><span class="line">Drink tea or ......</span><br><span class="line">drink beer ?</span><br><span class="line">     3 daemon:x:2:2:daemon:/sbin:/sbin/nologin</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure></p>
+<h3 id="以行为单位的取代与显示功能"><a href="#以行为单位的取代与显示功能" class="headerlink" title="以行为单位的取代与显示功能"></a>以行为单位的取代与显示功能</h3><p>####范例四：我想将第2-5行的内容取代成为『No 2-5 number』<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | sed <span class="string">&#x27;2,5c No 2-5 number&#x27;</span> </span><br><span class="line">     1   root : x : 0:0 : root:/root :/bin/bash</span><br><span class="line">No 2-5 number</span><br><span class="line">     6 <span class="built_in">sync</span>:x:5:0:<span class="built_in">sync</span>:/sbin:/bin/sync</span><br><span class="line">.....(后面省略).....</span><br></pre></td></tr></table></figure></p>
+<p>####范例五：仅列出/etc/passwd档案内的第5-7行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">nl</span> /etc/passwd | sed -n <span class="string">&#x27;5,7p&#x27;</span></span><br><span class="line">     5 lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin</span><br><span class="line">     6 <span class="built_in">sync</span>:x:5:0:<span class="built_in">sync</span>:/sbin:/bin/sync</span><br><span class="line">     7 shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown</span><br></pre></td></tr></table></figure></p>
+<h3 id="部分资料的搜寻并取代的功能"><a href="#部分资料的搜寻并取代的功能" class="headerlink" title="部分资料的搜寻并取代的功能"></a>部分资料的搜寻并取代的功能</h3><p>sed ‘s/要被取代的字串/新的字串/g’</p>
+<h4 id="范例一："><a href="#范例一：" class="headerlink" title="范例一："></a>范例一：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">步骤二：利用关键字配合grep撷取出关键的一行资料 </span><br><span class="line">[dmtsai@study ~]$ /sbin/ifconfig eth0 | grep <span class="string">&#x27;inet &#x27;</span> </span><br><span class="line">        inet 192.168.1.100 netmask 255.255.255.0 broadcast 192.168.1.255</span><br><span class="line"> <span class="comment">#当场仅剩下一行！要注意， CentOS 7与CentOS 6以前的ifconfig指令输出结果不太相同，</span></span><br><span class="line"><span class="comment"># 鸟哥这个范例主要是针对CentOS 7 以后的喔！接下来，我们要将开始到addr: 通通删除，</span></span><br><span class="line"><span class="comment"># 就是像底下这样：</span></span><br><span class="line"><span class="comment"># inet 192.168.1.100 netmask 255.255.255.0 broadcast 192.168.1.255</span></span><br><span class="line"><span class="comment"># 上面的删除关键在于『 ^.*inet 』啦！正规表示法出现！^_^</span></span><br><span class="line"></span><br><span class="line">步骤三：将IP前面的部分予以删除 </span><br><span class="line">[dmtsai@study ~]$ /sbin/ifconfig eth0 | grep <span class="string">&#x27;inet &#x27;</span> | sed <span class="string">&#x27;s/^.*inet //g&#x27;</span></span><br><span class="line">192.168.1.100 netmask 255.255.255.0 broadcast 192.168.1.255</span><br><span class="line"><span class="comment"># 仔细与上个步骤比较一下，前面的部分不见了！接下来则是删除后续的部分，亦即：</span></span><br><span class="line">192.168.1.100   netmask 255.255.255.0 broadcast 192.168.1.255 </span><br><span class="line"><span class="comment">#此时所需的正规表示法为：『 &#x27; *netmask.*$ 』就是啦！</span></span><br><span class="line"></span><br><span class="line">步骤四：将IP后面的部分予以删除 </span><br><span class="line">[dmtsai@study ~]$ /sbin/ifconfig eth0 | grep <span class="string">&#x27;inet &#x27;</span> | sed <span class="string">&#x27;s/^.*inet //g&#x27;</span> \ </span><br><span class="line">&gt;   | sed <span class="string">&#x27;s/ *netmask. *$//g&#x27;</span></span><br><span class="line">192.168.1.100</span><br></pre></td></tr></table></figure>
+<h4 id="范例二："><a href="#范例二：" class="headerlink" title="范例二："></a>范例二：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">步骤一：先使用grep将关键字MAN所在行取出来 </span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">cat</span> /etc/man_db.conf | grep <span class="string">&#x27;MAN&#x27;</span></span><br><span class="line"><span class="comment"># MANDATORY_MANPATH manpath_element</span></span><br><span class="line"><span class="comment"># MANPATH_MAP path_element manpath_element</span></span><br><span class="line"><span class="comment"># MANDB_MAP global_manpath [relative_catpath]</span></span><br><span class="line"><span class="comment"># every automatically generated MANPATH includes these fields</span></span><br><span class="line">....(后面省略)....</span><br><span class="line"></span><br><span class="line">步骤二：删除掉注解之后的资料！</span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">cat</span> /etc/man_db.conf | grep <span class="string">&#x27;MAN&#x27;</span>| sed <span class="string">&#x27;s/#.*$//g&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">MANDATORY_MANPATH /usr/man</span><br><span class="line">....(后面省略)....</span><br><span class="line"><span class="comment"># 从上面可以看出来，原本注解的资料都变成空白行啦！所以，接下来要删除掉空白行</span></span><br><span class="line"></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">cat</span> /etc/man_db.conf | grep <span class="string">&#x27;MAN&#x27;</span>| sed <span class="string">&#x27;s/#.*$//g&#x27;</span> | sed <span class="string">&#x27;/^$/d&#x27;</span></span><br><span class="line">MANDATORY_MANPATH /usr/man</span><br><span class="line">MANDATORY_MANPATH /usr/share/man</span><br><span class="line">MANDATORY_MANPATH /usr/local/share/man</span><br><span class="line">....(后面省略)....</span><br></pre></td></tr></table></figure>
+<h3 id="直接修改档案内容-危险动作"><a href="#直接修改档案内容-危险动作" class="headerlink" title="直接修改档案内容(危险动作)"></a>直接修改档案内容(危险动作)</h3><h4 id="范例六：利用sed将regular-express-txt内每一行结尾若为-则换成"><a href="#范例六：利用sed将regular-express-txt内每一行结尾若为-则换成" class="headerlink" title="范例六：利用sed将regular_express.txt内每一行结尾若为.则换成!"></a>范例六：利用sed将regular_express.txt内每一行结尾若为.则换成!</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ sed -i <span class="string">&#x27;s/\.$/\!/g&#x27;</span> regular_express.txt </span><br></pre></td></tr></table></figure>
+<h4 id="范例七：利用sed直接在regular-express-txt最后一行加入『-This-is-a-test』"><a href="#范例七：利用sed直接在regular-express-txt最后一行加入『-This-is-a-test』" class="headerlink" title="范例七：利用sed直接在regular_express.txt最后一行加入『# This is a test』"></a>范例七：利用sed直接在regular_express.txt最后一行加入『# This is a test』</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ sed -i <span class="string">&#x27;$a # This is a test&#x27;</span> regular_express.txt </span><br></pre></td></tr></table></figure>
+<h2 id="egrep延伸正规表示法"><a href="#egrep延伸正规表示法" class="headerlink" title="egrep延伸正规表示法"></a>egrep延伸正规表示法</h2><h3 id="范例一：『零个或一个』的前一个RE字符范例：搜寻-gd-god-这两个字串。那个o-代表『空的或1个o-』所以，上面的执行成果会将第13-14行列出来。有没有发现到，这两个案例-‘go-d’与’go-d’-的结果集合与’go-d’相同？想想看，这是为什么喔！-egrep-n-‘go-d’-regular-express-txt"><a href="#范例一：『零个或一个』的前一个RE字符范例：搜寻-gd-god-这两个字串。那个o-代表『空的或1个o-』所以，上面的执行成果会将第13-14行列出来。有没有发现到，这两个案例-‘go-d’与’go-d’-的结果集合与’go-d’相同？想想看，这是为什么喔！-egrep-n-‘go-d’-regular-express-txt" class="headerlink" title="范例一：『零个或一个』的前一个RE字符范例：搜寻(gd) (god)这两个字串。那个o?代表『空的或1个o 』所以，上面的执行成果会将第13, 14行列出来。有没有发现到，这两个案例( ‘go+d’与’go?d’ )的结果集合与’go*d’相同？想想看，这是为什么喔！^_^egrep -n ‘go?d’ regular_express.txt|"></a>范例一：『零个或一个』的前一个RE字符范例：搜寻(gd) (god)这两个字串。那个o?代表『空的或1个o 』所以，上面的执行成果会将第13, 14行列出来。有没有发现到，这两个案例( ‘go+d’与’go?d’ )的结果集合与’go*d’相同？想想看，这是为什么喔！^_^egrep -n ‘go?d’ regular_express.txt|</h3><p>范例：搜寻(god) (good) (goood)…等等的字串。那个o+代表『一个以上的o 』所以，底下的执行成果会将第1, 9, 13行列出来。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep -n <span class="string">&#x27;go+d&#x27;</span> regular_express.txt</span><br></pre></td></tr></table></figure></p>
+<h3 id="范例二：意义：『零个或一个』的前一个RE字符"><a href="#范例二：意义：『零个或一个』的前一个RE字符" class="headerlink" title="范例二：意义：『零个或一个』的前一个RE字符"></a>范例二：意义：『零个或一个』的前一个RE字符</h3><p>搜寻(gd) (god)这两个字串。那个o?代表『空的或1个o 』所以，上面的执行成果会将第13, 14行列出来。有没有发现到，这两个案例( ‘go+d’与’go?d’ )的结果集合与’go*d’相同？想想看，这是为什么喔！^_^<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep -n <span class="string">&#x27;go?d&#x27;</span> regular_express.txt</span><br></pre></td></tr></table></figure></p>
+<h3 id="范例三：用或-or-的方式找出数个字串"><a href="#范例三：用或-or-的方式找出数个字串" class="headerlink" title="范例三：用或( or )的方式找出数个字串"></a>范例三：用或( or )的方式找出数个字串</h3><p>搜寻gd或good这两个字串，注意，是『或』！所以，第1,9,14这三行都可以被列印出来喔！那如果还想要找出dog呢？<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">egrep -n <span class="string">&#x27;gd|good&#x27;</span> regular_express.txt </span><br><span class="line">egrep -n <span class="string">&#x27;gd|good|dog&#x27;</span> regular_express.txt</span><br></pre></td></tr></table></figure></p>
+<h3 id="范例四：找出『群组』字串"><a href="#范例四：找出『群组』字串" class="headerlink" title="范例四：找出『群组』字串"></a>范例四：找出『群组』字串</h3><p>搜寻(glad)或(good)这两个字串，因为g与d是重复的，所以，我就可以将la与oo列于( )当中，并以|来分隔开来，就可以啦！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">egrep -n <span class="string">&#x27;g(la|oo)d&#x27;</span> regular_express.txt</span><br></pre></td></tr></table></figure></p>
+<h3 id="范例五：意义：多个重复群组的判别"><a href="#范例五：意义：多个重复群组的判别" class="headerlink" title="范例五：意义：多个重复群组的判别"></a>范例五：意义：多个重复群组的判别</h3><p>将『AxyzxyzxyzxyzC』用echo叫出，然后再使用如下的方法搜寻一下！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;AxyzxyzxyzxyzC&#x27;</span> | egrep <span class="string">&#x27;A(xyz)+C&#x27;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="文件的格式化与相关处理"><a href="#文件的格式化与相关处理" class="headerlink" title="文件的格式化与相关处理"></a>文件的格式化与相关处理</h2><h3 id="格式化列印：-printf"><a href="#格式化列印：-printf" class="headerlink" title="格式化列印： printf"></a>格式化列印： printf</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">printf</span> <span class="string">&#x27;列印格式&#x27;</span>实际内容</span><br><span class="line">选项与参数：</span><br><span class="line">关于格式方面的几个特殊样式：</span><br><span class="line">       \a 警告声音输出</span><br><span class="line">       \b 倒退键(backspace)</span><br><span class="line">       \f 清除萤幕(form feed)</span><br><span class="line">       \n 输出新的一行</span><br><span class="line">       \r 亦即Enter 按键</span><br><span class="line">       \t 水平的[tab] 按键</span><br><span class="line">       \v 垂直的[tab] 按键</span><br><span class="line">       \xNN NN 为两位数的数字，可以转换数字成为字元。</span><br><span class="line">关于C 程式语言内，常见的变数格式</span><br><span class="line">       %ns 那个n 是数字， s 代表string ，亦即多少个字元；</span><br><span class="line">       %ni 那个n 是数字， i 代表<span class="built_in">integer</span> ，亦即多少整数位数；</span><br><span class="line">       %N.nf 那个n 与N 都是数字， f 代表floating (浮点)，如果有小数位数，</span><br><span class="line">             假设我共要十个位数，但小数点有两位，即为%10.2f 啰</span><br></pre></td></tr></table></figure>
+<h4 id="范例一：将刚刚上头资料的档案-printf-txt-内容仅列出姓名与成绩：-用-tab-分隔"><a href="#范例一：将刚刚上头资料的档案-printf-txt-内容仅列出姓名与成绩：-用-tab-分隔" class="headerlink" title="范例一：将刚刚上头资料的档案(printf.txt)内容仅列出姓名与成绩：(用[tab]分隔)"></a>范例一：将刚刚上头资料的档案(printf.txt)内容仅列出姓名与成绩：(用[tab]分隔)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[dmtsai@study ~]$ <span class="built_in">cat</span> printf.txt</span><br><span class="line">Name Chinese English Math Average</span><br><span class="line">DmTsai 80 60 92 77.33</span><br><span class="line">VBird 75 55 80 70.00</span><br><span class="line">Ken 60 90 70 73.33</span><br><span class="line"></span><br><span class="line">[dmtsai@study ~]$ <span class="built_in">printf</span> <span class="string">&#x27;%s\t %s\t %s\t %s\t %s\t \n&#x27;</span> $(<span class="built_in">cat</span> printf.txt)</span><br><span class="line">Name    Chinese     English     Math    Average</span><br><span class="line">DmTsai  80          60          92      77.33</span><br><span class="line">VBird   75          55          80      70.00</span><br><span class="line">Ken     60          90          70      73.33</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Linux%E6%8C%87%E4%BB%A4/" rel="tag"># Linux指令</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/10/16/%E9%9D%A2%E8%AF%95/js%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" rel="next" title="js面试题之事件循环">
+                <i class="fa fa-chevron-left"></i> js面试题之事件循环
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/10/22/%E9%9D%A2%E8%AF%95/%E5%A4%A7%E5%8E%82%E9%9D%A2%E8%AF%95%E9%A2%98%E7%B2%BE%E8%AE%B2/" rel="prev" title="面试题">
+                面试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%A3%E6%A1%88%E4%B8%8E%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">档案与目录管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">创建目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E8%AF%A6%E6%83%85"><span class="nav-number">1.2.</span> <span class="nav-text">修改文件权限详情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">cp:文件的复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MV-%E7%A7%BB%E5%8A%A8%E6%A1%A3%E6%A1%88%E4%B8%8E%E7%9B%AE%E5%BD%95%EF%BC%8C%E6%88%96%E8%80%85%E6%9B%B4%E5%90%8D"><span class="nav-number">1.4.</span> <span class="nav-text">MV:移动档案与目录，或者更名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%A3%E6%A1%88%E5%86%85%E5%AE%B9%E6%9F%A5%E9%98%85"><span class="nav-number">2.</span> <span class="nav-text">档案内容查阅</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%9B%91%E8%A7%86%E6%A1%A3%E6%A1%88%E5%86%85%E5%AE%B9"><span class="nav-number">2.1.</span> <span class="nav-text">直接监视档案内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cat"><span class="nav-number">2.1.1.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tac%EF%BC%88%E5%8F%8D%E5%90%91%E5%88%97%E5%BC%8F%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">tac（反向列式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nl%EF%BC%88%E6%B7%BB%E5%8A%A0%E8%A1%8C%E5%8F%B7%E5%88%97%E5%8D%B0%EF%BC%89"><span class="nav-number">2.1.3.</span> <span class="nav-text">nl（添加行号列印）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%BF%BB%E9%A1%B5%E6%A3%80%E8%A7%86"><span class="nav-number">2.2.</span> <span class="nav-text">可翻页检视</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#more-%EF%BC%88%E4%B8%80%E9%A1%B5%E4%B8%80%E9%A1%B5%E7%BF%BB%E5%8A%A8%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">more （一页一页翻动）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#less%EF%BC%88%E4%B8%80%E9%A1%B5%E4%B8%80%E9%A1%B5%E7%BF%BB%E5%8A%A8%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">less（一页一页翻动）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%96%99%E6%92%B7%E5%8F%96"><span class="nav-number">2.3.</span> <span class="nav-text">资料撷取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#head%EF%BC%88%E5%8F%96%E5%87%BA%E5%89%8D%E9%9D%A2%E5%87%A0%E8%A1%8C%EF%BC%89"><span class="nav-number">2.3.1.</span> <span class="nav-text">head（取出前面几行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail%EF%BC%88%E5%8F%96%E5%87%BA%E5%90%8E%E9%9D%A2%E5%87%A0%E8%A1%8C%EF%BC%89"><span class="nav-number">2.3.2.</span> <span class="nav-text">tail（取出后面几行）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%A3%E6%A1%88%E4%B8%8E%E6%A1%A3%E6%A1%88%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8E%8B%E7%BC%A9-%E6%89%93%E5%8C%85%E4%B8%8E%E5%A4%87%E4%BB%BD"><span class="nav-number">3.</span> <span class="nav-text">档案与档案系统的压缩,打包与备份</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%A1%A3%E6%A1%88%E7%9A%84%E7%94%A8%E9%80%94%E4%B8%8E%E6%8A%80%E6%9C%AF"><span class="nav-number">3.1.</span> <span class="nav-text">压缩档案的用途与技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gzip-zcat-zmore-zless-zgrep"><span class="nav-number">3.1.1.</span> <span class="nav-text">gzip, zcat&#x2F;zmore&#x2F;zless&#x2F;zgrep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bzip2-bzcat-bzmore-bzless-bzgrep"><span class="nav-number">3.1.2.</span> <span class="nav-text">bzip2, bzcat&#x2F;bzmore&#x2F;bzless&#x2F;bzgrep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xz-xzcat-xzmore-xzless-xzgrep"><span class="nav-number">3.1.3.</span> <span class="nav-text">xz, xzcat&#x2F;xzmore&#x2F;xzless&#x2F;xzgrep</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E6%8C%87%E4%BB%A4%EF%BC%9A-tar"><span class="nav-number">3.2.</span> <span class="nav-text">打包指令： tar</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tar"><span class="nav-number">3.2.1.</span> <span class="nav-text">tar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8tar-%E5%8A%A0%E5%85%A5-z-j-%E6%88%96-J-%E7%9A%84%E5%8F%82%E6%95%B0%E5%A4%87%E4%BB%BD-etc-%E7%9B%AE%E5%BD%95"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用tar 加入-z, -j 或-J 的参数备份&#x2F;etc&#x2F; 目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%A4%87%E4%BB%BD%E7%9A%84%E8%B5%84%E6%96%99%E8%A7%A3%E5%8E%8B%E7%BC%A9%EF%BC%8C%E5%B9%B6%E8%80%83%E8%99%91%E7%89%B9%E5%AE%9A%E7%9B%AE%E5%BD%95%E7%9A%84%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%8A%A8%E4%BD%9C-C-%E9%80%89%E9%A1%B9%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89"><span class="nav-number">3.2.3.</span> <span class="nav-text">将备份的资料解压缩，并考虑特定目录的解压缩动作(-C 选项的应用）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vim-%E7%A8%8B%E5%BC%8F%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">vim 程式编辑器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%89%E9%94%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">4.1.</span> <span class="nav-text">按键说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E8%A7%84%E8%A1%A8%E7%A4%BA%E6%B3%95%E4%B8%8E%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">正规表示法与文件格式化处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#grep%E7%9A%84%E4%B8%80%E4%BA%9B%E8%BF%9B%E9%98%B6%E9%80%89%E9%A1%B9"><span class="nav-number">5.1.</span> <span class="nav-text">grep的一些进阶选项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%80%EF%BC%9A%E6%90%9C%E7%B4%A2regular-express-txt%E4%B8%AD%E7%9A%84the%E7%9A%84%E8%AF%AD%E5%8F%A5"><span class="nav-number">5.1.0.1.</span> <span class="nav-text">范例一：搜索regular_express.txt中的the的语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%BA%8C%EF%BC%9A%E4%B8%8D%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E7%AD%9B%E9%80%89%E5%85%B3%E9%94%AE%E8%AF%8Dthe"><span class="nav-number">5.1.0.2.</span> <span class="nav-text">范例二：不分大小写的筛选关键词the</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%89%EF%BC%9A%E5%88%A9%E7%94%A8%E4%B8%AD%E6%8B%AC%E5%8F%B7-%E6%9D%A5%E6%90%9C%E5%AF%BB%E9%9B%86%E5%90%88%E5%AD%97%E5%85%83"><span class="nav-number">5.1.0.3.</span> <span class="nav-text">范例三：利用中括号[]来搜寻集合字元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E5%9B%9B%EF%BC%9A%E8%A1%8C%E9%A6%96%E8%88%87%E8%A1%8C%E5%B0%BE%E5%AD%97%E5%85%83"><span class="nav-number">5.1.0.4.</span> <span class="nav-text">范例四：行首與行尾字元 ^ $</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%BA%94%EF%BC%9A-%E4%BB%BB%E6%84%8F%E4%B8%80%E5%80%8B%E5%AD%97%E5%85%83-%E8%88%87%E9%87%8D%E8%A4%87%E5%AD%97%E5%85%83"><span class="nav-number">5.1.0.5.</span> <span class="nav-text">范例五： 任意一個字元 . 與重複字元 *</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E5%85%AD%EF%BC%9A%E9%99%90%E5%AE%9A%E8%BF%9E%E7%BB%ADRE%E5%AD%97%E7%AC%A6%E8%8C%83%E5%9B%B4"><span class="nav-number">5.1.0.6.</span> <span class="nav-text">范例六：限定连续RE字符范围{}</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sed-%E5%B7%A5%E5%85%B7"><span class="nav-number">5.2.</span> <span class="nav-text">sed 工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E8%A1%8C%E4%B8%BA%E5%8D%95%E4%BD%8D%E7%9A%84%E6%96%B0%E5%A2%9E-%E5%88%A0%E9%99%A4%E5%8A%9F%E8%83%BD"><span class="nav-number">5.2.1.</span> <span class="nav-text">以行为单位的新增&#x2F;删除功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%80%EF%BC%9A%E5%B0%86-etc-passwd%E7%9A%84%E5%86%85%E5%AE%B9%E5%88%97%E5%87%BA%E5%B9%B6%E4%B8%94%E5%88%97%E5%8D%B0%E8%A1%8C%E5%8F%B7%EF%BC%8C%E5%90%8C%E6%97%B6%EF%BC%8C%E8%AF%B7%E5%B0%86%E7%AC%AC2-5%E8%A1%8C%E5%88%A0%E9%99%A4"><span class="nav-number">5.2.1.1.</span> <span class="nav-text">范例一：将&#x2F;etc&#x2F;passwd的内容列出并且列印行号，同时，请将第2~5行删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%BA%8C%EF%BC%9A%E5%9C%A8%E7%AC%AC%E4%BA%8C%E8%A1%8C%E5%90%8E-%E4%BA%A6%E5%8D%B3%E6%98%AF%E5%8A%A0%E5%9C%A8%E7%AC%AC%E4%B8%89%E8%A1%8C-%E5%8A%A0%E4%B8%8A%E3%80%8Edrink-tea-%E3%80%8F%E5%AD%97%E6%A0%B7%EF%BC%81"><span class="nav-number">5.2.1.2.</span> <span class="nav-text">范例二：在第二行后(亦即是加在第三行)加上『drink tea?』字样！</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%89%EF%BC%9A%E5%9C%A8%E7%AC%AC%E4%BA%8C%E8%A1%8C%E5%90%8E%E9%9D%A2%E5%8A%A0%E5%85%A5%E4%B8%A4%E8%A1%8C%E5%AD%97"><span class="nav-number">5.2.1.3.</span> <span class="nav-text">范例三：在第二行后面加入两行字</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E8%A1%8C%E4%B8%BA%E5%8D%95%E4%BD%8D%E7%9A%84%E5%8F%96%E4%BB%A3%E4%B8%8E%E6%98%BE%E7%A4%BA%E5%8A%9F%E8%83%BD"><span class="nav-number">5.2.2.</span> <span class="nav-text">以行为单位的取代与显示功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E8%B5%84%E6%96%99%E7%9A%84%E6%90%9C%E5%AF%BB%E5%B9%B6%E5%8F%96%E4%BB%A3%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">5.2.3.</span> <span class="nav-text">部分资料的搜寻并取代的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%80%EF%BC%9A"><span class="nav-number">5.2.3.1.</span> <span class="nav-text">范例一：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%BA%8C%EF%BC%9A"><span class="nav-number">5.2.3.2.</span> <span class="nav-text">范例二：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E6%A1%A3%E6%A1%88%E5%86%85%E5%AE%B9-%E5%8D%B1%E9%99%A9%E5%8A%A8%E4%BD%9C"><span class="nav-number">5.2.4.</span> <span class="nav-text">直接修改档案内容(危险动作)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E5%85%AD%EF%BC%9A%E5%88%A9%E7%94%A8sed%E5%B0%86regular-express-txt%E5%86%85%E6%AF%8F%E4%B8%80%E8%A1%8C%E7%BB%93%E5%B0%BE%E8%8B%A5%E4%B8%BA-%E5%88%99%E6%8D%A2%E6%88%90"><span class="nav-number">5.2.4.1.</span> <span class="nav-text">范例六：利用sed将regular_express.txt内每一行结尾若为.则换成!</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%83%EF%BC%9A%E5%88%A9%E7%94%A8sed%E7%9B%B4%E6%8E%A5%E5%9C%A8regular-express-txt%E6%9C%80%E5%90%8E%E4%B8%80%E8%A1%8C%E5%8A%A0%E5%85%A5%E3%80%8E-This-is-a-test%E3%80%8F"><span class="nav-number">5.2.4.2.</span> <span class="nav-text">范例七：利用sed直接在regular_express.txt最后一行加入『# This is a test』</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#egrep%E5%BB%B6%E4%BC%B8%E6%AD%A3%E8%A7%84%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="nav-number">5.3.</span> <span class="nav-text">egrep延伸正规表示法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%80%EF%BC%9A%E3%80%8E%E9%9B%B6%E4%B8%AA%E6%88%96%E4%B8%80%E4%B8%AA%E3%80%8F%E7%9A%84%E5%89%8D%E4%B8%80%E4%B8%AARE%E5%AD%97%E7%AC%A6%E8%8C%83%E4%BE%8B%EF%BC%9A%E6%90%9C%E5%AF%BB-gd-god-%E8%BF%99%E4%B8%A4%E4%B8%AA%E5%AD%97%E4%B8%B2%E3%80%82%E9%82%A3%E4%B8%AAo-%E4%BB%A3%E8%A1%A8%E3%80%8E%E7%A9%BA%E7%9A%84%E6%88%961%E4%B8%AAo-%E3%80%8F%E6%89%80%E4%BB%A5%EF%BC%8C%E4%B8%8A%E9%9D%A2%E7%9A%84%E6%89%A7%E8%A1%8C%E6%88%90%E6%9E%9C%E4%BC%9A%E5%B0%86%E7%AC%AC13-14%E8%A1%8C%E5%88%97%E5%87%BA%E6%9D%A5%E3%80%82%E6%9C%89%E6%B2%A1%E6%9C%89%E5%8F%91%E7%8E%B0%E5%88%B0%EF%BC%8C%E8%BF%99%E4%B8%A4%E4%B8%AA%E6%A1%88%E4%BE%8B-%E2%80%98go-d%E2%80%99%E4%B8%8E%E2%80%99go-d%E2%80%99-%E7%9A%84%E7%BB%93%E6%9E%9C%E9%9B%86%E5%90%88%E4%B8%8E%E2%80%99go-d%E2%80%99%E7%9B%B8%E5%90%8C%EF%BC%9F%E6%83%B3%E6%83%B3%E7%9C%8B%EF%BC%8C%E8%BF%99%E6%98%AF%E4%B8%BA%E4%BB%80%E4%B9%88%E5%96%94%EF%BC%81-egrep-n-%E2%80%98go-d%E2%80%99-regular-express-txt"><span class="nav-number">5.3.1.</span> <span class="nav-text">范例一：『零个或一个』的前一个RE字符范例：搜寻(gd) (god)这两个字串。那个o?代表『空的或1个o 』所以，上面的执行成果会将第13, 14行列出来。有没有发现到，这两个案例( ‘go+d’与’go?d’ )的结果集合与’go*d’相同？想想看，这是为什么喔！^_^egrep -n ‘go?d’ regular_express.txt|</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%BA%8C%EF%BC%9A%E6%84%8F%E4%B9%89%EF%BC%9A%E3%80%8E%E9%9B%B6%E4%B8%AA%E6%88%96%E4%B8%80%E4%B8%AA%E3%80%8F%E7%9A%84%E5%89%8D%E4%B8%80%E4%B8%AARE%E5%AD%97%E7%AC%A6"><span class="nav-number">5.3.2.</span> <span class="nav-text">范例二：意义：『零个或一个』的前一个RE字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%89%EF%BC%9A%E7%94%A8%E6%88%96-or-%E7%9A%84%E6%96%B9%E5%BC%8F%E6%89%BE%E5%87%BA%E6%95%B0%E4%B8%AA%E5%AD%97%E4%B8%B2"><span class="nav-number">5.3.3.</span> <span class="nav-text">范例三：用或( or )的方式找出数个字串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E5%9B%9B%EF%BC%9A%E6%89%BE%E5%87%BA%E3%80%8E%E7%BE%A4%E7%BB%84%E3%80%8F%E5%AD%97%E4%B8%B2"><span class="nav-number">5.3.4.</span> <span class="nav-text">范例四：找出『群组』字串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%BA%94%EF%BC%9A%E6%84%8F%E4%B9%89%EF%BC%9A%E5%A4%9A%E4%B8%AA%E9%87%8D%E5%A4%8D%E7%BE%A4%E7%BB%84%E7%9A%84%E5%88%A4%E5%88%AB"><span class="nav-number">5.3.5.</span> <span class="nav-text">范例五：意义：多个重复群组的判别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%A4%84%E7%90%86"><span class="nav-number">5.4.</span> <span class="nav-text">文件的格式化与相关处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%88%97%E5%8D%B0%EF%BC%9A-printf"><span class="nav-number">5.4.1.</span> <span class="nav-text">格式化列印： printf</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8C%83%E4%BE%8B%E4%B8%80%EF%BC%9A%E5%B0%86%E5%88%9A%E5%88%9A%E4%B8%8A%E5%A4%B4%E8%B5%84%E6%96%99%E7%9A%84%E6%A1%A3%E6%A1%88-printf-txt-%E5%86%85%E5%AE%B9%E4%BB%85%E5%88%97%E5%87%BA%E5%A7%93%E5%90%8D%E4%B8%8E%E6%88%90%E7%BB%A9%EF%BC%9A-%E7%94%A8-tab-%E5%88%86%E9%9A%94"><span class="nav-number">5.4.1.1.</span> <span class="nav-text">范例一：将刚刚上头资料的档案(printf.txt)内容仅列出姓名与成绩：(用[tab]分隔)</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/10/18/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/Linux%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A01/';
+          this.page.identifier = '2018/10/18/Linux从入门到精通/Linux系统学习1/';
+          this.page.title = 'Linux系统学习壹';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

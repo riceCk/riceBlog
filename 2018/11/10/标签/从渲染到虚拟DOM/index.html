@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试题," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="从渲染到虚拟Dom12345678910111213141516问题：1.响应时间 0~10002.动画     16ms3.加载时间 JavaScript setTimeout&#x2F;setInterval 操作DOMCSSlayout 布局 在页面中DOM元素的大小，以及位置, rflow(联动）paint 绘图 元素颜色，图片，文本composite  渲染成合并解决优化：1、优化JavaScri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器从请求到页面渲染的各个细节">
+<meta property="og:url" content="http://yoursite.com/2018/11/10/%E6%A0%87%E7%AD%BE/%E4%BB%8E%E6%B8%B2%E6%9F%93%E5%88%B0%E8%99%9A%E6%8B%9FDOM/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="从渲染到虚拟Dom12345678910111213141516问题：1.响应时间 0~10002.动画     16ms3.加载时间 JavaScript setTimeout&#x2F;setInterval 操作DOMCSSlayout 布局 在页面中DOM元素的大小，以及位置, rflow(联动）paint 绘图 元素颜色，图片，文本composite  渲染成合并解决优化：1、优化JavaScri">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-11-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.748Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="面试题">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/10/标签/从渲染到虚拟DOM/"/>
+
+
+
+
+
+  <title>浏览器从请求到页面渲染的各个细节 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/11/10/%E6%A0%87%E7%AD%BE/%E4%BB%8E%E6%B8%B2%E6%9F%93%E5%88%B0%E8%99%9A%E6%8B%9FDOM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浏览器从请求到页面渲染的各个细节</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-10T00:00:00+08:00">
+                2018-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/11/10/%E6%A0%87%E7%AD%BE/%E4%BB%8E%E6%B8%B2%E6%9F%93%E5%88%B0%E8%99%9A%E6%8B%9FDOM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/10/标签/从渲染到虚拟DOM/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="从渲染到虚拟Dom"><a href="#从渲染到虚拟Dom" class="headerlink" title="从渲染到虚拟Dom"></a>从渲染到虚拟Dom</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">问题：</span><br><span class="line">1.响应时间 0~1000</span><br><span class="line">2.动画     16ms</span><br><span class="line">3.加载时间 </span><br><span class="line">JavaScript setTimeout/setInterval 操作DOM</span><br><span class="line">CSS</span><br><span class="line">layout 布局 在页面中DOM元素的大小，以及位置, rflow(联动）</span><br><span class="line">paint 绘图 元素颜色，图片，文本</span><br><span class="line">composite  渲染成合并</span><br><span class="line">解决优化：</span><br><span class="line">1、优化JavaScript执行效率</span><br><span class="line">requestAnimationFrame (h5代替定时器)</span><br><span class="line">workers 新建一个线程不会堵塞主线程的运行，优化数据庞大的计算</span><br><span class="line">对于css选择层级不要过深（最好不要超过5层）</span><br><span class="line">2、布局：使用流式布局 flex</span><br><span class="line">3、paint重绘，</span><br></pre></td></tr></table></figure>
+<h1 id="页面请求到渲染的基本流程"><a href="#页面请求到渲染的基本流程" class="headerlink" title="页面请求到渲染的基本流程"></a>页面请求到渲染的基本流程</h1><p>url地址分成协议://域名（端口）</p>
+<ul>
+<li>用户输入url地址</li>
+<li>浏览器解析url解析出主机名</li>
+<li>浏览器将主机名转换成服务器ip地址（浏览器先查找本地DNS缓存列表，没有的话，在想浏览器默认的DNS服务器发送查询请求同时缓存）</li>
+<li>浏览器将端口号从url中解析出来</li>
+<li>浏览器建立一条与目标Web服务器的TCP连接（三次挥手）</li>
+<li>浏览器向服务器发送一条HTTP请求报文</li>
+<li>服务器向浏览器返回一条HTTP响应报文</li>
+<li>关闭连接（四次挥挥手），浏览器解析文档</li>
+<li>如果文档有资源重复6 7 8动作直至资源全部加载完毕</li>
+</ul>
+<h2 id="浏览器渲染主要流程"><a href="#浏览器渲染主要流程" class="headerlink" title="浏览器渲染主要流程"></a>浏览器渲染主要流程</h2><ul>
+<li>html解析出DOM Tree</li>
+<li>css解析成Style Tree</li>
+<li>将两者关联成Render Tree</li>
+<li>Layout（布局）根据Render Tree计算每个节点的信息（宽高）</li>
+<li>Painting（绘制）根据计算好的信息绘制整个页面</li>
+</ul>
+<h2 id="浏览器的高级结构"><a href="#浏览器的高级结构" class="headerlink" title="浏览器的高级结构"></a>浏览器的高级结构</h2><ul>
+<li>用户界面：这包括地址栏，后退/前进按钮，书签菜单等。浏览器的每个部分都显示除了您看到所请求页面的窗口。</li>
+<li>浏览器引擎：在UI和呈现引擎之间编组操作。</li>
+<li>渲染引擎：负责显示请求的内容。例如，如果请求的内容是HTML，则呈现引擎解析HTML和CSS，并在屏幕上显示解析的内容。</li>
+<li>网络：用于网络调用，例如HTTP请求，在独立于平台的界面后面使用不同平台的不同实现。</li>
+<li>ui后端：用于绘制组合框和窗口等基本小部件。此后端公开了一个非平台特定的通用接口。它下面使用操作系统用户界面方法</li>
+<li>JS引擎：用于解析和执行JavaScript代码</li>
+<li>数据结构：这是一个持久层。浏览器可能需要在本地保存各种数据，例如cookie。浏览器还支持存储机制，例如localStorage，IndexedDB，WebSQL和FileSystem。</li>
+</ul>
+<h2 id="重排（reflow）成本比较高，如："><a href="#重排（reflow）成本比较高，如：" class="headerlink" title="重排（reflow）成本比较高，如："></a>重排（reflow）成本比较高，如：</h2><ul>
+<li>当你增加、删除、修改DOM结点时，会导致Reflow或者Repaint（重排重绘）</li>
+<li>当你移动Dom的位置，或是高出动画的时候（建议requestAnimationFrame代替定时器）</li>
+<li>当你修改Css样式的时候</li>
+<li>当你Resize（调整）窗口的时候，或是滚动的时候</li>
+<li>当你修改网页默认字体时<br>注：display：none会触发reflow，而visibility只会触发repaint，因为位置没有变化<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;body&#x27;</span>).css(<span class="string">&#x27;color&#x27;</span>: <span class="string">&#x27;red&#x27;</span>)  // repaint</span><br><span class="line">$(<span class="string">&#x27;body&#x27;</span>).css(<span class="string">&#x27;margin&#x27;</span>, <span class="string">&#x27;2px&#x27;</span>) // reflow, repaint</span><br><span class="line"><span class="built_in">let</span> bstyle =document.body.style  // 建立节点</span><br><span class="line">bstyle.padding = <span class="string">&#x27;20px&#x27;</span>  // reflow, repaint</span><br><span class="line">bstyle.border = <span class="string">&#x27;10px solid red&#x27;</span> // 再一次reflow 和 repaint</span><br><span class="line">bstyle.color = <span class="string">&#x27;blue&#x27;</span>   // repaint</span><br><span class="line">bstyle.backgroundColor = <span class="string">&#x27;#fad&#x27;</span>  // repaint</span><br><span class="line">bstyle.fontSize = <span class="string">&#x27;2em&#x27;</span>  // reflow, repaint</span><br></pre></td></tr></table></figure>
+<h2 id="优化CSS重排重绘与浏览器性能"><a href="#优化CSS重排重绘与浏览器性能" class="headerlink" title="优化CSS重排重绘与浏览器性能"></a>优化CSS重排重绘与浏览器性能</h2><h3 id="什么时候会导致reflow发生呢？"><a href="#什么时候会导致reflow发生呢？" class="headerlink" title="什么时候会导致reflow发生呢？"></a>什么时候会导致reflow发生呢？</h3></li>
+<li>改变窗口大小</li>
+<li>改变文字大小</li>
+<li>增加/删除样式表</li>
+<li>内容的改变（用户在输入框中写入内容也会）</li>
+<li>激活伪类，如hover</li>
+<li>操作class属性</li>
+<li>脚本操作DOM</li>
+<li>计算offsetWidth和offsetHeight等</li>
+<li>设置style属性</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">常见的重排元素</th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">width</td>
+<td style="text-align:center">height</td>
+<td style="text-align:center">padding</td>
+<td style="text-align:center">margin</td>
+</tr>
+<tr>
+<td style="text-align:center">display</td>
+<td style="text-align:center">border-width</td>
+<td style="text-align:center">border</td>
+<td style="text-align:center">top</td>
+</tr>
+<tr>
+<td style="text-align:center">position</td>
+<td style="text-align:center">font-size</td>
+<td style="text-align:center">float</td>
+<td style="text-align:center">text-align</td>
+</tr>
+<tr>
+<td style="text-align:center">overflow-y</td>
+<td style="text-align:center">font-weight</td>
+<td style="text-align:center">overflow</td>
+<td style="text-align:center">left</td>
+</tr>
+<tr>
+<td style="text-align:center">font-family</td>
+<td style="text-align:center">line-height</td>
+<td style="text-align:center">vertical-align</td>
+<td style="text-align:center">right</td>
+</tr>
+<tr>
+<td style="text-align:center">clear</td>
+<td style="text-align:center">white-space</td>
+<td style="text-align:center">bottom</td>
+<td style="text-align:center">min-height</td>
+</tr>
+</tbody>
+</table>
+<h4 id="减少reflow对性能的影响建议"><a href="#减少reflow对性能的影响建议" class="headerlink" title="减少reflow对性能的影响建议"></a>减少reflow对性能的影响建议</h4><ul>
+<li>不要一条一条的修改Dom样式，预先定义好class，然后修改Dom的<strong>className</strong></li>
+<li>不要Dom离线后修改，比如：先把Dom给<strong>display:none</strong>（又一次Reflow），然后你修改100次，在然后再把他显示出来</li>
+<li>不要把Dom节点的属性值放在一个循环里当成循环里的变量</li>
+<li>尽可能不要修改影响范围较大的Dom</li>
+<li>为动画的元素使用绝对定位<strong>absolute/fixed</strong></li>
+<li>不要使用<strong>table</strong>布局，可能很小的一个小改动造成整个table重新布局</li>
+<li>尽可能限制reflow的影响范围，尽可能的在底层Dom节点上，上述例子中，如果你要改变p的样式，class就不要加在div上，通过父元素去影响子元素不好</li>
+<li>避免设置大量的style属性，因为通过设置style属性改变节点样式的话，每一次设置都会触发一次reflow，所以，最好是使用class属性</li>
+<li>实现元素的动画，它的position属性，最好是设为absoulte或fixed，这样不会影响其他元素的布局</li>
+<li>动画实现的速度的选择。比如实现一个动画，以1像素为单位移动这样最平滑，但是reflow就会过于频繁，大量消耗CPU资源，如果以3个像素为单位移动则会好很多</li>
+<li>不要使用table布局，因为table中某一个元素一旦触发了reflow，那么整个table的元素都会触发reflow。那么在不得已使用table的场合，可以设置<strong>table-layout:auto</strong>或者是<strong>table-layout：fixed</strong>这样可以让table一行一行的渲染，这种做法也是为了限制reflow的影响范围</li>
+<li>如果css里面有计算表达式，每次都会重新计算一遍，触发一次reflow</li>
+</ul>
+<h3 id="什么是repaint"><a href="#什么是repaint" class="headerlink" title="什么是repaint"></a>什么是repaint</h3><p>repaint是在一个元素的外观被改变，但没有改变布局的情况下发生的，如改变了visibility、outline、background等。当repaint发生时，浏览器会验证DOM树上所有其他节点的visibility属性。</p>
+<h4 id="避免过分重绘-Repaints"><a href="#避免过分重绘-Repaints" class="headerlink" title="避免过分重绘(Repaints)"></a>避免过分重绘(Repaints)</h4><p>当元素改变的时候，将不会影响元素在页面当中的位置（比如 <strong>background-color</strong>, <strong>border-color</strong>, <strong>visibility</strong>），浏览器仅仅会应用新的样式重绘此元素，此过程称为 <strong>Repaint</strong>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">常见的重绘元素</th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">color</td>
+<td style="text-align:center">border-style</td>
+<td style="text-align:center">visibility</td>
+<td style="text-align:center">background</td>
+</tr>
+<tr>
+<td style="text-align:center">text-decoration</td>
+<td style="text-align:center">background-image</td>
+<td style="text-align:center">background-position</td>
+<td style="text-align:center">background-repeat</td>
+</tr>
+<tr>
+<td style="text-align:center">outline-color</td>
+<td style="text-align:center">outline</td>
+<td style="text-align:center">outline-style</td>
+<td style="text-align:center">border-radius</td>
+</tr>
+<tr>
+<td style="text-align:center">outline-width</td>
+<td style="text-align:center">box-shadow</td>
+<td style="text-align:center">background-size</td>
+</tr>
+</tbody>
+</table>
+<h4 id="优化动画"><a href="#优化动画" class="headerlink" title="优化动画"></a>优化动画</h4><p>css3 动画是优化的重中之重。除了做到上面两点，减少 Reflow 和 Repaints 之外，还需要注意以下方面。</p>
+<h3 id="启用-GPU-硬件加速"><a href="#启用-GPU-硬件加速" class="headerlink" title="启用 GPU 硬件加速"></a>启用 GPU 硬件加速</h3><p><strong>GPU</strong>（Graphics Processing Unit） 是<strong>图像处理器</strong>。<strong>GPU</strong> 硬件加速是指应用 <strong>GPU</strong> 的图形性能对浏览器中的一些图形操作交给 <strong>GPU</strong> 来完成，因为 GPU <strong>是专门为处理图形而设计</strong>，所以它在<strong>速度和能耗</strong>上更有效率。<br><strong>GPU</strong> 加速可以不仅应用于3D，而且也可以应用于2D。这里， <strong>GPU</strong> 加速通常包括以下几个部分：<strong>Canvas2D</strong>，<strong>布局合成（Layout Compositing）</strong>, <strong>CSS3转换（transitions）</strong>，<strong>CSS3 3D变换（transforms）</strong>，<strong>WebGL</strong>和<strong>视频(video)</strong>。</p>
+<p><strong>参考文献：</strong><br><a href="http://caibaojian.com/css-reflow-repaint.html">优化CSS重排重绘与浏览器性能</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag"># 面试题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/11/07/%E9%9D%A2%E8%AF%95/%E5%A4%A7%E5%8E%82%E9%9D%A2%E8%AF%95%E4%B9%8B%E9%97%AD%E5%8C%85/" rel="next" title="闭包">
+                <i class="fa fa-chevron-left"></i> 闭包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/11/11/%E9%9D%A2%E8%AF%95/%E5%A4%A7%E5%8E%82%E9%9D%A2%E8%AF%95%E4%B9%8B%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6/" rel="prev" title="大厂面试之事件循环机制">
+                大厂面试之事件循环机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E6%B8%B2%E6%9F%93%E5%88%B0%E8%99%9A%E6%8B%9FDom"><span class="nav-number">1.</span> <span class="nav-text">从渲染到虚拟Dom</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82%E5%88%B0%E6%B8%B2%E6%9F%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">页面请求到渲染的基本流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">浏览器渲染主要流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">浏览器的高级结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E6%8E%92%EF%BC%88reflow%EF%BC%89%E6%88%90%E6%9C%AC%E6%AF%94%E8%BE%83%E9%AB%98%EF%BC%8C%E5%A6%82%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">重排（reflow）成本比较高，如：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96CSS%E9%87%8D%E6%8E%92%E9%87%8D%E7%BB%98%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%80%A7%E8%83%BD"><span class="nav-number">2.4.</span> <span class="nav-text">优化CSS重排重绘与浏览器性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%AF%BC%E8%87%B4reflow%E5%8F%91%E7%94%9F%E5%91%A2%EF%BC%9F"><span class="nav-number">2.4.1.</span> <span class="nav-text">什么时候会导致reflow发生呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%8F%E5%B0%91reflow%E5%AF%B9%E6%80%A7%E8%83%BD%E7%9A%84%E5%BD%B1%E5%93%8D%E5%BB%BA%E8%AE%AE"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">减少reflow对性能的影响建议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFrepaint"><span class="nav-number">2.4.2.</span> <span class="nav-text">什么是repaint</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E8%BF%87%E5%88%86%E9%87%8D%E7%BB%98-Repaints"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">避免过分重绘(Repaints)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%8A%A8%E7%94%BB"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">优化动画</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8-GPU-%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F"><span class="nav-number">2.4.3.</span> <span class="nav-text">启用 GPU 硬件加速</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/11/10/%E6%A0%87%E7%AD%BE/%E4%BB%8E%E6%B8%B2%E6%9F%93%E5%88%B0%E8%99%9A%E6%8B%9FDOM/';
+          this.page.identifier = '2018/11/10/标签/从渲染到虚拟DOM/';
+          this.page.title = '浏览器从请求到页面渲染的各个细节';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

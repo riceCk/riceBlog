@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="react基础用法state状态  setState处在同步逻辑中，异步更新状态，更新真实dom setState处在异步逻辑中，同步更新状态，同步更新真实dom setState处在同步逻辑中 接受第二个参数，第二个参数是回调函数，状态和dom更新完后就会被处罚   12345678910111213141516171819202122232425262728293031import Bette">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.react基础用法之通信">
+<meta property="og:url" content="http://yoursite.com/2022/10/05/react/1.react%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95%E4%B9%8B%E9%80%9A%E4%BF%A1/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="react基础用法state状态  setState处在同步逻辑中，异步更新状态，更新真实dom setState处在异步逻辑中，同步更新状态，同步更新真实dom setState处在同步逻辑中 接受第二个参数，第二个参数是回调函数，状态和dom更新完后就会被处罚   12345678910111213141516171819202122232425262728293031import Bette">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-10-05T02:28:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/10/05/react/1.react基础用法之通信/"/>
+
+
+
+
+
+  <title>1.react基础用法之通信 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2022/10/05/react/1.react%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95%E4%B9%8B%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">1.react基础用法之通信</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-10-05T10:28:00+08:00">
+                2022-10-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2022/10/05/react/1.react%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95%E4%B9%8B%E9%80%9A%E4%BF%A1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2022/10/05/react/1.react基础用法之通信/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="react基础用法"><a href="#react基础用法" class="headerlink" title="react基础用法"></a>react基础用法</h2><h3 id="state状态"><a href="#state状态" class="headerlink" title="state状态"></a>state状态</h3><blockquote>
+<ul>
+<li>setState处在同步逻辑中，异步更新状态，更新真实dom</li>
+<li>setState处在异步逻辑中，同步更新状态，同步更新真实dom</li>
+<li>setState处在同步逻辑中 接受第二个参数，第二个参数是回调函数，状态和dom更新完后就会被处罚</li>
+</ul>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import BetterScroll from <span class="string">&#x27;better-scroll&#x27;</span>;</span><br><span class="line">    state = &#123;</span><br><span class="line">        list: []</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">               &lt;button onClick=&#123;() =&gt; this.getData()&#125;&gt;click&lt;/button&gt;</span><br><span class="line">                &lt;div className=<span class="string">&#x27;wrapper&#x27;</span> style=&#123;&#123;height: <span class="string">&#x27;200px&#x27;</span>, backgroundColor: <span class="string">&#x27;red&#x27;</span>&#125;&#125;&gt;</span><br><span class="line">                    &lt;ul className=<span class="string">&#x27;content&#x27;</span> style=&#123;&#123;height: <span class="string">&#x27;100%&#x27;</span>, overflow: <span class="string">&#x27;auto&#x27;</span>&#125;&#125;&gt;</span><br><span class="line">                        &#123;</span><br><span class="line">                            this.state.list.map(item =&gt; (</span><br><span class="line">                                &lt;li key=&#123;item&#125;&gt;&#123;item&#125;&lt;/li&gt;</span><br><span class="line">                            ))</span><br><span class="line">                        &#125;</span><br><span class="line">                    &lt;/ul&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">getData</span></span> () &#123;</span><br><span class="line">        <span class="built_in">let</span> list = []</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">let</span> i = 0; i &lt; 20; i++) &#123;</span><br><span class="line">            list.push(i)</span><br><span class="line">        &#125;</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            list: list</span><br><span class="line">        &#125;, () =&gt; &#123;</span><br><span class="line">            new BetterScroll(<span class="string">&#x27;.content&#x27;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="属性（props）"><a href="#属性（props）" class="headerlink" title="属性（props）"></a>属性（props）</h3><ul>
+<li><code>prop-types</code> 验证方法</li>
+<li><code>propTypes</code> prop校验规则</li>
+<li><code>defaultProps</code> 默认值<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import kerwinPropTypes from <span class="string">&#x27;prop-types&#x27;</span></span><br><span class="line"><span class="built_in">export</span> default class Navbar extends Component &#123;</span><br><span class="line">    <span class="comment"># prop 验证写法一</span></span><br><span class="line">    static propTypes = &#123;</span><br><span class="line">        title: kerwinPropTypes.string,</span><br><span class="line">        leftShow: kerwinPropTypes.bool</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># prop 默认值</span></span><br><span class="line">    static defaultProps = &#123;</span><br><span class="line">        title: <span class="string">&#x27;首页1&#x27;</span>,</span><br><span class="line">        leftShow: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &#123;this.props.leftShow &amp;&amp; &lt;button&gt;返回&lt;/button&gt;&#125;</span><br><span class="line">                navbar-&#123;this.props.title&#125;</span><br><span class="line">                &lt;button&gt;home&lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># prop 验证写法二</span></span><br><span class="line">Navbar.propTypes = &#123;</span><br><span class="line">    title: kerwinPropTypes.string,</span><br><span class="line">    leftShow: kerwinPropTypes.bool</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="父子通信实战-表单处理"><a href="#父子通信实战-表单处理" class="headerlink" title="父子通信实战-表单处理"></a>父子通信实战-表单处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment"># 子级组建</span></span><br><span class="line">class Field extends Component &#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        value: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">clear</span></span> () &#123;</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            value: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    setValue (value) &#123;</span><br><span class="line">        this.setState(&#123;</span><br><span class="line">            value</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        <span class="built_in">return</span> &lt;div style=&#123;&#123;background: <span class="string">&#x27;#ddd&#x27;</span>&#125;&#125;&gt;</span><br><span class="line">            &lt;label&gt;&#123;this.props.label&#125;&lt;/label&gt;</span><br><span class="line">            &lt;input <span class="built_in">type</span>=&#123;this.props.type&#125; onChange=&#123;(e) =&gt; &#123;</span><br><span class="line">                this.setValue(e.target.value)</span><br><span class="line">            &#125;&#125; value=&#123;this.state.value&#125;&gt;&lt;/input&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 父级表单组建</span></span><br><span class="line"><span class="built_in">export</span> default class App extends Component &#123;</span><br><span class="line">    username = React.createRef()</span><br><span class="line">    password = React.createRef()</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;h1&gt;登录组建&lt;/h1&gt;</span><br><span class="line">            &lt;Field label=<span class="string">&quot;用户名&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> ref=&#123;this.username&#125;&gt;&lt;/Field&gt;</span><br><span class="line">            &lt;Field label=<span class="string">&quot;密码&quot;</span> <span class="built_in">type</span>=<span class="string">&quot;password&quot;</span> ref=&#123;this.password&#125; &gt;&lt;/Field&gt;</span><br><span class="line">            &lt;button onClick=&#123;() =&gt; &#123;</span><br><span class="line">                console.log(this.username.current.state.value, 123123)</span><br><span class="line">                console.log(this.password.current.state.value, 123123)</span><br><span class="line">            &#125;&#125;&gt;登录&lt;/button&gt;</span><br><span class="line">            &lt;button onClick=&#123;() =&gt; &#123;</span><br><span class="line">                this.username.current.clear()</span><br><span class="line">                this.password.current.clear()</span><br><span class="line">            &#125;&#125;&gt;取消&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="非父子组件通信"><a href="#非父子组件通信" class="headerlink" title="非父子组件通信"></a>非父子组件通信</h3><h4 id="1-状态提升（中间人模式）"><a href="#1-状态提升（中间人模式）" class="headerlink" title="1.状态提升（中间人模式）"></a>1.状态提升（中间人模式）</h4><p>在父级进行状态管理，子级参数互传，父级管理<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> default class App extends Component &#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        filmList: [],</span><br><span class="line">        synopsis: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">constructor</span></span> () &#123;</span><br><span class="line">        super()</span><br><span class="line">        axios.get(<span class="string">&#x27;/test.json&#x27;</span>).<span class="keyword">then</span>(res =&gt; &#123;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                filmList: res.data.data.films</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                this.state.filmList.map(item =&gt;&lt;FilmItem key=&#123;item.filmId&#125; &#123;...item&#125; onClickEvent=&#123;(value) =&gt; &#123;</span><br><span class="line">                    this.setState(&#123;</span><br><span class="line">                        synopsis: value</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;&#125;&gt;&lt;/FilmItem&gt;)</span><br><span class="line">            &#125;</span><br><span class="line">            &lt;FilmDetail synopsis=&#123;this.state.synopsis&#125;&gt;&lt;/FilmDetail&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class FilmItem extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        const &#123;name, poster, synopsis&#125; = this.props</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div className=<span class="string">&#x27;filmItem&#x27;</span> onClick=&#123;() =&gt; this.props.onClickEvent(synopsis)&#125;&gt;</span><br><span class="line">                &lt;img src=&#123;poster&#125; alt=&#123;name&#125; /&gt;</span><br><span class="line">                &lt;h4&gt;&#123;name&#125;&lt;/h4&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class FilmDetail extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div className=<span class="string">&#x27;filmDetail&#x27;</span>&gt;&#123;this.props.synopsis&#125;&lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-发布订阅设计模式"><a href="#2-发布订阅设计模式" class="headerlink" title="2.发布订阅设计模式"></a>2.发布订阅设计模式</h4><h5 id="初级代码"><a href="#初级代码" class="headerlink" title="初级代码"></a>初级代码</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 状态管理系统</span></span><br><span class="line"><span class="built_in">let</span> bus = &#123;</span><br><span class="line">    list: [],</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 订阅</span></span><br><span class="line">    subscribe (callback) &#123;</span><br><span class="line">        this.list.push(callback)</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 发布</span></span><br><span class="line">    <span class="function"><span class="title">publish</span></span> () &#123;</span><br><span class="line">        this.list.map(callback =&gt;  callback &amp;&amp; callback())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 订阅</span></span><br><span class="line">bus.subscribe(() =&gt; &#123;</span><br><span class="line">    console.log(<span class="number">1111111111</span>)</span><br><span class="line">&#125;)</span><br><span class="line"># 订阅</span><br><span class="line">bus.subscribe(() =&gt; &#123;</span><br><span class="line">    console.log(<span class="number">22222222222</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 发布者</span><br><span class="line">bus.publish()</span><br></pre></td></tr></table></figure>
+<h5 id="react-兄弟组件之间传参应用订阅模式"><a href="#react-兄弟组件之间传参应用订阅模式" class="headerlink" title="react 兄弟组件之间传参应用订阅模式"></a>react 兄弟组件之间传参应用订阅模式</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 订阅发布系统</span></span><br><span class="line"><span class="built_in">let</span> bus = &#123;</span><br><span class="line">    list: [],</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 订阅</span></span><br><span class="line">    subscribe (callback) &#123;</span><br><span class="line">        this.list.push(callback)</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 发布</span></span><br><span class="line">    publish (synopsis) &#123;</span><br><span class="line">        this.list.map(callback =&gt;  callback &amp;&amp; callback(synopsis))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 父级渲染，不作处理</span></span><br><span class="line"><span class="built_in">export</span> default class App extends Component &#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        filmList: [],</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">constructor</span></span> () &#123;</span><br><span class="line">        super()</span><br><span class="line">        axios.get(<span class="string">&#x27;/test.json&#x27;</span>).<span class="keyword">then</span>(res =&gt; &#123;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                filmList: res.data.data.films</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                this.state.filmList.map(item =&gt;&lt;FilmItem key=&#123;item.filmId&#125; &#123;...item&#125; &gt;&lt;/FilmItem&gt;)</span><br><span class="line">            &#125;</span><br><span class="line">            &lt;FilmDetail&gt;&lt;/FilmDetail&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列表子级 点击事件进行 发布模式</span></span><br><span class="line">class FilmItem extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        const &#123;name, poster, synopsis&#125; = this.props</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div className=<span class="string">&#x27;filmItem&#x27;</span> onClick=&#123;() =&gt; &#123;</span><br><span class="line">                bus.publish(synopsis) <span class="comment"># 调用发布</span></span><br><span class="line">            &#125;&#125;&gt;</span><br><span class="line">                &lt;img src=&#123;poster&#125; alt=&#123;name&#125; /&gt;</span><br><span class="line">                &lt;h4&gt;&#123;name&#125;&lt;/h4&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 详情子级 初始化时 直接进行订阅</span></span><br><span class="line">class FilmDetail extends Component &#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        synopsis: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">constructor</span></span> () &#123;</span><br><span class="line">        super()</span><br><span class="line">        <span class="comment"># 订阅模式</span></span><br><span class="line">        bus.subscribe((test) =&gt; &#123;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                synopsis: test</span><br><span class="line">            &#125;)</span><br><span class="line">            console.log(test, &#x27;订阅&#x27;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    render () &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div className=&#x27;filmDetail&#x27;&gt;&#123;this.state.synopsis&#125;&lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-context"><a href="#3-context" class="headerlink" title="3.context"></a>3.context</h4><p>创建上下文对象<br><strong>GlobalContext.Provider</strong><br><strong>GlobalContext.Consumer</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 父级 定义一个info状态变量</span></span><br><span class="line"><span class="comment"># 通过value里面定义setInfo进行状态修改，重来重新进行render渲染</span></span><br><span class="line">class App extends Component &#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        filmList: [],</span><br><span class="line">        info: <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">constructor</span></span> () &#123;</span><br><span class="line">        super()</span><br><span class="line">        axios.get(<span class="string">&#x27;/test.json&#x27;</span>).<span class="keyword">then</span>(res =&gt; &#123;</span><br><span class="line">            this.setState(&#123;</span><br><span class="line">                filmList: res.data.data.films</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;GlobalContext.Provider value=&#123;&#123;</span><br><span class="line">                call: <span class="string">&#x27;打电话&#x27;</span>,</span><br><span class="line">                sms: <span class="string">&quot;短信&quot;</span>,</span><br><span class="line">                info: this.state.info,</span><br><span class="line">                setInfo: (info) =&gt; &#123;</span><br><span class="line">                    this.setState(&#123;</span><br><span class="line">                        info</span><br><span class="line">                    &#125;)</span><br><span class="line">                    console.log(this.state.info)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;&#125;&gt;</span><br><span class="line">                &lt;div&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        this.state.filmList.map(item =&gt;&lt;FilmItem key=&#123;item.filmId&#125; &#123;...item&#125;&gt;&lt;/FilmItem&gt;)</span><br><span class="line">                    &#125;</span><br><span class="line">                    &lt;FilmDetail&gt;&lt;/FilmDetail&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/GlobalContext.Provider&gt;</span><br><span class="line">            </span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class FilmItem extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        const &#123;name, poster, synopsis&#125; = this.props</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;GlobalContext.Consumer&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    (value) =&gt; &#123;</span><br><span class="line">                        <span class="built_in">return</span> (</span><br><span class="line">                            &lt;div className=<span class="string">&#x27;filmItem&#x27;</span> onClick=&#123;() =&gt; &#123;</span><br><span class="line">                                value.setInfo(synopsis)</span><br><span class="line">                            &#125;&#125;&gt;</span><br><span class="line">                                &lt;img src=&#123;poster&#125; alt=&#123;name&#125; /&gt;</span><br><span class="line">                                &lt;h4&gt;&#123;name&#125;&lt;/h4&gt;</span><br><span class="line">                            &lt;/div&gt;</span><br><span class="line">                        )</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &lt;/GlobalContext.Consumer&gt;</span><br><span class="line">            </span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class FilmDetail extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;GlobalContext.Consumer&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    (value) =&gt; &lt;div className=<span class="string">&#x27;filmDetail&#x27;</span>&gt;&#123;value.info&#125;&lt;/div&gt;</span><br><span class="line">                &#125;</span><br><span class="line">            &lt;/GlobalContext.Consumer&gt;</span><br><span class="line">            </span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h3><h4 id="基本插槽的用法"><a href="#基本插槽的用法" class="headerlink" title="基本插槽的用法"></a>基本插槽的用法</h4><blockquote>
+<ul>
+<li>1.为了复用</li>
+<li>2.减少父子通信</li>
+</ul>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Child extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span> () &#123;</span><br><span class="line">        <span class="built_in">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                Child</span><br><span class="line">                &#123;this.props.children[2]&#125;</span><br><span class="line">                &#123;this.props.children[1]&#125;</span><br><span class="line">                &#123;this.props.children[0]&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class App extends Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;Child title=<span class="string">&quot;12312321&quot;</span>&gt;</span><br><span class="line">            &lt;p style=&#123;&#123;color: <span class="string">&#x27;red&#x27;</span>, fontSize: <span class="string">&#x27;18px&#x27;</span>&#125;&#125;&gt;11111111&lt;/p&gt;</span><br><span class="line">            &lt;p style=&#123;&#123;color: <span class="string">&#x27;red&#x27;</span>, fontSize: <span class="string">&#x27;18px&#x27;</span>&#125;&#125;&gt;222&lt;/p&gt;</span><br><span class="line">            &lt;p style=&#123;&#123;color: <span class="string">&#x27;red&#x27;</span>, fontSize: <span class="string">&#x27;18px&#x27;</span>&#125;&#125;&gt;3333&lt;/p&gt;</span><br><span class="line">        &lt;/Child&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/react/" rel="tag"># react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2022/04/30/2022%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E4%B8%80%E7%AE%80%E5%8E%86/" rel="next" title="前端随笔之一简历">
+                <i class="fa fa-chevron-left"></i> 前端随笔之一简历
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2022/10/12/react/2.react%20%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="prev" title="2.react 生命周期">
+                2.react 生命周期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#react%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">react基础用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#state%E7%8A%B6%E6%80%81"><span class="nav-number">1.1.</span> <span class="nav-text">state状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%EF%BC%88props%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">属性（props）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%B6%E5%AD%90%E9%80%9A%E4%BF%A1%E5%AE%9E%E6%88%98-%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">父子通信实战-表单处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1"><span class="nav-number">1.4.</span> <span class="nav-text">非父子组件通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%8A%B6%E6%80%81%E6%8F%90%E5%8D%87%EF%BC%88%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.状态提升（中间人模式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.发布订阅设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E7%BA%A7%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">初级代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#react-%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E4%BC%A0%E5%8F%82%E5%BA%94%E7%94%A8%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">react 兄弟组件之间传参应用订阅模式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-context"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.context</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E6%A7%BD"><span class="nav-number">1.5.</span> <span class="nav-text">插槽</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%8F%92%E6%A7%BD%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.5.1.</span> <span class="nav-text">基本插槽的用法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2022/10/05/react/1.react%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95%E4%B9%8B%E9%80%9A%E4%BF%A1/';
+          this.page.identifier = '2022/10/05/react/1.react基础用法之通信/';
+          this.page.title = '1.react基础用法之通信';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

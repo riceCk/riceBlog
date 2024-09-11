@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue ssr服务器端渲染," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="单页面操作前期部署初始化1npm init vue + vue-server-renderer + express1cnpm install vue vue-server-renderer express --save vue-ssr服务器搭建1234567891011121314151617|- entry|   |- entry-server.js|   |- entry-client.js|">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue之服务器单页面应用">
+<meta property="og:url" content="http://yoursite.com/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="单页面操作前期部署初始化1npm init vue + vue-server-renderer + express1cnpm install vue vue-server-renderer express --save vue-ssr服务器搭建1234567891011121314151617|- entry|   |- entry-server.js|   |- entry-client.js|">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-11-03T02:45:14.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="vue ssr服务器端渲染">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/03/vue/vue之服务器单页面应用/"/>
+
+
+
+
+
+  <title>vue之服务器单页面应用 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue之服务器单页面应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-03T10:45:14+08:00">
+                2018-11-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/03/vue/vue之服务器单页面应用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="单页面操作"><a href="#单页面操作" class="headerlink" title="单页面操作"></a>单页面操作</h1><h2 id="前期部署"><a href="#前期部署" class="headerlink" title="前期部署"></a>前期部署</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+<h3 id="vue-vue-server-renderer-express"><a href="#vue-vue-server-renderer-express" class="headerlink" title="vue + vue-server-renderer + express"></a>vue + vue-server-renderer + express</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install vue vue-server-renderer express --save</span><br></pre></td></tr></table></figure>
+<h2 id="vue-ssr服务器搭建"><a href="#vue-ssr服务器搭建" class="headerlink" title="vue-ssr服务器搭建"></a>vue-ssr服务器搭建</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">|- entry</span><br><span class="line">|   |- entry-server.js</span><br><span class="line">|   |- entry-client.js</span><br><span class="line">|- src</span><br><span class="line">|   |- components</span><br><span class="line">|   |   |- home.vue</span><br><span class="line">|   |   |- about.vue</span><br><span class="line">|   |- App.vue</span><br><span class="line">|   |- main.js</span><br><span class="line">|   |- router.js</span><br><span class="line">|   |- store.js</span><br><span class="line">|- webpack</span><br><span class="line">|   |- webpack.server.js</span><br><span class="line">|   |- webpack.client.js</span><br><span class="line">|- index.template.html</span><br><span class="line">|- package,json</span><br><span class="line">|- server.js</span><br></pre></td></tr></table></figure>
+<h3 id="entry-server-js入口文件"><a href="#entry-server-js入口文件" class="headerlink" title="entry-server.js入口文件"></a>entry-server.js入口文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import createApp from <span class="string">&#x27;../src/main.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default (config) =&gt; &#123;</span><br><span class="line">    <span class="built_in">return</span> new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        let app = createApp()</span><br><span class="line">        app.<span class="variable">$router</span>.push(config.url)</span><br><span class="line">        let matchComponents = app.<span class="variable">$router</span>.getMatchedComponents()</span><br><span class="line">        if (matchComponents.length == <span class="number">0</span> ) &#123;</span><br><span class="line">            return reject(&#123;code: <span class="number">404</span>&#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        Promise.all(matchComponents.map(component =&gt; &#123;</span><br><span class="line">            if (component.serverRequest) &#123;</span><br><span class="line">                return component.serverRequest(app.<span class="variable">$store</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)).<span class="keyword">then</span>(() =&gt; &#123;</span><br><span class="line">            config.state = app.<span class="variable">$store</span>.state</span><br><span class="line">            resolve(app)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="entry-client-js"><a href="#entry-client-js" class="headerlink" title="entry-client.js"></a>entry-client.js</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import createApp from <span class="string">&#x27;../src/main.js&#x27;</span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">let</span> app = createApp()</span><br><span class="line"><span class="keyword">if</span> (window.__INITAL__STATE__) &#123;</span><br><span class="line">    app.<span class="variable">$store</span>.replaceState(window.__INITAL__STATE__)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">window.onload = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    app.<span class="variable">$mount</span>(<span class="string">&#x27;#App&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="home-vue"><a href="#home-vue" class="headerlink" title="home.vue"></a>home.vue</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=<span class="string">&quot;homeWrapper&quot;</span>&gt;</span><br><span class="line">        &lt;div class=<span class="string">&quot;title&quot;</span>&gt;&#123;&#123;mas&#125;&#125;&lt;/div&gt;</span><br><span class="line">        &lt;div class=<span class="string">&quot;content&quot;</span>&gt;Store: &#123;&#123;value&#125;&#125;&lt;/div&gt;</span><br><span class="line">        &lt;button @click=<span class="string">&quot;getValue&quot;</span>&gt;getValue&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="built_in">export</span> default &#123;</span><br><span class="line">        serverRequest(store) &#123;</span><br><span class="line">            <span class="built_in">return</span> store.dispatch(<span class="string">&#x27;getValue&#x27;</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">created</span></span>() &#123;</span><br><span class="line">            this.<span class="variable">$store</span>.dispatch(<span class="string">&quot;getValue&quot;</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        computed: &#123;</span><br><span class="line">            <span class="function"><span class="title">value</span></span>() &#123;</span><br><span class="line">                <span class="built_in">return</span> this.<span class="variable">$store</span>.state.value</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="title">data</span></span>() &#123;</span><br><span class="line">            <span class="built_in">return</span> &#123;</span><br><span class="line">                mas: <span class="string">&#x27;home&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods: &#123;</span><br><span class="line">            <span class="function"><span class="title">getValue</span></span>() &#123;</span><br><span class="line">                this.<span class="variable">$store</span>.dispatch(<span class="string">&quot;getValue&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="App-vue-主组件"><a href="#App-vue-主组件" class="headerlink" title="App.vue 主组件"></a>App.vue 主组件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div <span class="built_in">id</span>=<span class="string">&quot;App&quot;</span>&gt;</span><br><span class="line">        &lt;p&gt;我是组件入口文件&lt;/p&gt;</span><br><span class="line">        &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="built_in">export</span> default &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">    <span class="comment">#App &#123;</span></span><br><span class="line">        color: red</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="main-js-工厂函数创建vue实例"><a href="#main-js-工厂函数创建vue实例" class="headerlink" title="main.js 工厂函数创建vue实例"></a>main.js 工厂函数创建vue实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import Vue from <span class="string">&#x27;vue&#x27;</span></span><br><span class="line">import App from <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line">import createRouter from <span class="string">&#x27;./router.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default <span class="keyword">function</span> <span class="function"><span class="title">createApp</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> new Vue(&#123;</span><br><span class="line">        router: createRouter(),</span><br><span class="line">        render: createElement =&gt; createElement(App)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="router-js路由配置"><a href="#router-js路由配置" class="headerlink" title="router.js路由配置"></a>router.js路由配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import Vue from <span class="string">&#x27;vue&#x27;</span></span><br><span class="line">import VueRouter from <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(VueRouter)</span><br><span class="line">import home from <span class="string">&#x27;./components/home.vue&#x27;</span></span><br><span class="line">import about from <span class="string">&#x27;./components/about.vue&#x27;</span></span><br><span class="line">import show from <span class="string">&#x27;./components/show.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="built_in">return</span> new VueRouter(&#123;</span><br><span class="line">        mode: <span class="string">&#x27;history&#x27;</span>,</span><br><span class="line">        routes: [</span><br><span class="line">            &#123;</span><br><span class="line">                path: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">                component: home</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                path: <span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">                component: about</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                path: <span class="string">&#x27;/show&#x27;</span>,</span><br><span class="line">                component: show</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="store-js"><a href="#store-js" class="headerlink" title="store.js"></a>store.js</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import Vue from <span class="string">&#x27;vue&#x27;</span></span><br><span class="line">import Vuex from <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line">import axios from <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="built_in">return</span> new Vuex.Store(&#123;</span><br><span class="line">        state: &#123;</span><br><span class="line">            value: <span class="string">&#x27;111&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        mutations: &#123;</span><br><span class="line">            setValue(state, value) &#123;</span><br><span class="line">                state.value = value</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        actions: &#123;</span><br><span class="line">            getValue(&#123;commit&#125;) &#123;</span><br><span class="line">                <span class="built_in">return</span> axios.get(<span class="string">&#x27;http://localhost:3000/api/getValue&#x27;</span>).<span class="keyword">then</span>(value =&gt; &#123;</span><br><span class="line">                    commit(<span class="string">&#x27;setValue&#x27;</span>, value.data)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="webpack-server-js-服务器配置"><a href="#webpack-server-js-服务器配置" class="headerlink" title="webpack.server.js 服务器配置"></a>webpack.server.js 服务器配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;)</span><br><span class="line">const root = path.resolve(__dirname, &#x27;..&#x27;)</span><br><span class="line">const vueLoaderPlugin = require(&#x27;vue-loader/lib/plugin&#x27;)</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    target: &#x27;node&#x27;,</span><br><span class="line">    mode: &#x27;development&#x27;,</span><br><span class="line">    entry: [&#x27;babel-polyfill&#x27;, path.join(root, &#x27;entry/entry-server.js&#x27;)],</span><br><span class="line">    output: &#123;  // 输出</span><br><span class="line">        libraryTarget: &#x27;commonjs2&#x27;,</span><br><span class="line">        path: path.join(root, &#x27;dist&#x27;),</span><br><span class="line">        filename: &#x27;bundler.server.js&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123; // 模块</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.vue$/,</span><br><span class="line">                loader: &#x27;vue-loader&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.js$/,</span><br><span class="line">                loader: &#x27;babel-loader&#x27;,</span><br><span class="line">                include: root,</span><br><span class="line">                exclude: /node_modules/</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                loader: &#x27;vue-style-loader!css-loader&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [new vueLoaderPlugin()] // 插件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="webpack-client-js-页面进行挂在配置"><a href="#webpack-client-js-页面进行挂在配置" class="headerlink" title="webpack.client.js 页面进行挂在配置"></a>webpack.client.js 页面进行挂在配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">const path = require(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line">const root = path.resolve(__dirname, <span class="string">&#x27;..&#x27;</span>)</span><br><span class="line">const vueLoaderPlugin = require(<span class="string">&#x27;vue-loader/lib/plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    mode: <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">    entry: [<span class="string">&#x27;babel-polyfill&#x27;</span>, path.join(root, <span class="string">&#x27;entry/entry-client.js&#x27;</span>)],</span><br><span class="line">    output: &#123;  // 输出</span><br><span class="line">        path: path.join(root, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        filename: <span class="string">&#x27;bundler.client.js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123; // 模块</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">test</span>: /\.vue$/,</span><br><span class="line">                loader: <span class="string">&#x27;vue-loader&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">test</span>: /\.js$/,</span><br><span class="line">                loader: <span class="string">&#x27;babel-loader&#x27;</span>,</span><br><span class="line">                include: root,</span><br><span class="line">                exclude: /node_modules/</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">test</span>: /\.css$/,</span><br><span class="line">                loader: <span class="string">&#x27;vue-style-loader!css-loader&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [new vueLoaderPlugin()] // 插件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="index-template-html"><a href="#index-template-html" class="headerlink" title="index.template.html"></a>index.template.html</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span></span><br><span class="line">          content=<span class="string">&quot;width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &#123;&#123;&#123;<span class="built_in">bind</span>&#125;&#125;&#125;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;vue ssr template&lt;/h1&gt;</span><br><span class="line">    &lt;!--vue-ssr-outlet--&gt;</span><br><span class="line">    &#123;&#123;&#123;init&#125;&#125;&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="package-json配置"><a href="#package-json配置" class="headerlink" title="package.json配置"></a>package.json配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;ssr&quot;</span>,</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;main&quot;</span>: <span class="string">&quot;index.js&quot;</span>,</span><br><span class="line">  <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;test&quot;</span>: <span class="string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;start&quot;</span>: <span class="string">&quot;node server.js&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;author&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;license&quot;</span>: <span class="string">&quot;ISC&quot;</span>,</span><br><span class="line">  <span class="string">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;@babel/core&quot;</span>: <span class="string">&quot;^7.0.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;axios&quot;</span>: <span class="string">&quot;^0.18.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;babel-loader&quot;</span>: <span class="string">&quot;^8.0.4&quot;</span>,</span><br><span class="line">    <span class="string">&quot;babel-polyfill&quot;</span>: <span class="string">&quot;^6.26.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;css-loader&quot;</span>: <span class="string">&quot;^1.0.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;express&quot;</span>: <span class="string">&quot;^4.16.4&quot;</span>,</span><br><span class="line">    <span class="string">&quot;vue&quot;</span>: <span class="string">&quot;^2.5.17&quot;</span>,</span><br><span class="line">    <span class="string">&quot;vue-loader&quot;</span>: <span class="string">&quot;^15.4.2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;vue-router&quot;</span>: <span class="string">&quot;^3.0.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;vue-server-renderer&quot;</span>: <span class="string">&quot;^2.5.17&quot;</span>,</span><br><span class="line">    <span class="string">&quot;vue-template-compiler&quot;</span>: <span class="string">&quot;^2.5.17&quot;</span>,</span><br><span class="line">    <span class="string">&quot;vuex&quot;</span>: <span class="string">&quot;^3.0.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;webpack&quot;</span>: <span class="string">&quot;^4.24.0&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;devDependencies&quot;</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">&quot;description&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="server-js-后端node-express配置"><a href="#server-js-后端node-express配置" class="headerlink" title="server.js 后端node+express配置"></a>server.js 后端node+express配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">const express = require(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line">const serverRender = require(<span class="string">&#x27;vue-server-renderer&#x27;</span>)</span><br><span class="line">const createApp = require(<span class="string">&#x27;./dist/bundler.server.js&#x27;</span>)[<span class="string">&#x27;default&#x27;</span>]</span><br><span class="line">const clienturl = <span class="string">&#x27;/bundler.client.js&#x27;</span></span><br><span class="line">const server = express()</span><br><span class="line">server.use(<span class="string">&#x27;/&#x27;</span>, express.static(__dirname + <span class="string">&#x27;/dist&#x27;</span>))</span><br><span class="line">const renderer = serverRender.createRenderer(&#123;</span><br><span class="line">    template: require(<span class="string">&#x27;fs&#x27;</span>).readFileSync(<span class="string">&#x27;./index.template.html&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">server.get(<span class="string">&#x27;/api/getValue&#x27;</span>, (req, res) =&gt; &#123;</span><br><span class="line">    res.end(<span class="string">&#x27;hello&#x27;</span>) // 模拟后端传到hell字段值</span><br><span class="line">&#125;)</span><br><span class="line">server.get(<span class="string">&#x27;*&#x27;</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="built_in">let</span> config = &#123;url: req.url&#125;</span><br><span class="line">    createApp(config).<span class="keyword">then</span>(app =&gt; &#123;</span><br><span class="line">        <span class="built_in">let</span> state = JSON.stringify(config.state)</span><br><span class="line">        renderer.renderToString(app,  &#123;</span><br><span class="line">            init: `&lt;script src=<span class="variable">$&#123;clienturl&#125;</span>&gt;&lt;/script&gt;`,</span><br><span class="line">            <span class="built_in">bind</span>: `&lt;script&gt;window.__INITAL__STATE__ = <span class="variable">$&#123;state&#125;</span>&lt;/script&gt;`</span><br><span class="line">&#125;, (err, html) =&gt; &#123;</span><br><span class="line">            res.end(html)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.listen(3000, () =&gt; &#123;</span><br><span class="line">    console.log(9999)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/vue-ssr%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%B8%B2%E6%9F%93/" rel="tag"># vue ssr服务器端渲染</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%B2%E6%9F%93%E5%88%9D%E6%8E%A2/" rel="next" title="vue之服务器渲染初探">
+                <i class="fa fa-chevron-left"></i> vue之服务器渲染初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/11/07/%E9%9D%A2%E8%AF%95/%E5%A4%A7%E5%8E%82%E9%9D%A2%E8%AF%95%E4%B9%8B%E9%97%AD%E5%8C%85/" rel="prev" title="闭包">
+                闭包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E9%A1%B5%E9%9D%A2%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">单页面操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E9%83%A8%E7%BD%B2"><span class="nav-number">1.1.</span> <span class="nav-text">前期部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.1.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-vue-server-renderer-express"><span class="nav-number">1.1.2.</span> <span class="nav-text">vue + vue-server-renderer + express</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-ssr%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">vue-ssr服务器搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#entry-server-js%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">entry-server.js入口文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#entry-client-js"><span class="nav-number">1.2.2.</span> <span class="nav-text">entry-client.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#home-vue"><span class="nav-number">1.2.3.</span> <span class="nav-text">home.vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#App-vue-%E4%B8%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">App.vue 主组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-js-%E5%B7%A5%E5%8E%82%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BAvue%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.2.5.</span> <span class="nav-text">main.js 工厂函数创建vue实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#router-js%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.6.</span> <span class="nav-text">router.js路由配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#store-js"><span class="nav-number">1.2.7.</span> <span class="nav-text">store.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-server-js-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.8.</span> <span class="nav-text">webpack.server.js 服务器配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-client-js-%E9%A1%B5%E9%9D%A2%E8%BF%9B%E8%A1%8C%E6%8C%82%E5%9C%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.9.</span> <span class="nav-text">webpack.client.js 页面进行挂在配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index-template-html"><span class="nav-number">1.2.10.</span> <span class="nav-text">index.template.html</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#package-json%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.11.</span> <span class="nav-text">package.json配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#server-js-%E5%90%8E%E7%AB%AFnode-express%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.12.</span> <span class="nav-text">server.js 后端node+express配置</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/11/03/vue/vue%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8/';
+          this.page.identifier = '2018/11/03/vue/vue之服务器单页面应用/';
+          this.page.title = 'vue之服务器单页面应用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="工厂模式工厂模式定义创建对象的接口，但是让子类去真正实例化，也就是工厂方法将类的实例化延迟到子类 以飞机大战的飞机种类为例剖析工厂模式、观察者模式 没学模式事前我们怎么做？ 构造函数1234567891011function SmallPlane()&#123;    this.width &#x3D; 100;    this.height &#x3D; 100;        this.touch &#x3D; funct">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript设计模式（二）">
+<meta property="og:url" content="http://yoursite.com/2018/05/19/JavaScript/javaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="工厂模式工厂模式定义创建对象的接口，但是让子类去真正实例化，也就是工厂方法将类的实例化延迟到子类 以飞机大战的飞机种类为例剖析工厂模式、观察者模式 没学模式事前我们怎么做？ 构造函数1234567891011function SmallPlane()&#123;    this.width &#x3D; 100;    this.height &#x3D; 100;        this.touch &#x3D; funct">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-05-19T01:47:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.731Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/19/JavaScript/javaScript设计模式（二）/"/>
+
+
+
+
+
+  <title>javascript设计模式（二） | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/05/19/JavaScript/javaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">javascript设计模式（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-19T09:47:00+08:00">
+                2018-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/05/19/JavaScript/javaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/19/JavaScript/javaScript设计模式（二）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><p>工厂模式定义创建对象的接口，但是让子类去真正实例化，也就是工厂方法将类的实例化延迟到子类</p>
+<p><strong>以飞机大战的飞机种类为例剖析工厂模式、观察者模式</strong></p>
+<h3 id="没学模式事前我们怎么做？-构造函数"><a href="#没学模式事前我们怎么做？-构造函数" class="headerlink" title="没学模式事前我们怎么做？ 构造函数"></a>没学模式事前我们怎么做？ 构造函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SmallPlane</span></span>()&#123;</span><br><span class="line">    this.width = 100;</span><br><span class="line">    this.height = 100;</span><br><span class="line">    </span><br><span class="line">    this.touch = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        console.log(<span class="string">&#x27;die&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var oSmallPlane1 = new SmallPlane();</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SmartPlan</span></span>()&#123;&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">AttackPlan</span></span>()&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>构建三种类型的飞机函数，但是没有进行统一化，不便于统一管理</p>
+<h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> PlaneFactory(<span class="built_in">type</span>) &#123;</span><br><span class="line">    var oNewPlane = null</span><br><span class="line">    switch (<span class="built_in">type</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;SmallPlane&#x27;</span>:</span><br><span class="line">            oNewPlane = new SmallPlane();</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;SmartPlan&#x27;</span>:</span><br><span class="line">            oNewPlane = new SmartPlan();</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;AttackPlan&#x27;</span>:</span><br><span class="line">            oNewPlane = new AttackPlan();</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;BossPlane&#x27;</span>:</span><br><span class="line">            oNewPlane = new BossPlane();</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    oNewPlane.<span class="built_in">touch</span> = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        console.log(<span class="string">&#x27;die&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> oNewPlane</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SmallPlane</span></span>() &#123;</span><br><span class="line">    this.width = 100;</span><br><span class="line">    this.height = 100;</span><br><span class="line">    this.blood = 100;</span><br><span class="line">    <span class="comment"># this.touch = function () &#123;</span></span><br><span class="line">    <span class="comment">#     console.log(&#x27;die&#x27;)</span></span><br><span class="line">    <span class="comment"># &#125;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">SmartPlan</span></span>() &#123;</span><br><span class="line">    this.width = 200;</span><br><span class="line">    this.height = 200;</span><br><span class="line">    this.blood = 150;</span><br><span class="line">    <span class="comment"># this.touch = function () &#123;</span></span><br><span class="line">    <span class="comment">#     console.log(&#x27;die&#x27;)</span></span><br><span class="line">    <span class="comment"># &#125;</span></span><br><span class="line">    this.trank = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        console.log(<span class="string">&#x27;track&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">AttackPlan</span></span>() &#123;</span><br><span class="line">    this.width = 200;</span><br><span class="line">    this.height = 200;</span><br><span class="line">    this.blood = 150;</span><br><span class="line">    <span class="comment"># this.touch = function () &#123;</span></span><br><span class="line">    <span class="comment">#     console.log(&#x27;die&#x27;)</span></span><br><span class="line">    <span class="comment"># &#125;</span></span><br><span class="line">    this.attack = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        console.log(attack);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">BossPlane</span></span>() &#123;</span><br><span class="line">    this.width = 100;</span><br><span class="line">    this.height = 200;</span><br><span class="line">    this.blood = 20000;</span><br></pre></td></tr></table></figure>
+<p>可以把公共的方法提取到<code>PlaneFactory</code>函数中去，再通过<code>var oPlane = PlaneFactory(&#39;SmallPlane&#39;)</code>创建。但是违反了开闭原则</p>
+<h4 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h4><p>不在有一个唯一的工厂类的创建产品，而是将不同的产品交给对应的工厂子类去实现，每个产品有负责生产子工厂来创造，如果添加新的产品，需要做的是添加新的子工厂和产品，而不需要修改其他的工厂代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">PlaneFactory</span></span> () &#123;&#125;</span><br><span class="line">  <span class="comment"># 公共接口，所有的子类所实例化的对象都可以使用该接口</span></span><br><span class="line">  PlaneFactory.prototype.touch = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;die&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment"># 子类工厂都定义在原型上</span></span><br><span class="line">  PlaneFactory.prototype.SmallPlane = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    this.name = <span class="string">&#x27;SmallPlane&#x27;</span></span><br><span class="line">    this.width = 100;</span><br><span class="line">    this.height = 100;</span><br><span class="line">    this.blood = 100;</span><br><span class="line">  &#125;</span><br><span class="line">  PlaneFactory.prototype.SmartPlane = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">	this.name = <span class="string">&#x27;SmartPlane&#x27;</span></span><br><span class="line">	this.width = 50;</span><br><span class="line">	this.height = 50;</span><br><span class="line">	this.blood = 100;</span><br><span class="line">	this.track = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">	  console.log(<span class="string">&#x27;track&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  PlaneFactory.prototype.AttackPlane = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">	this.name = <span class="string">&#x27;AttackPlane&#x27;</span></span><br><span class="line">	this.width = 50;</span><br><span class="line">	this.height = 50;</span><br><span class="line">	this.blood = 100;</span><br><span class="line">	this.attack = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">	  console.log(<span class="string">&#x27;attack&#x27;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  PlaneFactory.prototype.BossPlane = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">	this.name = <span class="string">&#x27;BossPlane&#x27;</span></span><br><span class="line">	this.width = 300;</span><br><span class="line">	this.height = 300;</span><br><span class="line">	this.blood = 1000;</span><br><span class="line">	this.boomb = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">	  console.log(<span class="string">&#x27;boomb&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  PlaneFactory.create = <span class="keyword">function</span> (<span class="built_in">type</span>) &#123;</span><br><span class="line">    <span class="comment"># type =&gt; 子工厂 看一下子工厂是否和PlaneFactory 具备继承关系</span></span><br><span class="line">    <span class="keyword">if</span> (PlaneFactory.prototype[<span class="built_in">type</span>] === undefined) &#123;</span><br><span class="line">      throw <span class="string">&#x27;no this constructor&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (PlaneFactory.prototype[<span class="built_in">type</span>].prototype.__proto__ !== PlaneFactory.prototype) &#123;</span><br><span class="line">      PlaneFactory.prototype[<span class="built_in">type</span>].prototype = new PlaneFactory()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> oNewPlane = new PlaneFactory.prototype[<span class="built_in">type</span>]()</span><br><span class="line">  &#125;</span><br><span class="line">  var oSp1 = PlaneFactory.create(<span class="string">&#x27;SmallPlane&#x27;</span>)</span><br><span class="line">  var oSp2 = PlaneFactory.create(<span class="string">&#x27;SmallPlane&#x27;</span>)</span><br><span class="line">  var oAp = PlaneFactory.create(<span class="string">&#x27;AttackPlane&#x27;</span>)</span><br><span class="line">  var oSrp1 = PlaneFactory.create(<span class="string">&#x27;SmartPlane&#x27;</span>)</span><br><span class="line">  var oSrp2 = PlaneFactory.create(<span class="string">&#x27;SmartPlane&#x27;</span>)</span><br><span class="line">  var oBp = PlaneFactory.create(<span class="string">&#x27;BossPlane&#x27;</span>)</span><br><span class="line">  PlaneFactory.prototype.fly = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;fly&#x27;</span>)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="工厂模式-装饰者模式-都是通过原型实现"><a href="#工厂模式-装饰者模式-都是通过原型实现" class="headerlink" title="工厂模式 + 装饰者模式 都是通过原型实现"></a>工厂模式 + 装饰者模式 都是通过原型实现</h3><p><strong>装饰者模式：</strong> 在不改变原对象的基础上，通过对其进行包装扩展（添加属性方法）<br><strong>实现</strong> 构造函数需要一个装饰资源池，提供相应的装饰方法，提供添加装饰方法的方法</p>
+<h4 id="工厂模式通过将方法类型定义在函数原型上，再将方法、类型的原型重新指向函数原型如此思路"><a href="#工厂模式通过将方法类型定义在函数原型上，再将方法、类型的原型重新指向函数原型如此思路" class="headerlink" title="工厂模式通过将方法类型定义在函数原型上，再将方法、类型的原型重新指向函数原型如此思路"></a>工厂模式通过将方法类型定义在函数原型上，再将方法、类型的原型重新指向函数原型如此思路</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#建立模式函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">PlaneFactory</span></span>()&#123;</span><br><span class="line">    <span class="comment">#存储装饰方法的作用</span></span><br><span class="line">    this.decorator_list = [];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 装饰者模式</span></span><br><span class="line">PlaneFactory.prototype.decorators = &#123;</span><br><span class="line">    eatOneLife : <span class="keyword">function</span>(oP)&#123;</span><br><span class="line">        oP.blood += 100;</span><br><span class="line">    &#125;,</span><br><span class="line">    eatTwoLife : <span class="keyword">function</span>(oP)&#123;</span><br><span class="line">        oP.blood += 200;</span><br><span class="line">    &#125;,</span><br><span class="line">    eatShrinkLife: <span class="keyword">function</span>(oP)&#123;</span><br><span class="line">        oP.blood -= 550;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#装饰服</span></span><br><span class="line">PlaneFactory.prototype.decorate = <span class="keyword">function</span>(decorate)&#123;</span><br><span class="line">    <span class="comment">#装饰方法存储起来</span></span><br><span class="line">    this.decorator_list.push(decorate);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#执行装饰者方法</span></span><br><span class="line">PlaneFactory.prototype.done = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    <span class="keyword">for</span>(var i= 0; i&lt; this.decorator_list.length; i++)&#123;</span><br><span class="line">        <span class="comment">#先判断`this.decorator_list[i]`传到`this.decorators`方法是否存在，存在就执行</span></span><br><span class="line">        this.decorators[this.decorator_list[i]] &amp;&amp; this.decorators[this.decorator_list[i]](this);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#清空装饰者方法</span></span><br><span class="line">PlaneFactory.prototype.empty = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    this.decorator_list = [];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PlaneFactory.prototype.blood = 100;        </span><br><span class="line"><span class="comment">#工厂模式</span></span><br><span class="line"><span class="comment">#公共接口  所有子类所实例化的对象都可以使用该接口</span></span><br><span class="line">PlaneFactory.prototype.touch = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    console.log(<span class="string">&#x27;die&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#四个子类工厂都定义在原型上 </span></span><br><span class="line">PlaneFactory.prototype.SmallPlane = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    this.name= <span class="string">&#x27;SmallPlane&#x27;</span>,</span><br><span class="line">    this.width = 100;</span><br><span class="line">    this.height = 100;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">PlaneFactory.prototype.SmartPlan = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    this.name= <span class="string">&#x27;SmartPlan&#x27;</span>,</span><br><span class="line">    this.width = 50;</span><br><span class="line">    this.height = 50;            </span><br><span class="line">    this.track = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        console.log(track);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">PlaneFactory.prototype.AttackPlan = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    this.name= <span class="string">&#x27;AttackPlan&#x27;</span>,</span><br><span class="line">    this.width = 50;</span><br><span class="line">    this.height = 50;            </span><br><span class="line">    this.attack = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        console.log(attack);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">PlaneFactory.prototype.BossPlane = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    this.name= <span class="string">&#x27;BossPlane&#x27;</span>,</span><br><span class="line">    this.width = 300;</span><br><span class="line">    this.height = 300;            </span><br><span class="line">    this.boomb = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">        console.log(<span class="string">&#x27;boomb&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#创建create方法</span></span><br><span class="line">PlaneFactory.create = <span class="keyword">function</span>(<span class="built_in">type</span>)&#123;</span><br><span class="line">    <span class="comment">#type =&gt; 子工厂 是否和PlaneFactory具备继承关系</span></span><br><span class="line">    <span class="keyword">if</span>(PlaneFactory.prototype[<span class="built_in">type</span>] == undefined)&#123;</span><br><span class="line">        throw <span class="string">&#x27;no this constructor&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(PlaneFactory.prototype[<span class="built_in">type</span>].prototype.__proto__ !== PlaneFactory.prototype)&#123;</span><br><span class="line">        PlaneFactory.prototype[<span class="built_in">type</span>].prototype = new PlaneFactory();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># var arg = [].slice.call(arguments, 1);</span></span><br><span class="line">    var oNewPlane = new PlaneFactory.prototype[<span class="built_in">type</span>]();</span><br><span class="line">    <span class="built_in">return</span> oNewPlane;</span><br><span class="line">&#125;</span><br><span class="line">var oSp1 = PlaneFactory.create(<span class="string">&quot;SmallPlane&quot;</span>, 100, 200);</span><br><span class="line">var oSp2 = PlaneFactory.create(<span class="string">&quot;SmallPlane&quot;</span>);</span><br><span class="line">var oAp = PlaneFactory.create(<span class="string">&quot;AttackPlan&quot;</span>);</span><br><span class="line">var oSrp1 = PlaneFactory.create(<span class="string">&quot;SmartPlan&quot;</span>);        </span><br><span class="line">var oSrp2 = PlaneFactory.create(<span class="string">&quot;SmartPlan&quot;</span>);</span><br><span class="line">var oBp = PlaneFactory.create(<span class="string">&#x27;BossPlane&#x27;</span>);        </span><br><span class="line"><span class="comment"># 原始定义之后再添加方法</span></span><br><span class="line">PlaneFactory.prototype.fly = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    console.log(<span class="string">&#x27;fly&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">oAp.decorate(<span class="string">&#x27;eatOneLife&#x27;</span>); <span class="comment">#添加修饰</span></span><br><span class="line">oAp.decorate(<span class="string">&#x27;eatTwoLife&#x27;</span>)</span><br><span class="line">oAp.<span class="keyword">done</span>();                  <span class="comment">#执行修饰</span></span><br><span class="line">console.log(oAp.blood)</span><br><span class="line">oAp.empty();</span><br><span class="line">oAp.decorate(<span class="string">&#x27;eatShrinkLife&#x27;</span>)</span><br><span class="line">oAp.<span class="keyword">done</span>();</span><br><span class="line">console.log(oAp.blood)</span><br></pre></td></tr></table></figure>
+<h3 id="观察者模式（发布订阅模式）"><a href="#观察者模式（发布订阅模式）" class="headerlink" title="观察者模式（发布订阅模式）"></a>观察者模式（发布订阅模式）</h3><p>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知，实际上，只要你曾经在dom节点上绑定过事件函数，那么你就曾经使用过观察者模式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Event</span></span>()&#123;</span><br><span class="line">    this.cache = &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">Event.prototype.on = <span class="keyword">function</span>(<span class="built_in">type</span>, handle)&#123;</span><br><span class="line">    <span class="keyword">if</span>(!this.cache[<span class="built_in">type</span>])&#123;</span><br><span class="line">        this.cache[<span class="built_in">type</span>] = [handle];</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        this.cache[<span class="built_in">type</span>].push(handle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line">Event.prototype.emmit = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    <span class="comment">#type</span></span><br><span class="line">    var <span class="built_in">type</span> = arguments[0];</span><br><span class="line">    var arg = [].slice.call(arguments, 1);</span><br><span class="line">    <span class="keyword">for</span>(var i = 0; i&lt; this.cache[<span class="built_in">type</span>].length; i++)&#123;</span><br><span class="line">        <span class="comment">#依次执行die中的函数</span></span><br><span class="line">        this.cache[<span class="built_in">type</span>][i].apply(this, arg || []);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#清空方法</span></span><br><span class="line">Event.prototype.empty = <span class="keyword">function</span>(<span class="built_in">type</span>, hanlde)&#123;</span><br><span class="line">    <span class="comment">#es5的数组方法</span></span><br><span class="line">    this.cache[<span class="built_in">type</span>] = this.cache[<span class="built_in">type</span>].fliter(<span class="keyword">function</span>(ele,index)&#123;</span><br><span class="line">        <span class="built_in">return</span> ele != hanlde;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125; </span><br><span class="line">Event.prototype.once = <span class="keyword">function</span>(<span class="built_in">type</span>, hanlde)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">var oE = new Event();</span><br><span class="line">oE.on(<span class="string">&#x27;die&#x27;</span>, <span class="keyword">function</span> deal1(time)&#123;</span><br><span class="line">    console.log(<span class="string">&#x27;over&#x27;</span>), time;</span><br><span class="line">&#125;);</span><br><span class="line">oE.on(<span class="string">&#x27;die&#x27;</span>, <span class="keyword">function</span> deal2(time)&#123;</span><br><span class="line">    console.log(<span class="string">&#x27;I will Be Back&#x27;</span>, time);</span><br><span class="line">&#125;)</span><br><span class="line">oE.emmit(<span class="string">&#x27;die&#x27;</span>, <span class="string">&#x27;22:06&#x27;</span>);</span><br></pre></td></tr></table></figure><br>在<code>Event</code>中创建<strong>cache</strong>对象，在<strong>Event</strong>原型上创建<code>on</code>的方法来添加到<code>cache</code>对象中去，在通过<code>emmit</code>循环遍历执行各个方法，<code>empty</code>用来清空，之后的只要执行<code>emmit</code>方法，就能更新<code>on</code>中的方法</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/05/18/JavaScript/javaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="javascript设计模式（一）">
+                <i class="fa fa-chevron-left"></i> javascript设计模式（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue(%E4%B8%80%EF%BC%89/" rel="prev" title="组件化Vue(一)">
+                组件化Vue(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B2%A1%E5%AD%A6%E6%A8%A1%E5%BC%8F%E4%BA%8B%E5%89%8D%E6%88%91%E4%BB%AC%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">没学模式事前我们怎么做？ 构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">工厂方法模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F-%E9%83%BD%E6%98%AF%E9%80%9A%E8%BF%87%E5%8E%9F%E5%9E%8B%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">工厂模式 + 装饰者模式 都是通过原型实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E9%80%9A%E8%BF%87%E5%B0%86%E6%96%B9%E6%B3%95%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89%E5%9C%A8%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B%E4%B8%8A%EF%BC%8C%E5%86%8D%E5%B0%86%E6%96%B9%E6%B3%95%E3%80%81%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%87%8D%E6%96%B0%E6%8C%87%E5%90%91%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B%E5%A6%82%E6%AD%A4%E6%80%9D%E8%B7%AF"><span class="nav-number">1.3.1.</span> <span class="nav-text">工厂模式通过将方法类型定义在函数原型上，再将方法、类型的原型重新指向函数原型如此思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">观察者模式（发布订阅模式）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/05/19/JavaScript/javaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/';
+          this.page.identifier = '2018/05/19/JavaScript/javaScript设计模式（二）/';
+          this.page.title = 'javascript设计模式（二）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

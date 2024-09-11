@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="jquery," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="jQuery 封装模式123456789101112131415161718192021222324(function()&#123;&#125;)(window, function(window)&#123;    window.jQuery &#x3D; Window.$ &#x3D; jQuery;    function jQuery(str)&#123;        return new jQuery.p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解读jQuery核心源码">
+<meta property="og:url" content="http://yoursite.com/2018/01/29/jQuery/%E8%A7%A3%E8%AF%BBjquery%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="jQuery 封装模式123456789101112131415161718192021222324(function()&#123;&#125;)(window, function(window)&#123;    window.jQuery &#x3D; Window.$ &#x3D; jQuery;    function jQuery(str)&#123;        return new jQuery.p">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-01-29T01:10:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="jquery">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/29/jQuery/解读jquery核心源码/"/>
+
+
+
+
+
+  <title>解读jQuery核心源码 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/01/29/jQuery/%E8%A7%A3%E8%AF%BBjquery%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">解读jQuery核心源码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T09:10:00+08:00">
+                2018-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/jQuery/" itemprop="url" rel="index">
+                    <span itemprop="name">jQuery</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/01/29/jQuery/%E8%A7%A3%E8%AF%BBjquery%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/29/jQuery/解读jquery核心源码/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="jQuery-封装模式"><a href="#jQuery-封装模式" class="headerlink" title="jQuery 封装模式"></a>jQuery 封装模式</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">&#125;)(window, <span class="keyword">function</span>(window)&#123;</span><br><span class="line">    window.jQuery = Window.$ = jQuery;</span><br><span class="line">    <span class="keyword">function</span> jQuery(str)&#123;</span><br><span class="line">        <span class="built_in">return</span> new jQuery.prototype.init(str)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#init只是一个功能</span></span><br><span class="line">    jQuery.prototype.init = <span class="keyword">function</span>(str)&#123;</span><br><span class="line">        this[0] = document.getElementById(str);</span><br><span class="line">        this.length = 1;</span><br><span class="line">        <span class="built_in">return</span> this;</span><br><span class="line">    &#125;</span><br><span class="line">    jQuery.prototype.css = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        console.log(<span class="string">&#x27;css&#x27;</span>);</span><br><span class="line">        <span class="built_in">return</span> this; <span class="comment">#实现链式调用，放回的值到jquery上</span></span><br><span class="line">    &#125;</span><br><span class="line">    jQuery.prototype.html = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        console.log(<span class="string">&#x27;html&#x27;</span>);</span><br><span class="line">        <span class="built_in">return</span> this;</span><br><span class="line">    &#125;</span><br><span class="line">    jQuery.prototype.init.prototype = jQuery.prototype;</span><br><span class="line">    <span class="comment">#让init的原型回到jQuery上。</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>jquery为了实现无new操作，简历一个init方法，通过jquery实现new的操作，然后为了实现链式调用，定义在原型上的方法再一次返回到jquery上。并且让init的原型本来指向的object上的，强制指向jquery上面</p>
+<h1 id="‘’-参数选择器思想"><a href="#‘’-参数选择器思想" class="headerlink" title="$(‘’) 参数选择器思想"></a>$(‘’) 参数选择器思想</h1><h2 id="参数分为5种类型"><a href="#参数分为5种类型" class="headerlink" title="参数分为5种类型"></a>参数分为5种类型</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1.string   /^  (?:  \s*(&lt;[\w\W]+&gt;)[^&gt;]*  |  <span class="comment">#([\w-]+))  $/</span></span><br><span class="line">    $(<span class="string">&#x27;div&#x27;</span>) $(<span class="string">&#x27;.class&#x27;</span>)  $(<span class="string">&#x27;ul li&#x27;</span>)  <span class="comment"># math = null</span></span><br><span class="line">    $(<span class="string">&#x27;li&#x27;</span>, <span class="string">&#x27;ul&#x27;</span>)                   <span class="comment"># math = null </span></span><br><span class="line">    $(<span class="string">&#x27;#id&#x27;</span>)                   <span class="comment">#msth = [&#x27;#id&#x27;,    undefine d    id)]</span></span><br><span class="line">    $(<span class="string">&#x27;&lt;li&gt;dsfs&#x27;</span>)              <span class="comment">#math = [&#x27;  &lt;li&gt; lisdasdg&#x27;,&#x27;&lt;li&gt;&#x27;,  undefined]</span></span><br><span class="line">    $(<span class="string">&#x27;&lt;a&gt;&#x27;</span>) $(<span class="string">&#x27;&lt;li&gt;&lt;/li&gt;&#x27;</span>)    <span class="comment"># match = [null,    &#x27;&lt;a&gt;&#x27;,    null]</span></span><br><span class="line">2.<span class="keyword">function</span></span><br><span class="line">    $(<span class="function"><span class="title">function</span></span>()&#123;&#125;)</span><br><span class="line">3.dom</span><br><span class="line">    $(dom)</span><br><span class="line">4.空</span><br><span class="line">    $(null/false/undefined)</span><br><span class="line">5.对象/数组/$()</span><br><span class="line">    $($())</span><br></pre></td></tr></table></figure>
+<h2 id="源码详解"><a href="#源码详解" class="headerlink" title="源码详解"></a>源码详解</h2><h3 id="整体源码"><a href="#整体源码" class="headerlink" title="整体源码"></a>整体源码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">var rquickExpr = /^(?:\s*(&lt;[\w\W]+&gt;)[^&gt;]*|#([\w-]+))$/,</span><br><span class="line">    rsingleTag = ( /^&lt;([a-z][^\/\0&gt;:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?&gt;(?:&lt;\/\1&gt;|)$/i );</span><br><span class="line"></span><br><span class="line">                                    <span class="comment"># $(selector, context, root);</span></span><br><span class="line">init = jQuery.prototype.init = <span class="keyword">function</span>(selector, context, root)&#123;</span><br><span class="line">    var match, elem;</span><br><span class="line">    <span class="keyword">if</span>(!selector)&#123;</span><br><span class="line">    <span class="comment">#判定 $(&quot;&quot;), $(null), $(undefined), $(false) 然后返回参数</span></span><br><span class="line">        <span class="built_in">return</span> this;</span><br><span class="line">    &#125;</span><br><span class="line">    root = root || rootjQuery;</span><br><span class="line">    <span class="keyword">if</span>(typeof selector === <span class="string">&#x27;string&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(selector[0] === <span class="string">&quot;&lt;&quot;</span> &amp;&amp; selector[selector.length - 1] === <span class="string">&quot;&gt;&quot;</span> &amp;&amp;selector.length &gt;= 3)&#123;</span><br><span class="line">            match = [null, selector, null];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            match = rquickExpr.<span class="built_in">exec</span>(selector)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">#$(&#x27;#div&#x27;, &#123;html: 123&#125;)</span></span><br><span class="line">        <span class="keyword">if</span>(match &amp;&amp; (match[1] || !context))&#123;  <span class="comment">#match 有值 context没值</span></span><br><span class="line">            <span class="keyword">if</span>(match[1]) &#123;  <span class="comment">#match有值 context有无值待定</span></span><br><span class="line">                context = context instanceof jquery ? context[0] : context;</span><br><span class="line">                <span class="comment">#判定上下文context是jquery方法还是属性</span></span><br><span class="line">                jQuery.merge( this, jQuery.parseHTML(  <span class="comment">#merge合并后面的参数到this中</span></span><br><span class="line">                match[ 1 ],</span><br><span class="line">                context &amp;&amp; context.nodeType ? context.ownerDocument || context : document,</span><br><span class="line">                <span class="literal">true</span></span><br><span class="line">            ) );</span><br><span class="line">            <span class="comment">#jQuer.paeseHTML(&#x27;&lt;li/&gt;&lt;span&gt;&lt;srcipt&gt;var a = 123&lt;/\srcipt&gt;&#x27;, document, ture);</span></span><br><span class="line">            <span class="comment">#=&gt; [li, span, srcipt] 创建一个标签数组 创建dom元素</span></span><br><span class="line">            <span class="comment">#最后一个参数为true时运行添加脚本语言sctipt;第二个参数最后都是document；            </span></span><br><span class="line">            <span class="comment">#判断match正不正常符不符合一个合理的规则 &amp;&amp;  context 是不是一个纯对象通过&#123;&#125;或new object创建的</span></span><br><span class="line">            <span class="comment">#$(&#x27;&lt;li&gt;dsfs&#x27;)  或  $(&#x27;&lt;a&gt;&#x27;) $(&#x27;&lt;li&gt;&lt;/li&gt;&#x27;)</span></span><br><span class="line">            <span class="keyword">if</span>(rsingleTag.<span class="built_in">test</span>(match[1]) &amp;&amp; jQuery.isPlainObject( context ))&#123;</span><br><span class="line">                <span class="comment">#例如：$(&#x27;div&#x27;, &#123;html:123, ds:&quot;dt&quot;&#125;)</span></span><br><span class="line">                <span class="keyword">for</span>(match <span class="keyword">in</span> context)&#123;  <span class="comment">#macth重新利用。相当于prop</span></span><br><span class="line">                    <span class="keyword">if</span>(jQuery.isFunction(this[match]))&#123;  <span class="comment">#判定jQuery中有没有此方法</span></span><br><span class="line">                        this[match](context[match])</span><br><span class="line">                                <span class="comment">#html(123)</span></span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        this.attr(match, context[match])</span><br><span class="line">                        <span class="comment"># div.attr(ds, &quot;dt&quot;);</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;                </span><br><span class="line">            <span class="comment"># macth[&#x27;#id&#x27;, undefined ,id]   $(&#x27;#div&#x27;);</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;  </span><br><span class="line">                elem = document.getElementById(match[2]);</span><br><span class="line">                <span class="keyword">if</span>(elem)&#123;</span><br><span class="line">                    this[0] = elem;</span><br><span class="line">                    this.length = 1;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">return</span> this;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="comment">#$(&#x27;div&#x27;) $(&#x27;.class&#x27;) $(&#x27;div:eq(2)&#x27;)</span></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(!context || context.jquery)&#123;   </span><br><span class="line">        <span class="comment">#如果空值从jquery(document)找，有值从上下文找 || jQuery(document).find(&#x27;div&#x27;)</span></span><br><span class="line">            <span class="built_in">return</span> (context || root).find(selector)        </span><br><span class="line">        <span class="comment">#·$(&#x27;ul li&#x27;) </span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;    </span><br><span class="line">            <span class="built_in">return</span> this.constructor( context ).find( selector );</span><br><span class="line">            <span class="comment">#$(&#x27;ul&#x27;).find(&#x27;li&#x27;);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(selector.nodeType)&#123;   <span class="comment">#dom</span></span><br><span class="line">        this[0] = selector;</span><br><span class="line">        this.length = 1;</span><br><span class="line">        <span class="built_in">return</span> this;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(isFunction(selector))&#123; <span class="comment">#function()&#123;&#125;</span></span><br><span class="line">        <span class="built_in">return</span> root.ready != undefined ? root.ready(selector) : </span><br><span class="line">        selector()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> jQuery.makeArray(selector, this)  <span class="comment">#转换成类数组</span></span><br></pre></td></tr></table></figure>
+<h3 id="拆分源码"><a href="#拆分源码" class="headerlink" title="拆分源码"></a>拆分源码</h3><p>先分成四类，function、空null等、dom、字符string<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">init = jQuery.prototype.init = <span class="keyword">function</span>(selector, context, root)&#123;</span><br><span class="line">    var match, elem;</span><br><span class="line">     <span class="comment">#判定 $(&quot;&quot;), $(null), $(undefined), $(false) 如果是直接返回参数</span></span><br><span class="line">    <span class="keyword">if</span>(!selector)&#123;</span><br><span class="line">        <span class="built_in">return</span> this;</span><br><span class="line">    &#125;</span><br><span class="line">    root = root || rootjQuery;</span><br><span class="line">    <span class="keyword">if</span>(typeof selector === <span class="string">&#x27;string&#x27;</span>)&#123;</span><br><span class="line">        <span class="comment">#下面详细讲</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(selector.nodeType)&#123;</span><br><span class="line">    <span class="comment">#判定是不是dom，如果是直接赋值给this[0]</span></span><br><span class="line">        this[0] = selector;</span><br><span class="line">        this.length = 1;</span><br><span class="line">        <span class="built_in">return</span> this;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(isFunction(selector))&#123; </span><br><span class="line">    <span class="comment">#判定是不是function()是就执行</span></span><br><span class="line">        <span class="built_in">return</span> root.ready != undefined ? root.ready(selector) : </span><br><span class="line">        selector()</span><br><span class="line">    &#125;</span><br><span class="line"><span class="built_in">return</span> jQuery.makeArray(selector, this)  <span class="comment">#转换成类数组</span></span><br><span class="line">rootjQuery = jQuery(document)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>详细简介string类型<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;div&#x27;</span>) $(<span class="string">&#x27;.class&#x27;</span>)  $(<span class="string">&#x27;ul li&#x27;</span>)  <span class="comment"># math = null</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>, <span class="string">&#x27;ul&#x27;</span>)                   <span class="comment"># math = null </span></span><br><span class="line">$(<span class="string">&#x27;#id&#x27;</span>)                   <span class="comment">#msth = [&#x27;#id&#x27;,    undefine d    id)]</span></span><br><span class="line">$(<span class="string">&#x27;&lt;li&gt;dsfs&#x27;</span>)              <span class="comment">#math = [&#x27;  &lt;li&gt; lisdasdg&#x27;,&#x27;&lt;li&gt;&#x27;,  undefined]</span></span><br><span class="line">$(<span class="string">&#x27;&lt;a&gt;&#x27;</span>) $(<span class="string">&#x27;&lt;li&gt;&lt;/li&gt;&#x27;</span>)    <span class="comment"># match = [null,    &#x27;&lt;a&gt;&#x27;,    null]</span></span><br></pre></td></tr></table></figure><br>string有五种类型，下面的分别提出match有值的情况下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(selector[0] === <span class="string">&quot;&lt;&quot;</span> &amp;&amp; selector[selector.length - 1] === <span class="string">&quot;&gt;&quot;</span> &amp;&amp;selector.length &gt;= 3)&#123;</span><br><span class="line">    match = [null, selector, null];</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    match = rquickExpr.<span class="built_in">exec</span>(selector)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当match有值的情况下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#判定match[1] 有值 或者 context没值</span></span><br><span class="line"><span class="keyword">if</span>(match &amp;&amp; (match[1] || !context))&#123;</span><br><span class="line">    <span class="comment">#判断match有值的情况</span></span><br><span class="line">    <span class="keyword">if</span>(match[1])&#123;</span><br><span class="line">        <span class="comment">#match有值 context有无值待定 是创建标签类型的</span></span><br><span class="line">        context = context instanceof jquery ? context[0] : context;</span><br><span class="line">        <span class="comment">#判定上下文context是jquery方法还是属性</span></span><br><span class="line">        </span><br><span class="line">        jQuery.merge( this, jQuery.parseHTML(  <span class="comment">#merge合并后面的参数到this中</span></span><br><span class="line">        match[ 1 ],</span><br><span class="line">        context &amp;&amp; context.nodeType ? context.ownerDocument || context : document,</span><br><span class="line">        <span class="literal">true</span></span><br><span class="line">        ) );</span><br><span class="line">        <span class="comment">#jQuer.paeseHTML(&#x27;&lt;li/&gt;&lt;span&gt;&lt;srcipt&gt;var a = 123&lt;/\srcipt&gt;&#x27;, document, ture);</span></span><br><span class="line">        <span class="comment">#=&gt; [li, span, srcipt] 创建一个标签数组 创建dom元素</span></span><br><span class="line">        <span class="comment">#最后一个参数为true时运行添加脚本语言sctipt;第二个参数最后都是document；</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#然后开始处理context有的情况下，</span></span><br><span class="line">        <span class="comment">#先判定match正不正常符不符合一个合理的规则  &amp;&amp;  context 是不是一个纯对象通过&#123;&#125;或new object创建的</span></span><br><span class="line">        <span class="comment">#$(&#x27;&lt;li&gt;dsfs&#x27;)  或  $(&#x27;&lt;a&gt;&#x27;) $(&#x27;&lt;li&gt;&lt;/li&gt;&#x27;)</span></span><br><span class="line">        <span class="keyword">if</span>(rsingleTag.<span class="built_in">test</span>(match[1]) &amp;&amp; jQuery.isPlainObject( context ))&#123;</span><br><span class="line">            <span class="comment">#例如：$(&#x27;div&#x27;, &#123;html:123, ds:&quot;dt&quot;&#125;)</span></span><br><span class="line">            <span class="keyword">for</span>(match <span class="keyword">in</span> context)&#123;  <span class="comment">#macth重新利用。相当于prop</span></span><br><span class="line">                <span class="keyword">if</span>(jQuery.isFunction(this[match]))&#123;  <span class="comment">#判定jQuery中有没有此方法</span></span><br><span class="line">                    this[match](context[match])</span><br><span class="line">                            <span class="comment">#html(123)</span></span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    this.attr(match, context[match])</span><br><span class="line">                    <span class="comment"># div.attr(ds, &quot;dt&quot;);</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">#判定match没值 从而肯定为$(&#x27;#div&#x27;) 类型的</span></span><br><span class="line">        elem = document.getElementById(match[2]);</span><br><span class="line">        <span class="keyword">if</span>(elem)&#123;</span><br><span class="line">            this[0] = elem;</span><br><span class="line">            this.length = 1;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">return</span> this;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>当match没值的情况<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;div&#x27;</span>) $(<span class="string">&#x27;.class&#x27;</span>)  $(<span class="string">&#x27;ul li&#x27;</span>)  <span class="comment"># math = null</span></span><br><span class="line">$(<span class="string">&#x27;li&#x27;</span>, <span class="string">&#x27;ul&#x27;</span>)                   <span class="comment"># math = null </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!context || context.jquery)&#123;   </span><br><span class="line"><span class="comment">#如果空值从jquery(document)找，有值从上下文找 || jQuery(document).find(&#x27;div&#x27;)</span></span><br><span class="line">    <span class="built_in">return</span> (context || root).find(selector)</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;    <span class="comment">#$(&#x27;ul li&#x27;) </span></span><br><span class="line">    <span class="built_in">return</span> this.constructor( context ).find( selector );</span><br><span class="line">    <span class="comment">#$(&#x27;ul&#x27;).find(&#x27;li&#x27;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="extend-函数分析"><a href="#extend-函数分析" class="headerlink" title="extend()函数分析"></a>extend()函数分析</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">jQuery.extend = jQuery.fn.extend = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    var src, copyIsArray, copy, name, options, <span class="built_in">clone</span>,</span><br><span class="line">        target = arguments[0] || &#123;&#125;,</span><br><span class="line">    <span class="comment">#常见的用法jQuery.extend(obj1, obj2)，此时target为arguments[0];</span></span><br><span class="line">        i = 1,</span><br><span class="line">        length = arguments.length,</span><br><span class="line">        deep = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">type</span> target === <span class="string">&#x27;boolean&#x27;</span>)&#123;</span><br><span class="line">        <span class="comment">#如果第一个参数为true，即jQuery.extend(true, obj1,obj2);</span></span><br><span class="line">        deep = target;</span><br><span class="line">        target = arguments[1] || &#123;&#125;;</span><br><span class="line">        i = 2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(typeof target !== <span class="string">&quot;object&quot;</span> &amp;&amp; !jQuery.isFunction(target))&#123;</span><br><span class="line">        <span class="comment">#处理奇怪的情况，比如jQuery.extend(&#x27;hell&#x27;, &#123;nick:&#x27;casper&#125;)</span></span><br><span class="line">        target = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(length === i)&#123;</span><br><span class="line">        <span class="comment">#处理jQuery.extend(obj)</span></span><br><span class="line">        target = this;</span><br><span class="line">        <span class="comment">#jQuery.extend时，this指的是jQuery;</span></span><br><span class="line">        --i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(; i &lt; length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>((options = arguments[i]) != null) &#123;</span><br><span class="line">            #比如说jQuery.extend(obj1, obj2, obj3)</span><br><span class="line">            #options则是obj2,obj3...</span><br><span class="line">            for(name in options)&#123;</span><br><span class="line">                src = target[name]; #索引属性</span><br><span class="line">                copy = options[name]; # 参数</span><br><span class="line">                if(target === copy)&#123;</span><br><span class="line">                    continue;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            #深拷贝，被拷贝的属性值本身对象</span><br><span class="line">            if(deep &amp;&amp; copy </span><br><span class="line">                &amp;&amp;(jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy))</span><br><span class="line">            ))&#123;</span><br><span class="line">                <span class="keyword">if</span>(copyIsArray)&#123;</span><br><span class="line">                    <span class="comment">#被拷贝的属性值是个数组</span></span><br><span class="line">                    copyIsArray = <span class="literal">false</span>;</span><br><span class="line">                    <span class="built_in">clone</span> = src &amp;&amp; jQuery.isArray(src) ? src : [];</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="comment">#被拷贝的属性值是个plainObject，比如&#123; nick: &#x27;casper&#x27; &#125;</span></span><br><span class="line">                    <span class="built_in">clone</span> = src &amp;&amp; jQuery.isPlainObject(src) ? src : &#123;&#125;;</span><br><span class="line">                &#125;</span><br><span class="line">                target[name] = jQuery.extend( deep, <span class="built_in">clone</span>, copy );</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (copy !== undefined)&#123;</span><br><span class="line">                <span class="comment">#浅拷贝，且属性值不为undefined</span></span><br><span class="line">                target[name] = copy;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/jquery/" rel="tag"># jquery</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/01/27/JavaScript/javascript%E8%BF%90%E5%8A%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="javascript运动(一)">
+                <i class="fa fa-chevron-left"></i> javascript运动(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/02/04/jQuery/%E8%B5%B0%E8%BF%9Bjquery%E4%B8%96%E7%95%8C/" rel="prev" title="走进jQuery世界">
+                走进jQuery世界 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jQuery-%E5%B0%81%E8%A3%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">jQuery 封装模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%80%98%E2%80%99-%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9%E5%99%A8%E6%80%9D%E6%83%B3"><span class="nav-number">2.</span> <span class="nav-text">$(‘’) 参数选择器思想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%88%86%E4%B8%BA5%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">参数分为5种类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">源码详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%BA%90%E7%A0%81"><span class="nav-number">2.2.1.</span> <span class="nav-text">整体源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%86%E5%88%86%E6%BA%90%E7%A0%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">拆分源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#extend-%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">extend()函数分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/01/29/jQuery/%E8%A7%A3%E8%AF%BBjquery%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81/';
+          this.page.identifier = '2018/01/29/jQuery/解读jquery核心源码/';
+          this.page.title = '解读jQuery核心源码';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

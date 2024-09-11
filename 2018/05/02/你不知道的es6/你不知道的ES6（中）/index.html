@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ES6," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="ES5 预热继承 1、继承原型 2、继承私有属性  继承原型下面给出的方式都可以当继承的子级对象constructor指向自己 （1）继承原型很多种，最佳的为圣杯模式的继承1234567891011121314151617181920Parent.prototype.lasName &#x3D; &#x27;aaa&#x27;function Parent()&#123;  this.name &#x3D; &amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的ES6之中篇">
+<meta property="og:url" content="http://yoursite.com/2018/05/02/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%AD%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="ES5 预热继承 1、继承原型 2、继承私有属性  继承原型下面给出的方式都可以当继承的子级对象constructor指向自己 （1）继承原型很多种，最佳的为圣杯模式的继承1234567891011121314151617181920Parent.prototype.lasName &#x3D; &#x27;aaa&#x27;function Parent()&#123;  this.name &#x3D; &amp;#x2">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-05-02T03:10:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.740Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="ES6">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/02/你不知道的es6/你不知道的ES6（中）/"/>
+
+
+
+
+
+  <title>你不知道的ES6之中篇 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/05/02/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%AD%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你不知道的ES6之中篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-02T11:10:00+08:00">
+                2018-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6/" itemprop="url" rel="index">
+                    <span itemprop="name">你不知道的ES6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/05/02/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%AD%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/02/你不知道的es6/你不知道的ES6（中）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ES5-预热"><a href="#ES5-预热" class="headerlink" title="ES5 预热"></a>ES5 预热</h1><h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><ul>
+<li>1、继承原型</li>
+<li>2、继承私有属性</li>
+</ul>
+<h3 id="继承原型"><a href="#继承原型" class="headerlink" title="继承原型"></a>继承原型</h3><p>下面给出的方式都可以当继承的子级对象constructor指向自己</p>
+<h4 id="（1）继承原型很多种，最佳的为圣杯模式的继承"><a href="#（1）继承原型很多种，最佳的为圣杯模式的继承" class="headerlink" title="（1）继承原型很多种，最佳的为圣杯模式的继承"></a>（1）继承原型很多种，最佳的为圣杯模式的继承</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Parent.prototype.lasName = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Parent</span></span>()&#123;</span><br><span class="line">  this.name = <span class="string">&#x27;parent&#x27;</span>;</span><br><span class="line">  this.play = [1,2]</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype.newName = <span class="string">&#x27;bbb&#x27;</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Child</span></span>()&#123;</span><br><span class="line">  Parent.call(this);</span><br><span class="line">  this.type = <span class="string">&#x27;child&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> inherit (Target, Origin)&#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">F</span></span>()&#123;&#125;;</span><br><span class="line">  F.prototype = Origin.prototype;</span><br><span class="line">  Target.prototype = new F;</span><br><span class="line">  Target.prototype.constructor = Target</span><br><span class="line">  Target.prototype.uber = Object.prototype;</span><br><span class="line">&#125;</span><br><span class="line">inherit(Child, Parent);</span><br><span class="line">var a = new Child()</span><br><span class="line">Child.prototype.lasName=<span class="string">&#x27;ccc&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="（2）ES6-Object-setPrototypeOf-Target-Origin"><a href="#（2）ES6-Object-setPrototypeOf-Target-Origin" class="headerlink" title="（2）ES6 Object.setPrototypeOf(Target, Origin)"></a>（2）ES6 Object.setPrototypeOf(Target, Origin)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Target.prototype.__proto__ = Origin.prototype</span><br><span class="line"><span class="comment">## 等同于</span></span><br><span class="line">ES6 Object.setPrototypeOf(Target.prototype, Origin.prototype)</span><br></pre></td></tr></table></figure>
+<h4 id="3-通过Object-create创建对象的方式继承"><a href="#3-通过Object-create创建对象的方式继承" class="headerlink" title="(3) 通过Object.create创建对象的方式继承"></a>(3) 通过Object.create创建对象的方式继承</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Target.prototype = Object.create(Origin.prototype, &#123;</span><br><span class="line">    constructor: Target</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="继承私有属性"><a href="#继承私有属性" class="headerlink" title="继承私有属性"></a>继承私有属性</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> Plane (name) &#123;</span><br><span class="line">    this.name = name || <span class="string">&#x27;普通飞机&#x27;</span></span><br><span class="line">    this.blood = 100;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> AttackPlane (name) &#123;</span><br><span class="line">    Plane.call(this, name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> attack = new AttackPlane(<span class="string">&#x27;攻击机&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="class类"><a href="#class类" class="headerlink" title="class类"></a>class类</h1><p>constructor、static、extends、super</p>
+<ul>
+<li>class基本使用</li>
+<li>class的继承</li>
+</ul>
+<h2 id="class基本使用"><a href="#class基本使用" class="headerlink" title="class基本使用"></a>class基本使用</h2><ul>
+<li>constructor、实例属性、实例方法</li>
+<li>静态属性和静态方法</li>
+</ul>
+<h3 id="传统定义构造函数"><a href="#传统定义构造函数" class="headerlink" title="传统定义构造函数"></a>传统定义构造函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> Person(name, age)&#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">    this.age = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="es6-class的构造函数"><a href="#es6-class的构造函数" class="headerlink" title="es6 class的构造函数"></a>es6 class的构造函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person&#123;</span><br><span class="line">    constructor(name, age)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#class 构造的函数必须new</span></span><br><span class="line"><span class="built_in">let</span> person = new Person(<span class="string">&#x27;ck&#x27;</span>, 19); </span><br></pre></td></tr></table></figure>
+<h3 id="class-原型方法和私有方法"><a href="#class-原型方法和私有方法" class="headerlink" title="class 原型方法和私有方法"></a>class 原型方法和私有方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#函数属性放在内部实现私有化，方法放在原型上实现共享</span></span><br><span class="line">class Animal&#123;  </span><br><span class="line">    static <span class="function"><span class="title">alive</span></span> () &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#constructor构造的Animal函数属性</span></span><br><span class="line">    constructor(name, age=1)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">        this.weight = 10</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># eat与drink为定义在函数原型上的方法</span></span><br><span class="line">    eat(foot=1)&#123;</span><br><span class="line">        this.weight += foot</span><br><span class="line">    &#125;</span><br><span class="line">    drink(water=.5)&#123;</span><br><span class="line">        this.weight += water;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var a1 = new Animal(<span class="string">&#x27;zaizai&#x27;</span>);</span><br><span class="line">console.log(a1.eat === Animal.prototype.eat)  <span class="comment"># true </span></span><br><span class="line">console.log(Animal.alive())</span><br><span class="line"><span class="comment"># true  这边是函数上的私有方法并非构造实例的</span></span><br></pre></td></tr></table></figure>
+<h2 id="class继承"><a href="#class继承" class="headerlink" title="class继承"></a>class继承</h2><h3 id="exteds-继承父级属性方法"><a href="#exteds-继承父级属性方法" class="headerlink" title="exteds 继承父级属性方法"></a>exteds 继承父级属性方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class Animal&#123;</span><br><span class="line">    constructor(name)&#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = 1;</span><br><span class="line">        this.weight = 10;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">eat</span></span>()&#123;</span><br><span class="line">        this.weight ++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Person extends Animal&#123;      <span class="comment">#Person继承Animal方法</span></span><br><span class="line">    constructor(name, sex = <span class="string">&#x27;male&#x27;</span>)&#123;</span><br><span class="line">        <span class="comment">#super做函数时调用父类的Animal函数获取 &#123;name, age, weight&#125;  </span></span><br><span class="line">        super(name) <span class="comment"># 私有属性继承</span></span><br><span class="line">        <span class="comment">#隐性的Animal.prototype.constructor.call(this);</span></span><br><span class="line">        <span class="comment">#super.eat  至访问父级上的方法 ==&gt;Animal.prototype+</span></span><br><span class="line">        this.sex = sex;</span><br><span class="line">        <span class="comment">#super做对象时</span></span><br><span class="line">        console.log(super.eat)</span><br><span class="line">        <span class="comment"># =&gt; super =&gt; Animal.prototype</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var p = new Person(<span class="string">&#x27;xm&#x27;</span>);</span><br><span class="line"></span><br><span class="line">class A&#123;&#125;</span><br><span class="line">var a = new A;</span><br><span class="line">console.log(a.__proto__ === A.prototype); <span class="comment">#==&gt;ture</span></span><br><span class="line">class B extends A&#123;&#125;</span><br><span class="line">console.log(B.__proto__.prototype === A.prototype);  <span class="comment">#==&gt; true</span></span><br></pre></td></tr></table></figure>
+<h2 id="class-ES7-装饰器"><a href="#class-ES7-装饰器" class="headerlink" title="class ES7 装饰器"></a>class ES7 装饰器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const oInput = document.getElementById(<span class="string">&#x27;inp&#x27;</span>);</span><br><span class="line">const oBtn = document.getElementById(<span class="string">&#x27;btn&#x27;</span>);</span><br><span class="line"></span><br><span class="line">class Search &#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span></span> () &#123;</span><br><span class="line">    this.keyValue = <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">  url = <span class="string">&#x27;urlA-&#x27;</span>;</span><br><span class="line">  <span class="function"><span class="title">getContent</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;向&#x27;</span> + this.url + <span class="string">&#x27;发送网络请求，数据:&#x27;</span> + this.keyValue);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> search = new Search();</span><br><span class="line"></span><br><span class="line">oInput.oninput = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  search.keyValue = this.value;</span><br><span class="line">&#125;</span><br><span class="line">oBtn.onclick = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">  search.getContent();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>计算机中组织数据的方式</p>
+<ul>
+<li>Map是字典，加强的对象</li>
+<li>Set</li>
+</ul>
+<h2 id="Map-与-object"><a href="#Map-与-object" class="headerlink" title="Map 与 object"></a>Map 与 object</h2><p>map若干键值对的集合<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># map初始化</span></span><br><span class="line"><span class="built_in">let</span> map = new Map([</span><br><span class="line">    [<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;ck&#x27;</span>], </span><br><span class="line">    [<span class="string">&#x27;age&#x27;</span>, 18], </span><br><span class="line">    [1, 2]</span><br><span class="line">])</span><br><span class="line"><span class="comment"># map创建</span></span><br><span class="line"><span class="built_in">let</span> map = new Map();</span><br><span class="line">map.set(<span class="string">&#x27;1&#x27;</span>, <span class="string">&quot;wxb&quot;</span>); <span class="comment">#存</span></span><br><span class="line">map.set(1, 1);</span><br><span class="line"><span class="comment"># map =&gt; &#123;&#x27;1&#x27; =&gt; &quot;wxb&quot;, 1 =&gt; 1&#125;</span></span><br><span class="line">map.get(1)  <span class="comment">#=&gt; 取 1</span></span><br><span class="line">map.get(<span class="string">&#x27;1&#x27;</span>) <span class="comment">#=&gt; wxb</span></span><br><span class="line">map.has(1)  <span class="comment"># =&gt; true 判断是否存在</span></span><br><span class="line">map.delete(1) <span class="comment">#删除key为1时</span></span><br><span class="line">map.clear()  <span class="comment">#全部删除，map为空了</span></span><br><span class="line"><span class="comment"># 还支持forEach方法</span></span><br><span class="line">map.forEach((value, key, map) =&gt; &#123;</span><br><span class="line">    console.log(value);</span><br><span class="line">    console.log(key);</span><br><span class="line">    console.log(map)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> obj = &#123;&#125;;</span><br><span class="line">obj[<span class="string">&#x27;1&#x27;</span>] = <span class="string">&quot;wxb&quot;</span>;</span><br><span class="line">obj[1] = 1</span><br><span class="line"><span class="comment"># obj =&gt; ｛1：1｝</span></span><br></pre></td></tr></table></figure>
+<p>Map对象会区分key值的字符串和数子，但当对象object的时候，”1”和1就会发生隐式类型转换</p>
+<h3 id="map对象改编的数组去重"><a href="#map对象改编的数组去重" class="headerlink" title="map对象改编的数组去重"></a>map对象改编的数组去重</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">let</span> arr = [1, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;1&#x27;</span>, 1, obj, obj, &#123;&#125;];</span><br><span class="line">Array.prototype.unique = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">    <span class="built_in">let</span> itemIndex = new Map();</span><br><span class="line">    <span class="built_in">let</span> resArr = [];</span><br><span class="line">    this.forEach(item =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(!itemIndex.has(item))&#123;</span><br><span class="line">            itemIndex.<span class="built_in">set</span>(item);</span><br><span class="line">            resArr.push(item)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">return</span> resArr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="手撕map"><a href="#手撕map" class="headerlink" title="手撕map"></a>手撕map</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> myMap(arr) &#123;</span><br><span class="line">    this.init()</span><br><span class="line">&#125;</span><br><span class="line">myMap.prototype.len = 8</span><br><span class="line">myMap.prototype.bucket = []</span><br><span class="line">myMap.prototype.init = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">let</span> i=0; i&lt;this.len; i++) &#123;</span><br><span class="line">        this.bucket[i] = &#123;next: null&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">myMap.prototype.makeHash = <span class="keyword">function</span> (key) &#123;</span><br><span class="line">        <span class="built_in">let</span> <span class="built_in">hash</span>= 0</span><br><span class="line">        <span class="keyword">if</span>((typeof key) == &#x27;string&#x27;) &#123; </span><br><span class="line">            #取后三位字符串处理</span><br><span class="line">        let len = (key.length &gt; <span class="number">3</span>) ? key.length : <span class="number">3</span></span><br><span class="line">            for(let i=len-<span class="number">3</span>; i&lt;len; i++) &#123;</span><br><span class="line">                hash += (key[i] !== undefined) ? key[i].charCodeAt() : <span class="number">0</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            hash = +key</span><br><span class="line">        &#125;</span><br><span class="line">        return hash</span><br><span class="line">&#125;</span><br><span class="line">myMap.prototype.set = function (key, value)&#123;</span><br><span class="line">    let hash = this.makeHash(key)</span><br><span class="line">    let list = this.bucket[hash % this.len]</span><br><span class="line">    let nextNode = list</span><br><span class="line">    while(nextNode.next) &#123;</span><br><span class="line">        if(nextNode.key === key) &#123;</span><br><span class="line">            nextNode.value = value</span><br><span class="line">            return</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            nextNode = nextNode.next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    nextNode.next = &#123;key, value, next: null&#125;</span><br><span class="line">&#125;</span><br><span class="line">myMap.prototype.get = function (key) &#123;</span><br><span class="line">    let hash = this.makeHash(key)</span><br><span class="line">    let list = this.bucket[hash % this.len]</span><br><span class="line">    let nextNode = list</span><br><span class="line">    while(nextNode.next) &#123;</span><br><span class="line">        if(nextNode.key === key) &#123;</span><br><span class="line">            return nextNode.value</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            nextNode = nextNode.next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return </span><br><span class="line">&#125;</span><br><span class="line">myMap.prototype.has = function (key) &#123;</span><br><span class="line">    let hash = this.makeHash(key)</span><br><span class="line">    let list = this.bucket[hash % this.len]</span><br><span class="line">    let nextNode = list</span><br><span class="line">    while(nextNode.next) &#123;</span><br><span class="line">        if(nextNode.key === key) &#123;</span><br><span class="line">            return true</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            nextNode = nextNode.next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return  false</span><br><span class="line">&#125;</span><br><span class="line">myMap.prototype.delete = function (key) &#123;</span><br><span class="line">    let hash = this.makeHash(key)</span><br><span class="line">    let list = this.bucket[hash % this.len]</span><br><span class="line">    let nextNode = list</span><br><span class="line">    while(nextNode.next) &#123;</span><br><span class="line">        if(nextNode.next.key === key) &#123;</span><br><span class="line">            nextNode.next = nextNode.next.next</span><br><span class="line">            return true</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            nextNode = nextNode.next</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return false</span><br><span class="line">&#125;</span><br><span class="line">myMap.prototype.clear = function () &#123;</span><br><span class="line">        this.init()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>有序列表，包含相互独立且不相等的值<br>数组去重超级方便<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> <span class="built_in">set</span> = new Set([1, 2, 3, 4 , 5, 5, 5, 5, <span class="string">&#x27;1&#x27;</span>])</span><br><span class="line"><span class="comment">#-&gt; set=[1, 2, 3, 4 ,5]</span></span><br><span class="line"><span class="comment">#默认去掉重复性</span></span><br><span class="line">set.add(6) <span class="comment">#添加新值，如果有就不变</span></span><br><span class="line">set.delete(6) <span class="comment">#删除</span></span><br><span class="line">set.forEach()</span><br><span class="line">set.clear() <span class="comment">#清空</span></span><br><span class="line">set.has(6) <span class="comment"># 是否存在</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Set用法"><a href="#Set用法" class="headerlink" title="Set用法"></a>Set用法</h3><h4 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h4><p>仅限单纯数组，包含对象的无法做到真正去重<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> o = &#123;</span><br><span class="line">  name: 1</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> arr = [1, 2, 3, 4, o, o, &#123;name: 123&#125;, &#123;name: 222&#125;, &#123;name: 222&#125;, 5, 6, 1, 2, 3]</span><br><span class="line"><span class="built_in">let</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">let</span> oS = new Set(arr)</span><br><span class="line">console.log([...oS])</span><br></pre></td></tr></table></figure></p>
+<h4 id="并集和交集、差集"><a href="#并集和交集、差集" class="headerlink" title="并集和交集、差集"></a>并集和交集、差集</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 并集</span></span><br><span class="line"><span class="built_in">let</span> arr1 = [1, 2, 3, 2, 3]</span><br><span class="line"><span class="built_in">let</span> arr2 = [3, 2, 4, 4, 5]</span><br><span class="line"><span class="built_in">let</span> oS = new Set([...arr1, ...arr2])</span><br><span class="line">console.log([...oS])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交集</span></span><br><span class="line"><span class="built_in">let</span> arr1 = [1, 2, 3, 2, 3]</span><br><span class="line"><span class="built_in">let</span> arr2 = [3, 2, 4, 4, 5]</span><br><span class="line"><span class="built_in">let</span> oS1 = new Set(arr1)</span><br><span class="line"><span class="built_in">let</span> oS2 = new Set(arr2)</span><br><span class="line"><span class="built_in">let</span> newArr = [...oS1]</span><br><span class="line">newArr = newArr.filter(ele =&gt; oS2.has(ele))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 差集</span></span><br><span class="line"><span class="built_in">let</span> arr1 = [1, 2, 3, 2, 3]</span><br><span class="line"><span class="built_in">let</span> arr2 = [3, 2, 4 , 4, 5]</span><br><span class="line"><span class="built_in">let</span> oS1 = new Set(arr1)</span><br><span class="line"><span class="built_in">let</span> oS2 = new Set(arr2)</span><br><span class="line"><span class="built_in">let</span> newArr = [...oS1]</span><br><span class="line">newArr = newArr.filter(ele =&gt; oS2.has(ele))</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> newArr1 = [...oS1].filter(ele =&gt; &#123;</span><br><span class="line">  <span class="built_in">return</span> !oS2.has(ele)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">let</span> newArr2 = [...oS2].filter(ele =&gt; &#123;</span><br><span class="line">  <span class="built_in">return</span> !oS1.has(ele)</span><br><span class="line">&#125;)</span><br><span class="line">console.log([...newArr1, ...newArr2])</span><br></pre></td></tr></table></figure>
+<h1 id="迭代器和生成器"><a href="#迭代器和生成器" class="headerlink" title="迭代器和生成器"></a>迭代器和生成器</h1><h2 id="迭代器（遍历器）Iterator"><a href="#迭代器（遍历器）Iterator" class="headerlink" title="迭代器（遍历器）Iterator"></a>迭代器（遍历器）Iterator</h2><p><code>Iterator</code>迭代器是一个对象，专门为可迭代对象设计的统一的接口，这个方法用来遍历数据<br><strong>特点</strong></p>
+<ul>
+<li>每个迭代器都有<code>next</code>方法，每次执行next，返回一个结果对象{value, done}</li>
+<li>value每次迭代的数据，done迭代是否结束Boolean</li>
+<li>每个迭代器有专用指针，开始时指向数据结构的第一个值，每次调用next方法，返回当前值，指针下移</li>
+<li>每个迭代器支持for…of循环</li>
+</ul>
+<h3 id="迭代器思路，创建一个可以迭代数组的迭代器"><a href="#迭代器思路，创建一个可以迭代数组的迭代器" class="headerlink" title="迭代器思路，创建一个可以迭代数组的迭代器"></a>迭代器思路，创建一个可以迭代数组的迭代器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> arr = [1, 2, 3]</span><br><span class="line"><span class="comment"># arr.iterator.next()  &#123;value: 1, done: false&#125;</span></span><br><span class="line"><span class="comment"># arr.iterator.next()  &#123;value: 2, done: false&#125;</span></span><br><span class="line"><span class="comment"># arr.iterator.next()  &#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="comment"># arr.iterator.next()  &#123;value: undefined, done: true&#125;</span></span><br><span class="line"><span class="comment"># 创建一个可以迭代数组的迭代器</span></span><br><span class="line"><span class="keyword">function</span> createIterator(arr = []) &#123;</span><br><span class="line">    <span class="built_in">let</span> nextIndex = 0</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">        <span class="function"><span class="title">next</span></span>() &#123;</span><br><span class="line">            <span class="keyword">if</span>(arr.length &lt; nextIndex + 1) &#123;</span><br><span class="line">                <span class="built_in">return</span> &#123;</span><br><span class="line">                    value: undefined,</span><br><span class="line">                    <span class="keyword">done</span>: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="built_in">return</span> &#123;</span><br><span class="line">                    value: arr[nextIndex ++],</span><br><span class="line">                    <span class="keyword">done</span>: <span class="literal">false</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> i = createIterator(arr)</span><br><span class="line">i.next()</span><br><span class="line">i.next()</span><br></pre></td></tr></table></figure>
+<h3 id="默认的Iterator接口"><a href="#默认的Iterator接口" class="headerlink" title="默认的Iterator接口"></a>默认的Iterator接口</h3><p>Array、Map、Set、String、arguments、NodeLists<br>所有的迭代器都有Symbol.iterator属性必须通过中括号形式访问[Symbol.iterator]，返回默认的迭代器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> arr = [1, 2, 3, 4]</span><br><span class="line"><span class="built_in">let</span> map = new Map([[<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;wxb&#x27;</span>], [<span class="string">&#x27;age&#x27;</span>, 18], [<span class="string">&#x27;hobbit&#x27;</span>, <span class="string">&#x27;boy&#x27;</span>]])</span><br><span class="line"><span class="built_in">let</span> <span class="built_in">set</span> = new Set([1, 2, 3, 4, 5])</span><br><span class="line"><span class="comment"># arrEntries.next() 迭代器对于数组返回的[index, value]</span></span><br><span class="line"><span class="built_in">let</span> arrEntries = arr.entries()</span><br><span class="line"><span class="comment"># mapEntries.next()  [key, value]</span></span><br><span class="line"><span class="built_in">let</span> mapEntries = map.entries()</span><br><span class="line"><span class="comment"># setEntries.next()  [value, value]</span></span><br><span class="line"><span class="built_in">let</span> setEntries = set.entries()</span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">let</span> [key, value] of mapEntries) &#123;</span><br><span class="line">    console.log(key, value)</span><br><span class="line"><span class="comment"># entries 可循环遍历每个索引和value</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> arrkeys = arr.keys()</span><br><span class="line"><span class="built_in">let</span> mapkeys = map.keys()</span><br><span class="line"><span class="built_in">let</span> setkeys = set.keys()</span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">let</span> key of mapkeys) &#123;</span><br><span class="line">    console.log(key)</span><br><span class="line"><span class="comment"># mapkeys循环遍历索引值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>数组中迭代器中的指针，每次指向下一个索引</li>
+<li>Map，Set会把临连接表转化一个单向链表，指针每次指向一个节点，指针下移</li>
+<li>对象不可迭代</li>
+<li>字符串可迭代，for…of支持双字符迭代</li>
+</ul>
+<h2 id="生成器-Generator"><a href="#生成器-Generator" class="headerlink" title="生成器 Generator"></a>生成器 Generator</h2><p>用于生成迭代器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> *createIterator(arr=[]) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">let</span> i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">        yield arr[i]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var i = createIterator([1, 2, 3, 4, 5, 5])</span><br></pre></td></tr></table></figure></p>
+<h3 id="实例yield的实战用法"><a href="#实例yield的实战用法" class="headerlink" title="实例yield的实战用法"></a>实例yield的实战用法</h3><p>异步函数同步使用，完成一件事物需要open -&gt; load -&gt; close,按步骤完成<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">onpen</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&#x27;onpening&#x27;</span>)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;onpen Refrigrator&#x27;)</span><br><span class="line">        process.next()</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">function load() &#123;</span><br><span class="line">    console.log(&#x27;loading&#x27;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;load over&#x27;)</span><br><span class="line">        process.next()</span><br><span class="line">    &#125;, <span class="number">3000</span>)</span><br><span class="line">&#125;</span><br><span class="line">function close() &#123;</span><br><span class="line">    console.log(&#x27;closeing&#x27;)</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">        console.log(&#x27;close Refrigrator&#x27;)</span><br><span class="line">        process.next()</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;</span><br><span class="line">function *createIterator() &#123;</span><br><span class="line">    yield onpen()</span><br><span class="line">    yield load()</span><br><span class="line">    yield close()</span><br><span class="line">&#125;</span><br><span class="line">var process = createIterator()</span><br></pre></td></tr></table></figure></p>
+<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><h3 id="异步迭代生成器"><a href="#异步迭代生成器" class="headerlink" title="异步迭代生成器"></a>异步迭代生成器</h3><p>背景：ajax异步回调问题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> foo(x, y) &#123;</span><br><span class="line">    ajax(</span><br><span class="line">        <span class="string">&quot;http://some.url.1/?x=&quot;</span> + x + <span class="string">&quot;&amp;y=&quot;</span> + y,</span><br><span class="line">        <span class="keyword">function</span>(err, data) &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                // 向*main()抛出一个错误</span><br><span class="line">                it.throw(err);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                // 用收到的data回复 *main()</span><br><span class="line">                it.next(data)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> *<span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        var text = yield foo(11, 31)</span><br><span class="line">        console.log(text)</span><br><span class="line">    &#125;</span><br><span class="line">    catch (err) &#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br><span class="line">var it = main()</span><br><span class="line">it.next();</span><br></pre></td></tr></table></figure><br><strong>原理；</strong>这里并不是在消息传递的意义上使用的yield，而只是将其用于流程控制实现暂定/阻塞。实际上，它还是会消息传递，但只是生成器恢复运行之后的单向消息船体<br>看一下foo(…)。如果Ajax请求成功，我们调用：<br>it.next(data)<br>这会响应数据恢复生成器，意味着我们暂定的yield表达式直接接收到了这个值，然后随着生成器代码继续运行，这个值被赋值给局部变量text</p>
+<h3 id="生成器-Promise"><a href="#生成器-Promise" class="headerlink" title="生成器 + Promise"></a>生成器 + Promise</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> foo (x, y) &#123;</span><br><span class="line">    <span class="built_in">return</span> request(</span><br><span class="line">        <span class="string">&quot;http: //some.url.1/?x=&quot;</span> + x +<span class="string">&quot;&amp;y=&quot;</span> + y</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> *<span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        <span class="built_in">let</span> text = yield foo(11, 31)</span><br><span class="line">        console.log(text)</span><br><span class="line">    &#125;</span><br><span class="line">    catch(err) &#123;</span><br><span class="line">        console.error(err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> it = main()</span><br><span class="line"><span class="built_in">let</span> p = it.next().value</span><br><span class="line">p.then(<span class="keyword">function</span>(text) &#123;</span><br><span class="line">    it.next(text)</span><br><span class="line">&#125;, <span class="keyword">function</span> (err) &#123;</span><br><span class="line">    it.throw(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="run的工具方法"><a href="#run的工具方法" class="headerlink" title="run的工具方法"></a>run的工具方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> run (gen) &#123;</span><br><span class="line">    <span class="built_in">let</span> args = [].slice.call(arguments, 1), it</span><br><span class="line">    it = gen.apply(this, args)</span><br><span class="line">    <span class="built_in">return</span> Promise.resolve().<span class="keyword">then</span>(<span class="keyword">function</span> handleNext(value) &#123;</span><br><span class="line">        <span class="built_in">let</span> next = it.next(value)</span><br><span class="line">        <span class="built_in">return</span> (<span class="keyword">function</span> handleResult(next) &#123;</span><br><span class="line">            <span class="keyword">if</span>(next.done) &#123;</span><br><span class="line">                <span class="built_in">return</span> next.value</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="built_in">return</span> Promise.resolve(next.value).<span class="keyword">then</span>(handleNext, <span class="keyword">function</span> handleErr(err) &#123;</span><br><span class="line">                    <span class="built_in">return</span> Promise.resolve(it.throw(err)).<span class="keyword">then</span>(handleResult)</span><br><span class="line">                &#125;)(next) </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="简单的生成器案例，可以完善懒加载"><a href="#简单的生成器案例，可以完善懒加载" class="headerlink" title="简单的生成器案例，可以完善懒加载"></a>简单的生成器案例，可以完善懒加载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> *<span class="function"><span class="title">foo</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">&quot;*foo() staring&quot;</span>)</span><br><span class="line">    yield 3</span><br><span class="line">    yield 4</span><br><span class="line">    console.log(<span class="string">&quot;*foo() finished&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> *<span class="function"><span class="title">bar</span></span> () &#123;</span><br><span class="line">    yield 1</span><br><span class="line">    yield 2</span><br><span class="line">    yield *foo()</span><br><span class="line">    yield 5</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> it = bar()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/05/01/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%8A%EF%BC%89/" rel="next" title="你不知道的ES6之上篇">
+                <i class="fa fa-chevron-left"></i> 你不知道的ES6之上篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/05/04/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%8B%EF%BC%89/" rel="prev" title="你不知道的ES6之下篇">
+                你不知道的ES6之下篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ES5-%E9%A2%84%E7%83%AD"><span class="nav-number">1.</span> <span class="nav-text">ES5 预热</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">1.1.</span> <span class="nav-text">继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E5%8E%9F%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">继承原型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E7%BB%A7%E6%89%BF%E5%8E%9F%E5%9E%8B%E5%BE%88%E5%A4%9A%E7%A7%8D%EF%BC%8C%E6%9C%80%E4%BD%B3%E7%9A%84%E4%B8%BA%E5%9C%A3%E6%9D%AF%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">（1）继承原型很多种，最佳的为圣杯模式的继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89ES6-Object-setPrototypeOf-Target-Origin"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">（2）ES6 Object.setPrototypeOf(Target, Origin)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%80%9A%E8%BF%87Object-create%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E5%BC%8F%E7%BB%A7%E6%89%BF"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">(3) 通过Object.create创建对象的方式继承</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.2.</span> <span class="nav-text">继承私有属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#class%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">class类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#class%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">class基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E5%AE%9A%E4%B9%89%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.1.</span> <span class="nav-text">传统定义构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#es6-class%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.2.</span> <span class="nav-text">es6 class的构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class-%E5%8E%9F%E5%9E%8B%E6%96%B9%E6%B3%95%E5%92%8C%E7%A7%81%E6%9C%89%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.</span> <span class="nav-text">class 原型方法和私有方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class%E7%BB%A7%E6%89%BF"><span class="nav-number">2.2.</span> <span class="nav-text">class继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exteds-%E7%BB%A7%E6%89%BF%E7%88%B6%E7%BA%A7%E5%B1%9E%E6%80%A7%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">exteds 继承父级属性方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-ES7-%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">class ES7 装饰器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-%E4%B8%8E-object"><span class="nav-number">3.1.</span> <span class="nav-text">Map 与 object</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#map%E5%AF%B9%E8%B1%A1%E6%94%B9%E7%BC%96%E7%9A%84%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="nav-number">3.1.1.</span> <span class="nav-text">map对象改编的数组去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E6%92%95map"><span class="nav-number">3.1.2.</span> <span class="nav-text">手撕map</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set"><span class="nav-number">3.2.</span> <span class="nav-text">Set</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set%E7%94%A8%E6%B3%95"><span class="nav-number">3.2.1.</span> <span class="nav-text">Set用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">数组去重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E9%9B%86%E5%92%8C%E4%BA%A4%E9%9B%86%E3%80%81%E5%B7%AE%E9%9B%86"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">并集和交集、差集</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">迭代器和生成器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%EF%BC%88%E9%81%8D%E5%8E%86%E5%99%A8%EF%BC%89Iterator"><span class="nav-number">4.1.</span> <span class="nav-text">迭代器（遍历器）Iterator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%80%9D%E8%B7%AF%EF%BC%8C%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BB%A5%E8%BF%AD%E4%BB%A3%E6%95%B0%E7%BB%84%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">4.1.1.</span> <span class="nav-text">迭代器思路，创建一个可以迭代数组的迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%9A%84Iterator%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.1.2.</span> <span class="nav-text">默认的Iterator接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Generator"><span class="nav-number">4.2.</span> <span class="nav-text">生成器 Generator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8Byield%E7%9A%84%E5%AE%9E%E6%88%98%E7%94%A8%E6%B3%95"><span class="nav-number">4.2.1.</span> <span class="nav-text">实例yield的实战用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98"><span class="nav-number">4.3.</span> <span class="nav-text">实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E8%BF%AD%E4%BB%A3%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">4.3.1.</span> <span class="nav-text">异步迭代生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8-Promise"><span class="nav-number">4.3.2.</span> <span class="nav-text">生成器 + Promise</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#run%E7%9A%84%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95"><span class="nav-number">4.4.</span> <span class="nav-text">run的工具方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E7%94%9F%E6%88%90%E5%99%A8%E6%A1%88%E4%BE%8B%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%AE%8C%E5%96%84%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-number">4.5.</span> <span class="nav-text">简单的生成器案例，可以完善懒加载</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/05/02/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84es6/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84ES6%EF%BC%88%E4%B8%AD%EF%BC%89/';
+          this.page.identifier = '2018/05/02/你不知道的es6/你不知道的ES6（中）/';
+          this.page.title = '你不知道的ES6之中篇';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

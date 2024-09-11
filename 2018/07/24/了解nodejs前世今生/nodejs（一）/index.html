@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、nodejs基本操作1、通过官网安装包2、通过nvm安装nvm GitHub下载地址安装过程有事是非常坎坷的，大神nodejs和nvm拍坑安装流程 Nvm的命令12345nvm list available # nvm install 6.14.2  #6.14.2版本号，安装指定版本nvm use 6.14.2  #切换6点版本号nvm list  #查看本机安装点所有node版本号nvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buffer模块（一）">
+<meta property="og:url" content="http://yoursite.com/2018/07/24/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/nodejs%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="一、nodejs基本操作1、通过官网安装包2、通过nvm安装nvm GitHub下载地址安装过程有事是非常坎坷的，大神nodejs和nvm拍坑安装流程 Nvm的命令12345nvm list available # nvm install 6.14.2  #6.14.2版本号，安装指定版本nvm use 6.14.2  #切换6点版本号nvm list  #查看本机安装点所有node版本号nvm">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/nodeFlag.png">
+<meta property="article:published_time" content="2018-07-24T06:51:14.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.740Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="node">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/nodeFlag.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/24/了解nodejs前世今生/nodejs（一）/"/>
+
+
+
+
+
+  <title>Buffer模块（一） | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/07/24/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/nodejs%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Buffer模块（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-24T14:51:14+08:00">
+                2018-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">了解nodejs前世今生</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/07/24/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/nodejs%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/24/了解nodejs前世今生/nodejs（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、nodejs基本操作"><a href="#一、nodejs基本操作" class="headerlink" title="一、nodejs基本操作"></a>一、nodejs基本操作</h1><h2 id="1、通过官网安装包"><a href="#1、通过官网安装包" class="headerlink" title="1、通过官网安装包"></a>1、通过官网安装包</h2><h2 id="2、通过nvm安装"><a href="#2、通过nvm安装" class="headerlink" title="2、通过nvm安装"></a>2、通过nvm安装</h2><p><a href="https://github.com/coreybutler/nvm-windows/releases">nvm GitHub下载地址</a><br>安装过程有事是非常坎坷的，<a href="https://www.cnblogs.com/qiu-freedom/p/8871793.html">大神nodejs和nvm拍坑安装流程</a></p>
+<h3 id="Nvm的命令"><a href="#Nvm的命令" class="headerlink" title="Nvm的命令"></a>Nvm的命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nvm list available <span class="comment"># </span></span><br><span class="line">nvm install 6.14.2  <span class="comment">#6.14.2版本号，安装指定版本</span></span><br><span class="line">nvm use 6.14.2  <span class="comment">#切换6点版本号</span></span><br><span class="line">nvm list  <span class="comment">#查看本机安装点所有node版本号</span></span><br><span class="line">nvm uninstall 6.14.2  <span class="comment">#删除6点的版本号</span></span><br></pre></td></tr></table></figure>
+<h2 id="3、模块"><a href="#3、模块" class="headerlink" title="3、模块"></a>3、模块</h2><p>AMD、CMD、CommonJS</p>
+<h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><ul>
+<li>一个文件就是一个模块</li>
+<li>每个模块内定义的变量、函数、对象，作用域都属于这个模块本身，其他模块无法访问</li>
+<li>模块之间互相引用需要通过require()</li>
+<li>exports或者module.exports可以把对象暴露出来</li>
+</ul>
+<h4 id="exports和require的用法"><a href="#exports和require的用法" class="headerlink" title="exports和require的用法"></a>exports和require的用法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模块一文件 module_01.js文件下</span></span><br><span class="line"><span class="keyword">function</span> add(a, b)&#123;</span><br><span class="line">    <span class="built_in">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line">var a = <span class="string">&#x27;1232132131&#x27;</span></span><br><span class="line">var obj = new Object();</span><br><span class="line">obj.name = <span class="string">&#x27;ck&#x27;</span>;</span><br><span class="line">obj.age = <span class="string">&#x27;12&#x27;</span>;</span><br><span class="line">exports.add = add;</span><br><span class="line">exports.a = a;</span><br><span class="line">exports.obj = obj</span><br><span class="line"><span class="comment"># 模块二文件 module_02.js文件下</span></span><br><span class="line">var res = require(<span class="string">&#x27;./module_01&#x27;</span>)</span><br><span class="line">console.log(res.add(2, 2))</span><br><span class="line">console.log(res.a)</span><br><span class="line">console.log(res.obj)</span><br></pre></td></tr></table></figure>
+<h4 id="module-exports和require的用法"><a href="#module-exports和require的用法" class="headerlink" title="module.exports和require的用法"></a>module.exports和require的用法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模块一文件 module_01.js文件下</span></span><br><span class="line">var a = <span class="string">&#x27;sdjfkaj&#x27;</span></span><br><span class="line">module.exports = a;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模块二文件 module_02.js文件下</span></span><br><span class="line">var res = require(<span class="string">&#x27;./module_01&#x27;</span>)</span><br><span class="line">console.log(res)</span><br></pre></td></tr></table></figure>
+<h1 id="二、node常用API讲解（一）缓存和文件模块"><a href="#二、node常用API讲解（一）缓存和文件模块" class="headerlink" title="二、node常用API讲解（一）缓存和文件模块"></a>二、node常用API讲解（一）缓存和文件模块</h1><h2 id="1、Buffer简介"><a href="#1、Buffer简介" class="headerlink" title="1、Buffer简介"></a>1、Buffer简介</h2><p>JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。可以让 Node.js 处理二进制数据，每当需要在 Node.js 中处理I/O操作中移动的数据时，就有可能使用 Buffer库。原始数据存储在 Buffer 类的实例中。一个 Buffer 类似于一个整数数组，但它对应于 V8 堆内存之外的一块原始内存。</p>
+<h2 id="2、Buffer-与字符编码"><a href="#2、Buffer-与字符编码" class="headerlink" title="2、Buffer 与字符编码"></a>2、Buffer 与字符编码</h2><p>Buffer 实例一般用于表示编码字符的序列，比如 UTF-8 、 UCS2 、 Base64 、或十六进制编码的数据。 通过使用显式的字符编码，就可以在 Buffer 实例与普通的 JavaScript 字符串之间进行相互转换。unicode码 4字节 1bit 位 bye字节在v6.0之前创建Buffer对象直接使用new Buffer()构造函数来创建对象实例，但是Buffer对内存的权限操作相比很大，可以直接捕获一些敏感信息，所以在v6.0以后，官方文档里面建议使用 Buffer.from() 接口去创建Buffer对象。</p>
+<h3 id="Node-js-目前支持的字符编码包括"><a href="#Node-js-目前支持的字符编码包括" class="headerlink" title="Node.js 目前支持的字符编码包括"></a>Node.js 目前支持的字符编码包括</h3><ul>
+<li>ascii - 仅支持 7 位 ASCII 数据。如果设置去掉高位的话，这种编码是非常快的。</li>
+<li>utf8 - 多字节编码的 Unicode 字符。许多网页和其他文档格式都使用 UTF-8 。</li>
+<li>utf16le - 2 或 4 个字节，小字节序编码的 Unicode 字符。</li>
+<li>ucs2 - utf16le 的别名。</li>
+<li>base64 - Base64 编码。</li>
+<li>latin1 - 一种把 Buffer 编码成一字节编码的字符串的方式。</li>
+<li>binary - latin1 的别名。</li>
+<li>hex - 将每个字节编码为两个十六进制字符。</li>
+</ul>
+<p>Node.js自带的toString()方法不支持gbk，因此中文转换的时候需要加载第三方库，推荐下面这个编码转换库，iconvliticonv的纯js实现，支持的编码包括node.js原生编码：utf8, ucs2, ascii, binary,base64；同时支持广泛使用的单字节编码：Windows 125x family, ISO­8859 family,IBM/DOS codepages, Macintosh,family, KOI8 family, latin1, us­ascii；多字节编码：gbk, gb2313, Big5, cp950</p>
+<h3 id="安装iconvlit"><a href="#安装iconvlit" class="headerlink" title="安装iconvlit"></a>安装iconvlit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install iconv-lite</span><br></pre></td></tr></table></figure>
+<h1 id="三、Buffer常用操作"><a href="#三、Buffer常用操作" class="headerlink" title="三、Buffer常用操作"></a>三、Buffer常用操作</h1><h2 id="创建BUffer类"><a href="#创建BUffer类" class="headerlink" title="创建BUffer类"></a>创建BUffer类</h2><ul>
+<li>let buffer = Buffer.alloc(10)  返回一个指定大小的 Buffer 实例，如果没有设置 fill，则默认填满 0</li>
+<li>let buffer = Buffer.from(“大家好”)  返回一个被 array 的值初始化的新的 Buffer 实例（传入的array 的元素只能是数字，不然就会自动被 0 覆盖）</li>
+<li>let buffer = Buffer.allocUnsafe(10) 返回一个指定大小的 Buffer 实例，但是它不会被初始化，所以它可能包含敏感的数据</li>
+</ul>
+<h3 id="实例简单运用"><a href="#实例简单运用" class="headerlink" title="实例简单运用"></a>实例简单运用</h3><h4 id="iconvlit插件的方法利用"><a href="#iconvlit插件的方法利用" class="headerlink" title="iconvlit插件的方法利用"></a>iconvlit插件的方法利用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> http = require(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="built_in">let</span> iconv = require(<span class="string">&#x27;iconv-lite&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> str = <span class="string">&quot;大家好&quot;</span></span><br><span class="line"><span class="built_in">let</span> strGgb = iconv.encode(str,<span class="string">&quot;gbk&quot;</span>) <span class="comment"># 将str编译成gbk格式</span></span><br><span class="line">console.log(iconv.decode(strGgb,<span class="string">&#x27;gbk&#x27;</span>).toString); <span class="comment"># 将gbk格式解码成utf8码</span></span><br><span class="line">console.log(iconv.encodingExists(<span class="string">&quot;utf8&quot;</span>)) <span class="comment"># 判断插件iconv检查是否支持编码</span></span><br></pre></td></tr></table></figure>
+<h4 id="类方法：Buffer-alloc-size-fill-encoding"><a href="#类方法：Buffer-alloc-size-fill-encoding" class="headerlink" title="类方法：Buffer.alloc(size[, fill[, encoding]])"></a>类方法：Buffer.alloc(size[, fill[, encoding]])</h4><p><strong>const buf = Buffer.alloc(11, ‘hello world’, ‘utf-8’)</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> http = require(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="built_in">let</span> iconv = require(<span class="string">&#x27;iconv-lite&#x27;</span>)</span><br><span class="line"><span class="comment">#  let buffer = new Buffer(18)  已废弃</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1个二进制 = 1bit</span></span><br><span class="line"><span class="comment"># 8个二进制数 = 1bytes(1b)</span></span><br><span class="line"><span class="comment"># b -&gt; kb -&gt; Gb-&gt; Tb -&gt; Eb -&gt; Pb -&gt; Zb</span></span><br><span class="line"><span class="comment"># buffer的定义赋值</span></span><br><span class="line"><span class="built_in">let</span> buffer = Buffer.alloc(10)  <span class="comment"># buffer初始化</span></span><br><span class="line">buffer[0] = 1;  <span class="comment">#十进制</span></span><br><span class="line">buffer[1] = 15;</span><br><span class="line">buffer[2] = 255;</span><br><span class="line">buffer[3] = 0xaa <span class="comment">#十六进制</span></span><br><span class="line">buffer[4] = 0x41 <span class="comment">#字符串&quot;A&quot;</span></span><br><span class="line">console.log(buffer) <span class="comment"># =&gt; &lt;Buffer 01 0f ff aa A 00 00 00 00 00&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># buffer编码输出类型，默认都输十进制</span></span><br><span class="line"><span class="built_in">let</span> buffer = Buffer.alloc(10)</span><br><span class="line">buffer[0] = 0xa</span><br><span class="line">console.log(buffer) <span class="comment"># =&gt; &lt;Buffer 0a 00 00 00 00 00 00 00 00 00&gt; 十六进制存储</span></span><br><span class="line">console.log(buffer[0].toString())    <span class="comment">#=&gt; 10 二进制输出</span></span><br><span class="line">console.log(buffer[0].toString(16))  <span class="comment"># =&gt; a 十六进制输出</span></span><br><span class="line">```                                                                                         </span><br><span class="line"></span><br><span class="line"><span class="comment">#### let buffer = Buffer.from(&quot;大家好&quot;)    </span></span><br><span class="line">```bash</span><br><span class="line"><span class="comment"># 这里编码三个中文字符变成9个字符这个是utf8的正常3字节转换中文，一般看到的两字节转换中文字符的是gbk国标编码格式</span></span><br><span class="line"><span class="built_in">let</span> buffer = Buffer.from(<span class="string">&quot;大家好&quot;</span>)</span><br><span class="line">console.log(buffer); <span class="comment"># =&gt; &lt;Buffer e5 a4 a7 e5 ae b6 e5 a5 bd&gt;</span></span><br><span class="line">console.log(buffer.toString()) <span class="comment"># =&gt; 大家好 =&gt; toString是把二进制转换成urf8</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="let-buffer-Buffer-allocUnsafe-10"><a href="#let-buffer-Buffer-allocUnsafe-10" class="headerlink" title="let buffer = Buffer.allocUnsafe(10)"></a>let buffer = Buffer.allocUnsafe(10)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> buffer = Buffer.allocUnsafe(10)  </span><br><span class="line"><span class="comment"># 创建buffer但是并没有初始化，内部有值占用</span></span><br><span class="line">console.log(buffer)   <span class="comment"># &lt;Buffer 88 69 8a 8f 65 00 00 00 e8 69&gt;</span></span><br><span class="line">buffer.fill(0)   <span class="comment"># 相当于初始化，用零填充</span></span><br><span class="line">console.log(buffer)   <span class="comment"># &lt;Buffer 00 00 00 00 00 00 00 00 00 00&gt;</span></span><br><span class="line">```     </span><br><span class="line">                                                                                                             </span><br><span class="line"><span class="comment">## 写入Buffer</span></span><br><span class="line"><span class="comment">### 语法</span></span><br><span class="line">```bash</span><br><span class="line">buf.write(string[, offset[, length]][, encoding])</span><br></pre></td></tr></table></figure>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
+<li>string - 写入缓冲区的字符串。</li>
+<li>offset - 缓冲区开始写入的索引值，默认为 0 。</li>
+<li>length - 写入的字节数，默认为 buffer.length</li>
+<li>encoding - 使用的编码。默认为 ‘utf8’ 。</li>
+</ul>
+<p><strong>根据 encoding 的字符编码写入 string 到 buf 中的 offset 位置。 length 参数是写入的字节数。如果 buf 没有足够的空间保存整个字符串，则只会写入 string 的一部分。 只部分解码的字符不会被写入</strong>与c语言写入类似，创造多少空间就使用多少见，溢出自动截掉</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> buf = Buffer.alloc(10);    <span class="comment">#创建十个字节空间</span></span><br><span class="line"><span class="built_in">let</span> len = buf.write(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">console.log(<span class="string">&quot;写入的字节数&quot;</span> + len); <span class="comment"># =&gt; 10   len输出的是buf的字节数</span></span><br><span class="line"></span><br><span class="line">buf.write(<span class="string">&quot;hello world&quot;</span>, 2);  <span class="comment">#第二个参数指定从第几个索引开始写入，默认0</span></span><br><span class="line">console.log(buf.toString());  <span class="comment">#=&gt; hello wo  从索引第二位开始</span></span><br><span class="line"></span><br><span class="line">buf.write(<span class="string">&quot;hello world&quot;</span>, 2, 4) <span class="comment"># 第三个参数指定写入几个字节</span></span><br><span class="line">console.log(buf.toString());  <span class="comment">#=&gt; hello  只写入四个字节</span></span><br></pre></td></tr></table></figure>
+<h2 id="读取buffer"><a href="#读取buffer" class="headerlink" title="读取buffer"></a>读取buffer</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.toString([encoding[, start[, end]]])</span><br></pre></td></tr></table></figure>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><ul>
+<li>encoding - 使用的编码。默认为 ‘utf8’ 。</li>
+<li>start - 指定开始读取的索引位置，默认为 0。</li>
+<li>end - 结束位置，默认为缓冲区的末尾。</li>
+</ul>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buf = Buffer.alloc(26);</span><br><span class="line"><span class="keyword">for</span> (var i = 0 ; i &lt; 26 ; i++) &#123;</span><br><span class="line">buf[i] = i + 97;</span><br><span class="line">&#125;</span><br><span class="line">console.log(buf.toString());             <span class="comment"># 输出: abcdefghijklmnopqrstuvwxyz</span></span><br><span class="line">console.log(buf.toString(<span class="string">&#x27;ascii&#x27;</span>));      <span class="comment"># 输出: abcdefghijklmnopqrstuvwxyz</span></span><br><span class="line">console.log(buf.toString(<span class="string">&#x27;ascii&#x27;</span>,0,5));  <span class="comment"># 输出: abcde</span></span><br><span class="line">console.log(buf.toString(<span class="string">&#x27;utf8&#x27;</span>,0,5));   <span class="comment"># 输出: abcde </span></span><br></pre></td></tr></table></figure>
+<p>ascii码和utf8是互相兼容的 </p>
+<h2 id="将-Buffer-转换为-JSON-对象"><a href="#将-Buffer-转换为-JSON-对象" class="headerlink" title="将 Buffer 转换为 JSON 对象"></a>将 Buffer 转换为 JSON 对象</h2><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><p>将 Node Buffer 转换为 JSON 对象的函数语法格式如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.toJSON()</span><br></pre></td></tr></table></figure></p>
+<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h3><p>当字符串化一个 Buffer 实例时，JSON.stringify() 会隐式地调用该 toJSON()。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const jsonBuff = Buffer.from([1,2,3,4])</span><br><span class="line">const buf = Buffer.from([1,2,3,4]);</span><br><span class="line">const json = JSON.stringify(buf);  <span class="comment">#将json对象转化成json字符串</span></span><br><span class="line">console.log(jsonBuff.toJSON());</span><br><span class="line"><span class="comment"># &#123; type: &#x27;Buffer&#x27;, data: [ 1, 2, 3, 4 ] &#125;   输出的是json对象格式</span></span><br><span class="line">console.log(json);</span><br><span class="line"><span class="comment"># 输出: &#123;&quot;type&quot;:&quot;Buffer&quot;,&quot;data&quot;:[1,2,3,4,5]&#125;  输出的字符串格式</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="缓冲区合并"><a href="#缓冲区合并" class="headerlink" title="缓冲区合并"></a>缓冲区合并</h2><h3 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Buffer.concat(list[, totalLength])</span><br></pre></td></tr></table></figure>
+<h3 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h3><ul>
+<li>list - 用于合并的 Buffer 对象数组列表。</li>
+<li>totalLength - 指定合并后Buffer对象的总长度。</li>
+</ul>
+<h3 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var buffer1 = Buffer.from(<span class="string">&#x27;渡一教育&#x27;</span>);</span><br><span class="line">var buffer2 = Buffer.from(<span class="string">&#x27;www.duyi.com&#x27;</span>);</span><br><span class="line">var buffer3 = Buffer.concat([buffer1,buffer2]);</span><br><span class="line">var buffer4 = Buffer.concat([buffer1,buffer2], 10);</span><br><span class="line"><span class="comment"># =&gt; 渡一教  一个汉字占三个字节，所以输出三个字</span></span><br><span class="line">console.log(<span class="string">&quot;buffer3 内容: &quot;</span> + buffer3.toString())</span><br><span class="line"><span class="comment"># =&gt;  buffer3 内容: 渡一教育www.duyi.com</span></span><br></pre></td></tr></table></figure>
+<h2 id="缓冲区比较"><a href="#缓冲区比较" class="headerlink" title="缓冲区比较"></a>缓冲区比较</h2><h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.compare(targetBuffer,[targetStart,targetEnd,sourceStart,sourceEnd]);</span><br></pre></td></tr></table></figure>
+<h3 id="参数-3"><a href="#参数-3" class="headerlink" title="参数"></a>参数</h3><ul>
+<li>otherBuffer - 与 buf 对象比较的另外一个 Buffer 对象。</li>
+<li>targetStart - 数字, 可选 默认0</li>
+<li>targetEnd- 数字, 可选 默认: buffer.length</li>
+<li>sourceStart - 数字, 可选 默认0</li>
+<li>sourceEnd - 数字 默认: buffer.length</li>
+</ul>
+<h3 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 比较a和A的字符编码大小</span></span><br><span class="line">var buffer1 = Buffer.from(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">var buffer2 = Buffer.from(<span class="string">&#x27;A&#x27;</span>);</span><br><span class="line">var result = buffer1.compare(buffer2);</span><br><span class="line"><span class="comment"># 以buffer1为基准，buffer1大 -&gt; 1 ,反之自推</span></span><br><span class="line"><span class="comment"># 1 -&gt; 大于   0 -&gt; 等于  -1 -&gt; 小于</span></span><br><span class="line">console.log(result)  <span class="comment"># =&gt; 1 </span></span><br><span class="line">console.log(buffer1+<span class="string">&#x27;&#x27;</span>)  <span class="comment"># =&gt; buffer1.toString  =&gt; a</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数问题 </span></span><br><span class="line">var result = buffer1.compare(buffer2, 0, 1, 0, 1);</span><br><span class="line"><span class="comment"># 前两个控制buffer2的首位索引，后两个控制buffer1索引</span></span><br></pre></td></tr></table></figure>
+<h2 id="拷贝缓冲区，深拷贝过程"><a href="#拷贝缓冲区，深拷贝过程" class="headerlink" title="拷贝缓冲区，深拷贝过程"></a>拷贝缓冲区，深拷贝过程</h2><h3 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.copy(targetBuffer[, targetStart[, sourceStart[, sourceEnd]]])</span><br></pre></td></tr></table></figure>
+<h3 id="参数-4"><a href="#参数-4" class="headerlink" title="参数"></a>参数</h3><ul>
+<li>targetBuffer - 要拷贝的 Buffer 对象。</li>
+<li>targetStart - 数字, 可选, 默认: 0</li>
+<li>sourceStart - 数字, 可选, 默认: 0</li>
+<li>sourceEnd - 数字, 可选, 默认: buffer.length</li>
+</ul>
+<h3 id="实例-5"><a href="#实例-5" class="headerlink" title="实例"></a>实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var buf1 = Buffer.from(<span class="string">&#x27;abcdefghijkl&#x27;</span>);</span><br><span class="line">var buf2 = Buffer.from(<span class="string">&#x27;zzzzzz&#x27;</span>);</span><br><span class="line"><span class="comment"># 将 buf2 插入到 buf1 指定位置上</span></span><br><span class="line">buf2.copy(buf1, 2);</span><br><span class="line"><span class="comment"># abzzzzzzijkl  将buf2从索引第二位开始覆盖直到结束</span></span><br></pre></td></tr></table></figure>
+<h2 id="缓冲区裁剪-指向的同一块地址，原地址改变之后会连带反应"><a href="#缓冲区裁剪-指向的同一块地址，原地址改变之后会连带反应" class="headerlink" title="缓冲区裁剪 指向的同一块地址，原地址改变之后会连带反应"></a>缓冲区裁剪 指向的同一块地址，原地址改变之后会连带反应</h2><h3 id="语法-5"><a href="#语法-5" class="headerlink" title="语法"></a>语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.slice([start[, end]])</span><br></pre></td></tr></table></figure>
+<h3 id="参数-5"><a href="#参数-5" class="headerlink" title="参数"></a>参数</h3><ul>
+<li>start - 数字, 可选, 默认: 0</li>
+<li>end - 数字, 可选, 默认: buffer.length</li>
+</ul>
+<h3 id="实例-6"><a href="#实例-6" class="headerlink" title="实例"></a>实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var buffer = Buffer.from(<span class="string">&quot;absdfjs&quot;</span>)</span><br><span class="line">var bufResult = buffer.slice(0, 3)</span><br><span class="line">console.log(bufResult.toString()) <span class="comment">#=&gt; abs</span></span><br><span class="line">buffer[0] = 41 <span class="comment"># =&gt; bufResult也会发生改变</span></span><br></pre></td></tr></table></figure>
+<h2 id="缓冲区长度"><a href="#缓冲区长度" class="headerlink" title="缓冲区长度"></a>缓冲区长度</h2><h3 id="语法-6"><a href="#语法-6" class="headerlink" title="语法"></a>语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.length;</span><br></pre></td></tr></table></figure>
+<h3 id="实例-7"><a href="#实例-7" class="headerlink" title="实例"></a>实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> str = <span class="string">&quot;h汉&quot;</span></span><br><span class="line"><span class="built_in">let</span> buff = Buffer.from(str)</span><br><span class="line">console.log(str.length)   <span class="comment">#字符串长度 =&gt; 2</span></span><br><span class="line">console.log(buff.length)  <span class="comment"># 字节长度 =&gt; 4</span></span><br></pre></td></tr></table></figure>
+<h1 id="四、文件操作API"><a href="#四、文件操作API" class="headerlink" title="四、文件操作API"></a>四、文件操作API</h1><h2 id="异步和同步"><a href="#异步和同步" class="headerlink" title="异步和同步"></a>异步和同步</h2><p>Node.js文件系统（fs模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的fs.readFile（）和同步的fs.readFileSync（）。同步方法多有返回值<br>异步的方法函数最后一个参数为回调函数，回调函数的第一个参数包含啦错误信息（error）<br><strong>建议大家使用异步方法，比起同步，异步方法性能更高，速度更快，而且没有阻塞</strong></p>
+<h3 id="1、打开、读取文件方法"><a href="#1、打开、读取文件方法" class="headerlink" title="1、打开、读取文件方法"></a>1、打开、读取文件方法</h3><h4 id="（1）同步"><a href="#（1）同步" class="headerlink" title="（1）同步"></a>（1）同步</h4><p>fs.openSync(path, flags[, mode])</p>
+<ul>
+<li>path <string> | <Buffer> | <URL> 路径</li>
+<li>flags <string> | <number>   </li>
+<li>mode <integer> Default: 0o666 权限<br>return readBytes </li>
+</ul>
+<p><strong>Flag Description</strong></p>
+<ul>
+<li>r 以读取模式打开文件。如果文件不存在抛出异常。</li>
+<li>r+ 以读写模式打开文件。如果文件不存在抛出异常。</li>
+<li>rs 以同步的方式读取文件。</li>
+<li>rs+ 以同步的方式读取和写入文件。</li>
+<li>w 以写入模式打开文件，如果文件不存在则创建。</li>
+<li>wx 类似 ‘w’，但是如果文件路径存在，则文件写入失败。</li>
+<li>w+ 以读写模式打开文件，如果文件不存在则创建。</li>
+<li>wx+ 类似 ‘w+’， 但是如果文件路径存在，则文件读写失败。</li>
+<li>a 以追加模式打开文件，如果文件不存在则创建。</li>
+<li>ax 类似 ‘a’， 但是如果文件路径存在，则文件追加失败。</li>
+<li>a+ 以读取追加模式打开文件，如果文件不存在则创建。</li>
+<li>ax+ 类似 ‘a+’， 但是如果文件路径存在，则文件读取追加失败。<br><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/nodeFlag.png" alt="图片"><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="comment">#引入文件模块</span></span><br><span class="line">var fd = fs.openSync(<span class="string">&#x27;1.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">console.log(fd);</span><br><span class="line">fs.closeSync(fd);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="（2）异步打开-同步读取文件"><a href="#（2）异步打开-同步读取文件" class="headerlink" title="（2）异步打开 + 同步读取文件"></a>（2）异步打开 + 同步读取文件</h4><p><strong>异步打开语法</strong><br>fs.open(path, flags[, mode], callback)</p>
+<ul>
+<li>path <string> | <Buffer> | <URL> </li>
+<li>flags <string> | <number> </li>
+<li>mode <integer> Default: 0o666 </li>
+<li>callback <Function><br>  err <Error><br>  fd <integer></li>
+</ul>
+<p><strong>同步读取语法</strong><br>fs.readSync(fd, buffer, offset, length, position)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># buffer是内存空间; 0从buffer第几个字节开始读；</span></span><br><span class="line"><span class="comment"># buffer.length去多少个长度; 0从文件中第几个字节开始读，是字节</span></span><br><span class="line">fs.open(<span class="string">&#x27;1.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, (err, fd) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(err)</span><br><span class="line">        throw err</span><br><span class="line">    var buffer = Buffer.alloc(10)</span><br><span class="line">    var readBytes = fs.readSync(fd, buffer, 0, buffer.length, 0)</span><br><span class="line">    console.log(buffer.toString());</span><br><span class="line">    console.log(readBytes)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="（3）异步打开-异步步读取文件"><a href="#（3）异步打开-异步步读取文件" class="headerlink" title="（3）异步打开 + 异步步读取文件"></a>（3）异步打开 + 异步步读取文件</h4><p><strong>异步读取语法</strong><br>fs.read(fd, buffer, offset, length, position, callback)</p>
+<ul>
+<li>fd <integer>  指定的文件中读取数据</li>
+<li>buffer <Buffer> | <Uint8Array>  是数据将被写入到的 buffer。</li>
+<li>offset <integer>   buffer 中开始写入的偏移量</li>
+<li>length <integer>  length 是一个整数，指定要读取的字节数。</li>
+<li>position <integer>   指定从文件中开始读取的位置，null，则数据从当 前文件读取位置开始读取</li>
+<li>callback <Function><br>  err <Error><br>  bytesRead <integer><br>  buffer <Buffer></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fs.open(<span class="string">&#x27;1.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, (err, fd) =&gt;&#123;</span><br><span class="line">    var buffer = Buffer.alloc(10);</span><br><span class="line">    fs.read(fd, buffer, 1, 3, 0,(err, byttesRead) =&gt;&#123;</span><br><span class="line">        console.log(buffer.toString())</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="巩固知识题，在不明确文件中多少字节的情况下读取"><a href="#巩固知识题，在不明确文件中多少字节的情况下读取" class="headerlink" title="巩固知识题，在不明确文件中多少字节的情况下读取"></a>巩固知识题，在不明确文件中多少字节的情况下读取</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">fs.open(<span class="string">&#x27;1.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, (err, fd) =&gt;&#123;</span><br><span class="line">    var buffer = Buffer.alloc(0);</span><br><span class="line">    var buffer1 = Buffer.alloc(1)</span><br><span class="line">    <span class="keyword">function</span> <span class="built_in">sum</span>(buffer, buffer1)&#123;         </span><br><span class="line">        fs.read(fd, buffer1, 0, 1, buffer.length, (err, byttesRead) =&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span>(byttesRead != 0)&#123;</span><br><span class="line">                buffer = Buffer.concat([buffer, buffer1]);</span><br><span class="line">                <span class="built_in">return</span> <span class="built_in">sum</span>(buffer, buffer1)</span><br><span class="line">            &#125;</span><br><span class="line">            console.log(buffer.toString())</span><br><span class="line">            <span class="built_in">return</span> </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">sum</span>(buffer, buffer1) </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="6、写入"><a href="#6、写入" class="headerlink" title="6、写入"></a>6、写入</h3><h4 id="1-、同步"><a href="#1-、同步" class="headerlink" title="(1)、同步"></a>(1)、同步</h4><p>fs.writeSync(fd, buffer,[ offset[, length[, position]]]) </p>
+<ul>
+<li>fd <integer> </li>
+<li>buffer <Buffer> | <Uint8Array>  写入的文件内容</li>
+<li>offset <integer> </li>
+<li>length <integer> </li>
+<li>position <integer>指向从文件开始写入数据的位置的偏移量。 如果 typeof position !==  ‘number’，则数据从当前位置写入。</li>
+<li>Returns: <number></li>
+</ul>
+<h4 id="2-、异步"><a href="#2-、异步" class="headerlink" title="(2)、异步"></a>(2)、异步</h4><p>fs.write() </p>
+<ul>
+<li>fd <integer> string <string> || <buffer></li>
+<li>position <integer> </li>
+<li>encoding <string> 该参数只有在写入数据是字符串的时候才生效。 </li>
+<li>callback <Function><br>  err <Error><br>  written <integer> 指定传入的字符串被写入多少字节<br>  string <string></li>
+</ul>
+<p>异步实例<br>先打开在写入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fs.open(<span class="string">&#x27;1.txt.bak&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, (err, fd) =&gt;&#123;</span><br><span class="line">    fs.write(fd, <span class="string">&quot;holler world&quot;</span>, (err, written) =&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(err)</span><br><span class="line">            throw err</span><br><span class="line">        console.log(<span class="string">&quot;写入成功&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="3、简单读取文件"><a href="#3、简单读取文件" class="headerlink" title="3、简单读取文件"></a>3、简单读取文件</h3><h4 id="1-、同步-1"><a href="#1-、同步-1" class="headerlink" title="(1)、同步"></a>(1)、同步</h4><p>fs.readFileSync(path[, options])<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var buffer = fs.readFileSync(<span class="string">&#x27;1.txt&#x27;</span>, &#123;flag: <span class="string">&#x27;r&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-、异步-1"><a href="#2-、异步-1" class="headerlink" title="(2)、异步"></a>(2)、异步</h4><p>fs.readFile(path[, options], callback)</p>
+<ul>
+<li>path <string> | <Buffer> | <URL> | <integer> 文件名或文件描述 符。 </li>
+<li>options <Object> | <string> encoding <string> | <null> 默认为 null。</li>
+<li>flag <string> 详见支持的文件系统flag。默认 为 ‘r’。 </li>
+<li>callback <Function> err <Error> data <string> | <Buffer><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不设置flag默认也是 r</span></span><br><span class="line">fs.readFile(<span class="string">&#x27;1.txt&#x27;</span>, (err, buffer) =&gt; &#123;</span><br><span class="line">    console.log(buffer.toString())</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="4、简单写取文件"><a href="#4、简单写取文件" class="headerlink" title="4、简单写取文件"></a>4、简单写取文件</h3><h4 id="1-、同步-2"><a href="#1-、同步-2" class="headerlink" title="(1)、同步"></a>(1)、同步</h4>fs.writeFileSync(file, data[, options])<br>fs.writeFile() 的同步版本。返回 undefined。<h4 id="2-、异步-2"><a href="#2-、异步-2" class="headerlink" title="(2)、异步"></a>(2)、异步</h4>fs.writeFile(file, data[, options], callback)<br>异步地写入数据到文件，如果文件已经存在，则替代文件。 </li>
+<li>file：文件名或文件描述符 </li>
+<li>options.encoding: data编码，默认’utf8’ </li>
+<li>options.mode:文件属性，默认0o666 data 可以是一个字符串或一个 buffer。<br>  如果 data 是一个 buffer，则忽略 encoding 选项。它默认为 ‘utf8’</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 但定义buffer时，在传入encoding编码格式就变得无效啦</span></span><br><span class="line">var buffer = Buffer.from(<span class="string">&#x27;我是被写入的数据&#x27;</span>)</span><br><span class="line">fs.writeFile(<span class="string">&#x27;1.txt&#x27;</span>, buffer, &#123;flag: <span class="string">&#x27;a&#x27;</span>, encoding: <span class="string">&#x27;ascii&#x27;</span>&#125;, (err) =&gt;&#123;</span><br><span class="line">    console.log(<span class="string">&#x27;数据写入成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="5、创建读取流、写入流"><a href="#5、创建读取流、写入流" class="headerlink" title="5、创建读取流、写入流"></a>5、创建读取流、写入流</h3><h4 id="读取流"><a href="#读取流" class="headerlink" title="读取流"></a>读取流</h4><p>fs.createReadStream(path[, options])返回一个新建的 ReadStream 对象 </p>
+<ul>
+<li>path：文件路径 </li>
+<li>options：选项，包含以下值<br>  flags：文件属性。默认：’r’<br>  encoding:文件编码，默认 null<br>  fd：文件描述符，如果指定了 fd，则会忽略 path 参数。 这意味着不会触发 ‘open’ 事件。 mode：文件读写属性，默认0o666<br>  autoClose：如果 autoClose 为 false，则文件描述符不会被关闭，即使有错误。默认为 true。<br>  start：指定读取范围的开始位置 end：指定读取范围的结束位置<br><strong>fs.ReadStream 类</strong><br>fs.ReadStream 是createReadStream返回的可读流<br>close 事件 ReadStream 底层的文件描述符被关闭时触发<br>open 事件 当 ReadStream 的文件被打开时触发。</li>
+</ul>
+<h4 id="写入流"><a href="#写入流" class="headerlink" title="写入流"></a>写入流</h4><p>fs.createWriteStream(path[, options])<br>返回一个新建的 WriteStream 对象 </p>
+<ul>
+<li>path：文件路径 </li>
+<li>options：选项，包含以下值<br>   flags：文件属性。默认：’w’ encoding:文件编码，默认 utf8 fd：文件描述符，如果指定了 fd，则会忽略 path 参数。 这意味着不会触发 ‘open’ 事件。<br>   mode：文件读写属性，默认0o666<br>   autoClose：如果 autoClose 为 false，则文件描述符不会被关闭，即使有错误。默认为 true。<br>   start：指定文件写入的开始位置</li>
+</ul>
+<p><strong>fs.WriteStream 类</strong><br>fs.WriteStream 是 createWriteStream 返回的可写流<br><code>writeStream.path</code> 流正在写入的文件的路径，指定在 fs.createWriteStream() 的第一个参数。 如果 path 传入的是一个字符串，则 writeStream.path 是一个字符串。 如果 path 传入的是一个 Buffer，则 writeStream.path 是一个 Buffer。</p>
+<h4 id="实例-8"><a href="#实例-8" class="headerlink" title="实例"></a>实例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正常的读写流操作</span></span><br><span class="line">var rs = fs.createReadStream(<span class="string">&#x27;1.txt&#x27;</span>,&#123;highWaterMark: 3&#125;)</span><br><span class="line">var ws = fs.createWriteStream(<span class="string">&#x27;2.txt&#x27;</span>)</span><br><span class="line">rs.once(<span class="string">&#x27;open&#x27;</span>, () =&gt;&#123;</span><br><span class="line">    console.log(<span class="string">&quot;读取流已打开&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">rs.once(<span class="string">&#x27;close&#x27;</span>, () =&gt;&#123;</span><br><span class="line">    console.log(<span class="string">&quot;读取流已关闭&quot;</span>)</span><br><span class="line">    ws.end()</span><br><span class="line">&#125;)</span><br><span class="line">rs.on(<span class="string">&#x27;data&#x27;</span>, (chunk) =&gt;&#123;</span><br><span class="line">    console.log(chunk.toString())</span><br><span class="line">    ws.write(chunk)</span><br><span class="line">&#125;)</span><br><span class="line">ws.on(<span class="string">&#x27;open&#x27;</span>, () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;写入流已打开&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">ws.on(<span class="string">&#x27;close&#x27;</span>, () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;写入流已关闭&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line">ws.on(<span class="string">&#x27;finish&#x27;</span>, () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;写入流已结束&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 管道方法 实现数据自动传输</span></span><br><span class="line">var rs = fs.createReadStream(<span class="string">&#x27;1.txt&#x27;</span>,&#123;highWaterMark: 3&#125;)</span><br><span class="line">var ws = fs.createWriteStream(<span class="string">&#x27;2.txt&#x27;</span>)</span><br><span class="line">rs.pipe(ws)</span><br></pre></td></tr></table></figure>
+<h3 id="6、查看文件信息"><a href="#6、查看文件信息" class="headerlink" title="6、查看文件信息"></a>6、查看文件信息</h3><p>fs.statSync(path) </p>
+<h4 id="同步的-fs-stat。"><a href="#同步的-fs-stat。" class="headerlink" title="同步的 fs.stat。"></a>同步的 fs.stat。</h4><p>返回一个 fs.Stats 实例。 传递不存在的文件地址会抛出异常。</p>
+<h4 id="异步fs-stat-path-callback"><a href="#异步fs-stat-path-callback" class="headerlink" title="异步fs.stat(path, callback)"></a>异步fs.stat(path, callback)</h4><p>该方法返回关于文件的信息 path：文件地址 回调有两个参数 (err, stats)<br>其中 stats 是一个 fs.Stats 对象。 不建议在调用 fs.open() 、fs.readFile() 或 fs.writeFile() 之前使用 fs.stat() 检查一个文件是 否存在。 作为替代，用户代码应该直接打开/读取/写入文件，当文件无效时再处理错误。 传递不存在的文件地址会抛出异常。</p>
+<h4 id="stats类方法"><a href="#stats类方法" class="headerlink" title="stats类方法"></a>stats类方法</h4><ul>
+<li><p>stats.isFile()<br>如果是文件返回 true，否则返回 false。</p>
+</li>
+<li><p>stats.isDirectory()<br>如果是目录返回 true，否则返回 false。</p>
+</li>
+<li><p>stats.isBlockDevice()<br>如果是块设备返回 true，否则返回 false。</p>
+</li>
+<li><p>stats.isCharacterDevice()<br>如果是字符设备返回 true，否则返回 false。</p>
+</li>
+<li><p>stats.isSymbolicLink()<br>如果是软链接返回 true，否则返回 false。</p>
+</li>
+<li><p>stats.isFIFO()<br>如果是FIFO，返回true，否则返回 false。FIFO是UNIX中的一种特殊类型的命令管道。</p>
+</li>
+<li><p>stats.isSocket()<br>如果是 Socket 返回 true，否则返回 false。</p>
+</li>
+</ul>
+<h4 id="实例一"><a href="#实例一" class="headerlink" title="实例一"></a>实例一</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var fsState = fs.statSync(<span class="string">&#x27;1.txt&#x27;</span>)</span><br><span class="line">console.log(fsState)</span><br></pre></td></tr></table></figure>
+<h4 id="实例二"><a href="#实例二" class="headerlink" title="实例二"></a>实例二</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line">fs.stat(<span class="string">&#x27;./fs.js&#x27;</span>, <span class="keyword">function</span> (err, stats) &#123;</span><br><span class="line">    <span class="comment">#如果是文件返回 true</span></span><br><span class="line">    console.log(stats.isFile());         <span class="comment">#true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="7-、判断文件是否存在"><a href="#7-、判断文件是否存在" class="headerlink" title="7 、判断文件是否存在"></a>7 、判断文件是否存在</h3><p>fs.existsSync(path)<br>如果文件存在，则返回 true<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var fsState = fs.existsSync(<span class="string">&#x27;1.txt&#x27;</span>)</span><br><span class="line">console.log(fsState)</span><br></pre></td></tr></table></figure></p>
+<h3 id="8、删除文件"><a href="#8、删除文件" class="headerlink" title="8、删除文件"></a>8、删除文件</h3><p><strong>同步</strong><br>fs.unlink(path, callback) 删除一个符号链接<br><strong>异步</strong><br>fs.unlinkSync(path, callback)</p>
+<ul>
+<li>path：链接的存储地址 </li>
+<li>callback：完成后的回调函数，携带 err 参数</li>
+</ul>
+<p>实例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.unlinkSync(<span class="string">&#x27;2.txt&#x27;</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="9、fs-realpath-path-options-callback"><a href="#9、fs-realpath-path-options-callback" class="headerlink" title="9、fs.realpath(path[, options], callback)"></a>9、fs.realpath(path[, options], callback)</h3><p>此方法将相对地址转换为绝对地址。 </p>
+<ul>
+<li>path：需要转换的地址 </li>
+<li>options：字符编码，默认’utf8’ callback：callback 有两个参数 (err, resolvedPath)。<br>  传递不存在的相对路径会抛出异常。 除此方法外，也可以使用 process.cwd 来获取当前目录绝对路径，从而实现转换功能。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.realpath(<span class="string">&#x27;1.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="10、创建一个文件夹"><a href="#10、创建一个文件夹" class="headerlink" title="10、创建一个文件夹"></a>10、创建一个文件夹</h3><p>fs.mkdir(path[, mode], callback) 该方法用来创建目录，与mkdir命令的作用一致。 </p>
+<ul>
+<li>path：目录地址 mode：目标属性，建立目录的同时设置目录的权限，默认：0o777 </li>
+<li>callback：创建完成后执行的回调函数，带有一个异常参数。</li>
+</ul>
+<p>语法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.mkdirSync(path[, mode])</span><br></pre></td></tr></table></figure></p>
+<h3 id="11、删除一个文件夹"><a href="#11、删除一个文件夹" class="headerlink" title="11、删除一个文件夹"></a>11、删除一个文件夹</h3><p>fs.rmdir(path, callback) 该方法用来删除空目录，与rmdir命令的作用一致。 如果删除的目录不是空目录，会抛出错误。 </p>
+<ul>
+<li>path：目录地址 </li>
+<li>callback：完成后执行的回调函数，带有一个异常参数。 注意：在文件上调用此方法，会导致错误。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.rmdirSync(path)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/node/" rel="tag"># node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/07/24/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/nodejs%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="Http模块（二）">
+                <i class="fa fa-chevron-left"></i> Http模块（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/07/25/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%A5%87%E8%B0%88/" rel="prev" title="微信小程序奇谈">
+                微信小程序奇谈 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81nodejs%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">一、nodejs基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87%E5%AE%98%E7%BD%91%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.1.</span> <span class="nav-text">1、通过官网安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%80%9A%E8%BF%87nvm%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">2、通过nvm安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nvm%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.1.</span> <span class="nav-text">Nvm的命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%A8%A1%E5%9D%97"><span class="nav-number">1.3.</span> <span class="nav-text">3、模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CommonJS"><span class="nav-number">1.3.1.</span> <span class="nav-text">CommonJS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exports%E5%92%8Crequire%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">exports和require的用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#module-exports%E5%92%8Crequire%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">module.exports和require的用法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81node%E5%B8%B8%E7%94%A8API%E8%AE%B2%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89%E7%BC%93%E5%AD%98%E5%92%8C%E6%96%87%E4%BB%B6%E6%A8%A1%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">二、node常用API讲解（一）缓存和文件模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81Buffer%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1、Buffer简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Buffer-%E4%B8%8E%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">2、Buffer 与字符编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js-%E7%9B%AE%E5%89%8D%E6%94%AF%E6%8C%81%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E5%8C%85%E6%8B%AC"><span class="nav-number">2.2.1.</span> <span class="nav-text">Node.js 目前支持的字符编码包括</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85iconvlit"><span class="nav-number">2.2.2.</span> <span class="nav-text">安装iconvlit</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Buffer%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">三、Buffer常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BABUffer%E7%B1%BB"><span class="nav-number">3.1.</span> <span class="nav-text">创建BUffer类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E7%AE%80%E5%8D%95%E8%BF%90%E7%94%A8"><span class="nav-number">3.1.1.</span> <span class="nav-text">实例简单运用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iconvlit%E6%8F%92%E4%BB%B6%E7%9A%84%E6%96%B9%E6%B3%95%E5%88%A9%E7%94%A8"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">iconvlit插件的方法利用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%9ABuffer-alloc-size-fill-encoding"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">类方法：Buffer.alloc(size[, fill[, encoding]])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#let-buffer-Buffer-allocUnsafe-10"><span class="nav-number">3.1.1.3.</span> <span class="nav-text">let buffer &#x3D; Buffer.allocUnsafe(10)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">3.1.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96buffer"><span class="nav-number">3.2.</span> <span class="nav-text">读取buffer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">3.2.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86-Buffer-%E8%BD%AC%E6%8D%A2%E4%B8%BA-JSON-%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.3.</span> <span class="nav-text">将 Buffer 转换为 JSON 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-2"><span class="nav-number">3.3.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E5%90%88%E5%B9%B6"><span class="nav-number">3.4.</span> <span class="nav-text">缓冲区合并</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="nav-number">3.4.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-2"><span class="nav-number">3.4.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-3"><span class="nav-number">3.4.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%AF%94%E8%BE%83"><span class="nav-number">3.5.</span> <span class="nav-text">缓冲区比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="nav-number">3.5.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-3"><span class="nav-number">3.5.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-4"><span class="nav-number">3.5.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D%E8%BF%87%E7%A8%8B"><span class="nav-number">3.6.</span> <span class="nav-text">拷贝缓冲区，深拷贝过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="nav-number">3.6.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-4"><span class="nav-number">3.6.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-5"><span class="nav-number">3.6.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E8%A3%81%E5%89%AA-%E6%8C%87%E5%90%91%E7%9A%84%E5%90%8C%E4%B8%80%E5%9D%97%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%8E%9F%E5%9C%B0%E5%9D%80%E6%94%B9%E5%8F%98%E4%B9%8B%E5%90%8E%E4%BC%9A%E8%BF%9E%E5%B8%A6%E5%8F%8D%E5%BA%94"><span class="nav-number">3.7.</span> <span class="nav-text">缓冲区裁剪 指向的同一块地址，原地址改变之后会连带反应</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-5"><span class="nav-number">3.7.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0-5"><span class="nav-number">3.7.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-6"><span class="nav-number">3.7.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E9%95%BF%E5%BA%A6"><span class="nav-number">3.8.</span> <span class="nav-text">缓冲区长度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-6"><span class="nav-number">3.8.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-7"><span class="nav-number">3.8.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9CAPI"><span class="nav-number">4.</span> <span class="nav-text">四、文件操作API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E5%92%8C%E5%90%8C%E6%AD%A5"><span class="nav-number">4.1.</span> <span class="nav-text">异步和同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%89%93%E5%BC%80%E3%80%81%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.1.</span> <span class="nav-text">1、打开、读取文件方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%90%8C%E6%AD%A5"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">（1）同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%BC%82%E6%AD%A5%E6%89%93%E5%BC%80-%E5%90%8C%E6%AD%A5%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.1.2.</span> <span class="nav-text">（2）异步打开 + 同步读取文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E5%BC%82%E6%AD%A5%E6%89%93%E5%BC%80-%E5%BC%82%E6%AD%A5%E6%AD%A5%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.1.3.</span> <span class="nav-text">（3）异步打开 + 异步步读取文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A9%E5%9B%BA%E7%9F%A5%E8%AF%86%E9%A2%98%EF%BC%8C%E5%9C%A8%E4%B8%8D%E6%98%8E%E7%A1%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%A4%9A%E5%B0%91%E5%AD%97%E8%8A%82%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E8%AF%BB%E5%8F%96"><span class="nav-number">4.1.1.4.</span> <span class="nav-text">巩固知识题，在不明确文件中多少字节的情况下读取</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E5%86%99%E5%85%A5"><span class="nav-number">4.1.2.</span> <span class="nav-text">6、写入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E3%80%81%E5%90%8C%E6%AD%A5"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">(1)、同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E3%80%81%E5%BC%82%E6%AD%A5"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">(2)、异步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E7%AE%80%E5%8D%95%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.3.</span> <span class="nav-text">3、简单读取文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E3%80%81%E5%90%8C%E6%AD%A5-1"><span class="nav-number">4.1.3.1.</span> <span class="nav-text">(1)、同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E3%80%81%E5%BC%82%E6%AD%A5-1"><span class="nav-number">4.1.3.2.</span> <span class="nav-text">(2)、异步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E7%AE%80%E5%8D%95%E5%86%99%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.4.</span> <span class="nav-text">4、简单写取文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E3%80%81%E5%90%8C%E6%AD%A5-2"><span class="nav-number">4.1.4.1.</span> <span class="nav-text">(1)、同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E3%80%81%E5%BC%82%E6%AD%A5-2"><span class="nav-number">4.1.4.2.</span> <span class="nav-text">(2)、异步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E5%88%9B%E5%BB%BA%E8%AF%BB%E5%8F%96%E6%B5%81%E3%80%81%E5%86%99%E5%85%A5%E6%B5%81"><span class="nav-number">4.1.5.</span> <span class="nav-text">5、创建读取流、写入流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%B5%81"><span class="nav-number">4.1.5.1.</span> <span class="nav-text">读取流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E6%B5%81"><span class="nav-number">4.1.5.2.</span> <span class="nav-text">写入流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-8"><span class="nav-number">4.1.5.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.6.</span> <span class="nav-text">6、查看文件信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E7%9A%84-fs-stat%E3%80%82"><span class="nav-number">4.1.6.1.</span> <span class="nav-text">同步的 fs.stat。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5fs-stat-path-callback"><span class="nav-number">4.1.6.2.</span> <span class="nav-text">异步fs.stat(path, callback)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stats%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.6.3.</span> <span class="nav-text">stats类方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E4%B8%80"><span class="nav-number">4.1.6.4.</span> <span class="nav-text">实例一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E4%BA%8C"><span class="nav-number">4.1.6.5.</span> <span class="nav-text">实例二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E3%80%81%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="nav-number">4.1.7.</span> <span class="nav-text">7 、判断文件是否存在</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8%E3%80%81%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.8.</span> <span class="nav-text">8、删除文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E3%80%81fs-realpath-path-options-callback"><span class="nav-number">4.1.9.</span> <span class="nav-text">9、fs.realpath(path[, options], callback)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10%E3%80%81%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">4.1.10.</span> <span class="nav-text">10、创建一个文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11%E3%80%81%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">4.1.11.</span> <span class="nav-text">11、删除一个文件夹</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/07/24/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/nodejs%EF%BC%88%E4%B8%80%EF%BC%89/';
+          this.page.identifier = '2018/07/24/了解nodejs前世今生/nodejs（一）/';
+          this.page.title = 'Buffer模块（一）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

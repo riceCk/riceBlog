@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Vue简单语法糖玩转class类名建立html标签12345678910111213&lt;div id&#x3D;&quot;app&quot;&gt;        &lt;div class&#x3D;&quot;demo&quot;             @click&#x3D;&quot;attach&#x3D;!attach&quot;             :class&#x3D;&quot;&#123;&#x27;red&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="组件化Vue(二)">
+<meta property="og:url" content="http://yoursite.com/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="Vue简单语法糖玩转class类名建立html标签12345678910111213&lt;div id&#x3D;&quot;app&quot;&gt;        &lt;div class&#x3D;&quot;demo&quot;             @click&#x3D;&quot;attach&#x3D;!attach&quot;             :class&#x3D;&quot;&#123;&#x27;red&amp;#x">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-07-18T01:55:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.740Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/18/vue/组件化Vue（二）/"/>
+
+
+
+
+
+  <title>组件化Vue(二) | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">组件化Vue(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-18T09:55:00+08:00">
+                2018-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue%EF%BC%88%E4%BA%8C%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/18/vue/组件化Vue（二）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Vue简单语法糖"><a href="#Vue简单语法糖" class="headerlink" title="Vue简单语法糖"></a>Vue简单语法糖</h1><h2 id="玩转class类名"><a href="#玩转class类名" class="headerlink" title="玩转class类名"></a>玩转class类名</h2><h3 id="建立html标签"><a href="#建立html标签" class="headerlink" title="建立html标签"></a>建立html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">        &lt;div class=<span class="string">&quot;demo&quot;</span> </span><br><span class="line">            @click=<span class="string">&quot;attach=!attach&quot;</span> </span><br><span class="line">            :class=<span class="string">&quot;&#123;&#x27;red&#x27;: attach, blue: !attach&#125;&quot;</span></span><br><span class="line">        &gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=<span class="string">&quot;demo&quot;</span></span><br><span class="line">        @click=<span class="string">&quot;attach=!attach&quot;</span> </span><br><span class="line">        :class=<span class="string">&quot;divClass&quot;</span></span><br><span class="line">        &gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=<span class="string">&quot;demo&quot;</span> :class=<span class="string">&quot;color&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">        &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&quot;color&quot;</span>&gt;</span><br><span class="line">        &lt;div class=<span class="string">&quot;demo&quot;</span> :class=<span class="string">&quot;[color, &#123;blue: !attach&#125;]&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>这里面有两个<strong>class</strong>，<code>:class</code>是动态的class，Vue会将动态的class处理合并在一起。Vue实现的就是dom中可以运行js代码，可能现在还不太习惯，想开一点就好了。<br>在<code>第一个demo</code>中<code>:class</code>绑定一个对象通过点击事件绑定<strong>attach</strong>是T或F来处理class类名。在<code>第二个demo</code>中将第一个对象提炼到js中的<strong>computed</strong>下。效果一样。<br>在<code>第三个demo和input</code>绑定在一起改变<strong>class</strong>值改变样式。<code>在第四个中</code>动态的绑定一个数组，初始值为<strong>color</strong>，通过<strong>attach</strong>来覆盖之前的样式。</p>
+<h3 id="建立js脚本语言"><a href="#建立js脚本语言" class="headerlink" title="建立js脚本语言"></a>建立js脚本语言</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        attach: <span class="literal">false</span>,</span><br><span class="line">        color: <span class="string">&quot;green&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        divClass : <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            <span class="built_in">return</span> &#123;</span><br><span class="line">                red: this.attach,</span><br><span class="line">                blue: this.attach</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>脚本语言很简单，该说了上面也说了。就此…</p>
+<h2 id="玩转style样式"><a href="#玩转style样式" class="headerlink" title="玩转style样式"></a>玩转style样式</h2><p>万变不离其宗。还是一样的效果</p>
+<h3 id="html标签"><a href="#html标签" class="headerlink" title="html标签"></a>html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div class=<span class="string">&quot;demo&quot;</span> :style = <span class="string">&quot;&#123;backgroundColor: color&#125;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&quot;color&quot;</span>&gt;</span><br><span class="line">    &lt;div class=<span class="string">&quot;demo&quot;</span> :style=<span class="string">&quot;divStyle&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&quot;width&quot;</span>&gt;</span><br><span class="line">    &lt;div class=<span class="string">&quot;demo&quot;</span> :style= <span class="string">&quot;divStyle, &#123;height: height + &#x27;px&#x27;&#125;&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&quot;height&quot;</span>&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="js脚本代码"><a href="#js脚本代码" class="headerlink" title="js脚本代码"></a>js脚本代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        color: <span class="string">&#x27;red&#x27;</span>,</span><br><span class="line">        width: 100,</span><br><span class="line">        height: 200</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        divStyle: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            <span class="built_in">return</span>&#123;</span><br><span class="line">                backgroundColor: this.color,</span><br><span class="line">                width: this.width + <span class="string">&#x27;px&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>自行参考一样的意思上例题一，绑定的class或者style中可以创建对象就写属性，可以创建数组，多个属性处理一起使用，也可以创建字符串，当然这其实是函数执行类型，js脚本return出结果</p>
+<h2 id="v-if-和-v-else-应用"><a href="#v-if-和-v-else-应用" class="headerlink" title="v-if 和 v-else 应用"></a>v-if 和 v-else 应用</h2><h3 id="html标签-1"><a href="#html标签-1" class="headerlink" title="html标签"></a>html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;p v-if=<span class="string">&quot;show==&#x27;a&#x27;&quot;</span>&gt;你能看见我吗？我是a&lt;/p&gt;</span><br><span class="line">    &lt;p v-else-if=<span class="string">&quot;show==&#x27;b&#x27;&quot;</span>&gt;你看得见我把 我是b&lt;/p&gt;</span><br><span class="line">    &lt;p v-else&gt;你看不见我，嘻嘻我是<span class="string">&quot;其他&quot;</span>&lt;/p&gt;</span><br><span class="line">    &lt;template v-if=<span class="string">&quot;show&quot;</span>&gt;</span><br><span class="line">        &lt;p&gt;我是第一段p&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;我是第二段p&lt;/p&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;show=&#x27;b&#x27;&quot;</span>&gt;switch&lt;/button&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;show=&#x27;c&#x27;&quot;</span>&gt;switch&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><code>v-else</code>会自动找到离他最近的<code>v-else</code>进行逻辑解析,<code>template</code>标签不占dom节点H5的知识点</p>
+<h3 id="js脚本代码-1"><a href="#js脚本代码-1" class="headerlink" title="js脚本代码"></a>js脚本代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        show: <span class="string">&#x27;a&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="v-if-和-v-show-的区别"><a href="#v-if-和-v-show-的区别" class="headerlink" title="v-if 和 v-show 的区别"></a>v-if 和 v-show 的区别</h2><h3 id="上html标签"><a href="#上html标签" class="headerlink" title="上html标签"></a>上html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;p v-if=<span class="string">&quot;show&quot;</span>&gt;你能看见我吗？&lt;/p&gt;</span><br><span class="line">    &lt;p v-else&gt;你看不见我，嘻嘻&lt;/p&gt;</span><br><span class="line">    &lt;p v-show=<span class="string">&quot;show&quot;</span> &gt;你看不见我。嘻嘻&lt;/p&gt;</span><br><span class="line">    &lt;template v-if=<span class="string">&quot;show&quot;</span>&gt;</span><br><span class="line">        &lt;p&gt;请输入用户名&lt;/p&gt;</span><br><span class="line">        &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> placeholder=<span class="string">&quot;请输入用户名&quot;</span> key=<span class="string">&quot;username&quot;</span> &gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">    &lt;template v-else&gt;</span><br><span class="line">        &lt;p&gt;请输入密码&lt;/p&gt;</span><br><span class="line">        &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> placeholder=<span class="string">&quot;请输入密码&quot;</span> key=<span class="string">&quot;password&quot;</span>&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;show=!show&quot;</span>&gt;show&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><code>v-if</code>是false之后dom节点直接消失的，而<code>v-show</code>是通过<strong>display=none</strong>本质上的区别。<br>例上的两个input本质上一样的情况下vue为了优化性能就采用复用，所以要区别他们加一个<code>key</code>属性。</p>
+<h2 id="v-for-应用"><a href="#v-for-应用" class="headerlink" title="v-for 应用"></a>v-for 应用</h2><h3 id="html代码"><a href="#html代码" class="headerlink" title="html代码"></a>html代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li v-for=<span class="string">&quot;(prop,index) in block&quot;</span>&gt;&#123;&#123;prop&#125;&#125;(&#123;&#123;index&#125;&#125;)&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;template v-for=<span class="string">&quot;(prop,index) in block&quot;</span>&gt;</span><br><span class="line">        &lt;p&gt;&#123;&#123;prop&#125;&#125;&lt;/p&gt;</span><br><span class="line">        &lt;p&gt;&#123;&#123;index&#125;&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li v-for=<span class="string">&quot;person in persons&quot;</span>&gt;</span><br><span class="line">            &lt;p v-for=<span class="string">&quot;(value, key,i) in person&quot;</span>&gt;&#123;&#123;value&#125;&#125; | &#123;&#123;key&#125;&#125;&lt;/p&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>第一个ul是获取的数组，遍历缩影<strong>prop</strong>是值，<strong>index</strong>是索引很简单就不细说，第二个ul获取的是数组中嵌套对象形式，基本上开发都是这样，所以需要嵌套<code>v-for</code>,第一遍嵌套出来的是数组中每一位对象，里面的再次遍历<strong>value</strong>内部的值，获取属性名就是<strong>key</strong>,获取当前索引<strong>i</strong>。</p>
+<h3 id="js脚本代码-2"><a href="#js脚本代码-2" class="headerlink" title="js脚本代码"></a>js脚本代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        block : [<span class="string">&#x27;11111&#x27;</span>, <span class="string">&#x27;22222&#x27;</span>, <span class="string">&#x27;33333&#x27;</span>],</span><br><span class="line">        persons: [&#123;</span><br><span class="line">            name: <span class="string">&#x27;dengge&#x27;</span>,</span><br><span class="line">            color: <span class="string">&#x27;green&#x27;</span></span><br><span class="line">        &#125;,&#123;</span><br><span class="line">            name: <span class="string">&quot;chengge&quot;</span>,</span><br><span class="line">            color: <span class="string">&#x27;gold&#x27;</span></span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="v-for应用之添加、修改删除"><a href="#v-for应用之添加、修改删除" class="headerlink" title="v-for应用之添加、修改删除"></a>v-for应用之添加、修改删除</h2><h3 id="html-标签"><a href="#html-标签" class="headerlink" title="html 标签"></a>html 标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li v-for=<span class="string">&quot;(prop,index) in block&quot;</span> @click=<span class="string">&quot;change(index)&quot;</span>&gt;&#123;&#123;prop&#125;&#125;(&#123;&#123;index&#125;&#125;)&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;newAdd&quot;</span>&gt;new add&lt;/button&gt;</span><br><span class="line">    &lt;div v-for=<span class="string">&quot;value in inputValue&quot;</span> :key=<span class="string">&quot;value&quot;</span>&gt;</span><br><span class="line">        &#123;&#123;value&#125;&#125; : &lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> &gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;reverseInput&quot;</span>&gt;reverse&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>进过for遍历渲染之后如果再次就该里面的值，值会改变，但是页面不会再重新渲染所以页面不变。那怎么办？？？看js脚本<br>当v-for便利input时候。vue为了提高性能会复用input标签。所以在标签上加上绑定<code>:key</code>标签</p>
+<h3 id="js脚本"><a href="#js脚本" class="headerlink" title="js脚本"></a>js脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">    el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        block : [<span class="string">&#x27;11111&#x27;</span>, <span class="string">&#x27;22222&#x27;</span>, <span class="string">&#x27;33333&#x27;</span>],</span><br><span class="line">        persons: [&#123;</span><br><span class="line">            name: <span class="string">&#x27;dengge&#x27;</span>,</span><br><span class="line">            color: <span class="string">&#x27;green&#x27;</span></span><br><span class="line">        &#125;,&#123;</span><br><span class="line">            name: <span class="string">&quot;chengge&quot;</span>,</span><br><span class="line">            color: <span class="string">&#x27;gold&#x27;</span></span><br><span class="line">        &#125;],</span><br><span class="line">        inputValue: [1,2,3]</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        change: <span class="keyword">function</span>(index)&#123;</span><br><span class="line">            var arr = [].concat(this.block);</span><br><span class="line">            arr[index] = <span class="string">&#x27;5555&#x27;</span>,</span><br><span class="line">            this.block = arr;</span><br><span class="line">        &#125;,</span><br><span class="line">        newAdd: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            this.block.push(<span class="string">&#x27;7777&#x27;</span>);</span><br><span class="line">        &#125;,</span><br><span class="line">         reverseInput: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            this.inputValue.reverse() //revers()数组方法倒叙</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>通过创建新的<strong>arr</strong>重新赋值带<strong>block</strong>中重新渲染页面，但当用push方法直接添加就可以了，因为这不是这不是之前的原始js引擎的push方法，而是Vue重新写的，把之前的覆盖掉了。</p>
+<h2 id="Vue实例应用"><a href="#Vue实例应用" class="headerlink" title="Vue实例应用"></a>Vue实例应用</h2><h3 id="html标签-2"><a href="#html标签-2" class="headerlink" title="html标签"></a>html标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;h1&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;show&quot;</span> ref=<span class="string">&quot;myButton&quot;</span>&gt;让你能看见我&lt;/button&gt;</span><br><span class="line">    &lt;p v-if=<span class="string">&quot;showP&quot;</span>&gt;你能看见我吗？&lt;/p&gt;</span><br><span class="line">    &lt;hello&gt;&lt;/hello&gt;</span><br><span class="line">     &lt;hello&gt;&lt;/hello&gt; </span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;app2&quot;</span>&gt;</span><br><span class="line">    &lt;h1&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;</span><br><span class="line">    &lt;button @click=<span class="string">&quot;changevm1&quot;</span>&gt;change Vm1&lt;/button&gt;</span><br><span class="line">    &lt;hello&gt;&lt;/hello&gt; </span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><code>ref</code>属性，添加这个属性之后，在js代码中可以直接用<strong>vm.$refs.myButton</strong>，将其选出，js代码中的vm就是一个js对象，上面会有很多属性。通过<code>vm.</code>的形式可以将他们都选择操作。</p>
+<h3 id="js脚本语言"><a href="#js脚本语言" class="headerlink" title="js脚本语言"></a>js脚本语言</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(<span class="string">&quot;hello&quot;</span>, &#123;</span><br><span class="line">    template: <span class="string">&#x27;&lt;h1&gt;hello&lt;/h1&gt;&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        title: <span class="string">&quot;thie VueJs instance&quot;</span>,</span><br><span class="line">        showP : <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        show: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            this.title = <span class="string">&quot;the VueJs instance(update)&quot;</span></span><br><span class="line">            this.showP = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">        upperCase: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            <span class="built_in">return</span> this.title.toUpperCase(); //toUpperCase转义大写字符</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    watch: &#123;</span><br><span class="line">        title: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            alert(this.upperCase);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">console.log(vm.<span class="variable">$refs</span>.myButton);</span><br><span class="line">// setTimeout(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">//     vm.title = <span class="string">&quot;change by ti&quot;</span>,</span><br><span class="line">//     vm.show()</span><br><span class="line">// &#125;, 3000)</span><br><span class="line">var vm2 = new Vue(&#123;</span><br><span class="line">    </span><br><span class="line">    data:&#123;</span><br><span class="line">        title: <span class="string">&quot;the second Vuejs&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        changevm1: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">            vm.title = <span class="string">&quot;change by vm2&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">vm2.<span class="variable">$mount</span>(<span class="string">&quot;#app2&quot;</span>);</span><br><span class="line"></span><br><span class="line">var vm3 = new Vue(&#123;</span><br><span class="line">    template: `&lt;h1&gt;hello&lt;/h1&gt;`</span><br><span class="line">&#125;)</span><br><span class="line">vm3.<span class="variable">$mount</span>(<span class="string">&quot;#app3&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p><code>vm2.$mount(&quot;#app2&quot;);</code>就是当<strong>el</strong>没有定义的时候，后者插入的,<code>template</code>模板可以查到<strong>#app3</strong>div中。与<code>$mount</code>连用。这里可用于组建复用上。<br><code>hello</code>自定义的一个标签组建创建全局组建。把他插到Vue示例中就可以实现复用组件化</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/07/18/vue/Vue%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE/" rel="next" title="Vue的简单配置">
+                <i class="fa fa-chevron-left"></i> Vue的简单配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="组件化Vue(三)">
+                组件化Vue(三) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue%E7%AE%80%E5%8D%95%E8%AF%AD%E6%B3%95%E7%B3%96"><span class="nav-number">1.</span> <span class="nav-text">Vue简单语法糖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%A9%E8%BD%ACclass%E7%B1%BB%E5%90%8D"><span class="nav-number">1.1.</span> <span class="nav-text">玩转class类名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8Bhtml%E6%A0%87%E7%AD%BE"><span class="nav-number">1.1.1.</span> <span class="nav-text">建立html标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8Bjs%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80"><span class="nav-number">1.1.2.</span> <span class="nav-text">建立js脚本语言</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%A9%E8%BD%ACstyle%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">玩转style样式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E6%A0%87%E7%AD%BE"><span class="nav-number">1.2.1.</span> <span class="nav-text">html标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">js脚本代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-%E5%92%8C-v-else-%E5%BA%94%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">v-if 和 v-else 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E6%A0%87%E7%AD%BE-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">html标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">js脚本代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-%E5%92%8C-v-show-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.</span> <span class="nav-text">v-if 和 v-show 的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8Ahtml%E6%A0%87%E7%AD%BE"><span class="nav-number">1.4.1.</span> <span class="nav-text">上html标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-for-%E5%BA%94%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">v-for 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E4%BB%A3%E7%A0%81"><span class="nav-number">1.5.1.</span> <span class="nav-text">html代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81-2"><span class="nav-number">1.5.2.</span> <span class="nav-text">js脚本代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-for%E5%BA%94%E7%94%A8%E4%B9%8B%E6%B7%BB%E5%8A%A0%E3%80%81%E4%BF%AE%E6%94%B9%E5%88%A0%E9%99%A4"><span class="nav-number">1.6.</span> <span class="nav-text">v-for应用之添加、修改删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html-%E6%A0%87%E7%AD%BE"><span class="nav-number">1.6.1.</span> <span class="nav-text">html 标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%84%9A%E6%9C%AC"><span class="nav-number">1.6.2.</span> <span class="nav-text">js脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue%E5%AE%9E%E4%BE%8B%E5%BA%94%E7%94%A8"><span class="nav-number">1.7.</span> <span class="nav-text">Vue实例应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E6%A0%87%E7%AD%BE-2"><span class="nav-number">1.7.1.</span> <span class="nav-text">html标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80"><span class="nav-number">1.7.2.</span> <span class="nav-text">js脚本语言</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/07/18/vue/%E7%BB%84%E4%BB%B6%E5%8C%96Vue%EF%BC%88%E4%BA%8C%EF%BC%89/';
+          this.page.identifier = '2018/07/18/vue/组件化Vue（二）/';
+          this.page.title = '组件化Vue(二)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

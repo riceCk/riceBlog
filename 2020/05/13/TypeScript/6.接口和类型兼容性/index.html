@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TypeScript," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="扩展类型-接口接口：inteface    扩展类型：类型别名、枚举、接口、类  TypeScript的接口：用于约束、对象、函数的契约（标准） 契约（标准）的形式  API文档，弱标准 代码约束，强标准  1.接口约束对象123456789interface User &#123;  name: string,  age: number&#125;let u: User &#x3D; &#123;  na">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.TS-接口和类型兼容性">
+<meta property="og:url" content="http://yoursite.com/2020/05/13/TypeScript/6.%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%85%BC%E5%AE%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="扩展类型-接口接口：inteface    扩展类型：类型别名、枚举、接口、类  TypeScript的接口：用于约束、对象、函数的契约（标准） 契约（标准）的形式  API文档，弱标准 代码约束，强标准  1.接口约束对象123456789interface User &#123;  name: string,  age: number&#125;let u: User &#x3D; &#123;  na">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-05-13T11:36:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.733Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/13/TypeScript/6.接口和类型兼容性/"/>
+
+
+
+
+
+  <title>6.TS-接口和类型兼容性 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2020/05/13/TypeScript/6.%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%85%BC%E5%AE%B9%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">6.TS-接口和类型兼容性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-13T19:36:00+08:00">
+                2020-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/TypeScript/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2020/05/13/TypeScript/6.%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%85%BC%E5%AE%B9%E6%80%A7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/05/13/TypeScript/6.接口和类型兼容性/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="扩展类型-接口"><a href="#扩展类型-接口" class="headerlink" title="扩展类型-接口"></a>扩展类型-接口</h1><p>接口：inteface  </p>
+<blockquote>
+<p>扩展类型：类型别名、枚举、接口、类</p>
+</blockquote>
+<p>TypeScript的接口：用于约束、对象、函数的契约（标准）</p>
+<p>契约（标准）的形式</p>
+<ul>
+<li>API文档，弱标准</li>
+<li>代码约束，强标准</li>
+</ul>
+<h2 id="1-接口约束对象"><a href="#1-接口约束对象" class="headerlink" title="1.接口约束对象"></a>1.接口约束对象</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">interface User &#123;</span><br><span class="line">  name: string,</span><br><span class="line">  age: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> u: User = &#123;</span><br><span class="line">  name: <span class="string">&#x27;sdfa&#x27;</span>,</span><br><span class="line">  age: 12,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-接口约束函数"><a href="#2-接口约束函数" class="headerlink" title="2.接口约束函数"></a>2.接口约束函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface User &#123;</span><br><span class="line">  sayHello: () =&gt; void,</span><br><span class="line">  sayHello1(): void</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> u: User = &#123;</span><br><span class="line">  <span class="function"><span class="title">sayHello</span></span> () &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">sayHello1</span></span> () &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface Condition &#123;</span><br><span class="line">  (n:number): boolean</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="built_in">sum</span>(number: number[], callback: Condition) &#123;</span><br><span class="line">  <span class="built_in">let</span> s = 0;</span><br><span class="line">  number.forEach(n =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (callback(n)) &#123;</span><br><span class="line">      s += n</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">return</span> s</span><br><span class="line">&#125;</span><br><span class="line">console.log(<span class="built_in">sum</span>([3, 4, 5, 6, 11], n =&gt; n % 2 !== 0))</span><br></pre></td></tr></table></figure>
+<h3 id="接口可以继承"><a href="#接口可以继承" class="headerlink" title="接口可以继承"></a>接口可以继承</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">interface A &#123;</span><br><span class="line">  T1: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface B extends A &#123;</span><br><span class="line">  T2: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> u: B = &#123;</span><br><span class="line">  T2: 123,</span><br><span class="line">  T1: <span class="string">&#x27;123123&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface C extends A, B &#123;</span><br><span class="line">  T3: boolean</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> u1: C = &#123;</span><br><span class="line">  T1: <span class="string">&#x27;1231&#x27;</span>,</span><br><span class="line">  T2: 1231,</span><br><span class="line">  T3: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以通过接口之间的继承，实现多种接口的组合</p>
+<p>使用类型别名可以实现类似的组合效果，需要通过<strong> &amp; </strong> ，它叫做交叉类型<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> A = &#123;</span><br><span class="line">  T1: string</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">type</span> B = &#123;</span><br><span class="line">  T2: number</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">type</span> C = &#123;</span><br><span class="line">  T3: boolean</span><br><span class="line">&#125; &amp; A &amp; B</span><br><span class="line"><span class="built_in">let</span> u1: C = &#123;</span><br><span class="line">  T1: <span class="string">&#x27;1231&#x27;</span>,</span><br><span class="line">  T2: 1231,</span><br><span class="line">  T3: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="他们的区别："><a href="#他们的区别：" class="headerlink" title="他们的区别："></a>他们的区别：</h3><ul>
+<li>子接口不能覆盖父接口的成员</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">interface A &#123;</span><br><span class="line">  T1: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface B extends A &#123;</span><br><span class="line">  T1: number, <span class="comment"># 报错</span></span><br><span class="line">  T2: number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>类型别名的交叉类型会把相同成员的类型进行交叉，下面代码<strong>B</strong>中的T1要同时满足<strong>string</strong>以及<strong>number</strong>，所以赋值哪个类型都不正确</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> A = &#123;</span><br><span class="line">  T1: string</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">type</span> B = &#123;</span><br><span class="line">  T1: number, <span class="comment"># 不会报错</span></span><br><span class="line">  T2: number</span><br><span class="line">&#125; &amp; A</span><br></pre></td></tr></table></figure>
+<h3 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a>readonly</h3><p>只读修饰符，修饰的目标是只读，只读修饰符不参与编译，不在编译结果中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">interface User &#123;</span><br><span class="line">  <span class="built_in">readonly</span> <span class="built_in">id</span>: string</span><br><span class="line">  name: string</span><br><span class="line">  age: number</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> u: User = &#123;</span><br><span class="line">  <span class="built_in">id</span>: <span class="string">&#x27;1231&#x27;</span>,</span><br><span class="line">  name: <span class="string">&#x27;dfa&#x27;</span>,</span><br><span class="line">  age: 13</span><br><span class="line">&#125;</span><br><span class="line">u.id = <span class="string">&#x27;2321&#x27;</span> <span class="comment"># 报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并且所以改变数组的方法都失效</span></span><br><span class="line"><span class="built_in">let</span> arr: <span class="built_in">readonly</span> number[] = [2, 3, 5, 6, 6]</span><br><span class="line">arr[0] = 5 <span class="comment"># 报错</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="类型兼容性"><a href="#类型兼容性" class="headerlink" title="类型兼容性"></a>类型兼容性</h1><p>B -&gt; A, 如果能完成赋值，则B和A类型兼容<br>鸭子辩型法（子结构辩型法）：目标类型需要某一些特征，赋值的类型只要能满足改特征即可</p>
+<ul>
+<li>基本类型：完全匹配</li>
+<li>对象类型：鸭子辨型法 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">interface Duck &#123;</span><br><span class="line">  sound: <span class="string">&#x27;嘎嘎嘎&#x27;</span>,</span><br><span class="line">  swin(): void</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> person = &#123;</span><br><span class="line">  name: <span class="string">&#x27;伪装成鸭子的人&#x27;</span>,</span><br><span class="line">  age: 11,</span><br><span class="line">  sound: <span class="string">&#x27;嘎嘎嘎&#x27;</span> as <span class="string">&#x27;嘎嘎嘎&#x27;</span>, <span class="comment"># 类型断言</span></span><br><span class="line">  <span class="function"><span class="title">swin</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&quot;aaaaa&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> duck: Duck = person</span><br></pre></td></tr></table></figure>
+<p>当直接使用对象字面量赋值的时候，会进行更加严格的判断<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">interface Duck &#123;</span><br><span class="line">  sound: <span class="string">&#x27;嘎嘎嘎&#x27;</span>,</span><br><span class="line">  swin(): void</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> duck: Duck = &#123;</span><br><span class="line">  name: <span class="string">&#x27;伪装成鸭子的人&#x27;</span>, <span class="comment"># 报错</span></span><br><span class="line">  age: 11, <span class="comment"># 报错</span></span><br><span class="line">  sound: <span class="string">&#x27;嘎嘎嘎&#x27;</span> as <span class="string">&#x27;嘎嘎嘎&#x27;</span>, <span class="comment"># 类型断言</span></span><br><span class="line">  <span class="function"><span class="title">swin</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">&quot;aaaaa&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>函数类型<br><strong>参数</strong>：传递给目标函数的参数可以少，但不可以多,下面i可以不传<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">interface Condition &#123;</span><br><span class="line">  (n:number, i: number): boolean</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="built_in">sum</span>(number: number[], callback: Condition) &#123;</span><br><span class="line">  <span class="built_in">let</span> s = 0; </span><br><span class="line">  number.forEach((n, i) =&gt; &#123;</span><br><span class="line">    if (callback(n, i)) &#123;</span><br><span class="line">      s += n</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">return</span> s</span><br><span class="line">&#125;</span><br><span class="line">console.log(<span class="built_in">sum</span>([3, 4, 5, 6, 11], n =&gt; n % 2 !== 0))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>返回值</strong>：要求返回必须返回；</p>
+<h1 id="用接口改造程序（扑克牌），加入大小王"><a href="#用接口改造程序（扑克牌），加入大小王" class="headerlink" title="用接口改造程序（扑克牌），加入大小王"></a>用接口改造程序（扑克牌），加入大小王</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> Deck = Card[]</span><br><span class="line">enum Color &#123;</span><br><span class="line">  heart = <span class="string">&quot;♥&quot;</span>,</span><br><span class="line">  spade = <span class="string">&quot;♠&quot;</span>,</span><br><span class="line">  club = <span class="string">&quot;♣&quot;</span>,</span><br><span class="line">  diamond = <span class="string">&quot;♦&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">enum Mark &#123;</span><br><span class="line">  A = <span class="string">&quot;A&quot;</span>,</span><br><span class="line">  two = <span class="string">&#x27;2&#x27;</span>,</span><br><span class="line">  three = <span class="string">&#x27;3&#x27;</span>,</span><br><span class="line">  four = <span class="string">&#x27;4&#x27;</span>,</span><br><span class="line">  five = <span class="string">&#x27;5&#x27;</span>,</span><br><span class="line">  six = <span class="string">&#x27;6&#x27;</span>,</span><br><span class="line">  seven = <span class="string">&#x27;7&#x27;</span>,</span><br><span class="line">  eight = <span class="string">&#x27;8&#x27;</span>,</span><br><span class="line">  nine = <span class="string">&#x27;9&#x27;</span>,</span><br><span class="line">  ten = <span class="string">&#x27;10&#x27;</span>,</span><br><span class="line">  eleven = <span class="string">&#x27;J&#x27;</span>,</span><br><span class="line">  twelve = <span class="string">&#x27;Q&#x27;</span>,</span><br><span class="line">  king = <span class="string">&#x27;k&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface Card &#123;</span><br><span class="line">  getString(): string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface NormalCard extends Card &#123;</span><br><span class="line">  color: Color,</span><br><span class="line">  mark: Mark,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface Joker extends Card &#123;</span><br><span class="line">  <span class="built_in">type</span>: <span class="string">&#x27;big&#x27;</span> | <span class="string">&#x27;small&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> createDeck (): Deck &#123;</span><br><span class="line">  const deck: Deck = []</span><br><span class="line">  const maeks = Object.values(Mark);</span><br><span class="line">  const colors = Object.values(Color);</span><br><span class="line">  <span class="keyword">for</span> (const m of maeks) &#123;</span><br><span class="line">    <span class="keyword">for</span> (const c of colors) &#123;</span><br><span class="line">      deck.push(&lt;Card&gt;&#123; // 类型断言，强制定义成功Card类型</span><br><span class="line">        color: c,</span><br><span class="line">        mark: m,</span><br><span class="line">        <span class="function"><span class="title">getString</span></span> () &#123;</span><br><span class="line">          <span class="built_in">return</span> this.color + this.mark</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">let</span> joker: Joker = &#123;</span><br><span class="line">    <span class="built_in">type</span>: <span class="string">&quot;small&quot;</span>,</span><br><span class="line">    <span class="function"><span class="title">getString</span></span> () &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="string">&#x27;jo&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  deck.push(joker)</span><br><span class="line">  joker = &#123;</span><br><span class="line">    <span class="built_in">type</span>: <span class="string">&#x27;big&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">getString</span></span> () &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="string">&quot;JO&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  deck.push(joker)</span><br><span class="line">  <span class="built_in">return</span> deck</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> printDeck (deck: Deck) &#123;</span><br><span class="line">  deck.forEach(item =&gt; &#123;</span><br><span class="line">    console.log(item.getString())</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">printDeck(createDeck())</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2020/05/08/TypeScript/%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="next" title="5.TS-模块化">
+                <i class="fa fa-chevron-left"></i> 5.TS-模块化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/05/14/TypeScript/7.TS%E7%9A%84%E7%B1%BB%E5%92%8C%E6%B3%9B%E7%B1%BB/" rel="prev" title="7.TS的类和泛类">
+                7.TS的类和泛类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%B1%BB%E5%9E%8B-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">扩展类型-接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%8E%A5%E5%8F%A3%E7%BA%A6%E6%9D%9F%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1.接口约束对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8E%A5%E5%8F%A3%E7%BA%A6%E6%9D%9F%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">2.接口约束函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%8F%AF%E4%BB%A5%E7%BB%A7%E6%89%BF"><span class="nav-number">1.2.1.</span> <span class="nav-text">接口可以继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%96%E4%BB%AC%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">他们的区别：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#readonly"><span class="nav-number">1.2.3.</span> <span class="nav-text">readonly</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">类型兼容性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%8E%A5%E5%8F%A3%E6%94%B9%E9%80%A0%E7%A8%8B%E5%BA%8F%EF%BC%88%E6%89%91%E5%85%8B%E7%89%8C%EF%BC%89%EF%BC%8C%E5%8A%A0%E5%85%A5%E5%A4%A7%E5%B0%8F%E7%8E%8B"><span class="nav-number">3.</span> <span class="nav-text">用接口改造程序（扑克牌），加入大小王</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2020/05/13/TypeScript/6.%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%85%BC%E5%AE%B9%E6%80%A7/';
+          this.page.identifier = '2020/05/13/TypeScript/6.接口和类型兼容性/';
+          this.page.title = '6.TS-接口和类型兼容性';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

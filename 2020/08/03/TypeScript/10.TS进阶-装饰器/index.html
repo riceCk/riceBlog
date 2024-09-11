@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TypeScript," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="装饰器概述 面向对象概念（java：注解，C#:特征），decoratorangular大量使用，react中也会用到目前JS支持装饰器，目前处于征集的第二阶段  解决的问题装饰器，分离关注点  关注点的问题：在定义某个东西时，应该最清楚该东西的情况 重复代码的问题  上述两个问题产生的根源：某些信息，在定义时能够附加的信息量有限 装饰器的作用：为某些属性、类、参数、方法提供元数据信息（metad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10.TS进阶-装饰器">
+<meta property="og:url" content="http://yoursite.com/2020/08/03/TypeScript/10.TS%E8%BF%9B%E9%98%B6-%E8%A3%85%E9%A5%B0%E5%99%A8/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="装饰器概述 面向对象概念（java：注解，C#:特征），decoratorangular大量使用，react中也会用到目前JS支持装饰器，目前处于征集的第二阶段  解决的问题装饰器，分离关注点  关注点的问题：在定义某个东西时，应该最清楚该东西的情况 重复代码的问题  上述两个问题产生的根源：某些信息，在定义时能够附加的信息量有限 装饰器的作用：为某些属性、类、参数、方法提供元数据信息（metad">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-08-03T12:25:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.733Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/08/03/TypeScript/10.TS进阶-装饰器/"/>
+
+
+
+
+
+  <title>10.TS进阶-装饰器 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2020/08/03/TypeScript/10.TS%E8%BF%9B%E9%98%B6-%E8%A3%85%E9%A5%B0%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">10.TS进阶-装饰器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-03T20:25:00+08:00">
+                2020-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/TypeScript/" itemprop="url" rel="index">
+                    <span itemprop="name">TypeScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2020/08/03/TypeScript/10.TS%E8%BF%9B%E9%98%B6-%E8%A3%85%E9%A5%B0%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/08/03/TypeScript/10.TS进阶-装饰器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
+<p>面向对象概念（java：注解，C#:特征），decorator<br>angular大量使用，react中也会用到<br>目前JS支持装饰器，目前处于征集的第二阶段</p>
+</blockquote>
+<h2 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h2><p>装饰器，分离关注点</p>
+<ul>
+<li>关注点的问题：在定义某个东西时，应该最清楚该东西的情况</li>
+<li>重复代码的问题</li>
+</ul>
+<p>上述两个问题产生的根源：某些信息，在定义时能够附加的信息量有限</p>
+<p>装饰器的作用：为某些属性、类、参数、方法提供元数据信息（metadata）<br>元数据：描述数据的数据</p>
+<h3 id="装饰器的本质"><a href="#装饰器的本质" class="headerlink" title="装饰器的本质"></a>装饰器的本质</h3><p>在js中，装饰器是一个函数。（装饰器是要参与运行的）</p>
+<h2 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h2><p>类装饰器的本质是一个函数，该函数接受一个参数，表示类本身（构造函数本身）<br>使用装饰器<code>@装饰器名</code><br>在TS中，如何约束一个变量为类</p>
+<ul>
+<li>Function</li>
+<li><code>new (参数)=&gt;object</code></li>
+</ul>
+<p>在TS中要使用装饰器，需要开启<code>experimentalDecorators:true</code></p>
+<p>装饰器函数的运行时间：在类定义后之间运行</p>
+<p>类装饰器可以具有返回值：</p>
+<ul>
+<li>void：仅允许函数</li>
+<li>返回一个新的类：会讲新的类替换掉</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Function 约束</span></span><br><span class="line"><span class="keyword">function</span> <span class="built_in">test</span> (target:  Function ) &#123;&#125;</span><br><span class="line">@<span class="built_in">test</span> </span><br><span class="line">class A &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#new (参数)=&gt;object</span></span><br><span class="line"><span class="keyword">function</span> <span class="built_in">test</span> (target: new (...args: any[]) =&gt; object) &#123;</span><br><span class="line">  <span class="built_in">return</span> class B extends target&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="built_in">test</span> </span><br><span class="line">class A &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用@test()</span></span><br><span class="line"><span class="keyword">function</span> <span class="built_in">test</span> (str: string) &#123;</span><br><span class="line">  <span class="built_in">return</span> <span class="keyword">function</span> (target: new (...args: any[]) =&gt; object) &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="built_in">test</span>(<span class="string">&quot;这是一个类&quot;</span>)</span><br><span class="line">class A &#123;</span><br><span class="line">  prop1: string</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>多装饰器的情况：</p>
+<ul>
+<li>会按照后加入先调用的顺序进行调用<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span> constructor = new (...arg: any[]) =&gt; object</span><br><span class="line"><span class="keyword">function</span> d1(target: constructor) &#123;</span><br><span class="line">  console.log(<span class="string">&#x27;d1&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> d2(target: constructor) &#123;</span><br><span class="line">  console.log(<span class="string">&#x27;d2&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line">@d1</span><br><span class="line">@d2</span><br><span class="line">class A &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># d2</span></span><br><span class="line"><span class="comment"># d1</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="成员装饰器"><a href="#成员装饰器" class="headerlink" title="成员装饰器"></a>成员装饰器</h2><ul>
+<li>属性</li>
+</ul>
+<p>属性装饰器也是一个函数，该函数需要两个函数：<br>1.如果是静态属性，则是类本身；如果是实例属性，则为类的原型<br>2.固定为一个字符串，表示属性名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> d(target: any, key: string) &#123;</span><br><span class="line">  console.log(target, key)</span><br><span class="line">  <span class="comment"># A &#123;&#125; prop1</span></span><br><span class="line">  <span class="comment"># A &#123; _props: [ &#x27;prop1&#x27; ] &#125; prop2</span></span><br><span class="line">  <span class="keyword">if</span> (!target._props) &#123;</span><br><span class="line">    target._props = []</span><br><span class="line">  &#125;</span><br><span class="line">  target._props.push(key)</span><br><span class="line">&#125;</span><br><span class="line">class A &#123;</span><br><span class="line">  @d</span><br><span class="line">  prop1: string <span class="comment"># 实例属性</span></span><br><span class="line">  @d</span><br><span class="line">  prop2: string <span class="comment"># 静态属性</span></span><br><span class="line">&#125;</span><br><span class="line">console.log((A.prototype as any)._props)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>方法</li>
+</ul>
+<p>属性装饰器也是一个函数，该函数需要三个函数：<br>1.如果是静态属性，则是类本身；如果是实例属性，则为类的原型<br>2.固定为一个字符串，表示方法名<br>3.属性描述对象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">d</span></span>() &#123;</span><br><span class="line">  <span class="built_in">return</span> <span class="keyword">function</span> (target: any, key: string, descriptor: PropertyDescriptor) &#123;</span><br><span class="line">    console.log(target, key, descriptor)</span><br><span class="line">    <span class="comment">#A &#123;&#125; </span></span><br><span class="line">    <span class="comment"># method1</span></span><br><span class="line">    <span class="comment"># &#123;</span></span><br><span class="line">    <span class="comment">#  value: [Function: method1],</span></span><br><span class="line">    <span class="comment">#  writable: true,</span></span><br><span class="line">    <span class="comment">#  enumerable: false,</span></span><br><span class="line">    <span class="comment">#  configurable: true</span></span><br><span class="line">    <span class="comment"># &#125;</span></span><br><span class="line">&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class A &#123;</span><br><span class="line">  @d()</span><br><span class="line">  <span class="function"><span class="title">method1</span></span>() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="练习：类和属性的描述装饰器"><a href="#练习：类和属性的描述装饰器" class="headerlink" title="练习：类和属性的描述装饰器"></a>练习：类和属性的描述装饰器</h2><p>index.ts<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import &#123;classDescriptor, propDescriptor, printObj&#125; from <span class="string">&#x27;./Descriptor&#x27;</span></span><br><span class="line"></span><br><span class="line">@classDescriptor(<span class="string">&#x27;用户&#x27;</span>)</span><br><span class="line">class User &#123;</span><br><span class="line">  @propDescriptor(<span class="string">&quot;账号&quot;</span>)</span><br><span class="line">  loginId: string</span><br><span class="line">  @propDescriptor(<span class="string">&quot;密码&quot;</span>)</span><br><span class="line">  loginPwd: string</span><br><span class="line">&#125;</span><br><span class="line">const u = new User();</span><br><span class="line">u.loginId = <span class="string">&#x27;abc&#x27;</span></span><br><span class="line">u.loginPwd = <span class="string">&#x27;123&#x27;</span></span><br><span class="line">printObj(u);</span><br></pre></td></tr></table></figure></p>
+<p>Descriptor.tx<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> <span class="keyword">function</span> classDescriptor (description: string) &#123;</span><br><span class="line">  <span class="built_in">return</span> <span class="keyword">function</span> (target: Function) &#123;</span><br><span class="line">    // 保存到该类的原型中</span><br><span class="line">    target.prototype.<span class="variable">$classDescription</span> = description</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="keyword">function</span> propDescriptor (description: string) &#123;</span><br><span class="line">  <span class="built_in">return</span> <span class="keyword">function</span> (target: any, propName: string) &#123;</span><br><span class="line">    // 把所有的属性信息保存到该类的原型中</span><br><span class="line">    <span class="keyword">if</span> (!target.<span class="variable">$propDescriptions</span>) &#123;</span><br><span class="line">      target.<span class="variable">$propDescriptions</span> = []</span><br><span class="line">    &#125;</span><br><span class="line">    target.<span class="variable">$propDescriptions</span>.push(&#123;</span><br><span class="line">      propName,</span><br><span class="line">      description</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="keyword">function</span> printObj(obj: any) &#123;</span><br><span class="line">  <span class="keyword">if</span> (obj.<span class="variable">$classDescription</span>) &#123;</span><br><span class="line">    console.log(obj.<span class="variable">$classDescription</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    console.log(obj.__propt__.constructor.name)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(!obj.<span class="variable">$propDescriptions</span>) &#123;</span><br><span class="line">    obj.<span class="variable">$propDescriptions</span> = []</span><br><span class="line">  &#125;</span><br><span class="line">  // 输出所有的属性描述和属性值</span><br><span class="line">  <span class="keyword">for</span> (const key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">      const prop = obj.<span class="variable">$propDescriptions</span>.find((p: any) =&gt; p.propName === key) </span><br><span class="line">      if (prop) &#123;</span><br><span class="line">        console.log(`\t<span class="variable">$&#123;prop.description&#125;</span>: <span class="variable">$&#123;obj[key]&#125;</span>`)</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        console.log(`\t<span class="variable">$&#123;key&#125;</span>: <span class="variable">$&#123;obj[key]&#125;</span>`)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="reflect-metadata库"><a href="#reflect-metadata库" class="headerlink" title="reflect-metadata库"></a>reflect-metadata库</h2><p>该库的作用：保存元数据<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import <span class="string">&quot;reflect-metadata&quot;</span></span><br><span class="line"></span><br><span class="line">@Reflect.metadata(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;一个类&#x27;</span>)</span><br><span class="line">class A &#123;</span><br><span class="line">  @Reflect.metadata(<span class="string">&#x27;prop&#x27;</span>, <span class="string">&#x27;一个属性&#x27;</span>)</span><br><span class="line">  prop1: string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const obj = new A()</span><br><span class="line">console.log(Reflect.getMetadata(<span class="string">&#x27;a&#x27;</span>, A))</span><br><span class="line">console.log(Reflect.getMetadata(<span class="string">&#x27;prop&#x27;</span>, obj, <span class="string">&#x27;prop1&#x27;</span>))</span><br></pre></td></tr></table></figure></p>
+<h2 id="class-validator-和-class-transformer库"><a href="#class-validator-和-class-transformer库" class="headerlink" title="class-validator 和 class-transformer库"></a>class-validator 和 class-transformer库</h2><h3 id="class-validator-验证装饰器库"><a href="#class-validator-验证装饰器库" class="headerlink" title="class-validator 验证装饰器库"></a>class-validator 验证装饰器库</h3><ul>
+<li>npm install class-validator –save</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import <span class="string">&quot;reflect-metadata&quot;</span></span><br><span class="line">import &#123; IsNotEmpty, validate, MinLength, MaxLength, min, Min, Max &#125; from <span class="string">&#x27;class-validator&#x27;</span>;</span><br><span class="line"></span><br><span class="line">class RegUser &#123;</span><br><span class="line">  @IsNotEmpty(&#123;message: <span class="string">&quot;账号不可以为空&quot;</span>&#125;)</span><br><span class="line">  @MinLength(5, &#123;message: <span class="string">&#x27;账号最小有五个字符&#x27;</span>&#125;)</span><br><span class="line">  @MaxLength(15, &#123;message: <span class="string">&#x27;账号最多15个字符&#x27;</span>&#125;)</span><br><span class="line">  loginId: string</span><br><span class="line">  loginPwd: string</span><br><span class="line">  @Min(0, &#123;message: <span class="string">&#x27;年龄最小值为0&#x27;</span>&#125;)</span><br><span class="line">  @Max(100, &#123;message: <span class="string">&#x27;年龄最小值为100&#x27;</span>&#125;)</span><br><span class="line">  age: number</span><br><span class="line">  gender: <span class="string">&#x27;男&#x27;</span> | <span class="string">&#x27;女&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const post = new RegUser()</span><br><span class="line">post.loginId = <span class="string">&#x27;&#x27;</span></span><br><span class="line">validate(post).<span class="keyword">then</span>(errors =&gt; &#123;</span><br><span class="line">  console.log(errors)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
+<li>参数装饰器</li>
+</ul>
+<p>依赖注入、依赖倒置<br>要求函数有三个参数：<br>1.如果方法是静态的，则为类本身；如果方法是实例方法，则为类的原型<br>2.方法名称<br>3.在参数列表中的索引</p>
+<ul>
+<li>关于Ts自动注入的元数据 </li>
+</ul>
+<p>如果安装了<code>reflect-metadata</code>,并且导入了该库，并且在某个成员上添加了元数据，并且启用了<code>emitDecoratorMetadata</code></p>
+<p>则TS在编译结果中，会将约束的类型，作为元数据加入到相应位置</p>
+<p>这样一来Ts的类型检查（约束）将有机会在运行时进行</p>
+<ul>
+<li>AOP （aspect oriented programming）</li>
+</ul>
+<p>编程方式，属于面向对象开发</p>
+<p>将一些在业务中共同出现功能块，横向切分，已达到分离关注点的目的</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/TypeScript/" rel="tag"># TypeScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2020/06/29/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/4.python%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="next" title="4.Python组合数据类型">
+                <i class="fa fa-chevron-left"></i> 4.Python组合数据类型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/08/10/TypeScript/11.TS%E8%BF%9B%E9%98%B6-%E7%B1%BB%E5%9E%8B%E6%BC%94%E7%AE%97/" rel="prev" title="11.TS进阶-类型演算">
+                11.TS进阶-类型演算 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">装饰器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">装饰器的本质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">类装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E5%91%98%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">成员装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A%E7%B1%BB%E5%92%8C%E5%B1%9E%E6%80%A7%E7%9A%84%E6%8F%8F%E8%BF%B0%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">1.5.</span> <span class="nav-text">练习：类和属性的描述装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reflect-metadata%E5%BA%93"><span class="nav-number">1.6.</span> <span class="nav-text">reflect-metadata库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-validator-%E5%92%8C-class-transformer%E5%BA%93"><span class="nav-number">1.7.</span> <span class="nav-text">class-validator 和 class-transformer库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#class-validator-%E9%AA%8C%E8%AF%81%E8%A3%85%E9%A5%B0%E5%99%A8%E5%BA%93"><span class="nav-number">1.7.1.</span> <span class="nav-text">class-validator 验证装饰器库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.8.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2020/08/03/TypeScript/10.TS%E8%BF%9B%E9%98%B6-%E8%A3%85%E9%A5%B0%E5%99%A8/';
+          this.page.identifier = '2020/08/03/TypeScript/10.TS进阶-装饰器/';
+          this.page.title = '10.TS进阶-装饰器';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

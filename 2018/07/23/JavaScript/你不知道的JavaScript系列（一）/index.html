@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="你不知道到JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="重源码! bind的模拟实现1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556# 实例一&lt;div&gt;dsfd&lt;&#x2F;div&gt;&lt;srcipt&gt;var list &#x3D; &#123;    init: function()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道到JavaScript系列一">
+<meta property="og:url" content="http://yoursite.com/2018/07/23/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="重源码! bind的模拟实现1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556# 实例一&lt;div&gt;dsfd&lt;&#x2F;div&gt;&lt;srcipt&gt;var list &#x3D; &#123;    init: function()">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-07-23T07:51:14.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.732Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="你不知道到JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/23/JavaScript/你不知道的JavaScript系列（一）/"/>
+
+
+
+
+
+  <title>你不知道到JavaScript系列一 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2018/07/23/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你不知道到JavaScript系列一</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-23T15:51:14+08:00">
+                2018-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2018/07/23/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/23/JavaScript/你不知道的JavaScript系列（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="重源码-bind的模拟实现"><a href="#重源码-bind的模拟实现" class="headerlink" title="重源码! bind的模拟实现"></a>重源码! bind的模拟实现</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实例一</span></span><br><span class="line">&lt;div&gt;dsfd&lt;/div&gt;</span><br><span class="line">&lt;srcipt&gt;</span><br><span class="line">var list = &#123;</span><br><span class="line">    init: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        this.message = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line">        this.bindEvent();</span><br><span class="line">    &#125;,</span><br><span class="line">    bindEvent: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        <span class="comment">#this = list</span></span><br><span class="line">        var oDiv = document.getElementsByTagName(<span class="string">&#x27;div&#x27;</span>)[0];</span><br><span class="line">        oDiv.onclick = this.show.bind(this);</span><br><span class="line">    &#125;,</span><br><span class="line">    show: <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        <span class="comment"># 通过bind方法讲this转向list实例，否则this指向div实例</span></span><br><span class="line">        console.log(this) </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">list.init();</span><br><span class="line">&lt;/srcipt&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#实例二</span></span><br><span class="line">&lt;srcipt&gt;</span><br><span class="line">var value = 0;</span><br><span class="line">var obj = &#123;</span><br><span class="line">    value: 1</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> show (name, age)&#123;</span><br><span class="line">    console.log(this.value);</span><br><span class="line">    console.log(name, age);</span><br><span class="line">&#125;</span><br><span class="line">var newShow = show.bind(obj, <span class="string">&#x27;cst&#x27;</span>, 18)</span><br><span class="line"><span class="comment"># =&gt; bind的第一个参数是this指向，之后的参数是show的实参</span></span><br><span class="line">&lt;/srcipt&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在function原型上封装一个bin()</span></span><br><span class="line">&lt;srcipt&gt;</span><br><span class="line">Function.prototype.newBind = <span class="keyword">function</span>(target)&#123;</span><br><span class="line">    <span class="comment">#这边应该参数只写target，只取第一个参数即是this指向的地址</span></span><br><span class="line">    target = target || window;</span><br><span class="line">	var self = this;</span><br><span class="line">    <span class="comment"># 这里的arguments是newBind()中的参数</span></span><br><span class="line">	var args = [].slice.call(arguments, 1);</span><br><span class="line">    <span class="comment"># silce创建从原数组索引1开始的新数组</span></span><br><span class="line">    var temp = <span class="function"><span class="title">function</span></span>()&#123;&#125;;</span><br><span class="line">    var F = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">        <span class="comment"># 这里的arguments是new之后新函数的参数</span></span><br><span class="line">        var _arg = [].slice.call(arguments, 0)</span><br><span class="line">        <span class="built_in">return</span> self.apply(this instanceof temp ? this : target,args.concat(_arg))</span><br><span class="line">        <span class="comment"># concat方法是连接arg数组和_arg数组成新数组</span></span><br><span class="line">    &#125;</span><br><span class="line">    temp.prototype = this.prototype;</span><br><span class="line">    F.prototype = new temp();</span><br><span class="line">    <span class="built_in">return</span> F;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/srcipt&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="函数式编程之纯函数"><a href="#函数式编程之纯函数" class="headerlink" title="函数式编程之纯函数"></a>函数式编程之纯函数</h1><p>纯函数的定义是，对于相同的输入，永远会得到相同的输出，而且没有任何可观察的副作用，也不依赖外部环境的状态，及是不依赖，不修改其作用域之外的变量的函数</p>
+<h2 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = [1, 2, 3]</span><br><span class="line"><span class="keyword">function</span> foo(x) &#123;</span><br><span class="line">    x.push(4)</span><br><span class="line">    x; <span class="comment"># [1, 2, 3, 4]</span></span><br><span class="line">    <span class="comment"># 然后</span></span><br><span class="line">    x = [4, 5, 6]</span><br><span class="line">    x.push(7)</span><br><span class="line">    x; <span class="comment"># [4, 5, 6, 7]</span></span><br><span class="line">&#125;</span><br><span class="line">foo(a)</span><br><span class="line">a; <span class="comment"># 是[1, 2, 3, 4], 不是[4, 5, 6, 7]</span></span><br></pre></td></tr></table></figure>
+<p><strong>疑惑？</strong><br>我们向函数传递a的时候，实际是将引用a的一个复本赋值给x，而a仍然指向<code>[1, 2, 3]</code>。在函数中我们可以通过引用x来更改数组的值（push（4）之后变成<code>[1, 2, 3, 4]</code>）。但<code>x = [4, 5, 6]</code>并不影响a的指向，所以a仍然指向<code>[1, 2, 3, 4]</code></p>
+<h2 id="纯函数思路"><a href="#纯函数思路" class="headerlink" title="纯函数思路"></a>纯函数思路</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var arr = []</span><br><span class="line"><span class="keyword">function</span> add (_arr) &#123;</span><br><span class="line">    var obj = &#123;name: <span class="string">&#x27;cst&#x27;</span>&#125;</span><br><span class="line">    _arr.push(obj)</span><br><span class="line">&#125;</span><br><span class="line">add(arr)</span><br><span class="line"><span class="comment"># 不是纯函数</span></span><br><span class="line"><span class="comment"># arr会发生改变，这就是引用值和原始值的区别</span></span><br><span class="line">var arr = [&#123;name: <span class="string">&#x27;duyi&#x27;</span>&#125;]</span><br><span class="line"><span class="keyword">function</span> add(_arr) &#123;</span><br><span class="line">    var obj = &#123;name: <span class="string">&#x27;cst&#x27;</span>&#125;</span><br><span class="line">    var newArr = [];</span><br><span class="line">    <span class="keyword">for</span> (var i = 0; i &lt; _arr.length; i++) &#123;</span><br><span class="line">        newArr[i] = _arr[i];</span><br><span class="line">    &#125;</span><br><span class="line">    newArr.push(obj)</span><br><span class="line">    <span class="built_in">return</span> newArr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="纯函数实例：bug守恒定律"><a href="#纯函数实例：bug守恒定律" class="headerlink" title="纯函数实例：bug守恒定律"></a>纯函数实例：bug守恒定律</h2><p>在JavaScript中你可以很容易的创建全局变量，这些变量可以在所以函数中访问到。这也是一个导致bug的常见原因，因为程序中的任务部分都可能修改全局变量从而导致函数的行为出现异常函数的行为出现异常<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var personArr = [&#123;name: <span class="string">&#x27;王港&#x27;</span>, src: <span class="string">&#x27;3.png&#x27;</span>, des: <span class="string">&#x27;梵蒂冈数据库&#x27;</span>, sex:<span class="string">&#x27;m&#x27;</span>&#125;]</span><br><span class="line">var oIp = document.getElementById(<span class="string">&#x27;input&#x27;</span>)</span><br><span class="line">oInp.oninput = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    filterByText(this.value, personArr)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> filterByText (text, arr) &#123;</span><br><span class="line">    var newArr = [];</span><br><span class="line">    <span class="keyword">for</span> (var i = 0; i &lt; arr.lenth; i++) &#123;</span><br><span class="line">        arr[i].name.indexOf(text) != -1 ? newArr.push(arr[i])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="函数角度性能优化函数记忆"><a href="#函数角度性能优化函数记忆" class="headerlink" title="函数角度性能优化函数记忆"></a>函数角度性能优化函数记忆</h1><p>在内存与队列中选择最优效率</p>
+<h2 id="玩转阶乘"><a href="#玩转阶乘" class="headerlink" title="玩转阶乘"></a>玩转阶乘</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> cache = []</span><br><span class="line"><span class="built_in">let</span> count = 0</span><br><span class="line"><span class="keyword">function</span> factorial(n) &#123;</span><br><span class="line">    count ++</span><br><span class="line">    <span class="keyword">if</span>(cache[n]) &#123;</span><br><span class="line">        <span class="built_in">return</span> cache[n]</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (n == 0 || n == 1) &#123;</span><br><span class="line">            cache[0] = 1</span><br><span class="line">            cache[1] = 1</span><br><span class="line">            <span class="built_in">return</span> 1</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cache[n] = n * factorial(n-1)</span><br><span class="line">            <span class="built_in">return</span> cache[n]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line">factorial(5)</span><br><span class="line"><span class="comment"># 1! = 1 =&gt; 1次</span></span><br><span class="line"><span class="comment"># 2! = 2 * 1! =&gt; 2次</span></span><br><span class="line"><span class="comment"># 3! = 3 * 2! =&gt; 2次</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p><strong>count=9</strong>进行优化之后的函数执行的次数少了很多，随着n的增大，会变得更明显</p>
+<h2 id="优化阶乘函数（升级版）"><a href="#优化阶乘函数（升级版）" class="headerlink" title="优化阶乘函数（升级版）"></a>优化阶乘函数（升级版）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> factorial(n) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n == 0 || n == 1) &#123;</span><br><span class="line">        <span class="built_in">return</span> 1</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">return</span> n * factorial(n-1)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> memorize(fn) &#123;</span><br><span class="line">    var cache = &#123;&#125;</span><br><span class="line">    <span class="built_in">return</span> <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">        var key = arguments.length + Array.prototype.join.call(arguments)</span><br><span class="line">        <span class="keyword">if</span>(cache[key]) &#123;</span><br><span class="line">            <span class="built_in">return</span> cache[key]</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cache[key] = fn.apply(this, arguments)</span><br><span class="line">            <span class="built_in">return</span> cache[key]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var newF = memorize(factorial)</span><br></pre></td></tr></table></figure>
+<h1 id="防抖-amp-节流"><a href="#防抖-amp-节流" class="headerlink" title="防抖&amp;节流"></a>防抖&amp;节流</h1><h2 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h2><p>函数节流就是预定一个函数只要在不于等于执行周期时才执行，周期内调用不执行</p>
+<ul>
+<li>窗口调整</li>
+<li>页面滚动</li>
+<li>抢购疯狂点击</li>
+</ul>
+<h3 id="针对疯狂点击问题"><a href="#针对疯狂点击问题" class="headerlink" title="针对疯狂点击问题"></a>针对疯狂点击问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;show&quot;</span>&gt;0&lt;/div&gt;</span><br><span class="line">&lt;button <span class="built_in">id</span>=<span class="string">&quot;btn&quot;</span>&gt;click&lt;/button&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var oDiv = document.getElementById(<span class="string">&#x27;show&#x27;</span>)</span><br><span class="line">        var oBtn = document.getElementById(<span class="string">&#x27;btn&#x27;</span>);</span><br><span class="line">        <span class="keyword">function</span> throttle (handler, <span class="built_in">wait</span>) &#123;</span><br><span class="line">            var lastTime = 0;</span><br><span class="line">            <span class="built_in">return</span> <span class="keyword">function</span> (e) &#123;</span><br><span class="line">                var nowTime = new Date().getTime()  <span class="comment"># 1970年一月一日</span></span><br><span class="line">                <span class="keyword">if</span> (nowTime - lastTime &gt; <span class="built_in">wait</span>) &#123;</span><br><span class="line">                    handler.apply(this, arguments)</span><br><span class="line">                    lastTime = nowTime</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">function</span> buy (e) &#123;</span><br><span class="line">            oDiv.innerText = parseInt(oDiv.innerText) + 1;</span><br><span class="line">        &#125;</span><br><span class="line">        oBtn.onclick = throttle(buy, 1000)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h2><p>函数防抖就是在函数需要频繁触发情况时，只有足够空间的时间，才执行一次</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> <span class="built_in">id</span>=<span class="string">&quot;inp&quot;</span>&gt;&lt;/input&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var oInp = document.getElementById(<span class="string">&#x27;inp&#x27;</span>)</span><br><span class="line">    var timer = null;</span><br><span class="line">    <span class="keyword">function</span> <span class="function"><span class="title">ajax</span></span> () &#123;</span><br><span class="line">        console.log(this.value)</span><br><span class="line">    &#125;</span><br><span class="line">    oInp.oninput = <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">        clearTimeout(timer)</span><br><span class="line">        timer = setTimeout(<span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">            ajax.apply(_self, arguments)</span><br><span class="line">        &#125;, 1000)</span><br><span class="line">    &#125;;</span><br><span class="line">&lt;/srcipt&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="js数学之美"><a href="#js数学之美" class="headerlink" title="js数学之美"></a>js数学之美</h1><h2 id="拖拽公式-物体拖拽事件"><a href="#拖拽公式-物体拖拽事件" class="headerlink" title="拖拽公式-物体拖拽事件"></a>拖拽公式-物体拖拽事件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;box&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var oBox = document.getElementById(<span class="string">&#x27;box&#x27;</span>);</span><br><span class="line">        var body = document.getElementsByTagName(<span class="string">&#x27;body&#x27;</span>)[0];</span><br><span class="line">        <span class="keyword">function</span> bindEvent (ele, wrap) &#123;</span><br><span class="line">            var X,</span><br><span class="line">                Y,</span><br><span class="line">                boxL,</span><br><span class="line">                boxT,</span><br><span class="line">                disL,</span><br><span class="line">                disT;</span><br><span class="line">            var drag = <span class="literal">false</span>;</span><br><span class="line">            ele.onmousedown = <span class="keyword">function</span> (e) &#123;</span><br><span class="line">                drag = <span class="literal">true</span>;</span><br><span class="line">                var event = e || window.event;</span><br><span class="line">                X = event.clientX;</span><br><span class="line">                Y = event.clientY;</span><br><span class="line">                boxL = ele.offsetLeft;</span><br><span class="line">                boxT = ele.offsetTop;</span><br><span class="line">                disL = X - boxL;</span><br><span class="line">                disT = Y - boxT;</span><br><span class="line">                console.log(disL, disT)</span><br><span class="line">            &#125;</span><br><span class="line">            body.onmousemove = <span class="keyword">function</span> (e)&#123;</span><br><span class="line">                var event = e || window.event;</span><br><span class="line">                <span class="keyword">if</span> (drag) &#123;</span><br><span class="line">                    ele.style.left = event.clientX - disL + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                    ele.style.top = event.clientY - disT + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ele.onmouseup = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">                drag = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        bindEvent(oBox, body);</span><br><span class="line">    &lt;/scritp&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="canvas中的数学应用-扇形进度条"><a href="#canvas中的数学应用-扇形进度条" class="headerlink" title="canvas中的数学应用-扇形进度条"></a>canvas中的数学应用-扇形进度条</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas <span class="built_in">id</span>=<span class="string">&quot;can&quot;</span> height=<span class="string">&#x27;500px&#x27;</span> width=<span class="string">&#x27;500px&#x27;</span>&gt;&lt;/canvas&gt;</span><br><span class="line">&lt;div <span class="built_in">id</span>=<span class="string">&quot;box&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var can = document.getElementById(<span class="string">&#x27;can&#x27;</span>)</span><br><span class="line">        var oBox = document.getElementById(<span class="string">&#x27;box&#x27;</span>)</span><br><span class="line">        var ctx = can.getContext(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">        CanvasRenderingContext2D.prototype.sector = <span class="keyword">function</span> (x, y, r, sDeg, eDeg) &#123;</span><br><span class="line">            <span class="comment"># 圆心点，半径，角度 --&gt; 起始角度，终止角度</span></span><br><span class="line">            this.save();</span><br><span class="line">            this.beginPath();</span><br><span class="line">            this.moveTo(x, y);</span><br><span class="line">            <span class="comment"># 角度 -&gt; 弧度</span></span><br><span class="line">            this.arc(x, y, r, sDeg * Math.PI / 180, eDeg * Math.PI / 180, <span class="literal">false</span>);</span><br><span class="line">            this.closePath()</span><br><span class="line">            this.restore()</span><br><span class="line">            <span class="built_in">return</span> this</span><br><span class="line">        &#125;</span><br><span class="line">        var timer;</span><br><span class="line">        var angle = 0;</span><br><span class="line">        var per;</span><br><span class="line">        ctx.fillStyle = <span class="string">&#x27;red&#x27;</span></span><br><span class="line">        <span class="comment"># angle / 360 = per / 100</span></span><br><span class="line">        timer = setInterval(() =&gt; &#123;</span><br><span class="line">            angle += <span class="number">5</span></span><br><span class="line">            ctx.sector(<span class="number">250</span>, <span class="number">250</span>, <span class="number">100</span>, <span class="number">0</span>, angle).fill();</span><br><span class="line">            per = (<span class="number">5</span> * angle / <span class="number">18</span>).toFixed(<span class="number">2</span>)</span><br><span class="line">            oBox.innerHTML = &#x27;加载中：&#x27; + per + &#x27;%&#x27;</span><br><span class="line">            if (angle === <span class="number">360</span>) &#123;</span><br><span class="line">                clearInterval(timer)</span><br><span class="line">                oBox.innerHTML = &#x27;加载完成！&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">200</span>)</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="实战利器拖拽拓展-拖拽加覆盖"><a href="#实战利器拖拽拓展-拖拽加覆盖" class="headerlink" title="实战利器拖拽拓展-拖拽加覆盖"></a>实战利器拖拽拓展-拖拽加覆盖</h2><h1 id="UI多线程-深入剖析Js执行机制"><a href="#UI多线程-深入剖析Js执行机制" class="headerlink" title="UI多线程-深入剖析Js执行机制"></a>UI多线程-深入剖析Js执行机制</h1><h2 id="流程器常驻的线程"><a href="#流程器常驻的线程" class="headerlink" title="流程器常驻的线程"></a>流程器常驻的线程</h2><ul>
+<li>JS引擎线程（解释执行js代码、用户输入、网络请求）</li>
+<li>GUI线程（绘制用户界面、与js主线程是互斥的）</li>
+<li>http网络请求线程（处理用户的get、post等请求，等返回结果后将回调函数推入任务队列）</li>
+<li>定时器触发器线程（setTimeout、setInterval等待时间结束后把执行函数推入任务队列中）</li>
+<li>浏览器事件处理线程（将click、mouse等交互事件发生后将这些事件放入事件队列中）</li>
+</ul>
+<h2 id="JS引擎线程和GUI线程-互斥"><a href="#JS引擎线程和GUI线程-互斥" class="headerlink" title="JS引擎线程和GUI线程-互斥"></a>JS引擎线程和GUI线程-互斥</h2><p>JS可以操作Dom元素，进行会影响到GUI的渲染结果，因此JS引擎线程与GUI渲染线程是互斥的，也就是说当js引擎线程处于运行状态时，GUI渲染线程处于冻结状态</p>
+<h2 id="JS执行机制-如果是多线程的不好吗"><a href="#JS执行机制-如果是多线程的不好吗" class="headerlink" title="JS执行机制-如果是多线程的不好吗"></a>JS执行机制-如果是多线程的不好吗</h2><p>js设计出来就是为了与用户交互，处理Dom，加入js是多线程，同一时间一个线程想要修改Dom，另一个线程想要删除Dom，问题就变的复杂许多，浏览器不知道听谁的，如果引入“锁”的机制，这不就又回到了被其他尴尬的困境了吗？</p>
+<h2 id="Js执行机制"><a href="#Js执行机制" class="headerlink" title="Js执行机制"></a>Js执行机制</h2><p>导图表达的内容用文字来表述的话：<br>同步和异步任务分别进入不同的执行“场所”，同步的进入主线程，异步的进入Event Table并注册函数。<br>当指定的事件完成时，Event Table会将这个函数移入Event Queue<br>主线程内的任务执行完毕为空，会去Event Queue读取对应的函数，进入主线程执行。<br>上述过程会不断重复，也就是常说的Event Loop（事件循环）</p>
+<h2 id="同步任务"><a href="#同步任务" class="headerlink" title="同步任务"></a>同步任务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> foo (ot) &#123;</span><br><span class="line">    <span class="keyword">function</span> bar (it) &#123;</span><br><span class="line">        console.log(it)</span><br><span class="line">    &#125;</span><br><span class="line">    bar(20)</span><br><span class="line">    console.log(ot)</span><br><span class="line">&#125;</span><br><span class="line">foo(10)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码没有执行的时候，执行栈为空栈</li>
+<li>foo函数执行时，创建了一个帧中包含了形参、局部变量（预编译过程），然后把这一帧压入栈中</li>
+<li>然后执行foo函数内代码，执行bar函数 </li>
+<li>创建新栈，同样有形参、局部变量，压入栈中</li>
+<li>bar函数执行完毕，弹出栈</li>
+<li>foo函数执行完毕，弹出栈</li>
+<li>执行栈为空</li>
+</ul>
+<h1 id="重源码！call-apply手写实现与应用"><a href="#重源码！call-apply手写实现与应用" class="headerlink" title="重源码！call,apply手写实现与应用"></a>重源码！call,apply手写实现与应用</h1><h2 id="封装call源码"><a href="#封装call源码" class="headerlink" title="封装call源码"></a>封装call源码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.newCall = <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">let</span> ctx = arguments[0] || window</span><br><span class="line">    <span class="built_in">let</span> args = []</span><br><span class="line">    ctx.fn = this</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">let</span> i = 1; i &lt; arguments.length; i++) &#123;</span><br><span class="line">        args.push(<span class="string">&#x27;arguments[&#x27;</span> + i + <span class="string">&#x27;]&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="comment">#  eval -&gt; 可以直接执行eval中的函数/运算</span></span><br><span class="line">    <span class="built_in">let</span> result = <span class="built_in">eval</span>(<span class="string">&#x27;ctx.fn(&#x27;</span> + args.join(<span class="string">&#x27;,&#x27;</span>) + <span class="string">&#x27;)&#x27;</span>)</span><br><span class="line">    delete ctx.fn</span><br><span class="line">    <span class="built_in">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> value = <span class="string">&#x27;window&#x27;</span>;</span><br><span class="line"><span class="built_in">let</span> obj = &#123;</span><br><span class="line">    value: <span class="string">&#x27;obj&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> show (name, age) &#123;</span><br><span class="line">    console.log(this.value)</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">        name: name,</span><br><span class="line">        age: age</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># obj.show = show()</span></span><br><span class="line">show.call(obj)</span><br><span class="line"><span class="built_in">let</span> reslut = show.newCall(obj, <span class="string">&#x27;deng&#x27;</span>, 30)</span><br><span class="line">console.log(reslut)</span><br></pre></td></tr></table></figure>
+<h2 id="封装apply"><a href="#封装apply" class="headerlink" title="封装apply"></a>封装apply</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Function prototype.newApply = <span class="keyword">function</span>(ctx, arr) &#123;</span><br><span class="line">    <span class="built_in">let</span> ctx = ctx || window</span><br><span class="line">    <span class="built_in">let</span> result </span><br><span class="line">    ctx.fn = this</span><br><span class="line">    <span class="keyword">if</span>(!arr) &#123;</span><br><span class="line">        result = ctx.fn()</span><br><span class="line">        delete ctx.fn</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">let</span> args = []</span><br><span class="line">        ctx.fn = this</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">let</span> i = 1; i &lt; arr.length; i++) &#123;</span><br><span class="line">            args.push(<span class="string">&#x27;arr[&#x27;</span> + i + <span class="string">&#x27;]&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        result = <span class="built_in">eval</span>(<span class="string">&#x27;ctx.fn(&#x27;</span> + args.join(<span class="string">&#x27;,&#x27;</span>) + <span class="string">&#x27;)&#x27;</span>)</span><br><span class="line">        delete ctx.fn</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> reslut</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对抽象等于进行详解"><a href="#对抽象等于进行详解" class="headerlink" title="对抽象等于进行详解"></a>对抽象等于进行详解</h1><h2 id="1、字符串和数字之间的相等比较"><a href="#1、字符串和数字之间的相等比较" class="headerlink" title="1、字符串和数字之间的相等比较"></a>1、字符串和数字之间的相等比较</h2><ul>
+<li>如果Type(x)是数字，Type(y)是字符串，则返回x == ToNumber(y)的结果</li>
+<li>如果Type(x)是字符串，Type(y)是数字，则返回ToNumber(x) == y的结果</li>
+</ul>
+<h2 id="2、其他类型和布尔值之间的比较"><a href="#2、其他类型和布尔值之间的比较" class="headerlink" title="2、其他类型和布尔值之间的比较"></a>2、其他类型和布尔值之间的比较</h2><ul>
+<li>如果Type(x)是布尔类型，则返回ToNumber(x) == y的结果</li>
+<li>如果Type(y)是布尔类型，则返回x == ToNumber(y)的结果</li>
+</ul>
+<h2 id="3、null和undefined之间的相等比较"><a href="#3、null和undefined之间的相等比较" class="headerlink" title="3、null和undefined之间的相等比较"></a>3、null和undefined之间的相等比较</h2><ul>
+<li>null == undefined</li>
+</ul>
+<h2 id="对象和非对象之间的相等比较"><a href="#对象和非对象之间的相等比较" class="headerlink" title="对象和非对象之间的相等比较"></a>对象和非对象之间的相等比较</h2><ul>
+<li>如果Type(x)是字符串或者数字，Type(y)是对象，则返回x == ToPrimitive(y)的结果；</li>
+<li>反之一样 </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E5%88%B0JavaScript/" rel="tag"># 你不知道到JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2018/07/23/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/Linux%E5%9F%BA%E6%9C%AC%E6%8C%87%E4%BB%A4/" rel="next" title="Linux基本指令">
+                <i class="fa fa-chevron-left"></i> Linux基本指令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2018/07/24/%E4%BA%86%E8%A7%A3nodejs%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/nodejs%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="Http模块（二）">
+                Http模块（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E6%BA%90%E7%A0%81-bind%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">重源码! bind的模拟实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">函数式编程之纯函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80"><span class="nav-number">2.1.</span> <span class="nav-text">小试牛刀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0%E6%80%9D%E8%B7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">纯函数思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0%E5%AE%9E%E4%BE%8B%EF%BC%9Abug%E5%AE%88%E6%81%92%E5%AE%9A%E5%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">纯函数实例：bug守恒定律</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%A7%92%E5%BA%A6%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0%E8%AE%B0%E5%BF%86"><span class="nav-number">3.</span> <span class="nav-text">函数角度性能优化函数记忆</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%A9%E8%BD%AC%E9%98%B6%E4%B9%98"><span class="nav-number">3.1.</span> <span class="nav-text">玩转阶乘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E9%98%B6%E4%B9%98%E5%87%BD%E6%95%B0%EF%BC%88%E5%8D%87%E7%BA%A7%E7%89%88%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">优化阶乘函数（升级版）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B2%E6%8A%96-amp-%E8%8A%82%E6%B5%81"><span class="nav-number">4.</span> <span class="nav-text">防抖&amp;节流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E6%B5%81"><span class="nav-number">4.1.</span> <span class="nav-text">节流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E7%96%AF%E7%8B%82%E7%82%B9%E5%87%BB%E9%97%AE%E9%A2%98"><span class="nav-number">4.1.1.</span> <span class="nav-text">针对疯狂点击问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E6%8A%96"><span class="nav-number">4.2.</span> <span class="nav-text">防抖</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#js%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E"><span class="nav-number">5.</span> <span class="nav-text">js数学之美</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%96%E6%8B%BD%E5%85%AC%E5%BC%8F-%E7%89%A9%E4%BD%93%E6%8B%96%E6%8B%BD%E4%BA%8B%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">拖拽公式-物体拖拽事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#canvas%E4%B8%AD%E7%9A%84%E6%95%B0%E5%AD%A6%E5%BA%94%E7%94%A8-%E6%89%87%E5%BD%A2%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">5.2.</span> <span class="nav-text">canvas中的数学应用-扇形进度条</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E5%88%A9%E5%99%A8%E6%8B%96%E6%8B%BD%E6%8B%93%E5%B1%95-%E6%8B%96%E6%8B%BD%E5%8A%A0%E8%A6%86%E7%9B%96"><span class="nav-number">5.3.</span> <span class="nav-text">实战利器拖拽拓展-拖拽加覆盖</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UI%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">UI多线程-深入剖析Js执行机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%99%A8%E5%B8%B8%E9%A9%BB%E7%9A%84%E7%BA%BF%E7%A8%8B"><span class="nav-number">6.1.</span> <span class="nav-text">流程器常驻的线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E5%BC%95%E6%93%8E%E7%BA%BF%E7%A8%8B%E5%92%8CGUI%E7%BA%BF%E7%A8%8B-%E4%BA%92%E6%96%A5"><span class="nav-number">6.2.</span> <span class="nav-text">JS引擎线程和GUI线程-互斥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6-%E5%A6%82%E6%9E%9C%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%8D%E5%A5%BD%E5%90%97"><span class="nav-number">6.3.</span> <span class="nav-text">JS执行机制-如果是多线程的不好吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Js%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">6.4.</span> <span class="nav-text">Js执行机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%BB%BB%E5%8A%A1"><span class="nav-number">6.5.</span> <span class="nav-text">同步任务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E6%BA%90%E7%A0%81%EF%BC%81call-apply%E6%89%8B%E5%86%99%E5%AE%9E%E7%8E%B0%E4%B8%8E%E5%BA%94%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">重源码！call,apply手写实现与应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85call%E6%BA%90%E7%A0%81"><span class="nav-number">7.1.</span> <span class="nav-text">封装call源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">7.2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85apply"><span class="nav-number">7.3.</span> <span class="nav-text">封装apply</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E6%8A%BD%E8%B1%A1%E7%AD%89%E4%BA%8E%E8%BF%9B%E8%A1%8C%E8%AF%A6%E8%A7%A3"><span class="nav-number">8.</span> <span class="nav-text">对抽象等于进行详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E7%AD%89%E6%AF%94%E8%BE%83"><span class="nav-number">8.1.</span> <span class="nav-text">1、字符串和数字之间的相等比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%B8%83%E5%B0%94%E5%80%BC%E4%B9%8B%E9%97%B4%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">8.2.</span> <span class="nav-text">2、其他类型和布尔值之间的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81null%E5%92%8Cundefined%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E7%AD%89%E6%AF%94%E8%BE%83"><span class="nav-number">8.3.</span> <span class="nav-text">3、null和undefined之间的相等比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%92%8C%E9%9D%9E%E5%AF%B9%E8%B1%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E7%AD%89%E6%AF%94%E8%BE%83"><span class="nav-number">8.4.</span> <span class="nav-text">对象和非对象之间的相等比较</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/07/23/JavaScript/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E7%B3%BB%E5%88%97%EF%BC%88%E4%B8%80%EF%BC%89/';
+          this.page.identifier = '2018/07/23/JavaScript/你不知道的JavaScript系列（一）/';
+          this.page.title = '你不知道到JavaScript系列一';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

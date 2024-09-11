@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="组合数据类型序列类型Python语言中有很多数据类型都是序列类型，其中比较重要的是str（字符串）、tuple（元祖）和list（列表）元祖是包含0个或多个数据项的不可变序列类型列表则是一个可以修改数据项的序列类型，使用也最灵活123456# 列表a &#x3D; [1, 2, 3]a[1] &#x3D; 4# 元祖b &#x3D; (1, 2, 3)b[1] &#x3D; 2 # 报错 序列方法   操作符 描述     x in s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.Python组合数据类型">
+<meta property="og:url" content="http://yoursite.com/2020/06/29/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/4.python%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="组合数据类型序列类型Python语言中有很多数据类型都是序列类型，其中比较重要的是str（字符串）、tuple（元祖）和list（列表）元祖是包含0个或多个数据项的不可变序列类型列表则是一个可以修改数据项的序列类型，使用也最灵活123456# 列表a &#x3D; [1, 2, 3]a[1] &#x3D; 4# 元祖b &#x3D; (1, 2, 3)b[1] &#x3D; 2 # 报错 序列方法   操作符 描述     x in s">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-06-29T12:29:00.000Z">
+<meta property="article:modified_time" content="2024-08-21T06:20:36.736Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/29/python-人工智能“深度学习”/4.python组合数据类型/"/>
+
+
+
+
+
+  <title>4.Python组合数据类型 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2020/06/29/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/4.python%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">4.Python组合数据类型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-29T20:29:00+08:00">
+                2020-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2020/06/29/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/4.python%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/06/29/python-人工智能“深度学习”/4.python组合数据类型/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="组合数据类型"><a href="#组合数据类型" class="headerlink" title="组合数据类型"></a>组合数据类型</h1><h1 id="序列类型"><a href="#序列类型" class="headerlink" title="序列类型"></a>序列类型</h1><p>Python语言中有很多数据类型都是序列类型，其中比较重要的是<strong>str（字符串）</strong>、<strong>tuple（元祖）</strong>和<strong>list（列表）</strong><br>元祖是包含0个或多个数据项的不可变序列类型<br>列表则是一个可以修改数据项的序列类型，使用也最灵活<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列表</span></span><br><span class="line">a = [1, 2, 3]</span><br><span class="line">a[1] = 4</span><br><span class="line"><span class="comment"># 元祖</span></span><br><span class="line">b = (1, 2, 3)</span><br><span class="line">b[1] = 2 <span class="comment"># 报错</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="序列方法"><a href="#序列方法" class="headerlink" title="序列方法"></a>序列方法</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">操作符</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x in s</td>
+<td style="text-align:center">如果x是s的元素，返回True，否则返回False</td>
+</tr>
+<tr>
+<td style="text-align:center">x not in s</td>
+<td style="text-align:center">如果x不是s的元素，返回True，否则返回False</td>
+</tr>
+<tr>
+<td style="text-align:center">s + t</td>
+<td style="text-align:center">连接s和t (跟numpy区别）</td>
+</tr>
+<tr>
+<td style="text-align:center">s <em> n 或 n </em> s</td>
+<td style="text-align:center">将序列s复制n次</td>
+</tr>
+<tr>
+<td style="text-align:center">s[i]</td>
+<td style="text-align:center">索引，返回序列的第i个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">s[i: j]</td>
+<td style="text-align:center">分片，返回包含序列s第i到j个元素的子序列（不包含第j个元素）</td>
+</tr>
+<tr>
+<td style="text-align:center">s[i: j: k]</td>
+<td style="text-align:center">步骤分片，返回包含序列s第i到j个元素以j为步数的子序列</td>
+</tr>
+<tr>
+<td style="text-align:center">len(s)</td>
+<td style="text-align:center">序列s的元素个数（长度）</td>
+</tr>
+<tr>
+<td style="text-align:center">min(s)</td>
+<td style="text-align:center">序列s中的最小元素</td>
+</tr>
+<tr>
+<td style="text-align:center">max(s)</td>
+<td style="text-align:center">序列s中的最大元素</td>
+</tr>
+<tr>
+<td style="text-align:center">s.index(x[, i[, j]])</td>
+<td style="text-align:center">序列s中从i开始到j位置中第一次出现元素x的位置</td>
+</tr>
+<tr>
+<td style="text-align:center">s.count(x)</td>
+<td style="text-align:center">序列s中出现x的总次数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="列表类型和操作"><a href="#列表类型和操作" class="headerlink" title="列表类型和操作"></a>列表类型和操作</h2><p>列表（list）包含0个或多个对象引用的有序序列，属于序列类型。与元祖不用，列表的长度和内容都是可变的，可自由对列表中数据项进行<strong>增加、删除或替换</strong>。列表没有长度限制元素类型可以不同，使用非常灵活</p>
+<h3 id="列表的append和list函数"><a href="#列表的append和list函数" class="headerlink" title="列表的append和list函数"></a>列表的append和list函数</h3><p>列表用**中括号[]表示，也可以通过list()函数将其他类型转化成功列表。直接使用list()函数会返回一个空列表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> = []</span><br><span class="line">ls.append(0)</span><br><span class="line">ls.append(<span class="string">&#x27;ab&#x27;</span>)</span><br><span class="line"><span class="comment"># [0, &#x27;ab&#x27;]</span></span><br><span class="line">list(&#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, &#125;) <span class="comment"># [&#x27;b&#x27;, &#x27;a&#x27;]</span></span><br><span class="line">list((&#x27;a&#x27;, &#x27;b&#x27;, )) <span class="comment"># [&#x27;a&#x27;, &#x27;b&#x27;]</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="列表类型的操作"><a href="#列表类型的操作" class="headerlink" title="列表类型的操作"></a>列表类型的操作</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">函数或方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ls[i] = x</td>
+<td style="text-align:center">替换列表ls第i数据项为x</td>
+</tr>
+<tr>
+<td style="text-align:center">ls[i: j] = lt</td>
+<td style="text-align:center">用列表lt替换列表ls中第i到j项数据（不含第j项，下同）</td>
+</tr>
+<tr>
+<td style="text-align:center">ls[i: j: k] = lt</td>
+<td style="text-align:center">用列表lt替换列表ls中第i到j以k为步的数据</td>
+</tr>
+<tr>
+<td style="text-align:center">del ls[i: j]</td>
+<td style="text-align:center">删除列表ls第i到j项数据，等价于ls[i: j]=[]</td>
+</tr>
+<tr>
+<td style="text-align:center">del ls[i: j: k]</td>
+<td style="text-align:center">删除列表ls第i到j以k为步的数据</td>
+</tr>
+<tr>
+<td style="text-align:center">ls += lt或ls.extend(lt)</td>
+<td style="text-align:center">将列表lt元素增加到列表ls中</td>
+</tr>
+<tr>
+<td style="text-align:center">ls *= n</td>
+<td style="text-align:center">更新列表ls，其元素重复n次</td>
+</tr>
+<tr>
+<td style="text-align:center">ls.append(x)</td>
+<td style="text-align:center">在列表ls最后增加一个元素x</td>
+</tr>
+<tr>
+<td style="text-align:center">ls.clear()</td>
+<td style="text-align:center">删除ls中所有元素</td>
+</tr>
+<tr>
+<td style="text-align:center">ls.copy()</td>
+<td style="text-align:center">生成一个新列表，复制ls中所有元素</td>
+</tr>
+<tr>
+<td style="text-align:center">ls.insert(i, x)</td>
+<td style="text-align:center">在列表ls第i位置增加元素x</td>
+</tr>
+<tr>
+<td style="text-align:center">ls.pop(i)</td>
+<td style="text-align:center">将列表ls中第i项元素取出并删除该元素</td>
+</tr>
+<tr>
+<td style="text-align:center">ls.remove(x)</td>
+<td style="text-align:center">将列表中出现的第一个元素x删除</td>
+</tr>
+<tr>
+<td style="text-align:center">ls.reverse(x)</td>
+<td style="text-align:center">列表ls中元素反转</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ls-n-m-方法"><a href="#ls-n-m-方法" class="headerlink" title="ls[n: m]方法"></a>ls[n: m]方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> = list(range(5))</span><br><span class="line"><span class="comment"># [0, 1, 2, 3, 4]</span></span><br><span class="line"><span class="built_in">ls</span>[1:3] = [3, 4, 5]</span><br><span class="line"><span class="comment"># [0, 3, 4, 5, 3, 4]</span></span><br><span class="line"><span class="built_in">ls</span>[4] = <span class="string">&#x27;good&#x27;</span></span><br><span class="line"><span class="comment"># [0, 3, 4, 5, &#x27;good&#x27;, 4]</span></span><br></pre></td></tr></table></figure>
+<h3 id="列表和lambad混合操作"><a href="#列表和lambad混合操作" class="headerlink" title="列表和lambad混合操作"></a>列表和lambad混合操作</h3><h4 id="map方法"><a href="#map方法" class="headerlink" title="map方法"></a>map方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> = list(range(5))</span><br><span class="line"><span class="comment"># [0, 1, 2, 3, 4]</span></span><br><span class="line">nls = map(lambda x: x * x, <span class="built_in">ls</span>)</span><br><span class="line">list(nls)</span><br><span class="line"><span class="comment"># [0, 1, 4, 9, 16]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from functools import reduce</span><br><span class="line"><span class="built_in">ls</span> = list(range(5))</span><br><span class="line"><span class="built_in">print</span>(reduce(lambda x, y: x * y + 1, <span class="built_in">ls</span>))</span><br><span class="line"><span class="comment"># (((1 * 2 + 1) * 3 + ) * 4 + 1) * 5 + 1</span></span><br></pre></td></tr></table></figure>
+<h4 id="filter过滤器"><a href="#filter过滤器" class="headerlink" title="filter过滤器"></a>filter过滤器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> = list(range(9))</span><br><span class="line"><span class="built_in">ls</span> = filter(lambda x: x % 2 == 0, <span class="built_in">ls</span>)</span><br><span class="line"><span class="built_in">print</span>(list(<span class="built_in">ls</span>))</span><br><span class="line"><span class="comment"># [0, 2, 4, 6, 8]</span></span><br></pre></td></tr></table></figure>
+<h1 id="集合类型"><a href="#集合类型" class="headerlink" title="集合类型"></a>集合类型</h1><p>集合类型与<strong>数学中集合</strong>的概念一致，即包含0个或多个数据项的无序组合。集合中元素不可重复，元素类型只能是固定数据类型，例如：整数、浮点数、字符串、元祖等，列表、字典和集合类型本身都是可变数据类型，不能作为集合的元素出现，集合用大括号({})表示，可以赋值语言生成一个集合<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s=&#123;1, 2, 3&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用集合去除重复元素"><a href="#使用集合去除重复元素" class="headerlink" title="使用集合去除重复元素"></a>使用集合去除重复元素</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="built_in">set</span>(s) </span><br><span class="line"><span class="comment"># &#123;&#x27;h&#x27;, &#x27;e&#x27;, &#x27;l&#x27;, &#x27;o&#x27;&#125;</span></span><br><span class="line">l = [1, 3, 3, 4, 4, 2, 0]</span><br><span class="line">l_n = list(<span class="built_in">set</span>(l))</span><br><span class="line"><span class="comment">#   [0, 1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+<h2 id="集合操作符"><a href="#集合操作符" class="headerlink" title="集合操作符"></a>集合操作符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">操作符</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">S – T 或 S.difference(T)</td>
+<td style="text-align:center">返回一个新集合，包括在集合S中但不在集合T中的元素</td>
+</tr>
+<tr>
+<td style="text-align:center">S-=T或S.difference_update(T)</td>
+<td style="text-align:center">更新集合S，包括在集合S中但不在集合T中的元素</td>
+</tr>
+<tr>
+<td style="text-align:center">S &amp; T或S.intersection(T)</td>
+<td style="text-align:center">返回一个新集合，包括同时在集合S和T中的元素</td>
+</tr>
+<tr>
+<td style="text-align:center">S&amp;=T或S.intersection_update(T)</td>
+<td style="text-align:center">更新集合S，包括同时在集合S和T中的元素。</td>
+</tr>
+<tr>
+<td style="text-align:center">S^T或s.symmetric_difference(T)</td>
+<td style="text-align:center">返回一个新集合，包括集合S和T中元素，但不包括同时在其中的</td>
+</tr>
+</tbody>
+</table>
+<p>元素|<br>|S=^T或s.symmetric_difference_update(T)| 更新集合S，包括集合S和T中元素，但不包括同时在其中的元素|<br>|S|T或S.union(T) |返回一个新集合，包括集合S和T中所有元素|<br>|S=|T或S.update(T)| 更新集合S，包括集合S和T中所有元素|<br>|S&lt;=T或S.issubset(T) |如果S与T相同或S是T的子集，返回True，否则返回False，可以用 S&lt;T判断S是否是T的真子集|<br>|S&gt;=T或S.issuperset(T)| 如果S与T相同或S是T的超集，返回True，否则返回False，可以用S&gt;T判断S是否是T的真超集|</p>
+<h2 id="集合类型10个操作函数或方法"><a href="#集合类型10个操作函数或方法" class="headerlink" title="集合类型10个操作函数或方法"></a>集合类型10个操作函数或方法</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">函数或方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">S.add(x)</td>
+<td style="text-align:center">如果数据项x不在集合S中，将x增加到s</td>
+</tr>
+<tr>
+<td style="text-align:center">S.clear()</td>
+<td style="text-align:center">移除S中所有数据项</td>
+</tr>
+<tr>
+<td style="text-align:center">S.copy()</td>
+<td style="text-align:center">返回集合S的一个拷贝</td>
+</tr>
+<tr>
+<td style="text-align:center">S.pop()</td>
+<td style="text-align:center">随机返回集合S中的一个元素，如果S为空，产生KeyError异常</td>
+</tr>
+<tr>
+<td style="text-align:center">S.discard(x)</td>
+<td style="text-align:center">如果x在集合S中，移除该元素；如果x不在，不报错</td>
+</tr>
+<tr>
+<td style="text-align:center">S.remove(x)</td>
+<td style="text-align:center">如果x在集合S中，移除该元素；不在产生KeyError异常</td>
+</tr>
+<tr>
+<td style="text-align:center">S.isdisjoint(T)</td>
+<td style="text-align:center">如果集合S与T没有相同元素，返回True</td>
+</tr>
+<tr>
+<td style="text-align:center">len(S)</td>
+<td style="text-align:center">返回集合S元素个数</td>
+</tr>
+<tr>
+<td style="text-align:center">x in S</td>
+<td style="text-align:center">如果x是S的元素，返回True，否则返回False</td>
+</tr>
+<tr>
+<td style="text-align:center">x not in S</td>
+<td style="text-align:center">如果x不是S的元素，返回True，否则返回False</td>
+</tr>
+</tbody>
+</table>
+<h1 id="字典类型"><a href="#字典类型" class="headerlink" title="字典类型"></a>字典类型</h1><h2 id="字典类型的基本概念"><a href="#字典类型的基本概念" class="headerlink" title="字典类型的基本概念"></a>字典类型的基本概念</h2><p>通过任意键信息查找一组数据中值信息的过程叫映射，Python语言中通过Python语言中的字典可以通过大括号({})建立<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">st = &#123;<span class="string">&#x27;a&#x27;</span>&#125; <span class="comment"># set</span></span><br><span class="line">dic = &#123;<span class="string">&#x27;B&#x27;</span>: <span class="string">&quot;百度&quot;</span>, <span class="string">&quot;A&quot;</span>: <span class="string">&quot;阿里&quot;</span>, <span class="string">&quot;T&quot;</span>: <span class="string">&quot;腾讯&quot;</span>&#125; <span class="comment"># dict</span></span><br><span class="line">dic[<span class="string">&quot;B&quot;</span>] <span class="comment"># &#x27;百度&#x27;</span></span><br><span class="line">dic[<span class="string">&#x27;z&#x27;</span>] = <span class="string">&#x27;字节跳动&#x27;</span></span><br><span class="line"><span class="comment"># &#123;&#x27;B&#x27;: &#x27;百度&#x27;, &#x27;A&#x27;: &#x27;阿里&#x27;, &#x27;T&#x27;: &#x27;腾讯&#x27;, &#x27;z&#x27;: &#x27;字节跳动&#x27;&#125;</span></span><br><span class="line"> dic[<span class="string">&#x27;B&#x27;</span>] = <span class="string">&#x27;百度中国&#x27;</span></span><br><span class="line"><span class="comment"># &#123;&#x27;B&#x27;: &#x27;百度中国&#x27;, &#x27;A&#x27;: &#x27;阿里&#x27;, &#x27;T&#x27;: &#x27;腾讯&#x27;, &#x27;z&#x27;: &#x27;字节跳动&#x27;&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="字典类型的操作"><a href="#字典类型的操作" class="headerlink" title="字典类型的操作"></a>字典类型的操作</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">函数和方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><d>.keys()</td>
+<td style="text-align:center">返回所有的键信息</td>
+</tr>
+<tr>
+<td style="text-align:center"><d>.values()</td>
+<td style="text-align:center">返回所有的值信息</td>
+</tr>
+<tr>
+<td style="text-align:center"><d>.items()</td>
+<td style="text-align:center">返回所有的键值对</td>
+</tr>
+<tr>
+<td style="text-align:center"><d>.get(<key>,<default>)</td>
+<td style="text-align:center">键存在则返回相应值，否则返回默认值</td>
+</tr>
+<tr>
+<td style="text-align:center"><d>.pop(<key>,<default>)</td>
+<td style="text-align:center">键存在则返回相应值，同时删除键值对，否则返回默认值</td>
+</tr>
+<tr>
+<td style="text-align:center"><d>.popitem()</td>
+<td style="text-align:center">随机从字典中取出一个键值对，以元组(key, value)形式返回</td>
+</tr>
+<tr>
+<td style="text-align:center"><d>.clear()</td>
+<td style="text-align:center">删除所有的键值对</td>
+</tr>
+<tr>
+<td style="text-align:center">del <d>[<key>]</td>
+<td style="text-align:center">删除字典中某一个键值对</td>
+</tr>
+<tr>
+<td style="text-align:center"><key> in <d></td>
+<td style="text-align:center">如果键在字典中返回True，否则返回False</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&#x27;B&#x27;</span>: <span class="string">&quot;百度&quot;</span>, <span class="string">&quot;A&quot;</span>: <span class="string">&quot;阿里&quot;</span>, <span class="string">&quot;T&quot;</span>: <span class="string">&quot;腾讯&quot;</span>&#125; <span class="comment"># dict</span></span><br><span class="line">dic.keys()</span><br><span class="line"><span class="comment"># dict_keys([&#x27;B&#x27;, &#x27;A&#x27;, &#x27;T&#x27;, &#x27;z&#x27;])</span></span><br><span class="line">dic.values()</span><br><span class="line"><span class="comment"># dict_values([&#x27;百度中国&#x27;, &#x27;阿里&#x27;, &#x27;腾讯&#x27;, &#x27;字节跳动&#x27;])</span></span><br><span class="line">dic.items()</span><br><span class="line"><span class="comment"># dict_items([(&#x27;B&#x27;, &#x27;百度中国&#x27;), (&#x27;A&#x27;, &#x27;阿里&#x27;), (&#x27;T&#x27;, &#x27;腾讯&#x27;), (&#x27;z&#x27;, &#x27;字节跳动&#x27;)])</span></span><br><span class="line"><span class="string">&quot;A&quot;</span> <span class="keyword">in</span> dic <span class="comment"># True</span></span><br><span class="line"><span class="string">&quot;阿里&quot;</span> <span class="keyword">in</span> dic <span class="comment"># False</span></span><br><span class="line">dic.get(<span class="string">&quot;A&quot;</span>) <span class="comment"># &quot;阿里&quot;</span></span><br><span class="line">dic.get(<span class="string">&quot;c&quot;</span>, <span class="string">&quot;查找不多&quot;</span>) <span class="comment"># 查找不到</span></span><br><span class="line">dic.get(<span class="string">&quot;B&quot;</span>, <span class="string">&quot;差找不到&quot;</span>) <span class="comment"># 百度</span></span><br></pre></td></tr></table></figure>
+<h3 id="for…in-默认遍历keys"><a href="#for…in-默认遍历keys" class="headerlink" title="for…in,默认遍历keys"></a>for…in,默认遍历keys</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> key,value <span class="keyword">in</span> dic.items():</span><br><span class="line">    <span class="built_in">print</span>(key)</span><br><span class="line">    <span class="built_in">print</span>(value)</span><br><span class="line">B</span><br><span class="line">百度中国</span><br><span class="line">A</span><br><span class="line">阿里</span><br><span class="line">T</span><br><span class="line">腾讯</span><br><span class="line">z</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> dic:</span><br><span class="line">    <span class="built_in">print</span>(key)</span><br><span class="line">B</span><br><span class="line">A</span><br><span class="line">T</span><br><span class="line">z</span><br></pre></td></tr></table></figure>
+<h3 id="lambda函数和sorted的结合"><a href="#lambda函数和sorted的结合" class="headerlink" title="lambda函数和sorted的结合"></a>lambda函数和sorted的结合</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> = [3, 2, 1, 6, 5, 4, 2]</span><br><span class="line"><span class="built_in">print</span>(sorted(<span class="built_in">ls</span>))</span><br><span class="line"><span class="comment"># [1, 2, 2, 3, 4, 5, 6]</span></span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>: 3,  <span class="string">&#x27;f&#x27;</span>: 9, <span class="string">&#x27;k&#x27;</span>: 1, <span class="string">&#x27;e&#x27;</span>: 2,&#125;</span><br><span class="line">sorted(dic, key = lambda item: item[0])</span><br><span class="line"><span class="comment">#  [&#x27;a&#x27;, &#x27;e&#x27;, &#x27;f&#x27;, &#x27;k&#x27;]</span></span><br><span class="line">sorted(dic.items(), key = lambda item: item[0])</span><br><span class="line"><span class="comment"># [(&#x27;a&#x27;, 3), (&#x27;e&#x27;, 2), (&#x27;f&#x27;, 9), (&#x27;k&#x27;, 1)]</span></span><br><span class="line">sorted(dic.items(), key = lambda item: item[1])</span><br><span class="line"><span class="comment"># [(&#x27;k&#x27;, 1), (&#x27;e&#x27;, 2), (&#x27;a&#x27;, 3), (&#x27;f&#x27;, 9)]</span></span><br><span class="line">sorted(dic.items(), key= lambda item:item[1], reverse = True)</span><br><span class="line"><span class="comment"># [(&#x27;f&#x27;, 9), (&#x27;a&#x27;, 3), (&#x27;e&#x27;, 2), (&#x27;k&#x27;, 1)]</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2020/06/16/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/3.python%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84%E3%80%81%E5%87%BD%E6%95%B0%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8/" rel="next" title="3.Python控制结构、函数与代码复用">
+                <i class="fa fa-chevron-left"></i> 3.Python控制结构、函数与代码复用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2020/08/03/TypeScript/10.TS%E8%BF%9B%E9%98%B6-%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="prev" title="10.TS进阶-装饰器">
+                10.TS进阶-装饰器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">组合数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">序列类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">序列方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E7%B1%BB%E5%9E%8B%E5%92%8C%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">列表类型和操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E7%9A%84append%E5%92%8Clist%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.1.</span> <span class="nav-text">列表的append和list函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.2.</span> <span class="nav-text">列表类型的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ls-n-m-%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">ls[n: m]方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E5%92%8Clambad%E6%B7%B7%E5%90%88%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.3.</span> <span class="nav-text">列表和lambad混合操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#map%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">map方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduce"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">reduce</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#filter%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">filter过滤器</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">集合类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%E5%8E%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0"><span class="nav-number">3.1.</span> <span class="nav-text">使用集合去除重复元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">3.2.</span> <span class="nav-text">集合操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B10%E4%B8%AA%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0%E6%88%96%E6%96%B9%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">集合类型10个操作函数或方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">字典类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">4.1.</span> <span class="nav-text">字典类型的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">字典类型的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for%E2%80%A6in-%E9%BB%98%E8%AE%A4%E9%81%8D%E5%8E%86keys"><span class="nav-number">4.2.1.</span> <span class="nav-text">for…in,默认遍历keys</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda%E5%87%BD%E6%95%B0%E5%92%8Csorted%E7%9A%84%E7%BB%93%E5%90%88"><span class="nav-number">4.2.2.</span> <span class="nav-text">lambda函数和sorted的结合</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2020/06/29/python-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E2%80%9C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E2%80%9D/4.python%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/';
+          this.page.identifier = '2020/06/29/python-人工智能“深度学习”/4.python组合数据类型/';
+          this.page.title = '4.Python组合数据类型';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
