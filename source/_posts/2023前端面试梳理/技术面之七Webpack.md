@@ -1,8 +1,8 @@
 ---
 title: 前端随笔之七Webpack
-categories: 2022前端随笔汇总
+categories: 2023前端面试梳理
 tags: 前端随笔
-date: 2022-04-24 09:48:00
+date: 2023-04-24 09:48:00
 ---
 
 ## webpack 面试题汇总
