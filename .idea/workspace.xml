@@ -1,98 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8086e8c6-71ab-4d45-8218-abb3fd93290a" name="Default Changelist" comment="" />
-    <ignored path="$PROJECT_DIR$/.tmp/" />
-    <ignored path="$PROJECT_DIR$/temp/" />
-    <ignored path="$PROJECT_DIR$/tmp/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
+    <list default="true" id="8086e8c6-71ab-4d45-8218-abb3fd93290a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="779123825">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="29" />
-          <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.1" value="5" />
-          <entry key="project.open.time.10" value="8" />
-          <entry key="project.open.time.11" value="4" />
-          <entry key="project.open.time.12" value="7" />
-          <entry key="project.open.time.13" value="3" />
-          <entry key="project.open.time.16" value="1" />
-          <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.2" value="2" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="3" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.open.time.9" value="13" />
-          <entry key="project.opened" value="55" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="html" value="5" />
-          <entry key="js" value="1" />
-          <entry key="json" value="1" />
-          <entry key="md" value="64" />
-          <entry key="png" value="7" />
-          <entry key="ts" value="1" />
-          <entry key="yml" value="10" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="HTML" value="5" />
-          <entry key="Image" value="7" />
-          <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="1" />
-          <entry key="Markdown" value="61" />
-          <entry key="PLAIN_TEXT" value="3" />
-          <entry key="TypeScript" value="1" />
-          <entry key="YAML" value="10" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="html" value="7879" />
-          <entry key="md" value="18862" />
-          <entry key="yml" value="23" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="HTML" value="7879" />
-          <entry key="Markdown" value="17908" />
-          <entry key="PLAIN_TEXT" value="954" />
-          <entry key="YAML" value="23" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages">
-        <counts>
-          <entry key="git.branch.checkout.local" value="3" />
-          <entry key="git.branch.create.new" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts" />
-    </session>
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="javaScript设计模式（二）.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source/_posts/JavaScript/javaScript设计模式（二）.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -110,6 +26,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_COMMON_BRANCH" value="live" />
   </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="92c1a859-02d6-4c4f-b0d0-e01bf9a0b339" />
+        <option name="url" value="https://github.com/riceCk/riceBlog.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -117,7 +41,7 @@
         <option value="$PROJECT_DIR$/source/_posts/JavaScript/你不知道的JavaScript系列（一）.md" />
         <option value="$PROJECT_DIR$/source/_posts/vue/vue之服务器渲染初探.md" />
         <option value="$PROJECT_DIR$/source/_posts/vue/vue之服务器单页面应用.md" />
-        <option value="D:/index.html" />
+        <option value="$PROJECT_DIR$/../../index.html" />
         <option value="$PROJECT_DIR$/source/_posts/你不知道的es6/你不知道的ES6（下）.md" />
         <option value="$PROJECT_DIR$/source/_posts/标签/从渲染原理到虚拟DOM.md" />
         <option value="$PROJECT_DIR$/source/_posts/标签/从渲染到虚拟DOM.md" />
@@ -163,6 +87,7 @@
     <option name="width" value="1285" />
     <option name="height" value="915" />
   </component>
+  <component name="ProjectId" id="2G4Ii4rJX6gBhXdReQOQPuenAcc" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -201,6 +126,10 @@
       <pane id="Scope" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="shwo() {&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -209,19 +138,9 @@
     <property name="node.js.selected.package.eslint" value="C:\Users\大帅比\AppData\Roaming\npm\node_modules\eslint" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="copyright" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -290,6 +209,7 @@
       <workItem from="1634546289651" duration="286000" />
       <workItem from="1649662092540" duration="12000" />
       <workItem from="1655812116008" duration="95000" />
+      <workItem from="1665641554559" duration="216000" />
     </task>
     <servers />
   </component>
@@ -350,10 +270,7 @@
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+    <option name="version" value="3" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/source/_posts/JavaScript/javaScript设计模式（二）.md">
@@ -373,7 +290,7 @@
     <entry file="file://$PROJECT_DIR$/source/_posts/JavaScript/javaScript设计模式（二）.md">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://D:/deom.html" />
+    <entry file="file://$PROJECT_DIR$/../../deom.html" />
     <entry file="file://$PROJECT_DIR$/source/_posts/Git/Git与时间简史.md">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -396,7 +313,7 @@
     <entry file="file://$PROJECT_DIR$/source/_posts/vue/vue之服务器渲染初探.md" />
     <entry file="file://$PROJECT_DIR$/source/_posts/vue/vue之服务器单页面应用.md" />
     <entry file="file://$PROJECT_DIR$/source/_posts/JavaScript/你不知道的JavaScript系列（一）.md" />
-    <entry file="file://D:/index.html" />
+    <entry file="file://$PROJECT_DIR$/../../index.html" />
     <entry file="file://$PROJECT_DIR$/source/_posts/标签/从渲染原理到虚拟DOM.md" />
     <entry file="file://$PROJECT_DIR$/themes/landscape/_config.yml">
       <provider selected="true" editor-type-id="text-editor" />
