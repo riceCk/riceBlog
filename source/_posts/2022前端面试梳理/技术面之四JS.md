@@ -141,7 +141,7 @@ Hash路由通过在地址增加`#path`实现区分页面，当hash发生变化�
 * 每一个构造函数都有一个`protoype`属性，该属性指向实例对象的原型对象
 * 原型对象里的`contructor`指向构造函数本身
 
-![原型与原型链](https://xiejie-typora.oss-cn-chengdu.aliyuncs.  /2021-08-12-081402.png)
+![原型与原型链](https://xiejie-typora.oss-cn-chengdu.aliyuncs./2021-08-12-081402.png)
 
 ### 16、ES6新增了那些东西
 * 1、箭头函数
