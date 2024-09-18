@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试题," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一、手写代码1.手写promise（简易版）1234567891011121314151617181920212223242526272829303132333435363738394041class MyPromise &#123;    constructor (fn) &#123;        # 存储reslove回调函数列表        this.callbacks &#x3D; [];">
+<meta property="og:type" content="article">
+<meta property="og:title" content="技术面试之十代码篇">
+<meta property="og:url" content="http://yoursite.com/2023/04/30/2023%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/10.%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8D%81%E4%BB%A3%E7%A0%81%E7%AF%87/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="一、手写代码1.手写promise（简易版）1234567891011121314151617181920212223242526272829303132333435363738394041class MyPromise &#123;    constructor (fn) &#123;        # 存储reslove回调函数列表        this.callbacks &#x3D; [];">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-04-30T01:48:00.000Z">
+<meta property="article:modified_time" content="2024-09-18T08:03:07.669Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="面试题">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/04/30/2023前端面试梳理/10.技术面试之十代码篇/"/>
+
+
+
+
+
+  <title>技术面试之十代码篇 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2023/04/30/2023%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/10.%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8D%81%E4%BB%A3%E7%A0%81%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">技术面试之十代码篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-04-30T09:48:00+08:00">
+                2023-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/2023%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">2023前端面试梳理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2023/04/30/2023%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/10.%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8D%81%E4%BB%A3%E7%A0%81%E7%AF%87/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2023/04/30/2023前端面试梳理/10.技术面试之十代码篇/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、手写代码"><a href="#一、手写代码" class="headerlink" title="一、手写代码"></a>一、手写代码</h2><h3 id="1-手写promise（简易版）"><a href="#1-手写promise（简易版）" class="headerlink" title="1.手写promise（简易版）"></a>1.手写promise（简易版）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class MyPromise &#123;</span><br><span class="line">    constructor (fn) &#123;</span><br><span class="line">        <span class="comment"># 存储reslove回调函数列表</span></span><br><span class="line">        this.callbacks = [];</span><br><span class="line">        const resolve = (value) =&gt; &#123;</span><br><span class="line">            this.data = value <span class="comment"># 返回值给后面的 .then</span></span><br><span class="line">            <span class="keyword">while</span> (this.callbacks.length) &#123;</span><br><span class="line">                <span class="built_in">let</span> cb = this.callbacks.shift();</span><br><span class="line">                cb(value)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        fn(resolve);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">then</span>(onResolvedCallback) &#123;</span><br><span class="line">        <span class="built_in">return</span> new MyPromise(resolve =&gt; &#123;</span><br><span class="line">            this.callbacks.push(() =&gt; &#123;</span><br><span class="line">                const res = onResolvedCallback(this.data);</span><br><span class="line">                if (res instanceof MyPromise) &#123;</span><br><span class="line">                    res.then(resolve)</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    resolve(res)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 这是测试案例</span><br><span class="line">new MyPromise((resolve) =&gt; &#123;</span><br><span class="line">  setTimeout(() =&gt; &#123;</span><br><span class="line">    resolve(<span class="number">1</span>)</span><br><span class="line">  &#125;, <span class="number">1000</span>)</span><br><span class="line">&#125;).then((res) =&gt; &#123;</span><br><span class="line">    console.log(res)</span><br><span class="line">    return new MyPromise((resolve) =&gt; &#123;</span><br><span class="line">      setTimeout(() =&gt; &#123;</span><br><span class="line">        resolve(<span class="number">2</span>)</span><br><span class="line">      &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;).then(res =&gt;&#123;console.log(res)&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="2-防抖节流"><a href="#2-防抖节流" class="headerlink" title="2.防抖节流"></a>2.防抖节流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 防抖</span></span><br><span class="line"><span class="keyword">function</span> debounce(fn, <span class="built_in">date</span>) &#123;</span><br><span class="line">    <span class="built_in">let</span> timer; <span class="comment"># 声明接收定时器的变量</span></span><br><span class="line">    <span class="built_in">return</span> <span class="keyword">function</span> (...arg) &#123; <span class="comment"># 获取参数</span></span><br><span class="line">        timer &amp;&amp; clearTimeout(timer); <span class="comment"># 清空定时器</span></span><br><span class="line">        <span class="comment"># 生成新的定时器</span></span><br><span class="line">        timer = setTimeout(() =&gt; &#123;  </span><br><span class="line">            # 因为箭头函数里的this指向上层作用域的this,所以这里可以直接用this，不需要声明其他的变量来接收</span><br><span class="line">            fn.apply(this, arg); </span><br><span class="line">        &#125;, date)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 节流</span><br><span class="line">function debounce (fn, date) &#123;</span><br><span class="line">    let timer = +new date(); # 声明初始时间</span><br><span class="line">    return function (...arg) &#123; # 获取参数</span><br><span class="line">        let newTimer = +new Date(); # 获取触发事件的时间</span><br><span class="line">        if (newTimer - timer &gt;= data) &#123; # 时间判断,是否满足条件</span><br><span class="line">            fn.apply(this, arg)  # 调用需要执行的函数,修改this值,并且传入参数</span><br><span class="line">            timer = +new Date() # 重置初始时间</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-手写AJAX请求"><a href="#3-手写AJAX请求" class="headerlink" title="3.手写AJAX请求"></a>3.手写AJAX请求</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">const SERVER_URL = <span class="string">&#x27;/server&#x27;</span>;</span><br><span class="line"><span class="built_in">let</span> xhr = new XMLHttpRequest();</span><br><span class="line"><span class="comment"># 创建Http请求</span></span><br><span class="line">xhr.open(<span class="string">&quot;GET&quot;</span>, SERVER_URL, <span class="literal">true</span>);</span><br><span class="line"><span class="comment"># 设置状态监听函数</span></span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="keyword">if</span> (this.readyState !== 4) <span class="built_in">return</span>;</span><br><span class="line">    <span class="comment"># 请求成功时</span></span><br><span class="line">    <span class="keyword">if</span> (this.status === 200) &#123;</span><br><span class="line">        handle(this.response);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        console.error(this.statusText);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 设置请求失败时的监听函数</span></span><br><span class="line">xhr.onerror = <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">  console.error(this.statusText);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment"># 设置请求头信息</span></span><br><span class="line">xhr.responseType = <span class="string">&quot;json&quot;</span>;</span><br><span class="line">xhr.setRequestHeader(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line"><span class="comment"># 发送 Http 请求</span></span><br><span class="line">xhr.send(null);</span><br></pre></td></tr></table></figure>
+<h3 id="4-手写深拷贝"><a href="#4-手写深拷贝" class="headerlink" title="4.手写深拷贝"></a>4.手写深拷贝</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> fn(obj) &#123;</span><br><span class="line">    <span class="comment"># 判断数据是否是复杂类型</span></span><br><span class="line">    <span class="keyword">if</span> (obj instanceof Object) &#123;</span><br><span class="line">        <span class="comment"># 判断数据是否数组</span></span><br><span class="line">        <span class="keyword">if</span> (Array.isArray(obj)) &#123;</span><br><span class="line">            <span class="comment"># 声明一个空数组来接收拷贝后的数据</span></span><br><span class="line">            <span class="built_in">let</span> result = [];</span><br><span class="line">            obj.forEach(item =&gt; &#123;</span><br><span class="line">                <span class="comment"># 需要递归深层遍历，否则复制的是地址</span></span><br><span class="line">                resluit.puah(fn(item))</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="comment"># 返回输出这个数组,数组拷贝完成</span></span><br><span class="line">            <span class="built_in">return</span> result</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment"># 如果是对象，就声明一个空对象来接收拷贝后的数据</span></span><br><span class="line">            <span class="built_in">let</span> reslut = &#123;&#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">let</span> k <span class="keyword">in</span> obj) &#123;</span><br><span class="line">                <span class="comment"># 使用递归深层遍历</span></span><br><span class="line">                reslut[k] = fn(obj[k])</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">return</span> result</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-手写打乱数组顺序的方法"><a href="#5-手写打乱数组顺序的方法" class="headerlink" title="5.手写打乱数组顺序的方法"></a>5.手写打乱数组顺序的方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> arr = [1,2,3,4,5,6,7,8,9,10];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">let</span> i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">    const randomIndex = Math.round(Math.random() * (array.length - 1 - i)) + i;</span><br><span class="line">    [arr[i], arr[randomIndex]] = [arr[randomIndex], arr[i]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-用Promise实现图片的异步加载"><a href="#6-用Promise实现图片的异步加载" class="headerlink" title="6.用Promise实现图片的异步加载"></a>6.用Promise实现图片的异步加载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> imageAsync = (url) =&gt; &#123;</span><br><span class="line">    <span class="built_in">return</span> new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        let img = new Image();</span><br><span class="line">        img.src = url;</span><br><span class="line">        img.onload = () =&gt; &#123;</span><br><span class="line">            console.log(&#x27;图片请求成功, 此处进行通用操作&#x27;)</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.οnerrοr=(err)=&gt;&#123;</span><br><span class="line">            console.log(`失败，此处进行失败的通用操作`);</span><br><span class="line">            reject(err);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二、算法基础"><a href="#二、算法基础" class="headerlink" title="二、算法基础"></a>二、算法基础</h2><h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h3><p>每遍历一个元素，都会把之前的所有相邻的元素都两两比较一遍，即便是已经排序好的元素<br>思路：每轮循环将最大值排到末尾<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> arr = [4, 1, 6, 8, 3, 2, 9, 7];</span><br><span class="line"><span class="keyword">function</span> bubbleSort (arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">let</span> i = 0; i &lt; arr.length - 1; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">let</span> j = 0; j &lt; arr.length - 1; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j + 1]) &#123;</span><br><span class="line">                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-选择排序"><a href="#2-选择排序" class="headerlink" title="2.选择排序"></a>2.选择排序</h3><p>思路：选择排序，内层循环，每一圈选出最大的，然后放在后面<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> arr = [4, 1, 6, 8, 3, 2, 9, 7];</span><br><span class="line"><span class="keyword">function</span> bubbleSort(arr) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">let</span> i = 0; i &lt; arr.length - 1; i++) &#123;</span><br><span class="line">        <span class="built_in">let</span> maxIndex = 0; <span class="comment"># 每一圈选出一个最大的</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">let</span> j = 0; j &lt; arr.length  - i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[maxIndex] &lt; arr[j]) &#123;</span><br><span class="line">                maxIndex = j</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">let</span> temp = arr[maxIndex];</span><br><span class="line">        arr[maxIndex] = arr[arr.length - i -1]</span><br><span class="line">        arr[arr.length - i -1] = temp</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(bubbleSort(arr));</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-快速排序"><a href="#3-快速排序" class="headerlink" title="3.快速排序"></a>3.快速排序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> arr = [4, 1, 6, 8, 3, 2, 9, 7];</span><br><span class="line"><span class="keyword">function</span> bubbleSort(arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr === null || arr.length === 0) <span class="built_in">return</span> []</span><br><span class="line">    <span class="built_in">let</span> leader = arr[0];</span><br><span class="line">    <span class="built_in">let</span> right = []</span><br><span class="line">    <span class="built_in">let</span> left = []</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">let</span> i = 1; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] &gt; leader) &#123;</span><br><span class="line">            right.push(arr[i])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            left.push(arr[i])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> [...bubbleSort(left), leader, ...bubbleSort(right)]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(bubbleSort(arr));</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag"># 面试题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2023/04/29/2023%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/8.%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E5%85%AB%E7%BD%91%E7%BB%9C%E5%92%8C%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="next" title="技术面之八简历网络和浏览器">
+                <i class="fa fa-chevron-left"></i> 技术面之八简历网络和浏览器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2023/04/30/2023%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/1.%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B9%8B%E4%B8%80%E7%AE%80%E5%8E%86/" rel="prev" title="技术面之一简历">
+                技术面之一简历 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">113</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">一、手写代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%89%8B%E5%86%99promise%EF%BC%88%E7%AE%80%E6%98%93%E7%89%88%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">1.手写promise（简易版）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81"><span class="nav-number">1.2.</span> <span class="nav-text">2.防抖节流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%89%8B%E5%86%99AJAX%E8%AF%B7%E6%B1%82"><span class="nav-number">1.3.</span> <span class="nav-text">3.手写AJAX请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%89%8B%E5%86%99%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="nav-number">1.4.</span> <span class="nav-text">4.手写深拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%89%8B%E5%86%99%E6%89%93%E4%B9%B1%E6%95%B0%E7%BB%84%E9%A1%BA%E5%BA%8F%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.5.</span> <span class="nav-text">5.手写打乱数组顺序的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%94%A8Promise%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E7%9A%84%E5%BC%82%E6%AD%A5%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.6.</span> <span class="nav-text">6.用Promise实现图片的异步加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">二、算法基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="nav-number">2.1.</span> <span class="nav-text">1.冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="nav-number">2.3.</span> <span class="nav-text">3.快速排序</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2023/04/30/2023%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E6%A2%B3%E7%90%86/10.%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AF%95%E4%B9%8B%E5%8D%81%E4%BB%A3%E7%A0%81%E7%AF%87/';
+          this.page.identifier = '2023/04/30/2023前端面试梳理/10.技术面试之十代码篇/';
+          this.page.title = '技术面试之十代码篇';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
