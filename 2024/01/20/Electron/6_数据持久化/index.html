@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Electron," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="数据持久化由于Electron本身是Chromium和node的结合体，因此实现数据持久化的时候，可以从两个方面来考虑：  基于Node.js的本地文件持久化 基于浏览器技术的持久化  设置存储目录Windows  用户数据目录：在 Windows 操作系统中，应用程序通常在以下路径之一存储用户数据： C:\Users\[用户名]\AppData\Roaming\：用于存储漫游数据，即用户在不同计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.数据持久化">
+<meta property="og:url" content="http://yoursite.com/2024/01/20/Electron/6_%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="数据持久化由于Electron本身是Chromium和node的结合体，因此实现数据持久化的时候，可以从两个方面来考虑：  基于Node.js的本地文件持久化 基于浏览器技术的持久化  设置存储目录Windows  用户数据目录：在 Windows 操作系统中，应用程序通常在以下路径之一存储用户数据： C:\Users\[用户名]\AppData\Roaming\：用于存储漫游数据，即用户在不同计">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-01-20T01:47:00.000Z">
+<meta property="article:modified_time" content="2024-10-24T05:59:41.386Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Electron">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/01/20/Electron/6_数据持久化/"/>
+
+
+
+
+
+  <title>6.数据持久化 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2024/01/20/Electron/6_%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">6.数据持久化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-01-20T09:47:00+08:00">
+                2024-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/Electron/" itemprop="url" rel="index">
+                    <span itemprop="name">Electron</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2024/01/20/Electron/6_%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2024/01/20/Electron/6_数据持久化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="数据持久化"><a href="#数据持久化" class="headerlink" title="数据持久化"></a>数据持久化</h1><p>由于Electron本身是Chromium和node的结合体，因此实现数据持久化的时候，可以从两个方面来考虑：</p>
+<ul>
+<li>基于Node.js的本地文件持久化</li>
+<li>基于浏览器技术的持久化</li>
+</ul>
+<h1 id="设置存储目录"><a href="#设置存储目录" class="headerlink" title="设置存储目录"></a>设置存储目录</h1><p><strong>Windows</strong></p>
+<ul>
+<li>用户数据目录：在 Windows 操作系统中，应用程序通常在以下路径之一存储用户数据：<ul>
+<li><code>C:\Users\[用户名]\AppData\Roaming\</code>：用于存储漫游数据，即用户在不同计算机上使用相同用户账户时可以访问的数据。</li>
+<li><code>C:\Users\[用户名]\AppData\Local\</code>：用于存储特定于单个计算机的数据。</li>
+</ul>
+</li>
+<li>程序数据目录：对于所有用户共享的应用数据，通常存储在 <code>C:\ProgramData\</code> 目录。</li>
+</ul>
+<p><strong>macOS</strong></p>
+<ul>
+<li>用户数据目录: 在macOS中，应用程序的用户数据通常存储在用户的库目录（Library）中，路径为：<ul>
+<li><code>/Users/[用户名]/Library/</code>：这个目录用于存储应用程序的配置文件、缓存和其他用户特定的数据。</li>
+</ul>
+</li>
+<li>应用支持目录：特别是，许多应用程序将数据存储在 <code>/Users/[用户名]/Library/Application Support/</code> 目录。</li>
+</ul>
+<p><strong>Linux</strong></p>
+<ul>
+<li>用户数据目录：在 Linux 系统中，用户个性化数据通常存储在用户的主目录下的隐藏文件夹中。这些目录的名称通常以点（ . ）开始，例如：<code>/home/[用户名]/.[应用程序名称]/</code>：用于存储该应用程序的个性化设置和数据。</li>
+<li>配置文件：一些通用的配置文件可能存储在 <code>/home/[用户名]/.config/</code> 目录中。</li>
+</ul>
+<p>在 Electron 中可以通过 app.getPath(“userData”) 来获取到默认的用户数据目录。</p>
+<p>另外，在 app.getPath 方法中传入不同的参数，能够获取到不同用途的路径：</p>
+<ul>
+<li><code>&quot;home&quot;</code>: 用户的主目录。</li>
+<li><code>&quot;appData&quot;</code>: 当前用户的应用程序目录。</li>
+<li><code>&quot;userData&quot;</code>: 对应用户个性化数据的目录。</li>
+<li><code>&quot;temp&quot;</code>: 临时文件目录。</li>
+<li><code>&quot;exe&quot;</code>: 当前的可执行文件目录。</li>
+<li><code>&quot;desktop&quot;</code>: 用户的桌面目录。</li>
+<li><code>&quot;documents&quot;</code>: 用户的文档目录。</li>
+<li><code>&quot;downloads&quot;</code>: 用户的下载目录。</li>
+<li><code>&quot;music&quot;</code>: 用户的音乐目录。</li>
+<li><code>&quot;pictures&quot;</code>: 用户的图片目录。</li>
+<li><code>&quot;videos&quot;</code>: 用户的视频目录。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">console.log(app.getPath(<span class="string">&quot;userData&quot;</span>)); // C:\Users\A\AppData\Roaming\demo</span><br><span class="line">console.log(app.getPath(<span class="string">&quot;home&quot;</span>)); // C:\Users\A </span><br><span class="line">console.log(app.getPath(<span class="string">&quot;desktop&quot;</span>)); // C:\Users\A\Desktop </span><br><span class="line">console.log(app.getPath(<span class="string">&quot;documents&quot;</span>));// C:\Users\A\Documents </span><br><span class="line">console.log(app.getPath(<span class="string">&quot;downloads&quot;</span>)); // C:\Users\A\Downloads</span><br><span class="line">console.log(app.getPath(<span class="string">&quot;music&quot;</span>)); // C:\Users\A\Music</span><br></pre></td></tr></table></figure>
+<p>允许用户自己来选择将应用的用户数据存储到哪个位置，通过：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">setPath</span>(<span class="string">&#x27;appData&#x27;</span>, <span class="string">&#x27;path&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>appData： 要重置的路径的名称</li>
+<li>path：具体的路径</li>
+</ul>
+<h2 id="读写本地文件"><a href="#读写本地文件" class="headerlink" title="读写本地文件"></a>读写本地文件</h2><p>关于读写本地文件这一块儿，就是利用 Node.js 里面和文件处理相关的 fs 模块的 API。</p>
+<p>这里再推荐一个第三方的库：fs-extra，这个库在原本的 fs 模块的基础上又做了一层封装，添加了很多更好用的 API。</p>
+<p>原生 fs 模块，在删除一个目录的时候，如果该目录下面有子目录，子目录下面又有子目录，那么该目录是无法删除，要删除一个目录的前提就是该目录必须是空的，因此在原生 fs 模块里面，就会涉及到递归操作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">deleteDirectory</span>(<span class="params">directoryPath</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (fs.<span class="title function_">existsSync</span>(directoryPath)) &#123;</span><br><span class="line">    fs.<span class="title function_">readdirSync</span>(directoryPath).<span class="title function_">forEach</span>(<span class="function">(<span class="params">file</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> currentPath = path.<span class="title function_">join</span>(directoryPath, file);</span><br><span class="line">      <span class="keyword">if</span> (fs.<span class="title function_">lstatSync</span>(currentPath).<span class="title function_">isDirectory</span>()) &#123;</span><br><span class="line">        <span class="comment">// 递归删除子目录</span></span><br><span class="line">        <span class="title function_">deleteDirectory</span>(currentPath);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 删除文件</span></span><br><span class="line">        fs.<span class="title function_">unlinkSync</span>(currentPath);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 删除目录</span></span><br><span class="line">    fs.<span class="title function_">rmdirSync</span>(directoryPath);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Directory <span class="subst">$&#123;directoryPath&#125;</span> has been removed successfully.`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Directory not found.&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义要删除的目录路径</span></span><br><span class="line"><span class="keyword">const</span> dirPath = <span class="string">&#x27;./path/to/your/directory&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="title function_">deleteDirectory</span>(dirPath);</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Error occurred while removing directory: <span class="subst">$&#123;err.message&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>fs-extra</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs-extra&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义要删除的目录路径</span></span><br><span class="line"><span class="keyword">const</span> directoryPath = <span class="string">&#x27;./path/to/your/directory&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// 删除目录及其所有内容</span></span><br><span class="line">  fs.<span class="title function_">removeSync</span>(directoryPath);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Directory <span class="subst">$&#123;directoryPath&#125;</span> has been removed successfully.`</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Error occurred while removing directory: <span class="subst">$&#123;err.message&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例二</p>
+<p>原生 fs 模块在创建目录之前需要先判断该目录是否存在，只有在不存在的情况下，才能够创建</p>
+<p>原生 fs 模块相关代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dirPath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;exampleDir&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查目录是否存在</span></span><br><span class="line"><span class="keyword">if</span> (!fs.<span class="title function_">existsSync</span>(dirPath)) &#123;</span><br><span class="line">  <span class="comment">// 如果目录不存在，则创建它</span></span><br><span class="line">  fs.<span class="title function_">mkdirSync</span>(dirPath, &#123; <span class="attr">recursive</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Directory created successfully!&#x27;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Directory already exists.&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>fs-extra 模块提供了 ensureDir 方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs-extra&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dirPath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;exampleDir&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果已经存在，代码将继续执行而不会发生错误。</span></span><br><span class="line"><span class="comment">// 如果目录不存在，则创建它</span></span><br><span class="line">fs.<span class="title function_">ensureDir</span>(dirPath)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Directory ensured successfully!&#x27;</span>))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(err));</span><br></pre></td></tr></table></figure>
+<p>关于 fs-extra 官网：<a href="https://github.com/jprichardson/node-fs-extra">https://github.com/jprichardson/node-fs-extra</a></p>
+<h1 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h1><p>有些时候，我们要存储的数据就是一个简单 JSON 数据，那么这个时候我们可以选择 electron-store 来进行存储。</p>
+<p>electron-store 是专为 Electron 设计，并且专门用于存储 JSON 这种轻量级数据。</p>
+<p>我们在使用这个第三方库的时候，引入即用，都不需要指定文件的路径和文件名。</p>
+<p>常用的方法如下：</p>
+<p><strong>引入和实例化</strong></p>
+<p>在 Electron 的主进程或渲染进程中，引入并实例化 <code>electron-store</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Store</span> = <span class="built_in">require</span>(<span class="string">&#x27;electron-store&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Store</span>();</span><br></pre></td></tr></table></figure>
+<p><strong>存储数据</strong></p>
+<p>使用 <code>set</code> 方法存储数据。您可以存储字符串、数字、对象等类型的数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 存储一个简单的值</span></span><br><span class="line">store.<span class="title function_">set</span>(<span class="string">&#x27;unicorn&#x27;</span>, <span class="string">&#x27;🦄&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 存储一个对象</span></span><br><span class="line">store.<span class="title function_">set</span>(<span class="string">&#x27;user&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">25</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>读取数据</strong></p>
+<p>使用 <code>get</code> 方法读取数据，如果指定的键不存在，可以返回一个默认值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取数据</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">get</span>(<span class="string">&#x27;unicorn&#x27;</span>)); <span class="comment">// 输出：🦄</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取对象的属性</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">get</span>(<span class="string">&#x27;user.name&#x27;</span>)); <span class="comment">// 输出：Alice</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取不存在的键，返回默认值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(store.<span class="title function_">get</span>(<span class="string">&#x27;foo&#x27;</span>, <span class="string">&#x27;默认值&#x27;</span>)); <span class="comment">// 输出：默认值</span></span><br></pre></td></tr></table></figure>
+<p><strong>检查键是否存在</strong></p>
+<p>使用 <code>has</code> 方法检查存储中是否存在某个键：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (store.<span class="title function_">has</span>(<span class="string">&#x27;unicorn&#x27;</span>)) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Unicorn exists&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>删除数据</strong></p>
+<p>使用 <code>delete</code> 方法删除存储中的数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 删除一个键</span></span><br><span class="line">store.<span class="title function_">delete</span>(<span class="string">&#x27;unicorn&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>配置和选项</strong></p>
+<p>在实例化 <code>electron-store</code> 时，您可以传递一些选项来自定义其行为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Store</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;my-data&#x27;</span>, <span class="comment">// 自定义存储文件的名称，默认是 &#x27;config&#x27;</span></span><br><span class="line">    <span class="attr">encryptionKey</span>: <span class="string">&#x27;aes-256-cbc&#x27;</span>, <span class="comment">// 加密存储的数据</span></span><br><span class="line">    <span class="attr">cwd</span>: <span class="string">&#x27;some/path&#x27;</span>, <span class="comment">// 自定义存储文件的路径</span></span><br><span class="line">    <span class="attr">fileExtension</span>: <span class="string">&#x27;json&#x27;</span> <span class="comment">// 文件扩展名，默认是 &#x27;json&#x27;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>另外，electron-store 默认是将数据存储到对应操作系统的 userData 目录下面。</p>
+<ul>
+<li>macOS：<code>~/Library/Application Support/YourApp</code></li>
+<li>Windows：<code>C:\Users\YourName\AppData\Local\YourApp</code></li>
+</ul>
+<p>更多关于 electron-store 的使用，可以参阅：<a href="https://github.com/sindresorhus/electron-store">https://github.com/sindresorhus/electron-store</a></p>
+<h1 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h1><p>在 Electron 中，如果你打开了多个 BrowserWindow 的实例，那么它们默认情况下会共享同一个 localStorage 空间。</p>
+<p>另外，关于多个窗口是否共享 localStorage 这一点，虽然默认是多窗口共享，但是是可以进行配置的。</p>
+<p>例如，在创建窗口二的时候，可以添加如下的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> secondWin = <span class="keyword">new</span> <span class="title class_">BrowserWindow</span>(&#123;</span><br><span class="line">  <span class="attr">width</span>: <span class="number">800</span>,</span><br><span class="line">  <span class="attr">height</span>: <span class="number">600</span>,</span><br><span class="line">  <span class="attr">webPreferences</span>: &#123;</span><br><span class="line">    <span class="attr">nodeIntegration</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">contextIsolation</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">partition</span>: <span class="string">&quot;persist:myCustomPartition&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>partition：用于定义该窗口数据存储的独立性和持久性<ul>
+<li>persist：这是一个前缀，该前缀表明这是一个持久性的会话</li>
+<li>myCustomPartition：这个标识符代表该会话的唯一名称。这里就是通过不同的 partition 名称，给应用中的不同窗口创建了隔离的存储空间。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Electron/" rel="tag"># Electron</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2024/01/18/Electron/5_%E7%B3%BB%E7%BB%9F%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%8E%E8%8F%9C%E5%8D%95%E5%92%8C%E8%BF%9B%E5%BA%A6%E6%9D%A1/" rel="next" title="5.系统对话框与菜单和进度条">
+                <i class="fa fa-chevron-left"></i> 5.系统对话框与菜单和进度条
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2024/03/02/%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2/1.%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88/" rel="prev" title="1.主题切换实现方案">
+                1.主题切换实现方案 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">116</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">数据持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">设置存储目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">读写本地文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">第三方库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#localStorage"><span class="nav-number">4.</span> <span class="nav-text">localStorage</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2024/01/20/Electron/6_%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96/';
+          this.page.identifier = '2024/01/20/Electron/6_数据持久化/';
+          this.page.title = '6.数据持久化';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
