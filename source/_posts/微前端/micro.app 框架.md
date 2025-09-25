@@ -5,8 +5,7 @@ date: 2025-05-29 21:30:00
 ---
 
 # Micro-app 框架
-
-
+[官网地址](https://jd-opensource.github.io/micro-app/)
 
 ## 使用框架基调
 
@@ -15,7 +14,7 @@ date: 2025-05-29 21:30:00
 ## 1、框架安装
 
 ```js
-npm i @micro-zoe/micro-app --save
+npm i @micro-zoe/micro-app@latest --save
 ```
 
 ## 2、子应用对应的view页面
@@ -42,10 +41,10 @@ npm i @micro-zoe/micro-app --save
 
 ```js
 {
-      //路由路径最好是非严格匹配
-      path: "/app-vue2-demo*",
-      name: "Vue2DemoPage",
-      component: () => import("@/views/Vue2DemoPage.vue")
+  //路由路径最好是非严格匹配
+  path: "/app-vue2-demo*",
+  name: "Vue2DemoPage",
+  component: () => import("@/views/Vue2DemoPage.vue")
 }
 ```
 
@@ -119,11 +118,11 @@ devServer: {
 
 ```js
 {
-    //路由路径最好是非严格匹配
-    path: "/app-react-demo*",
-    name: "ReactDemoPage",
-    component: () => import("@/views/ReactDemoPage.vue")
-  }
+  //路由路径最好是非严格匹配
+  path: "/app-react-demo*",
+  name: "ReactDemoPage",
+  component: () => import("@/views/ReactDemoPage.vue")
+}
 ```
 
 
@@ -148,7 +147,7 @@ devServer: {
 
 ```js
 headers: {
-      'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': '*',
 },
 ```
 
@@ -192,7 +191,7 @@ views中添加页面ViteDemoPage.vue
   <div>
     <h2>Main - Vite Vue3 Demo</h2>
     <div>
-      <micro-app name='app-vite-demo' url='http://localhost:4003/' baseroute='/app-vite-demo'></micro-app>
+      <micro-app name='app-vite-demo' url='http://localhost:4003/' baseroute='/app-vite-demo' iframe></micro-app>
     </div>
   </div>
 </template>
@@ -202,10 +201,10 @@ views中添加页面ViteDemoPage.vue
 
 ```ts
 {
-      path: "/app-vite-demo*",
-      name: "AppViteDemo",
-      component: () => import("@/views/ViteDemoPage.vue")
- }
+  path: "/app-vite-demo*",
+  name: "AppViteDemo",
+  component: () => import("@/views/ViteDemoPage.vue")
+}
 ```
 
 app.vue页面别忘记添加路由
@@ -233,39 +232,6 @@ export default defineConfig({
   base: `${process.env.NODE_ENV === 'production' ? 'http://my-site.com' : ''}/app-vite-demo/`,
   plugins: [
     vue(),
-    // 自定义插件
-    (function () {
-      let basePath = ''
-      return {
-        name: "vite:micro-app",
-        apply: 'build',
-        configResolved(config) {
-          //配置资源文件基础路径
-          //${config.base} 项目基础路径，就是上面配置的那些
-          //${config.build.assetsDir}资源文件存放的目录名。默认情况下，它是 'assets'
-          basePath = `${config.base}${config.build.assetsDir}/`
-        },
-        writeBundle (options, bundle) {
-          //遍历所有的代码块，找到文件名以 '.js' 结尾的代码块
-          for (const chunkName in bundle) {
-            if (Object.prototype.hasOwnProperty.call(bundle, chunkName)) {
-              const chunk = bundle[chunkName]
-              if (chunk.fileName && chunk.fileName.endsWith('.js')) {
-               //使用正则表达式来查找所有的相对路径，并使用 new URL() 方法将这些路径转换为绝对路径。
-                chunk.code = chunk.code.replace(/(from|import\()(\s*['"])(\.\.?\/)/g, (all, $1, $2, $3) => {
-                  return all.replace($3, new URL($3, basePath))
-                })
-       //options.dir Vite 构建过程中的输出目录，默认情况下，options.dir 的值就是 dist
-      //options.dir 是 dist，chunk.fileName 是 main.js，那么完整的文件路径就是 dist/main.js
-                const fullPath = join(options.dir, chunk.fileName)
-                //将修改后的内容，重新写入文件系统
-                writeFileSync(fullPath, chunk.code)
-              }
-            }
-          }
-        },
-      }
-    })() as any,
   ],
   resolve: {
     alias: {
@@ -367,8 +333,7 @@ const imgUrl = computed(() => (url: string) => new URL(url, import.meta.url).hre
   name='app-vite-demo' 
   url='http://localhost:4003/' 
   baseroute='/app-vite-demo'
-  inline 
-  disableSandbox
+  iframe
  >
  </micro-app>
 ```
@@ -377,22 +342,8 @@ const imgUrl = computed(() => (url: string) => new URL(url, import.meta.url).hre
 
 ```js
 microApp.start({
-  plugins: {
-    modules: {
-      // appName即应用的name值,注意这里的name实际上是页面<micro-app>标签的name值
-      'app-vite-demo': [{
-        loader(code) {
-          if (process.env.NODE_ENV === 'development') {
-            // 这里 basename 需要和子应用vite.config.js中base的配置保持一致
-            code = code.replace(/(from|import)(\s*['"])(\/app-vite-demo\/)/g, all => {
-              return all.replace('/app-vite-demo/', 'http://127.0.0.1:4003/app-vite-demo/')
-            })
-          }
-          return code
-        }
-      }]
-    }
-  }
+  'disable-memory-router': true, // 关闭虚拟路由系统
+  'disable-patch-request': true, // 关闭对子应用请求的拦截
 })
 ```
 
@@ -474,10 +425,10 @@ export default {
 <button @click="handleData">获取父应用传递数据</button>
 
 methods: {
-    handleData() { 
-      const data = window.microApp.getData()
-      console.log(data);
-    },
+  handleData() { 
+    const data = window.microApp.getData()
+    console.log(data);
+  },
 }
 ```
 
@@ -487,11 +438,10 @@ methods: {
 <button @click="sendData">子应用反馈数据</button>
 
 methods: {
-    sendData() { 
-      window.microApp.dispatch({type: '子应用发送的数据'})
-    }
+  sendData() { 
+    window.microApp.dispatch({type: '子应用发送的数据'})
   }
- }
+}
 ```
 
 ### 父应用直接接收消息
