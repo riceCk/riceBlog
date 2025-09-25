@@ -10,7 +10,7 @@ date: 2025-05-29 21:30:00
 
 ## 使用框架基调
 
-![image-20230602211251896](./assets/image-20230602211251896.png)
+![image-20230602211251896](https://raw.githubusercontent.com/riceCk/riceBlog/master/images/image-20230602211251896.png)
 
 ## 1、框架安装
 
@@ -67,10 +67,10 @@ const router = new VueRouter({
 
 ```js
 devServer: {
-    port: 4001,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    }
+  port: 4001,
+  headers: {
+  'Access-Control-Allow-Origin': '*',
+  }
 }
 ```
 
@@ -106,9 +106,9 @@ devServer: {
 
 ```
 <micro-app 
-      name='app-react-demo' 
-      url='http://localhost:4002/' 
-      baseroute='/app-react-demo'
+  name='app-react-demo' 
+  url='http://localhost:4002/' 
+  baseroute='/app-react-demo'
 >
 </micro-app>
 ```
@@ -119,11 +119,11 @@ devServer: {
 
 ```js
 {
-      //路由路径最好是非严格匹配
-      path: "/app-react-demo*",
-      name: "ReactDemoPage",
-      component: () => import("@/views/ReactDemoPage.vue")
-    }
+    //路由路径最好是非严格匹配
+    path: "/app-react-demo*",
+    name: "ReactDemoPage",
+    component: () => import("@/views/ReactDemoPage.vue")
+  }
 ```
 
 
@@ -134,14 +134,14 @@ devServer: {
 
 ```js
 <Router basename={window.__MICRO_APP_BASE_ROUTE__ || '/'}>
-        <Routes>
-          <Route path="/" element={<LayoutMain />} > 
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="info" element={<Info />} />
-          </Route>
-        </Routes>
-      </Router>
+  <Routes>
+    <Route path="/" element={<LayoutMain />} > 
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="info" element={<Info />} />
+    </Route>
+  </Routes>
+</Router>
 ```
 
 2、设置跨域
@@ -343,7 +343,7 @@ const viteLogo = new URL('/vite.svg', import.meta.url).href
         <img :src="imgUrl('/vite.svg')" class="logo" alt="Vite logo" />
       </a>
       <a href="https://vuejs.org/" target="_blank">
-        <img :src="imgUrl('../assets/vue.svg')" class="logo vue" alt="Vue logo" />
+        <img :src="imgUrl('.https://raw.githubusercontent.com/riceCk/riceBlog/master/images/vue.svg')" class="logo vue" alt="Vue logo" />
       </a>
     </div>
     <HelloWorld msg="子应用 -- Vite+Vue@3.x" />
@@ -446,7 +446,7 @@ requestIdleCallback浏览器渲染一帧的剩余空闲时间执行优先度相�
 
 实现原理 数据中心(发布订阅+数据缓存)
 
-![image-20230606202921562](./assets/image-20230606202921562.png)
+![image-20230606202921562](https://raw.githubusercontent.com/riceCk/riceBlog/master/images/image-20230606202921562.png)
 
 ### 父应用直接传递
 
