@@ -391,7 +391,7 @@ requestIdleCallback浏览器渲染一帧的剩余空闲时间执行优先度相�
   - 合成
 - requestIdleCallback(空闲时间)
 
-## 数据通信
+## 6、数据通信
 
 
 
