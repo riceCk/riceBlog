@@ -45,9 +45,8 @@ pagination_dir: page
 theme: next
 deploy:
   type: git
-  repo: 'https://github.com/riceCk/riceBlog.git'
+  repo: git@github.com:riceCk/riceBlog.git
   branch: master
-  repository: 'git@github.com:riceCk.github.io.git'
 menu:
   home: /
   categories: /categories
