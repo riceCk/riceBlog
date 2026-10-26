@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="状态 Schema reducer  1.SchemaSchema用来做状态的结构约束，统一规定：  这个图全局状态 有哪些字段 字段类型是哪些 那些是必须的  12345import * as z from &quot;zod&quot;;const Schema &#x3D; z.object(&#123;  messages: z.array(z.custom&lt;BaseMessage&gt;()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.状态与节点">
+<meta property="og:url" content="http://yoursite.com/2026/05/02/LangGraph/2.%E7%8A%B6%E6%80%81%E4%B8%8E%E8%8A%82%E7%82%B9/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="状态 Schema reducer  1.SchemaSchema用来做状态的结构约束，统一规定：  这个图全局状态 有哪些字段 字段类型是哪些 那些是必须的  12345import * as z from &quot;zod&quot;;const Schema &#x3D; z.object(&#123;  messages: z.array(z.custom&lt;BaseMessage&gt;()">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-05-02T04:22:33.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.382Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/05/02/LangGraph/2.状态与节点/"/>
+
+
+
+
+
+  <title>2.状态与节点 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/05/02/LangGraph/2.%E7%8A%B6%E6%80%81%E4%B8%8E%E8%8A%82%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">2.状态与节点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-05-02T12:22:33+08:00">
+                2026-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangGraph/" itemprop="url" rel="index">
+                    <span itemprop="name">LangGraph</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/05/02/LangGraph/2.%E7%8A%B6%E6%80%81%E4%B8%8E%E8%8A%82%E7%82%B9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/05/02/LangGraph/2.状态与节点/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h1><ul>
+<li>Schema</li>
+<li>reducer</li>
+</ul>
+<p><strong>1.Schema</strong><br>Schema用来做状态的结构约束，统一规定：</p>
+<ul>
+<li>这个图全局状态</li>
+<li>有哪些字段</li>
+<li>字段类型是哪些</li>
+<li>那些是必须的</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import * as z from <span class="string">&quot;zod&quot;</span>;</span><br><span class="line">const Schema = z.object(&#123;</span><br><span class="line">  messages: z.array(z.custom&lt;BaseMessage&gt;()),</span><br><span class="line">  llmCalls: z.number().optional(),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>默认情况下，图的输入Schema = 输出 Schema</li>
+<li>可以手动分别指定 input Schema 和 output Schema</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const inputSchema = z.object(&#123;</span><br><span class="line">  query: z.string()</span><br><span class="line">&#125;)</span><br><span class="line">const outputSchema = z.object(&#123;</span><br><span class="line">  query: z.string(),</span><br><span class="line">  answer: z.string(),</span><br><span class="line">  metadta: z.object(&#123;</span><br><span class="line">    model: z.string(),</span><br><span class="line">    tokens: z.number(),</span><br><span class="line">    duration: z.number()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># 实例化</span></span><br><span class="line">new StateGraph(&#123;</span><br><span class="line">  input: inputSchema,</span><br><span class="line">  output: outputSchema</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>2.reducer</strong><br>状态合并器，reducer决定这些更新如何和旧的状态合并，默认是覆盖<br>工作原则：</p>
+<ol>
+<li>节点只需返回“要更新的那一小块”，不用把整份 state 再抄一遍。</li>
+<li>如果没为某个 key 指定 reducer，就按默认策略：直接覆盖，后来的值把前面的值盖掉。</li>
+<li>每个 key 可以有各自的合并方式，例如指定 number 怎么合？array 怎么合？</li>
+</ol>
+<p>示例：要更新的那一小块，不用把整份 state 再抄一遍<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 节点1</span></span><br><span class="line">async <span class="keyword">function</span> <span class="function"><span class="title">node1</span></span>() &#123;</span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    count: 1,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 节点2</span></span><br><span class="line">async <span class="keyword">function</span> node2(state: TState) &#123;</span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    logs: [`第一条<span class="built_in">log</span>，count=<span class="variable">$&#123;state.count&#125;</span>`],</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 节点3</span></span><br><span class="line">async <span class="keyword">function</span> <span class="function"><span class="title">node3</span></span>() &#123;</span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    status: <span class="string">&quot;完成&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 节点4</span></span><br><span class="line">async <span class="keyword">function</span> <span class="function"><span class="title">node4</span></span>() &#123;</span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    count: 200,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 节点5</span></span><br><span class="line">async <span class="keyword">function</span> node5(state: TState) &#123;</span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    logs: [`第二条<span class="built_in">log</span>，count=<span class="variable">$&#123;state.count&#125;</span>`],</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># &#123; count: 200, logs: [ &#x27;第二条log，count=200&#x27; ], status: &#x27;完成&#x27; &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>示例2：每个 key 可以有各自的合并方式，例如指定 number 怎么合？array 怎么合？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const Schema = z.object(&#123;</span><br><span class="line">  count: z.number().register(registry, &#123;</span><br><span class="line">    reducer: &#123;</span><br><span class="line">      <span class="comment"># 这里因为指定了reducer，因此在进行状态合并的时候</span></span><br><span class="line">      <span class="comment"># 不再是新的状态去覆盖旧的状态，而是新旧状态相加</span></span><br><span class="line">      fn: (oldVal, newVal) =&gt; oldVal + newVal,</span><br><span class="line">    &#125;,</span><br><span class="line">    default: () =&gt; 0,</span><br><span class="line">  &#125;),</span><br><span class="line">  logs: z.array(z.string()).register(registry, &#123;</span><br><span class="line">    reducer: &#123;</span><br><span class="line">      <span class="comment"># 新旧状态拼接到一起，而非覆盖</span></span><br><span class="line">      fn: (oldVal, incoming) =&gt; oldVal.concat(incoming), <span class="comment"># 拼接数组</span></span><br><span class="line">    &#125;,</span><br><span class="line">    default: () =&gt; [] as string[], <span class="comment"># 没有旧值时，用空数组作为初始值</span></span><br><span class="line">  &#125;),</span><br><span class="line">  status: z.string().optional(),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>3. messages</strong><br>把“上下文对话”保存在 <code>state.messages</code> 里，供后续节点读取与追加。这里官方推荐 <code>MessagesZodMeta</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import &#123; StateGraph, MessagesZodMeta &#125; from <span class="string">&quot;@langchain/langgraph&quot;</span>;</span><br><span class="line">import &#123; registry &#125; from <span class="string">&quot;@langchain/langgraph/zod&quot;</span>;</span><br><span class="line"><span class="comment"># import * as z from &quot;zod&quot;;</span></span><br><span class="line">import &#123; z &#125; from <span class="string">&quot;zod/v4&quot;</span>;</span><br><span class="line">import &#123; BaseMessage &#125; from <span class="string">&quot;@langchain/core/messages&quot;</span>;</span><br><span class="line"></span><br><span class="line">const State = z.object(&#123;</span><br><span class="line">  messages: z</span><br><span class="line">    .array(z.custom&lt;BaseMessage&gt;()) <span class="comment"># 用 BaseMessage 数组承载对话</span></span><br><span class="line">    .register(registry, MessagesZodMeta), <span class="comment"># 通过 MessagesZodMeta 绑定“按 id 合并/覆盖”的 reducer + 序列化逻辑</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 还可以放其它业务字段</span></span><br><span class="line">  documents: z.array(z.string()).optional(),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const graph = new StateGraph(State);</span><br></pre></td></tr></table></figure></p>
+<p>这里的 reducer 不是 concat，而是 <code>MessagesZodMeta</code> 内部的智能 reducer，它的特性：</p>
+<ul>
+<li><p>有 <code>id</code> 的消息：覆盖</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123; <span class="attr">messages</span>: [ <span class="keyword">new</span> <span class="title class_">HumanMessage</span>(&#123; <span class="attr">id</span>: <span class="string">&quot;m-123&quot;</span>, <span class="attr">content</span>: <span class="string">&quot;修正内容&quot;</span> &#125;) ] &#125;</span><br></pre></td></tr></table></figure>
+<p>不会 append，而是覆盖同 id 的消息</p>
+</li>
+<li><p>没有 <code>id</code> 的消息：追加</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123; <span class="attr">messages</span>: [ <span class="keyword">new</span> <span class="title class_">AIMessage</span>(<span class="string">&quot;hi&quot;</span>) ] &#125;</span><br></pre></td></tr></table></figure>
+<p>会追加到 messages 末尾</p>
+</li>
+</ul>
+<p>能够达到双模式。</p>
+<p>示例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">import &#123; StateGraph, START, END, MessagesZodMeta &#125; from <span class="string">&quot;@langchain/langgraph&quot;</span>;</span><br><span class="line">import &#123; registry &#125; from <span class="string">&quot;@langchain/langgraph/zod&quot;</span>;</span><br><span class="line">import &#123;</span><br><span class="line">  BaseMessage,</span><br><span class="line">  HumanMessage,</span><br><span class="line">  AIMessage,</span><br><span class="line">&#125; from <span class="string">&quot;@langchain/core/messages&quot;</span>;</span><br><span class="line"><span class="comment"># import * as z from &quot;zod&quot;;</span></span><br><span class="line">import &#123; z &#125; from <span class="string">&quot;zod/v4&quot;</span>;</span><br><span class="line"><span class="comment"># 定义Schema</span></span><br><span class="line">const Schema = z.object(&#123;</span><br><span class="line">  messages: z</span><br><span class="line">    .array(z.custom&lt;BaseMessage&gt;())</span><br><span class="line">    .register(registry, MessagesZodMeta),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment"># type TState = z.infer&lt;typeof Schema&gt;;</span></span><br><span class="line"></span><br><span class="line">async <span class="keyword">function</span> <span class="function"><span class="title">node1</span></span>() &#123;</span><br><span class="line">  const msg = new HumanMessage(&#123;</span><br><span class="line">    content: <span class="string">&quot;你好，langgraph&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    messages: [msg], <span class="comment"># 追加</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async <span class="keyword">function</span> <span class="function"><span class="title">node2</span></span>() &#123;</span><br><span class="line">  const msg = new AIMessage(&#123;</span><br><span class="line">    content: <span class="string">&quot;你好，langgraph22222&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    messages: [msg], <span class="comment"># 追加</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async <span class="keyword">function</span> <span class="function"><span class="title">node3</span></span>() &#123;</span><br><span class="line">  const msg = new HumanMessage(&#123;</span><br><span class="line">    <span class="built_in">id</span>: <span class="string">&quot;m-123&quot;</span>,</span><br><span class="line">    content: <span class="string">&quot;修正用户消息&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    messages: [msg], <span class="comment"># 更新 id 为 m-123 的消息内容</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">async <span class="keyword">function</span> <span class="function"><span class="title">node4</span></span>() &#123;</span><br><span class="line">  const msg = new AIMessage(&#123;</span><br><span class="line">    <span class="built_in">id</span>: <span class="string">&quot;m-456&quot;</span>,</span><br><span class="line">    content: <span class="string">&quot;修正AI回复的消息&quot;</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> &#123;</span><br><span class="line">    messages: [msg], <span class="comment"># 更新 id 为 m-456 的消息内容</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const app = new StateGraph(Schema)</span><br><span class="line">  .addNode(<span class="string">&quot;node1&quot;</span>, node1)</span><br><span class="line">  .addNode(<span class="string">&quot;node2&quot;</span>, node2)</span><br><span class="line">  .addNode(<span class="string">&quot;node3&quot;</span>, node3)</span><br><span class="line">  .addNode(<span class="string">&quot;node4&quot;</span>, node4)</span><br><span class="line">  .addEdge(START, <span class="string">&quot;node1&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;node1&quot;</span>, <span class="string">&quot;node2&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;node2&quot;</span>, <span class="string">&quot;node3&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;node3&quot;</span>, <span class="string">&quot;node4&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;node4&quot;</span>, END)</span><br><span class="line">  .compile();</span><br><span class="line"></span><br><span class="line">const result = await app.invoke(&#123;</span><br><span class="line">  <span class="comment"># 一开始有两条信息</span></span><br><span class="line">  messages: [</span><br><span class="line">    new HumanMessage(&#123; <span class="built_in">id</span>: <span class="string">&quot;m-123&quot;</span>, content: <span class="string">&quot;这是原始的用户消息&quot;</span> &#125;),</span><br><span class="line">    new AIMessage(&#123; <span class="built_in">id</span>: <span class="string">&quot;m-456&quot;</span>, content: <span class="string">&quot;这是原始的AI回复消息&quot;</span> &#125;),</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<h1 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h1><h2 id="节点参数"><a href="#节点参数" class="headerlink" title="节点参数"></a>节点参数</h2><p>graph.addNode(“节点名称”, 节点函数);</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">graph.addNode(<span class="string">&quot;myNode&quot;</span>, (state, config) =&gt; &#123;</span><br><span class="line">  console.log(<span class="string">&quot;In node: &quot;</span>, config?.configurable?.user_id);</span><br><span class="line">  <span class="built_in">return</span> &#123; results: `Hello, <span class="variable">$&#123;state.input&#125;</span>!` &#125;;</span><br><span class="line">&#125;)</span><br><span class="line">addNode(<span class="string">&quot;otherNode&quot;</span>, (state) =&gt; &#123;</span><br><span class="line">  <span class="built_in">return</span> state;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">## 默认节点名</span></span><br><span class="line"></span><br><span class="line">如果不书写节点名称，会自动取**函数名作为节点名**。例如：</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line"><span class="keyword">function</span> myNode(state) &#123;</span><br><span class="line">  <span class="built_in">return</span> &#123; ... &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">graph.addNode(myNode);</span><br><span class="line"><span class="comment"># graph.addNode(&quot;myNode&quot;, myNode);</span></span><br></pre></td></tr></table></figure>
+<h2 id="开始节点和结束节点"><a href="#开始节点和结束节点" class="headerlink" title="开始节点和结束节点"></a>开始节点和结束节点</h2><p><code>START</code> 是一个特殊的节点，表示图的起点。<code>END</code> 也是一个特殊节点，表示图的结束：</p>
+<h2 id="节点缓存机制"><a href="#节点缓存机制" class="headerlink" title="节点缓存机制"></a>节点缓存机制</h2><p>某一些节点函数计算昂贵，可以选择将其缓存起来，这样下次有相同的输入时不用再重新执行节点，而是直接返回缓存结果。</p>
+<p><strong>1. <code>compile()</code> 编译图的时候，启用缓存</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.<span class="title function_">compile</span>(&#123; <span class="attr">cache</span>: <span class="keyword">new</span> <span class="title class_">InMemoryCache</span>() &#125;);</span><br></pre></td></tr></table></figure>
+<p>表示整个图都使用内存缓存。</p>
+<p>也可以换成 Redis、file、database 等。</p>
+<p>缓存策略有两种：</p>
+<ol>
+<li>ttl：缓存有效时长（秒），决定“缓存多久过期”，适用于想让缓存自动失效时。</li>
+<li>keyFunc：自定义缓存 key，决定“什么输入算同一个缓存”，适用于<strong>想精细控制缓存命中逻辑时</strong>。<ul>
+<li>LangGraph 在执行流程中有多个“检查缓存”的时机，而每个时机的 state 结构不同（有时已 reduce、有时未 reduce）</li>
+<li>因此 cachePolicy 的 keyFunc 会发生在 “reduce 前” 或 “reduce 后” 的不同位置，有可能拿到：<ul>
+<li>单一 state</li>
+<li>reducer 尚未处理的 state 数组</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">const app = new StateGraph(Schema)</span><br><span class="line">  .addNode(</span><br><span class="line">    <span class="string">&quot;node1&quot;</span>,</span><br><span class="line">    async (state: TState) =&gt; &#123;</span><br><span class="line">      <span class="comment"># 演示一个耗时的操作</span></span><br><span class="line">      console.log(<span class="string">&quot;这是一个耗时的操作...&quot;</span>);</span><br><span class="line">      await new Promise((r) =&gt; setTimeout(r, <span class="number">5000</span>));</span><br><span class="line">      <span class="built_in">return</span> &#123;</span><br><span class="line">        result: `<span class="variable">$&#123;state.query&#125;</span>对应答案`,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      cachePolicy: &#123;</span><br><span class="line">        keyFunc: (state: any) =&gt; &#123;</span><br><span class="line">          const s = Array.isArray(state) ? state[state.length - 1] : state;</span><br><span class="line">          console.log(s?.userId, <span class="string">&quot;state=============&quot;</span>);</span><br><span class="line">          <span class="built_in">return</span> s?.userId;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment"># ttl: 10, # 缓存10秒，单位是秒</span></span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  )</span><br><span class="line">  .addEdge(START, <span class="string">&quot;node1&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;node1&quot;</span>, END)</span><br><span class="line">  .compile(&#123;</span><br><span class="line">    cache: new InMemoryCache(), <span class="comment"># 开启缓存</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/05/02/LangGraph/4.MapReduce/" rel="next" title="4.MapReduce">
+                <i class="fa fa-chevron-left"></i> 4.MapReduce
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/05/02/LangGraph/3.%E8%B6%85%E6%AD%A5%E4%B8%8E%E8%BE%B9%E4%B8%8E%E5%BE%AA%E7%8E%AF/" rel="prev" title="2.超步与边以及实战循环">
+                2.超步与边以及实战循环 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8A%B6%E6%80%81"><span class="nav-number">1.</span> <span class="nav-text">状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8A%82%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E5%8F%82%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">节点参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E8%8A%82%E7%82%B9%E5%92%8C%E7%BB%93%E6%9D%9F%E8%8A%82%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">开始节点和结束节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="nav-number">2.3.</span> <span class="nav-text">节点缓存机制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/05/02/LangGraph/2.%E7%8A%B6%E6%80%81%E4%B8%8E%E8%8A%82%E7%82%B9/';
+          this.page.identifier = '2026/05/02/LangGraph/2.状态与节点/';
+          this.page.title = '2.状态与节点';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Document对象在LangChain中，无论你的数据来源哪里——文本文件、数据库、网页还是GitHub项目，最终都会封装成统一的数据结构Document对象。好处：LangChain的后续模块（比如向量化、检索器、分片器等）不需要关心数据源、只处理Document即可123456new Document(&#123;  pageContent: &#x27;这是一段测试文字&#x27;, #">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.本地资源Loader">
+<meta property="og:url" content="http://yoursite.com/2026/03/23/LangChain/5.%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90Loader/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="Document对象在LangChain中，无论你的数据来源哪里——文本文件、数据库、网页还是GitHub项目，最终都会封装成统一的数据结构Document对象。好处：LangChain的后续模块（比如向量化、检索器、分片器等）不需要关心数据源、只处理Document即可123456new Document(&#123;  pageContent: &#x27;这是一段测试文字&#x27;, #">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-03-23T02:11:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.377Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/03/23/LangChain/5.本地资源Loader/"/>
+
+
+
+
+
+  <title>3.本地资源Loader | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/03/23/LangChain/5.%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90Loader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">3.本地资源Loader</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-03-23T10:11:00+08:00">
+                2026-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangChain/" itemprop="url" rel="index">
+                    <span itemprop="name">LangChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/03/23/LangChain/5.%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90Loader/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/03/23/LangChain/5.本地资源Loader/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Document对象"><a href="#Document对象" class="headerlink" title="Document对象"></a>Document对象</h1><p>在LangChain中，无论你的数据来源哪里——文本文件、数据库、网页还是GitHub项目，最终都会封装成统一的数据结构<code>Document</code>对象。<br>好处：LangChain的后续模块（比如向量化、检索器、分片器等）不需要关心数据源、只处理<code>Document</code>即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Document(&#123;</span><br><span class="line">  pageContent: <span class="string">&#x27;这是一段测试文字&#x27;</span>, <span class="comment"># 文本内容，表示这段文档的主题内容</span></span><br><span class="line">  metadata: &#123; <span class="comment"># 原数据，附加的上下文信息，如来源、页面、标题等</span></span><br><span class="line">    <span class="built_in">source</span>: <span class="string">&#x27;abc&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h1 id="文本PDF"><a href="#文本PDF" class="headerlink" title="文本PDF"></a>文本PDF</h1><p>文本Loader位于LangChain包下面<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm add community pdf-parse </span><br></pre></td></tr></table></figure><br>例题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import &#123; PDFLoader &#125; from <span class="string">&quot;@langchain/community/document_loaders/fs/pdf&quot;</span>;</span><br><span class="line">const loader = new PDFLoader(<span class="string">&quot;data/111.pdf&quot;</span>);</span><br><span class="line"></span><br><span class="line">const res = await loader.load();</span><br><span class="line">console.log(res);</span><br><span class="line">[</span><br><span class="line">  Document &#123;</span><br><span class="line">    pageContent: <span class="string">&#x27;作业申请单位 \t公用工程车间 \t作业申请时间 \t2026-08-25 08:55:34\n&#x27;</span>,</span><br><span class="line">    metadata: &#123; <span class="built_in">source</span>: <span class="string">&#x27;data/111.pdf&#x27;</span>, pdf: [Object], loc: [Object] &#125;,</span><br><span class="line">    <span class="built_in">id</span>: undefined</span><br><span class="line">  &#125;,</span><br><span class="line">  Document &#123;</span><br><span class="line">    pageContent: <span class="string">&#x27;01 动火设备内部构件清洗干净，蒸汽吹扫或水洗、置换合格，达到动火\n&#x27;</span>,</span><br><span class="line">    metadata: &#123; <span class="built_in">source</span>: <span class="string">&#x27;data/111.pdf&#x27;</span>, pdf: [Object], loc: [Object] &#125;,</span><br><span class="line">    <span class="built_in">id</span>: undefined</span><br><span class="line">  &#125;,</span><br><span class="line">  Document &#123;</span><br><span class="line">    pageContent: <span class="string">&#x27;同意动火\n&#x27;</span> +</span><br><span class="line">    metadata: &#123; <span class="built_in">source</span>: <span class="string">&#x27;data/111.pdf&#x27;</span>, pdf: [Object], loc: [Object] &#125;,</span><br><span class="line">    <span class="built_in">id</span>: undefined</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<h1 id="目录Loader"><a href="#目录Loader" class="headerlink" title="目录Loader"></a>目录Loader</h1><p>在实际项目中，数据通常不是孤零零存在的，而是统一放在一个文件中，有多格式文件组成（比如：<code>.txt</code>、<code>.pdf</code>、<code>.md</code>等等）。这时逐个调用对应的Loader，会非常麻烦<br>LangChain为我们提供一个统一的————<code>DirectoryLoader</code>,可以自动识别目录中不同类型的文件，并调用对应Loader执行加载器任务。</p>
+<h1 id="Web资源Loader"><a href="#Web资源Loader" class="headerlink" title="Web资源Loader"></a>Web资源Loader</h1><p><code>CheerioWebBaseLoader</code>作为抓取指定网页并解析的HTML内容，提取需要的纯文本数据。<br>这个Loader底层依赖<a href="https://cheerio.js.org/docs/intro/">cheerio</a>，语法类型JQuery，可以方便选择HTML元素并提取内容，适用于解析静态的HTML网页<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm add @langchain/community cheerio</span><br></pre></td></tr></table></figure><br><strong>快速上手示例</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123; CheerioWebBaseLoader &#125; from <span class="string">&quot;@langchain/community/document_loaders/web/cheerio&quot;</span>;</span><br><span class="line">const loader = new CheerioWebBaseLoader(<span class="string">&quot;https://tech.meituan.com/&quot;</span>);</span><br><span class="line">const res = await loader.load();</span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure><br>可以配置<code>selector</code>,提取指定HTML标签内容。<br>比如只提取三级菜单标题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const loader = new CheerioWebBaseLoader(<span class="string">&quot;https://tech.meituan.com/&quot;</span>, &#123;</span><br><span class="line">  selector: <span class="string">&quot;h3&quot;</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="Github-loader"><a href="#Github-loader" class="headerlink" title="Github loader"></a>Github loader</h1><p>希望大模型理解某个项目的结构和实现细节，比如：</p>
+<ul>
+<li>根据提问问题回答组件如何使用</li>
+<li>根据错误信息定位源码位置</li>
+<li>辅助理解项目代码逻辑</li>
+</ul>
+<p>这种场景下，直接将整个GitHub仓库作为数据源加载进去，是一种非常实用的做法。<br><code>GithubRepoLoader</code>来一键抓取GitHub项目内容，并自动转成<code>Document</code>对象<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 依赖ignore包</span></span><br><span class="line">pnpm add ignore </span><br></pre></td></tr></table></figure><br>快速上手示例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123; GithubRepoLoader &#125; from <span class="string">&quot;@langchain/community/document_loaders/web/github&quot;</span>;</span><br><span class="line">const loader = new GithubRepoLoader(<span class="string">&quot;https://github.com/vuejs/vue&quot;</span>, &#123;</span><br><span class="line">  branch: <span class="string">&quot;main&quot;</span>, <span class="comment"># 指定分支</span></span><br><span class="line">  recursive: <span class="literal">false</span>, <span class="comment"># 是否递归子目录（测试建议false）</span></span><br><span class="line">  unknown: <span class="string">&quot;warn&quot;</span>, <span class="comment"># 遇到未知类型的文件是否警告</span></span><br><span class="line">  ignorePaths: [<span class="string">&quot;*.md&quot;</span>, <span class="string">&quot;*.json&quot;</span>, <span class="string">&quot;yarn.lock&quot;</span>], <span class="comment"># 忽略的部分文件</span></span><br><span class="line">&#125;);</span><br><span class="line">const result = await loader.load();</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<h1 id="SearchAPI"><a href="#SearchAPI" class="headerlink" title="SearchAPI"></a>SearchAPI</h1><p>在很多场景中，希望AI应用会大一些最新的问题：</p>
+<ul>
+<li>今天有什么科技新闻</li>
+<li>某个API的用法有什么变动</li>
+</ul>
+<p>LangChain中提供了多个工具：</p>
+<ol>
+<li>SearchApiLoader：背后用到的服务商为<a href="https://www.searchapi.io">https://www.searchapi.io</a></li>
+<li>SerpApiLoader: 背后用到的服务器商<a href="https://serpapi.com">https://serpapi.com</a></li>
+</ol>
+<p>都是第三方的抓取解析提供商,需要注册apikey</p>
+<p>快熟上手示例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123; SerpAPILoader &#125; from <span class="string">&quot;@langchain/community/document_loaders/web/serpapi&quot;</span>;</span><br><span class="line">const apikey = <span class="string">&#x27;提供商apikey&#x27;</span></span><br><span class="line">const q = <span class="string">&#x27;什么是Copilot?&#x27;</span></span><br><span class="line">const loader = new SerpAPILoader(&#123;</span><br><span class="line">  q,</span><br><span class="line">  apiKey</span><br><span class="line">&#125;)</span><br><span class="line">const result = await loader.load()</span><br><span class="line">console.log(result)</span><br></pre></td></tr></table></figure><br><code>metadata.responseType</code>常见类型<br>| responseType | 含义 | 适合用途 |<br>|——|———-|——|<br>|knowledge_fraph| 权威定义、结构化知识|实体解释、百科内容|<br>|organic_results| 正常网页搜索结果|扩展背景、内容召回|<br>|people_also_ask|相关问题列表|多轮对话生成、问题推荐|<br>|related_questions|延伸相关问题|扩展性回答、导航引导|<br>|top_stories|新闻报道|实时事件聚合、更新动态|<br>|videos|视频资源|多模态输出、学习材料推荐|</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/03/22/LangChain/4.%E8%A7%A3%E6%9E%90%E5%99%A8/" rel="next" title="3.解析器">
+                <i class="fa fa-chevron-left"></i> 3.解析器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/03/24/LangChain/6.%E6%A3%80%E7%B4%A2%E4%BD%93%E7%B3%BB/" rel="prev" title="6.检索体系">
+                6.检索体系 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Document%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">Document对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%ACPDF"><span class="nav-number">2.</span> <span class="nav-text">文本PDF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95Loader"><span class="nav-number">3.</span> <span class="nav-text">目录Loader</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web%E8%B5%84%E6%BA%90Loader"><span class="nav-number">4.</span> <span class="nav-text">Web资源Loader</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Github-loader"><span class="nav-number">5.</span> <span class="nav-text">Github loader</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SearchAPI"><span class="nav-number">6.</span> <span class="nav-text">SearchAPI</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/03/23/LangChain/5.%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90Loader/';
+          this.page.identifier = '2026/03/23/LangChain/5.本地资源Loader/';
+          this.page.title = '3.本地资源Loader';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

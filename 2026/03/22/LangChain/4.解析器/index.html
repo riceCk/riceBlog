@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="字符串解析器默认情况下LangChain中调用的LLM返回的不是一个简单的字符串，而是一个包含大量元信息的对象。 解析器的作用拿到模型的输出后，利用解析器可以帮助我们将LLM原始输出转行成结构化数据，常用语：  提取JSON、列表、对象、代码块 数据清洗与格式化 配合TOOl &#x2F; Agent 提取指令参数  1234567const model &#x3D; new ChatOllama(&#123;  m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.解析器">
+<meta property="og:url" content="http://yoursite.com/2026/03/22/LangChain/4.%E8%A7%A3%E6%9E%90%E5%99%A8/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="字符串解析器默认情况下LangChain中调用的LLM返回的不是一个简单的字符串，而是一个包含大量元信息的对象。 解析器的作用拿到模型的输出后，利用解析器可以帮助我们将LLM原始输出转行成结构化数据，常用语：  提取JSON、列表、对象、代码块 数据清洗与格式化 配合TOOl &#x2F; Agent 提取指令参数  1234567const model &#x3D; new ChatOllama(&#123;  m">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-03-22T04:11:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.377Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/03/22/LangChain/4.解析器/"/>
+
+
+
+
+
+  <title>3.解析器 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/03/22/LangChain/4.%E8%A7%A3%E6%9E%90%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">3.解析器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-03-22T12:11:00+08:00">
+                2026-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangChain/" itemprop="url" rel="index">
+                    <span itemprop="name">LangChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/03/22/LangChain/4.%E8%A7%A3%E6%9E%90%E5%99%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/03/22/LangChain/4.解析器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="字符串解析器"><a href="#字符串解析器" class="headerlink" title="字符串解析器"></a>字符串解析器</h1><p>默认情况下LangChain中调用的LLM返回的不是一个简单的字符串，而是一个包含大量元信息的对象。</p>
+<h2 id="解析器的作用"><a href="#解析器的作用" class="headerlink" title="解析器的作用"></a>解析器的作用</h2><p>拿到模型的输出后，利用解析器可以帮助我们将LLM原始输出转行成结构化数据，常用语：</p>
+<ul>
+<li>提取JSON、列表、对象、代码块</li>
+<li>数据清洗与格式化</li>
+<li>配合TOOl / Agent 提取指令参数</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line"><span class="comment"># 模型处理的数据经过插件parser，输出提示词</span></span><br><span class="line">const res = await model.pipe(parser).invoke(new HumanMessage(<span class="string">&#x27;Tell me a joke&#x27;</span>));</span><br></pre></td></tr></table></figure>
+<h1 id="结构化输出解析器"><a href="#结构化输出解析器" class="headerlink" title="结构化输出解析器"></a>结构化输出解析器</h1><p>定义解析器：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const parser = StructuredOutputParser.fromNamesAndDescriptions(&#123;</span><br><span class="line">  answer: <span class="string">&quot;用户问题的答案&quot;</span>,</span><br><span class="line">  evidence: <span class="string">&quot;你回答用户问题所依据的答案&quot;</span>,</span><br><span class="line">  confidence: <span class="string">&quot;问题答案的可信度评分，格式是百分数&quot;</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>使用解析器<br>但是正常使用的提示词，会报错，大模型答案无法解析，需要用到辅助方法：<strong>getFormatInstructions</strong>，不支持流式输出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const pt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;请回答：\n&#123;instructions&#125; \n &#123;question&#125;&quot;</span>,</span><br><span class="line">);</span><br><span class="line">const chain = await pt.pipe(model).pipe(parser);</span><br><span class="line">const res = await chain.invoke(&#123;</span><br><span class="line">  question: <span class="string">&quot;请用中文回答闭包&quot;</span>,</span><br><span class="line">  instructions: parser.getFormatInstructions(),</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="列表输出解析器"><a href="#列表输出解析器" class="headerlink" title="列表输出解析器"></a>列表输出解析器</h1><p>有些场景，希望模型输出一个简单的字段串列表，比如：列出三个美国的互联网公司<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&#x27;Fecebook&#x27;</span>, <span class="string">&#x27;Google&#x27;</span>, <span class="string">&#x27;Amzon&#x27;</span>]</span><br></pre></td></tr></table></figure><br>这时候就需要<code>CommaSeparatedListOut</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import &#123; CommaSeparatedListOutputParser &#125; from <span class="string">&quot;@langchain/core/output_parsers&quot;</span>;</span><br><span class="line">import &#123; ChatOllama &#125; from <span class="string">&quot;@langchain/ollama&quot;</span>;</span><br><span class="line">import &#123; PromptTemplate &#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line"></span><br><span class="line">const pt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;&#123;instructions&#125; \n 列出三个&#123;country&#125; 的著名互联网公司&quot;</span>,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 完整的提示词：</span><br><span class="line"> * Your response should be a list of comma separated values, eg: `foo, bar, baz`</span><br><span class="line"> * 列出三个中国 的著名互联网公司</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const parser = new CommaSeparatedListOutputParser();</span><br><span class="line"></span><br><span class="line">const chain = pt.pipe(model).pipe(parser);</span><br><span class="line">const res = await chain.invoke(&#123;</span><br><span class="line">  country: <span class="string">&quot;中国&quot;</span>,</span><br><span class="line">  instructions: parser.getFormatInstructions(),</span><br><span class="line">&#125;);</span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure>
+<p>补充一点<strong>数据流向决定 pipe 顺序</strong><br>输入 → 模板 → 模型 → 解析 → 输出<br>谁先处理数据，谁就在最前面<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 步骤1：pt（模板填充）</span></span><br><span class="line">输入：&#123; country: <span class="string">&quot;中国&quot;</span>, instructions: parser.getFormatInstructions(), &#125;</span><br><span class="line">       ↓</span><br><span class="line">pt.pipe(model).pipe(parser)</span><br><span class="line"><span class="comment">#  pt 输出：</span></span><br><span class="line"><span class="comment"># Your response should be a list of comma separated values, eg: `foo, bar, baz` </span></span><br><span class="line"><span class="comment"># &quot;列出三个中国的著名互联网公司&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤2：model（调用模型）</span></span><br><span class="line">输入：<span class="string">&quot;Your response should be a list of comma separated values, eg: `foo, bar, baz` \n 列出三个中国的著名互联网公司&quot;</span></span><br><span class="line">       ↓</span><br><span class="line">pt.pipe(model).pipe(parser)</span><br><span class="line"><span class="comment">#  model 输出： &quot;阿里巴巴,腾讯,百度&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 步骤3：parser（解析输出）</span></span><br><span class="line">输入：<span class="string">&quot;阿里巴巴,腾讯,百度&quot;</span> </span><br><span class="line">       ↓</span><br><span class="line">pt.pipe(model).pipe(parser)</span><br><span class="line"><span class="comment">#  parser 输出： [&quot;阿里巴巴&quot;, &quot;腾讯&quot;, &quot;百度&quot;]</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="JSON解析器"><a href="#JSON解析器" class="headerlink" title="JSON解析器"></a>JSON解析器</h1><p>需要拿到一段合法的JSON格式输出，用到<code>JsonOutputParser</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">const parser = new JsonOutputParser();</span><br><span class="line">const pt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;请提供以下城市的信息，并以JSON格式输出：城市：&#123;city&#125;&quot;</span>,</span><br><span class="line">);</span><br><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line">const chain = pt.pipe(model).pipe(parser);</span><br><span class="line">const res = await chain.invoke(&#123;</span><br><span class="line">  city: <span class="string">&quot;泰州&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line">console.log(res);</span><br><span class="line"><span class="comment"># 打印如下</span></span><br><span class="line">&#123;</span><br><span class="line">  name: <span class="string">&#x27;Taizhou&#x27;</span>,</span><br><span class="line">  province: <span class="string">&#x27;Jiangsu&#x27;</span>,</span><br><span class="line">  city_code: <span class="string">&#x27;320300&#x27;</span>,</span><br><span class="line">  latitude: 32.433333,</span><br><span class="line">  longitude: 119.233333,</span><br><span class="line">  population: 5120000,</span><br><span class="line">  area: 8729.33,</span><br><span class="line">  timezone: <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>和<strong>StringOutputParser</strong>的区别：</p>
+<ul>
+<li>StringOutputParser：有明确的字段结构，告诉大模型、必须按照格式来</li>
+<li>JsonOutputParser：只想提取JSON内容或做快速原型，只要输出JSON就行</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const parser = new StringOutputParser();</span><br><span class="line">const pt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;请提供以下城市的信息，并以JSON格式输出：城市：&#123;city&#125;, 需要的字段有：name、country、location、population&quot;</span>,</span><br><span class="line">);</span><br><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line">const chain = pt.pipe(model).pipe(parser);</span><br><span class="line">const res = await chain.invoke(&#123;</span><br><span class="line">  city: <span class="string">&quot;泰州&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line">console.log(res);</span><br><span class="line"><span class="comment"># 打印如下</span></span><br><span class="line">根据我的数据库，泰州市（Taizhou）位于中国江苏省。我将为您提供相关信息，以 JSON 格式输出：</span><br></pre></td></tr></table></figure>
+<p>{<br>  “name”: “Taizhou”,<br>  “country”: “China”,<br>  “location”: {<br>    “lat”: 32.415333,<br>    “lng”: 119.735278<br>  },<br>  “population”: 5111300<br>}<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意：以上信息来自我的数据库，可能不太准确，请以官方数据为准。</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/03/21/LangChain/3.LCEL/" rel="next" title="3.LCEL && Runnable接口">
+                <i class="fa fa-chevron-left"></i> 3.LCEL && Runnable接口
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/03/23/LangChain/5.%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90Loader/" rel="prev" title="3.本地资源Loader">
+                3.本地资源Loader <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">字符串解析器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">解析器的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E8%BE%93%E5%87%BA%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">结构化输出解析器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E8%BE%93%E5%87%BA%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">列表输出解析器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSON%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">JSON解析器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/03/22/LangChain/4.%E8%A7%A3%E6%9E%90%E5%99%A8/';
+          this.page.identifier = '2026/03/22/LangChain/4.解析器/';
+          this.page.title = '3.解析器';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

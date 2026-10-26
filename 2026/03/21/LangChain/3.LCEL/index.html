@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="LCELLangChain Expression Language,是LangChain提供的一种声明式构建链式，调用的流程方式，它允许开发者.pipe()操作符将不同模块（比如提示模块、模型、解析器等）连接在一起形成一个完整的“链（Chain）”LCEL的设计理念：  所有模块都实现统一接口：Runnable 任意模块之间都可以.pipe()链接组合 逻辑更清晰、组合更自由、调试也更友好  快速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.LCEL &amp;&amp; Runnable接口">
+<meta property="og:url" content="http://yoursite.com/2026/03/21/LangChain/3.LCEL/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="LCELLangChain Expression Language,是LangChain提供的一种声明式构建链式，调用的流程方式，它允许开发者.pipe()操作符将不同模块（比如提示模块、模型、解析器等）连接在一起形成一个完整的“链（Chain）”LCEL的设计理念：  所有模块都实现统一接口：Runnable 任意模块之间都可以.pipe()链接组合 逻辑更清晰、组合更自由、调试也更友好  快速">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-03-21T03:55:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.376Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/03/21/LangChain/3.LCEL/"/>
+
+
+
+
+
+  <title>3.LCEL && Runnable接口 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/03/21/LangChain/3.LCEL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">3.LCEL && Runnable接口</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-03-21T11:55:00+08:00">
+                2026-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangChain/" itemprop="url" rel="index">
+                    <span itemprop="name">LangChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/03/21/LangChain/3.LCEL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/03/21/LangChain/3.LCEL/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="LCEL"><a href="#LCEL" class="headerlink" title="LCEL"></a>LCEL</h1><p>LangChain Expression Language,是LangChain提供的一种声明式构建<strong>链式</strong>，调用的流程方式，它允许开发者<code>.pipe()</code>操作符将不同模块（比如提示模块、模型、解析器等）连接在一起形成一个完整的“链（Chain）”<br>LCEL的设计理念：</p>
+<ul>
+<li>所有模块都实现统一接口：<code>Runnable</code></li>
+<li>任意模块之间都可以<code>.pipe()</code>链接组合</li>
+<li>逻辑更清晰、组合更自由、调试也更友好</li>
+</ul>
+<p>快速上手<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ChatOllama &#125; from <span class="string">&quot;@langchain/ollama&quot;</span>;</span><br><span class="line">import &#123; PromptTemplate &#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line">import &#123; StringOutputParser &#125; from <span class="string">&quot;@langchain/core/output_parsers&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模块：提示词模板、模板模块、解析器模板</span></span><br><span class="line"><span class="comment"># 1.创建提示词</span></span><br><span class="line">const prompt = PromptTemplate.fromTemplate(<span class="string">&quot;请使用中文解释下什么：&#123;question&#125;&quot;</span>);</span><br><span class="line"><span class="comment"># 2.创建模型</span></span><br><span class="line">const model = await new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment"># 3.创建一个解析器</span></span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line"><span class="comment"># 4.将上面的三个模块连接起来：pip</span></span><br><span class="line">const chain = prompt.pipe(model).pipe(parser);</span><br><span class="line"><span class="comment"># 5.使用chain链条 &amp;&amp; chain.stream 也可以支持流式输出</span></span><br><span class="line">const res = await chain.invoke(&#123;</span><br><span class="line">  question: <span class="string">&quot;js闭包&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure><br>可以把<code>.pipe()</code>理解成模块之间的数据通道：</p>
+<ul>
+<li><code>prompt</code>接受原始输入、并生成提示文本</li>
+<li><code>model</code>根据提示生成回答</li>
+<li><code>parser</code>把模型响应格式化成字符串输出</li>
+</ul>
+<h2 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h2><ul>
+<li>invoke 内容直接输出</li>
+<li>pipe 管道链接</li>
+<li>stream 流式输出</li>
+<li>batch 批量</li>
+</ul>
+<h3 id="batch"><a href="#batch" class="headerlink" title="batch"></a>batch</h3><p>该方法用于同时处理多个输入，适合批量问答、摘要等场景，返回一个<strong>结果数组</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 5.多条输入</span></span><br><span class="line">const inputs = [</span><br><span class="line">  &#123; question: <span class="string">&quot;闭包&quot;</span> &#125;,</span><br><span class="line">  &#123; question: <span class="string">&quot;原型链&quot;</span> &#125;,</span><br><span class="line">  &#123; question: <span class="string">&quot;事件循环&quot;</span> &#125;,</span><br><span class="line">];</span><br><span class="line"><span class="comment"># 6.使用chain链条</span></span><br><span class="line">const res = await chain.batch(inputs);</span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure></p>
+<h1 id="Runnable接口"><a href="#Runnable接口" class="headerlink" title="Runnable接口"></a>Runnable接口</h1><p>在LCEL中，几乎所有的模块提示词模块、模型、解析器都能实现Runnable接口，可以将这些模块称为Runnable类型，这种类型的模块可以快速插入链条里面</p>
+<h2 id="RunnableLambda-Lambda-拉姆达表达式"><a href="#RunnableLambda-Lambda-拉姆达表达式" class="headerlink" title="RunnableLambda (Lambda-拉姆达表达式)"></a>RunnableLambda (Lambda-拉姆达表达式)</h2><p><code>RunnableLambda</code>是LangChain.js提供的一种轻量级工具，它能把<strong>普通函数</strong>封装成<code>Runable</code>接口规范的示例，从而让该函数无缝参与到LCEL的链式调用与流式处理流程中</p>
+<p>1.快速上手<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123; RunnableLambda &#125; from <span class="string">&quot;@langchain/core/runnables&quot;</span>;</span><br><span class="line">const fn = (text) =&gt; &#123;</span><br><span class="line">  <span class="built_in">return</span> text.toUpperCase();</span><br><span class="line">&#125;</span><br><span class="line">const runnableFn = RunnableLambda.from(fn);</span><br><span class="line">const result = await runnableFn.invoke(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<p>2.关键词高亮插件<br><code>闭包</code> –&gt; <code>*&amp;*闭包</code>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ChatOllama &#125; from <span class="string">&quot;@langchain/ollama&quot;</span>;</span><br><span class="line">import &#123; PromptTemplate&#125; from <span class="string">&#x27;@langchain/core/prompts&#x27;</span></span><br><span class="line">import &#123; StringOutputParser&#125; from <span class="string">&#x27;@langchain/core/output_parsers&#x27;</span></span><br><span class="line">import &#123;RunnableLambda&#125; from <span class="string">&#x27;@langchain/core/runnables&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 创建模板</span></span><br><span class="line">const pt = PromptTemplate.fromTemplate(<span class="string">&quot;请使用中文解释：&#123;topic&#125;&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 创建模型</span></span><br><span class="line">const model = new ChatOllama(&#123; model: <span class="string">&quot;llama3&quot;</span>, stream: <span class="literal">true</span>,temperature: 0.7 &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 创建输出解析器</span></span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 创建链</span></span><br><span class="line">const chain =pt.pipe(model).pipe(parser);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5.创建一个简单的插件</span></span><br><span class="line">const fn = text =&gt; text.replace(/闭包/g, <span class="string">&#x27;*&amp;*闭包&#x27;</span>);</span><br><span class="line">const highlight = RunnableLambda.from(fn);</span><br><span class="line"><span class="comment"># 重点是用思路，，但是这边只能用invoke 不能是用流式</span></span><br><span class="line">const result = await chain.pipe(highlight).invoke(&#123;topic: <span class="string">&#x27;闭包 &#x27;</span>&#125;);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure>
+<p>更多场景：</p>
+<ul>
+<li>插入日志收集模块</li>
+<li>插入翻译模块（调用外部API）</li>
+<li>插入开关：判断某个条件是否中断执行</li>
+<li>格式调整、结构清洗、敏感词过滤</li>
+</ul>
+<p><code>Pipe()</code>方法可以接受三种类型</p>
+<ul>
+<li>Runnable实例：这是最常用的，也是最推荐的</li>
+<li>普通函数：LCEL内部会自动化<code>RunnableLambda.from(fn)</code>包装成一个<code>Runnable</code>.</li>
+<li>对象：将上游的输入（或结果）分别传给多个runnable，然后返回一个对象</li>
+</ul>
+<p><strong>接收对象实例</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ChatOllama &#125; from <span class="string">&quot;@langchain/ollama&quot;</span>;</span><br><span class="line">import &#123; PromptTemplate&#125; from <span class="string">&#x27;@langchain/core/prompts&#x27;</span></span><br><span class="line">import &#123; StringOutputParser&#125; from <span class="string">&#x27;@langchain/core/output_parsers&#x27;</span></span><br><span class="line">import &#123;RunnableLambda&#125; from <span class="string">&#x27;@langchain/core/runnables&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 创建模型</span></span><br><span class="line">const model = new ChatOllama(&#123; model: <span class="string">&quot;llama3&quot;</span>, temperature: 0.7 &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 创建输出解析器</span></span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建两个子链</span></span><br><span class="line">const chain1 = PromptTemplate.fromTemplate(<span class="string">&quot;请用中文2-3句概括以下主题核心含义：&#123;input&#125;&quot;</span>)</span><br><span class="line">  .pipe(model)</span><br><span class="line">  .pipe(parser);</span><br><span class="line">const chain2 = PromptTemplate.fromTemplate(<span class="string">&quot;请用中文从以下主题提取5个关键词，以逗号隔开：&#123;input&#125;&quot;</span>)</span><br><span class="line">.pipe(model)</span><br><span class="line">.pipe(parser);</span><br><span class="line"><span class="comment"># pipe 可以传入一个对象的模板</span></span><br><span class="line">const chain = RunnableLambda.from((x) =&gt; x).pipe(&#123;</span><br><span class="line">  summary: chain1,</span><br><span class="line">  keywords: chain2,</span><br><span class="line">&#125;)</span><br><span class="line">const result = await chain.invoke(&#123;input: &#x27;闭包 &#x27;&#125;);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<h2 id="RunnableMap"><a href="#RunnableMap" class="headerlink" title="RunnableMap"></a>RunnableMap</h2><p><code>RunnableMap</code>也叫（<code>RunnableParallel</code>）,它可以让多个链条<strong>并发执行</strong>，并返回结构化的对象结构<br><code>RunnableMap.from(&#123;...&#125;)</code>并发执行多个子链，并将他们的结果组合成一个对象返回<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import &#123; ChatOllama &#125; from <span class="string">&quot;@langchain/ollama&quot;</span>;</span><br><span class="line">import &#123; PromptTemplate&#125; from <span class="string">&#x27;@langchain/core/prompts&#x27;</span></span><br><span class="line">import &#123; StringOutputParser&#125; from <span class="string">&#x27;@langchain/core/output_parsers&#x27;</span></span><br><span class="line">import &#123;RunnableMap&#125; from <span class="string">&#x27;@langchain/core/runnables&#x27;</span></span><br><span class="line"><span class="comment"># 2. 创建模型</span></span><br><span class="line">const model = new ChatOllama(&#123; model: <span class="string">&quot;llama3&quot;</span>, temperature: 0.7 &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 创建输出解析器</span></span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建两个子链</span></span><br><span class="line">const pt1 = PromptTemplate.fromTemplate(<span class="string">&quot;请用中文讲一个关于&#123;topic&#125;的笑话&quot;</span>)</span><br><span class="line">.pipe(model)</span><br><span class="line">.pipe(parser);</span><br><span class="line">const pt2 = PromptTemplate.fromTemplate(<span class="string">&quot;请用中文从写一首关于&#123;topic&#125;的诗&quot;</span>)</span><br><span class="line">.pipe(model)</span><br><span class="line">.pipe(parser);</span><br><span class="line"></span><br><span class="line">const chain = RunnableMap.from(&#123;</span><br><span class="line">  joke: pt1,</span><br><span class="line">  poem: pt2,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const result = await chain.invoke(&#123;topic: <span class="string">&#x27;小狗 &#x27;</span>&#125;);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure><br>不过，它的<code>.stream()</code>并不会将多个子链条的增量输出合并成一个统一的流，因为每一个子链的<code>.stream()</code>都会返回独立的<code>AsyncInterable&lt;string&gt;</code>,无法直接将多个异步迭代器在内部串联或者合并一个持续性的输出流</p>
+<h2 id="RunnableSequence"><a href="#RunnableSequence" class="headerlink" title="RunnableSequence"></a>RunnableSequence</h2><p><code>pipe()</code>是逐个拼接，<code>RunnableSequence.from([])</code>则是显式声明流程结构，将多个步骤写成数组更清晰<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建模板</span></span><br><span class="line">const pt = PromptTemplate.fromTemplate(<span class="string">&quot;请使用中文解释：&#123;topic&#125;&quot;</span>);</span><br><span class="line"><span class="comment"># 2. 创建模型</span></span><br><span class="line">const model = new ChatOllama(&#123; model: <span class="string">&quot;llama3&quot;</span>, stream: <span class="literal">true</span>,temperature: 0.7 &#125;);</span><br><span class="line"><span class="comment"># 3. 创建输出解析器</span></span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line"><span class="comment"># 5.创建一个简单的插件</span></span><br><span class="line">const fn = text =&gt; text.replace(/闭包/g, <span class="string">&#x27;*&amp;*闭包&#x27;</span>);</span><br><span class="line">const highlight = RunnableLambda.from(fn);</span><br><span class="line"><span class="comment"># 原pipe用法：pt.pipe(model).pipe(parser).pipe(highlight);</span></span><br><span class="line">const chain = RunnableSequence.from([pt, model, parser,highlight])</span><br><span class="line">const result = await chain.invoke(&#123;topic: <span class="string">&#x27;闭包 &#x27;</span>&#125;);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<h2 id="RunnablePassthrough"><a href="#RunnablePassthrough" class="headerlink" title="RunnablePassthrough"></a>RunnablePassthrough</h2><p><code>RunnablePassthrough</code>接收一个配置对象，该对象配置func副作用函数，用于输入做一些副作用处理，比如记录日志、写入数据库、做埋点等。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123;RunnablePassthrough&#125; from <span class="string">&#x27;@langchain/core/runnables&#x27;</span></span><br><span class="line"></span><br><span class="line">const logger = new RunnablePassthrough(&#123;</span><br><span class="line">  func: async (input) =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;收到输入：&quot;</span>, input);</span><br><span class="line">    <span class="comment"># 对输入做一些副作用处理，比如记录日志、写入数据库、做埋点</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">await logger.invoke(&#123;input: <span class="string">&#x27;Hello, world!&#x27;</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><code>.assign</code>方法给上下文添加字段，类似用js<strong>Object.assign</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const injector = RunnablePassthrough.assign(&#123;</span><br><span class="line">  timestamp: async () =&gt; new Date().toDateString,</span><br><span class="line">  meta: async () =&gt; (&#123;</span><br><span class="line">    region: <span class="string">&quot;us-east&quot;</span>,</span><br><span class="line">    requestId: <span class="string">&quot;req-456&quot;</span>,</span><br><span class="line">  &#125;),</span><br><span class="line">&#125;);</span><br><span class="line">const res = await injector.invoke(&#123; input: <span class="string">&quot;Hello, world!&quot;</span> &#125;);</span><br><span class="line">console.log(res);</span><br><span class="line">&#123;</span><br><span class="line">  input: <span class="string">&#x27;Hello, world!&#x27;</span>,</span><br><span class="line">  timestamp: [Function: toDateString],</span><br><span class="line">  meta: &#123; region: <span class="string">&#x27;us-east&#x27;</span>, requestId: <span class="string">&#x27;req-456&#x27;</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实战练习：<br>1.打印用户输入日志<br>2.注入userId<br>3.拼接prompt<br>4.调用本地模型<br>5.解析返回结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.记录日志</span></span><br><span class="line">const logFunc = new RunnablePassthrough(&#123;</span><br><span class="line">  func: async (input) =&gt; &#123;</span><br><span class="line">    <span class="comment"># 上报、数据操作、埋点</span></span><br><span class="line">    console.log(<span class="string">&quot;用户提的问题为：&quot;</span>, input.query);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment"># 2.注入用户id</span></span><br><span class="line">const injector = RunnablePassthrough.assign(&#123;</span><br><span class="line">  userId: async (input) =&gt; input.userId,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment"># 提示词模板</span></span><br><span class="line">const pt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;请使用中文帮用户&#123;userId&#125;解答：&#123;query&#125;, 回答问题时以亲爱的&#123;userId&#125;开头&quot;</span>,</span><br><span class="line">);</span><br><span class="line"><span class="comment"># 4.模型</span></span><br><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">  stream: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment"># 5.解析器</span></span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line">const chain = RunnableSequence.from([logFunc, injector, pt, model, parser]);</span><br><span class="line">const res = await chain.stream(&#123;</span><br><span class="line">  query: <span class="string">&quot;闭包&quot;</span>,</span><br><span class="line">  userId: <span class="string">&quot;user-12345&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">for</span> await (const chunk of res) &#123;</span><br><span class="line">  process.stdout.write(chunk);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="条件路由"><a href="#条件路由" class="headerlink" title="条件路由"></a>条件路由</h1><p>所谓条件路由，就是在一条AI推理/数据处理流水线里，先依据输入内容、上下文或运行时信号做一次判别，再把请求分发到不同的子流程（链）上执行。本质上受控if/else：先“判别”，再“选择”，最后“执行”，避免“一个提示词走天下”</p>
+<p>在LangChain.js中，常用做法有两种：</p>
+<ol>
+<li>用<code>RunnableBranch</code>声明式按顺序匹配分支（可视作if/else的旧范式）</li>
+<li>用<code>RunnableLambda</code>在函数里动态返回要执行的子链（官方更推荐）</li>
+</ol>
+<h2 id="RunnableBranch"><a href="#RunnableBranch" class="headerlink" title="RunnableBranch"></a>RunnableBranch</h2><p>基础语法<br>RunnableBranch是一个类，因此需要实例化，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># branches:对应类型为Branch&lt;Runinput, Runoutput&gt;[],其Runinput是条件，Runoutput是被选中的子链</span></span><br><span class="line"><span class="comment"># default 默认链条，没有命中执行</span></span><br><span class="line">new RunnableBranch(&#123;branches, default&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>案例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line">const parser = new StringOutputParser();</span><br><span class="line">const physicsChain = ChatPromptTemplate.fromTemplate(</span><br><span class="line">  `你是一位物理学家，擅长使用中文回答物理相关问题，当你不知道问题的答案时，你就回答不知道。</span><br><span class="line">  具体问题如下：</span><br><span class="line">  &#123;input&#125;`,</span><br><span class="line">)</span><br><span class="line">  .pipe(model)</span><br><span class="line">  .pipe(parser); <span class="comment"># 物理链</span></span><br><span class="line">const mathChain = ChatPromptTemplate.fromTemplate(</span><br><span class="line">  `你是一位数学学家，擅长使用中文回答数学相关问题，当你不知道问题的答案时，你就回答不知道。</span><br><span class="line">  具体问题如下：</span><br><span class="line">  &#123;input&#125;`,</span><br><span class="line">)</span><br><span class="line">  .pipe(model)</span><br><span class="line">  .pipe(parser); <span class="comment"># 数学链</span></span><br><span class="line">const otherChain = ChatPromptTemplate.fromTemplate(</span><br><span class="line">  `你是一个AI助手，你会使用中文回答以下问题。</span><br><span class="line">  具体问题如下：</span><br><span class="line">  &#123;input&#125;`,</span><br><span class="line">)</span><br><span class="line">  .pipe(model)</span><br><span class="line">  .pipe(parser); <span class="comment"># 其他链</span></span><br><span class="line"></span><br><span class="line">const classifyChain = ChatPromptTemplate.fromMessages([</span><br><span class="line">  [</span><br><span class="line">    <span class="string">&quot;system&quot;</span>,</span><br><span class="line">    `你是一个仅输出标签的分类器，</span><br><span class="line">    任务：将用户问题分类为以下三类之一：数学、物理、其他。</span><br><span class="line">    规则：</span><br><span class="line">    - 只能输出且必须输出其中一个：数学 或 物理 或 其他</span><br><span class="line">    - 不要输出任务解释、理由、引导、标点、前后缀或额外空行</span><br><span class="line">    - 若不确定，输出：其他`.trim(),</span><br><span class="line">  ],</span><br><span class="line">  [</span><br><span class="line">    <span class="string">&quot;human&quot;</span>,</span><br><span class="line">    `问题：&#123;input&#125;</span><br><span class="line">    现在输出分类（仅一个词）：`.trim(),</span><br><span class="line">  ],</span><br><span class="line">])</span><br><span class="line">  .pipe(model)</span><br><span class="line">  .pipe(parser); <span class="comment"># 分类链</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分派器：根据topic路由对应子链</span></span><br><span class="line">const answerBranch = RunnableBranch.from([</span><br><span class="line">  [(input) =&gt; input.topic.includes(<span class="string">&quot;物理&quot;</span>), physicsChain],</span><br><span class="line">  [(input) =&gt; input.topic.includes(<span class="string">&quot;数学&quot;</span>), mathChain],</span><br><span class="line">  otherChain,</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终组合</span></span><br><span class="line">const finalChain = RunnableSequence.from([</span><br><span class="line">  RunnablePassthrough.assign(&#123;</span><br><span class="line">    topic: classifyChain,</span><br><span class="line">  &#125;),</span><br><span class="line">  new RunnablePassthrough(&#123;</span><br><span class="line">    <span class="comment"># 日志，可以进行打印 &#123; input: &#x27;什么是经典力学&#x27;, topic: &#x27;物理&#x27; &#125;</span></span><br><span class="line">    func: async (input) =&gt; &#123;</span><br><span class="line">      console.log(input);</span><br><span class="line">      <span class="built_in">return</span> input;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;),</span><br><span class="line">  answerBranch,</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">const run = async () =&gt; &#123;</span><br><span class="line">  console.log(await finalChain.invoke(&#123; input: <span class="string">&quot;什么是经典力学&quot;</span> &#125;));</span><br><span class="line">  console.log(await finalChain.invoke(&#123; input: <span class="string">&quot;对y = x 求导的结果是多少&quot;</span> &#125;));</span><br><span class="line">  console.log(await finalChain.invoke(&#123; input: <span class="string">&quot;你好，你是谁？&quot;</span> &#125;));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">run();</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/03/20/LangChain/2.%E6%8F%90%E7%A4%BA%E8%AF%8D/" rel="next" title="1.LangChain-提示词">
+                <i class="fa fa-chevron-left"></i> 1.LangChain-提示词
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/03/22/LangChain/4.%E8%A7%A3%E6%9E%90%E5%99%A8/" rel="prev" title="3.解析器">
+                3.解析器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LCEL"><span class="nav-number">1.</span> <span class="nav-text">LCEL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">核心方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#batch"><span class="nav-number">1.1.1.</span> <span class="nav-text">batch</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Runnable%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">Runnable接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RunnableLambda-Lambda-%E6%8B%89%E5%A7%86%E8%BE%BE%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">RunnableLambda (Lambda-拉姆达表达式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunnableMap"><span class="nav-number">2.2.</span> <span class="nav-text">RunnableMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunnableSequence"><span class="nav-number">2.3.</span> <span class="nav-text">RunnableSequence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RunnablePassthrough"><span class="nav-number">2.4.</span> <span class="nav-text">RunnablePassthrough</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%B7%AF%E7%94%B1"><span class="nav-number">3.</span> <span class="nav-text">条件路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RunnableBranch"><span class="nav-number">3.1.</span> <span class="nav-text">RunnableBranch</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/03/21/LangChain/3.LCEL/';
+          this.page.identifier = '2026/03/21/LangChain/3.LCEL/';
+          this.page.title = '3.LCEL && Runnable接口';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

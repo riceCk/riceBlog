@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="🏷️ 使用注解注解的作用注解就是贴在类、方法、字段上的标签。标签自己不跑代码。谁来读、读完干什么，分三种： 1. 编译器读的（SOURCE） 编译完就扔掉，不进 .class。  @Override：让编译器检查这是不是一次正确的覆写 @SuppressWarnings：让编译器忽略此处的警告  2. 工具读 class 文件的（CLASS） 会写进 .class，加载进 JVM 之后内存里就没">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.注解">
+<meta property="og:url" content="http://yoursite.com/2026/06/18/java%E5%85%A5%E9%97%A8/7.%E6%B3%A8%E8%A7%A3/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="🏷️ 使用注解注解的作用注解就是贴在类、方法、字段上的标签。标签自己不跑代码。谁来读、读完干什么，分三种： 1. 编译器读的（SOURCE） 编译完就扔掉，不进 .class。  @Override：让编译器检查这是不是一次正确的覆写 @SuppressWarnings：让编译器忽略此处的警告  2. 工具读 class 文件的（CLASS） 会写进 .class，加载进 JVM 之后内存里就没">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-06-18T02:55:34.000Z">
+<meta property="article:modified_time" content="2026-10-26T08:25:20.781Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/06/18/java入门/7.注解/"/>
+
+
+
+
+
+  <title>7.注解 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/06/18/java%E5%85%A5%E9%97%A8/7.%E6%B3%A8%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">7.注解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-06-18T10:55:34+08:00">
+                2026-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/java%E5%85%A5%E9%97%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">java入门</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/06/18/java%E5%85%A5%E9%97%A8/7.%E6%B3%A8%E8%A7%A3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/06/18/java入门/7.注解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="🏷️-使用注解"><a href="#🏷️-使用注解" class="headerlink" title="🏷️ 使用注解"></a>🏷️ 使用注解</h1><h2 id="注解的作用"><a href="#注解的作用" class="headerlink" title="注解的作用"></a>注解的作用</h2><p>注解就是贴在类、方法、字段上的<strong>标签</strong>。标签自己不跑代码。谁来读、读完干什么，分三种：</p>
+<p><strong>1. 编译器读的（<code>SOURCE</code>）</strong></p>
+<p>编译完就扔掉，不进 <code>.class</code>。</p>
+<ul>
+<li><code>@Override</code>：让编译器检查这是不是一次正确的覆写</li>
+<li><code>@SuppressWarnings</code>：让编译器忽略此处的警告</li>
+</ul>
+<p><strong>2. 工具读 class 文件的（<code>CLASS</code>）</strong></p>
+<p>会写进 <code>.class</code>，加载进 JVM 之后内存里就没有了。底层库有时靠它在加载时改 class。一般不用自己写，也不用自己读。</p>
+<p><strong>3. 运行时还能读到的（<code>RUNTIME</code>）</strong></p>
+<p>加载后一直留在 JVM 里，可以用反射读出来。平时用到的注解多半是这种。例如 <code>@PostConstruct</code>：构造方法跑完后自动调用那个方法。这是某段 Java 代码读了注解再去调用的，JVM 本身不认识它。</p>
+<p><code>@Check</code> 只是把 <code>min</code> / <code>max</code> 记在字段上：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="meta">@Check(min = 0, max = 100, value = 55)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Check(value = 99)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> p;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Check(99)</span> <span class="comment">// 参数名叫 value 时可以省略，等价于 @Check(value = 99)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> x;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Check</span> <span class="comment">// 三个参数都用默认值</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@interface</span> Check &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">min</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">max</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">100</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">value</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 贴上 <code>@Check</code> 不会自动检查 <code>n</code>。没有代码去读这张标签，它就只是摆在那里。</p>
+</blockquote>
+<h1 id="🧩-定义注解"><a href="#🧩-定义注解" class="headerlink" title="🧩 定义注解"></a>🧩 定义注解</h1><p>用 <code>@interface</code> 声明。里面每个方法是一个参数，<code>default</code> 是不写时的默认值。</p>
+<h2 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h2><p>元注解是贴在注解上的注解，用来约束这个注解自己。</p>
+<p><strong>@Target</strong>：允许贴在源码的哪些位置。</p>
+<ul>
+<li>类或接口：<code>ElementType.TYPE</code></li>
+<li>字段：<code>ElementType.FIELD</code></li>
+<li>方法：<code>ElementType.METHOD</code></li>
+<li>构造方法：<code>ElementType.CONSTRUCTOR</code></li>
+<li>方法参数：<code>ElementType.PARAMETER</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Report &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">type</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">String</span> <span class="title function_">level</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;info&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="title function_">value</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>多个位置写成数组：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123; ElementType.METHOD, ElementType.FIELD &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Report &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">type</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">String</span> <span class="title function_">level</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;info&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="title function_">value</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@Retention</strong>：这张标签能活多久。</p>
+<ul>
+<li><code>RetentionPolicy.SOURCE</code>：只在编译期</li>
+<li><code>RetentionPolicy.CLASS</code>：只留在 class 文件里</li>
+<li><code>RetentionPolicy.RUNTIME</code>：运行期还能读。自己定义、还打算用反射读的，用这个</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Report &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">type</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">String</span> <span class="title function_">level</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;info&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="title function_">value</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反射把值读出来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@interface</span> MyTag &#123;</span><br><span class="line">    <span class="type">String</span> <span class="title function_">value</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="meta">@MyTag(&quot;test-method&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Method</span> <span class="variable">m</span> <span class="operator">=</span> Main.class.getMethod(<span class="string">&quot;hello&quot;</span>, String.class);</span><br><span class="line">        <span class="keyword">if</span> (m.isAnnotationPresent(MyTag.class)) &#123;</span><br><span class="line">            <span class="type">MyTag</span> <span class="variable">anno</span> <span class="operator">=</span> m.getAnnotation(MyTag.class);</span><br><span class="line">            System.out.println(anno.value()); <span class="comment">// test-method</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>@Repeatable</strong></p>
+<p>允许同一个位置重复贴同一个注解。用得少，看到它知道「这个注解可以贴多次」即可。</p>
+<h1 id="🔍-处理注解"><a href="#🔍-处理注解" class="headerlink" title="🔍 处理注解"></a>🔍 处理注解</h1><h2 id="先看懂这一句"><a href="#先看懂这一句" class="headerlink" title="先看懂这一句"></a>先看懂这一句</h2><p>定义注解只规定标签长什么样。程序跑起来以后，标签不会自己生效。</p>
+<p>处理注解就是两步：</p>
+<ol>
+<li>用反射把标签读出来</li>
+<li>自己写 <code>if</code>，决定读到之后干什么</li>
+</ol>
+<p>Spring 的 <code>@GetMapping</code>、参数校验的 <code>@NotNull</code> 看起来像自动生效，是框架启动时替你做了这两步。</p>
+<p>能被这段反射读到的，只有 <code>@Retention(RetentionPolicy.RUNTIME)</code>。<code>SOURCE</code> 编译完已经丢了；<code>CLASS</code> 虽然在 class 文件里，JVM 不会把它装进内存，<code>getAnnotation</code> 拿到的是 <code>null</code>。</p>
+<h2 id="怎么读"><a href="#怎么读" class="headerlink" title="怎么读"></a>怎么读</h2><p><code>Class</code>、<code>Field</code>、<code>Method</code>、<code>Constructor</code> 上是同一对方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>得到什么</th>
+<th>什么时候用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isAnnotationPresent(Xxx.class)</code></td>
+<td><code>true</code> / <code>false</code></td>
+<td>只想知道贴了没有</td>
+</tr>
+<tr>
+<td><code>getAnnotation(Xxx.class)</code></td>
+<td>注解对象；没贴就是 <code>null</code></td>
+<td>还要读 <code>min()</code>、<code>value()</code></td>
+</tr>
+</tbody>
+</table>
+<p>要读参数，用第二种再判空就够。第一种只是少写一次空判断。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只问有没有</span></span><br><span class="line">Person.class.isAnnotationPresent(Report.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 拿标签本体。平时用这个</span></span><br><span class="line"><span class="type">Report</span> <span class="variable">report</span> <span class="operator">=</span> Person.class.getAnnotation(Report.class);</span><br><span class="line"><span class="keyword">if</span> (report != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">type</span> <span class="operator">=</span> report.type();</span><br><span class="line">    <span class="type">String</span> <span class="variable">level</span> <span class="operator">=</span> report.level();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>MyTag</code> 就是在方法上走了同一条路：<code>getMethod</code> → <code>getAnnotation</code> → <code>anno.value()</code>。</p>
+<p>字段、构造方法只是把对象换掉：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> person.getClass().getField(<span class="string">&quot;name&quot;</span>);</span><br><span class="line"><span class="type">Range</span> <span class="variable">range</span> <span class="operator">=</span> field.getAnnotation(Range.class);</span><br><span class="line"></span><br><span class="line"><span class="type">Constructor</span>&lt;?&gt; <span class="variable">constructor</span> <span class="operator">=</span> Person.class.getConstructor();</span><br><span class="line"><span class="comment">// constructor.getAnnotation(...)</span></span><br></pre></td></tr></table></figure>
+<h2 id="自己写检查：-Range"><a href="#自己写检查：-Range" class="headerlink" title="自己写检查：@Range"></a>自己写检查：@Range</h2><p>想限制字符串字段的长度。<code>@Range</code> 只记下 <code>min</code> / <code>max</code>，比较长度的代码要另写。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.FIELD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Range &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">min</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">max</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">255</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="meta">@Range(min = 1, max = 20)</span></span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Range(max = 10)</span></span><br><span class="line">    <span class="keyword">public</span> String city;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>check</code> 每转一圈做四件事：</p>
+<ol>
+<li><code>getFields()</code> 拿出所有 <strong>public</strong> 字段（和反射一样，不含 <code>private</code>，含父类的 public）</li>
+<li><code>getAnnotation(Range.class)</code>：没贴就是 <code>null</code>，跳过</li>
+<li><code>field.get(person)</code>：拿出这个对象上该字段现在的值</li>
+<li>值是 <code>String</code> 时，用长度比 <code>range.min()</code> / <code>range.max()</code>，超出就抛异常</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">check</span><span class="params">(Person person)</span> <span class="keyword">throws</span> IllegalArgumentException, ReflectiveOperationException &#123;</span><br><span class="line">    <span class="keyword">for</span> (Field field : person.getClass().getFields()) &#123;</span><br><span class="line">        <span class="type">Range</span> <span class="variable">range</span> <span class="operator">=</span> field.getAnnotation(Range.class);</span><br><span class="line">        <span class="keyword">if</span> (range != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">Object</span> <span class="variable">value</span> <span class="operator">=</span> field.get(person);</span><br><span class="line">            <span class="keyword">if</span> (value <span class="keyword">instanceof</span> String s) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s.length() &lt; range.min() || s.length() &gt; range.max()) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid field: &quot;</span> + field.getName());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>name</code> 的长度超过 20 时，循环走到 <code>name</code> 会抛 <code>Invalid field: name</code>。<code>city</code> 没超过 10 就放过。没贴 <code>@Range</code> 的字段不会被检查。</p>
+<p>这段逻辑要自己调用 <code>check(person)</code> 才会发生。<code>new Person()</code> 时 JVM 不会顺手跑它。以后 Spring 的校验，就是框架看到 <code>@NotNull</code>、<code>@Size</code> 后替你调用类似的检查。</p>
+<p>字段若是 <code>private</code>，<code>getFields()</code> 拿不到。改成 <code>getDeclaredFields()</code>，再 <code>field.setAccessible(true)</code>，和反射里读私有字段一样。</p>
+<h2 id="方法参数上的注解"><a href="#方法参数上的注解" class="headerlink" title="方法参数上的注解"></a>方法参数上的注解</h2><p>类、字段、方法本身，一张位置通常看一个注解，<code>getAnnotation</code> 就够。</p>
+<p>参数麻烦一点：一个方法有好几个参数，每个参数上又能贴好几张注解。一次全拿出来，是一个<strong>二维数组</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">void</span> <span class="title function_">hello</span><span class="params">(<span class="meta">@NotNull</span> <span class="meta">@Range(max = 5)</span> String name, <span class="meta">@NotNull</span> String prefix)</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">annos[0]  →  第 1 个参数 name    →  [ @NotNull, @Range(max=5) ]</span><br><span class="line">annos[1]  →  第 2 个参数 prefix  →  [ @NotNull ]</span><br></pre></td></tr></table></figure>
+<p>外层下标对得上参数顺序，从 0 开始。内层是这个参数上的每一张标签。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Method</span> <span class="variable">m</span> <span class="operator">=</span> Person.class.getMethod(<span class="string">&quot;hello&quot;</span>, String.class, String.class);</span><br><span class="line"><span class="type">Annotation</span>[][] <span class="variable">annos</span> <span class="operator">=</span> m.getParameterAnnotations();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Annotation anno : annos[<span class="number">0</span>]) &#123; <span class="comment">// 只看 name 上的注解</span></span><br><span class="line">    <span class="keyword">if</span> (anno <span class="keyword">instanceof</span> Range r) &#123;</span><br><span class="line">        r.max(); <span class="comment">// 5</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (anno <span class="keyword">instanceof</span> NotNull) &#123;</span><br><span class="line">        <span class="comment">// 贴了 @NotNull。它没有参数，确认有这张标签即可</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数组里的元素类型只是 <code>Annotation</code>，看不出是 <code>@Range</code> 还是 <code>@NotNull</code>，所以用 <code>instanceof</code> 认一下，才能调用 <code>max()</code>。</p>
+<p>业务代码很少手写这段。记住「参数注解是二维数组，外层下标就是参数顺序」。校验框架内部就是这样读的。</p>
+<h2 id="先停在这里"><a href="#先停在这里" class="headerlink" title="先停在这里"></a>先停在这里</h2><p>会用 <code>@Override</code>，并且说得清「<code>RUNTIME</code> 注解 → 反射读出来 → 自己写处理」，这一章就够了。编译期生成代码的注解处理器先不碰。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/06/12/java%E5%85%A5%E9%97%A8/6.%E5%8F%8D%E5%B0%84/" rel="next" title="6.反射">
+                <i class="fa fa-chevron-left"></i> 6.反射
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/06/22/java%E5%85%A5%E9%97%A8/8.%E6%B3%9B%E5%9E%8B/" rel="prev" title="7.泛型">
+                7.泛型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8F%B7%EF%B8%8F-%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">🏷️ 使用注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">注解的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A7%A9-%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">🧩 定义注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E6%B3%A8%E8%A7%A3"><span class="nav-number">2.1.</span> <span class="nav-text">元注解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%94%8D-%E5%A4%84%E7%90%86%E6%B3%A8%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">🔍 处理注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E7%9C%8B%E6%87%82%E8%BF%99%E4%B8%80%E5%8F%A5"><span class="nav-number">3.1.</span> <span class="nav-text">先看懂这一句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E8%AF%BB"><span class="nav-number">3.2.</span> <span class="nav-text">怎么读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%B7%B1%E5%86%99%E6%A3%80%E6%9F%A5%EF%BC%9A-Range"><span class="nav-number">3.3.</span> <span class="nav-text">自己写检查：@Range</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8A%E7%9A%84%E6%B3%A8%E8%A7%A3"><span class="nav-number">3.4.</span> <span class="nav-text">方法参数上的注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E5%81%9C%E5%9C%A8%E8%BF%99%E9%87%8C"><span class="nav-number">3.5.</span> <span class="nav-text">先停在这里</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/06/18/java%E5%85%A5%E9%97%A8/7.%E6%B3%A8%E8%A7%A3/';
+          this.page.identifier = '2026/06/18/java入门/7.注解/';
+          this.page.title = '7.注解';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

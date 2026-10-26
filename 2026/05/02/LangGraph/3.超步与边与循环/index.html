@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="超步并发英语为 Concurrency指的是在同一时间段内，多个任务交替进行。这些任务没有真正同时运行，而是通过任务切换来营造“同时进行”的效果。  类比：一个服务员同时负责 3 桌客人，他会先给 A 桌上菜，再去 B 桌点单，然后回到 C 桌加水……看起来好像在同时照顾三桌，其实是快速切换任务。并发的特点：一个执行单元（单线程）通过任务调度来处理多个任务。  并行英语为 Parallelism指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.超步与边以及实战循环">
+<meta property="og:url" content="http://yoursite.com/2026/05/02/LangGraph/3.%E8%B6%85%E6%AD%A5%E4%B8%8E%E8%BE%B9%E4%B8%8E%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="超步并发英语为 Concurrency指的是在同一时间段内，多个任务交替进行。这些任务没有真正同时运行，而是通过任务切换来营造“同时进行”的效果。  类比：一个服务员同时负责 3 桌客人，他会先给 A 桌上菜，再去 B 桌点单，然后回到 C 桌加水……看起来好像在同时照顾三桌，其实是快速切换任务。并发的特点：一个执行单元（单线程）通过任务调度来处理多个任务。  并行英语为 Parallelism指">
+<meta property="og:locale">
+<meta property="og:image" content="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2025-11-10-034622.png">
+<meta property="og:image" content="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2025-11-10-034752.png">
+<meta property="og:image" content="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2025-11-10-034128.png">
+<meta property="article:published_time" content="2026-05-02T04:22:33.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.383Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2025-11-10-034622.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/05/02/LangGraph/3.超步与边与循环/"/>
+
+
+
+
+
+  <title>2.超步与边以及实战循环 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/05/02/LangGraph/3.%E8%B6%85%E6%AD%A5%E4%B8%8E%E8%BE%B9%E4%B8%8E%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">2.超步与边以及实战循环</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-05-02T12:22:33+08:00">
+                2026-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangGraph/" itemprop="url" rel="index">
+                    <span itemprop="name">LangGraph</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/05/02/LangGraph/3.%E8%B6%85%E6%AD%A5%E4%B8%8E%E8%BE%B9%E4%B8%8E%E5%BE%AA%E7%8E%AF/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/05/02/LangGraph/3.超步与边与循环/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="超步"><a href="#超步" class="headerlink" title="超步"></a>超步</h1><h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><p>英语为 Concurrency<br>指的是在同一时间段内，<strong>多个任务交替进行</strong>。这些任务没有真正同时运行，而是通过任务切换来营造“同时进行”的效果。</p>
+<blockquote>
+<p>类比：一个服务员同时负责 3 桌客人，他会先给 A 桌上菜，再去 B 桌点单，然后回到 C 桌加水……看起来好像在同时照顾三桌，其实是快速切换任务。<br>并发的特点：<strong>一个</strong>执行单元（单线程）通过任务调度来处理多个任务。</p>
+</blockquote>
+<h2 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h2><p>英语为 Parallelism<br>指的是在<strong>同一时刻</strong>，<strong>多个任务真正同时运行</strong>。这通常依赖于多核 CPU 或多台机器的同时执行。</p>
+<blockquote>
+<p>类比：3 个服务员分别负责 3 桌客人，大家同时干活，互不干扰，这就是真正的同时进行。<br>并行的特点：需要<strong>多个执行单元</strong>（多线程、多进程、多核硬件）共同工作。</p>
+</blockquote>
+<blockquote>
+<p>[!tip]</p>
+<p>在 LangGraph 中，采用的是并发的方式执行多个任务。</p>
+</blockquote>
+<h2 id="扇出和扇入"><a href="#扇出和扇入" class="headerlink" title="扇出和扇入"></a>扇出和扇入</h2><p><strong>扇出</strong><br>英语为 Fan-out<br>指的是一个节点添加多个出边，将其同时连接到下游节点。当 LangGraph 执行到该节点时，会并发的触发所有出边。<br><img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2025-11-10-034622.png" alt="扇出"><br>总结起来，就是一个节点连接多个下游节点。</p>
+<p><strong>扇入</strong><br>英语为 Fan-in<br>指多个分支汇聚到同一个下游节点的操作。实现扇入时，需要为目标节点添加多条入边，使其能够接收多个上游节点的输入。<br><img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2025-11-10-034752.png" alt="扇入"><br>总结起来，就是一个节点连接多个上游节点。</p>
+<p><strong>示例代码</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">import &#123; StateGraph, START, END &#125; from <span class="string">&quot;@langchain/langgraph&quot;</span>;</span><br><span class="line">import &#123; z &#125; from <span class="string">&quot;zod/v4&quot;</span>;</span><br><span class="line">import &#123; registry &#125; from <span class="string">&quot;@langchain/langgraph/zod&quot;</span>;</span><br><span class="line">const Schema = z.object(&#123;</span><br><span class="line">  a: z.string().optional(),</span><br><span class="line">  b: z.string().optional(),</span><br><span class="line">  c: z.string().optional(),</span><br><span class="line">  t0: z.number().optional(), // 记录时间</span><br><span class="line">  logs: z.array(z.string()).register(registry, &#123;</span><br><span class="line">    reducer: &#123;</span><br><span class="line">      fn: (oldVal, newVal) =&gt; oldVal.concat(newVal),</span><br><span class="line">    &#125;,</span><br><span class="line">    default: () =&gt; [] as string[],</span><br><span class="line">  &#125;),</span><br><span class="line">&#125;);</span><br><span class="line">const <span class="built_in">sleep</span> = (ms: number) =&gt; new Promise((r) =&gt; setTimeout(r, ms));</span><br><span class="line">const <span class="built_in">fmt</span> = (t0?: number) =&gt; `<span class="variable">$&#123;t0 !== undefined ? Date.now() - t0 : 0&#125;</span>ms`;</span><br><span class="line">const graph = new StateGraph(Schema)</span><br><span class="line">  .addNode(<span class="string">&quot;A&quot;</span>, async () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行A节点&quot;</span>);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      a: <span class="string">&quot;A节点执行后的结果&quot;</span>,</span><br><span class="line">      t0: Date.now(),</span><br><span class="line">      logs: [<span class="string">&quot;【A节点】开始（+0ms）&quot;</span>, <span class="string">&quot;【A节点】结束（+0ms）&quot;</span>],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addNode(<span class="string">&quot;B&quot;</span>, async (state) =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行B节点&quot;</span>);</span><br><span class="line">    const start = <span class="built_in">fmt</span>(state.t0);</span><br><span class="line">    await <span class="built_in">sleep</span>(2500);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      b: <span class="string">&quot;b节点执行后的结果&quot;</span>,</span><br><span class="line">      logs: [`【B节点】开始(+<span class="variable">$&#123;start&#125;</span>)`, `【B节点】结束(+<span class="variable">$&#123;fmt(state.t0)&#125;</span>)`],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addNode(<span class="string">&quot;C&quot;</span>, async (state) =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行C节点&quot;</span>);</span><br><span class="line">    const start = <span class="built_in">fmt</span>(state.t0);</span><br><span class="line">    await <span class="built_in">sleep</span>(1000);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      c: <span class="string">&quot;c节点执行后的结果&quot;</span>,</span><br><span class="line">      logs: [`【C节点】开始(+<span class="variable">$&#123;start&#125;</span>)`, `【C节点】结束(+<span class="variable">$&#123;fmt(state.t0)&#125;</span>)`],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addNode(<span class="string">&quot;D&quot;</span>, async (state) =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行D节点&quot;</span>);</span><br><span class="line">    const summary = `D节点已运行，b=<span class="variable">$&#123;state.b ?? &quot;node&quot;&#125;</span>, c=<span class="variable">$&#123;state.c ?? &quot;none&quot;&#125;</span>`;</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      logs: [`<span class="variable">$&#123;summary&#125;</span>`, `【D节点】结束(+<span class="variable">$&#123;fmt(state.t0)&#125;</span>)`, `整个流程结束`],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addEdge(START, <span class="string">&quot;A&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;A&quot;</span>, <span class="string">&quot;C&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;B&quot;</span>, <span class="string">&quot;D&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;D&quot;</span>, END)</span><br><span class="line">  .compile();</span><br><span class="line">const result = await graph.invoke(&#123;&#125;);</span><br><span class="line">console.log(result);</span><br><span class="line"><span class="comment"># 打印如下</span></span><br><span class="line">运行A节点</span><br><span class="line">运行B节点</span><br><span class="line">运行C节点</span><br><span class="line">运行D节点</span><br><span class="line">&#123;</span><br><span class="line">  a: <span class="string">&#x27;A节点执行后的结果&#x27;</span>,</span><br><span class="line">  b: <span class="string">&#x27;b节点执行后的结果&#x27;</span>,</span><br><span class="line">  c: <span class="string">&#x27;c节点执行后的结果&#x27;</span>,</span><br><span class="line">  t0: 1790646320616,</span><br><span class="line">  logs: [</span><br><span class="line">    <span class="string">&#x27;【A节点】开始（+0ms）&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;【A节点】结束（+0ms）&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;【B节点】开始(+4ms)&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;【B节点】结束(+2510ms)&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;【C节点】开始(+4ms)&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;【C节点】结束(+1012ms)&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D节点已运行，b=b节点执行后的结果, c=c节点执行后的结果&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;【D节点】结束(+2513ms)&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;整个流程结束&#x27;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="超步-1"><a href="#超步-1" class="headerlink" title="超步"></a>超步</h2><p>图执行过程中的一个“批次轮次”，也就是一轮统一调度的执行阶段。</p>
+<p>在 LangGraph 中，超步的设计思想借鉴自 Google 的分布式计算框架 Pregel，以及其他分布式图计算模型。它的核心目的，是让多个节点能够在同一轮中<strong>并发</strong>执行，并在每一轮结束时进行全局同步。</p>
+<p>LangGraph 中超步特点：</p>
+<ol>
+<li>并发性：同一个超步内，多个节点可以并发执行，从而提升一个执行效率。</li>
+<li>同步性：每个超步结束后，会有一个全局的同步点，同步全局状态，同步完成之后，才进入下一个超步。</li>
+<li>迭代性：图执行的过程其实就是超步的迭代过程。每一个超步都是在前一个超步的状态基础上进行计算和更新的。<br><img src="https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2025-11-10-034128.png" alt="超步"></li>
+</ol>
+<h1 id="边"><a href="#边" class="headerlink" title="边"></a>边</h1><p>LangGraph 中边有 4 种类型：</p>
+<ol>
+<li>普通边</li>
+<li>条件边</li>
+<li>入口点：START</li>
+<li>条件入口点</li>
+</ol>
+<h2 id="普通边"><a href="#普通边" class="headerlink" title="普通边"></a>普通边</h2><p>连接两个节点，例如 <code>nodeA</code> 到 <code>nodeB</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.addEdge(<span class="string">&quot;nodeA&quot;</span>, <span class="string">&quot;nodeB&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="条件边"><a href="#条件边" class="headerlink" title="条件边"></a>条件边</h2><p>语法如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">graph.addConditionalEdges(<span class="string">&quot;nodeA&quot;</span>, routingFunction [, mapping]);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&quot;nodeA&quot;</code>：哪个节点跑完以后要做分流。</li>
+<li><code>routingFunction(state)</code>：路由函数，接收当前 state，返回一个“去向”。</li>
+<li><code>mapping</code>（可选）：把路由函数的返回值翻译成真正的节点名或节点名列表。</li>
+</ul>
+<p><strong>路由函数</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> shouldSearch(state) &#123;</span><br><span class="line">  <span class="built_in">return</span> state.query?.trim() ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> route(state) &#123;</span><br><span class="line">  <span class="keyword">if</span> (state.needTools) <span class="built_in">return</span> <span class="string">&quot;tools&quot;</span>;</span><br><span class="line">  <span class="keyword">if</span> (state.done) <span class="built_in">return</span> <span class="string">&quot;stop&quot;</span>;</span><br><span class="line">  <span class="built_in">return</span> <span class="string">&quot;finalize&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> fanOut(state) &#123;</span><br><span class="line">  <span class="built_in">return</span> [<span class="string">&quot;fetchProfile&quot;</span>, <span class="string">&quot;fetchOrders&quot;</span>]; // 下一步并发的跑两个节点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>mapping</strong><br>mapping 是做一个节点的映射，目的是让路由函数和具体的节点名称解耦。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph.addConditionalEdges(<span class="string">&quot;nodeA&quot;</span>, shouldSearch, &#123;</span><br><span class="line">  <span class="literal">true</span>: <span class="string">&quot;nodeB&quot;</span>,</span><br><span class="line">  <span class="literal">false</span>: <span class="string">&quot;nodeC&quot;</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>shouldSearch 是路由函数，只需要返回 <code>true/false</code>，具体映射的节点由 mapping 来决定。</p>
+<p>示例练习</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">const graph = new StateGraph(Schema)</span><br><span class="line">  .addNode(<span class="string">&quot;A&quot;</span>, async () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行A节点&quot;</span>);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      a: <span class="string">&quot;A节点的计算结果&quot;</span>,</span><br><span class="line">      logs: [<span class="string">&quot;A节点计算完成&quot;</span>],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addNode(<span class="string">&quot;B&quot;</span>, async () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行B节点&quot;</span>);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      a: <span class="string">&quot;B节点的计算结果&quot;</span>,</span><br><span class="line">      logs: [<span class="string">&quot;B节点计算完成&quot;</span>],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addNode(<span class="string">&quot;C&quot;</span>, () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行C节点&quot;</span>);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      a: <span class="string">&quot;C节点的计算结果&quot;</span>,</span><br><span class="line">      logs: [<span class="string">&quot;C节点计算完成&quot;</span>],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addNode(<span class="string">&quot;D&quot;</span>, () =&gt; &#123;</span><br><span class="line">    console.log(<span class="string">&quot;运行D节点&quot;</span>);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      a: <span class="string">&quot;D节点的计算结果&quot;</span>,</span><br><span class="line">      logs: [<span class="string">&quot;D节点计算完成&quot;</span>],</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addEdge(START, <span class="string">&quot;A&quot;</span>)</span><br><span class="line">  .addConditionalEdges(<span class="string">&quot;A&quot;</span>, (state: TState) =&gt; &#123;</span><br><span class="line">    <span class="built_in">return</span> state.path === <span class="string">&quot;B&quot;</span> ? <span class="string">&quot;B&quot;</span> : <span class="string">&quot;C&quot;</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">  .addEdge(<span class="string">&quot;B&quot;</span>, <span class="string">&quot;D&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>)</span><br><span class="line">  .addEdge(<span class="string">&quot;D&quot;</span>, END)</span><br><span class="line">  .compile();</span><br></pre></td></tr></table></figure>
+<h2 id="条件入口点"><a href="#条件入口点" class="headerlink" title="条件入口点"></a>条件入口点</h2><p>其实就是条件边，只不过第一个参数为 <code>START</code><br>条件入口点也可以使用映射表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph.addConditionalEdges(START, routingFunction, &#123;</span><br><span class="line">  <span class="literal">true</span>: <span class="string">&quot;nodeB&quot;</span>,</span><br><span class="line">  <span class="literal">false</span>: <span class="string">&quot;nodeC&quot;</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="实战循环"><a href="#实战循环" class="headerlink" title="实战循环"></a>实战循环</h1><p>实现循环图核心代码<br>通过条件边<code>routeFunc</code>控制循环，返回increment节点<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> buildGraph(maxCount: number) &#123;</span><br><span class="line">  async <span class="keyword">function</span> increment(state: TState) &#123;</span><br><span class="line">    const next = state.count + 1;</span><br><span class="line">    await <span class="built_in">sleep</span>(1500);</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      count: next,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> routeFunc(state: TState) &#123;</span><br><span class="line">    <span class="built_in">return</span> state.count &lt; maxCount ? <span class="string">&quot;true&quot;</span> : <span class="string">&quot;false&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">return</span> new StateGraph(Schema)</span><br><span class="line">    .addNode(<span class="string">&quot;increment&quot;</span>, increment)</span><br><span class="line">    .addEdge(START, <span class="string">&quot;increment&quot;</span>)</span><br><span class="line">    .addConditionalEdges(<span class="string">&quot;increment&quot;</span>, routeFunc, &#123;</span><br><span class="line">      <span class="literal">true</span>: <span class="string">&quot;increment&quot;</span>,</span><br><span class="line">      <span class="literal">false</span>: END,</span><br><span class="line">    &#125;)</span><br><span class="line">    .compile();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/05/02/LangGraph/2.%E7%8A%B6%E6%80%81%E4%B8%8E%E8%8A%82%E7%82%B9/" rel="next" title="2.状态与节点">
+                <i class="fa fa-chevron-left"></i> 2.状态与节点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/05/03/LangGraph/5.Command%E6%8C%87%E4%BB%A4/" rel="prev" title="4.MapReduce">
+                4.MapReduce <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B6%85%E6%AD%A5"><span class="nav-number">1.</span> <span class="nav-text">超步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-number">1.1.</span> <span class="nav-text">并发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">并行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%87%E5%87%BA%E5%92%8C%E6%89%87%E5%85%A5"><span class="nav-number">1.3.</span> <span class="nav-text">扇出和扇入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E6%AD%A5-1"><span class="nav-number">1.4.</span> <span class="nav-text">超步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BE%B9"><span class="nav-number">2.</span> <span class="nav-text">边</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E8%BE%B9"><span class="nav-number">2.1.</span> <span class="nav-text">普通边</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%BE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">条件边</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%85%A5%E5%8F%A3%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">条件入口点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.</span> <span class="nav-text">实战循环</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/05/02/LangGraph/3.%E8%B6%85%E6%AD%A5%E4%B8%8E%E8%BE%B9%E4%B8%8E%E5%BE%AA%E7%8E%AF/';
+          this.page.identifier = '2026/05/02/LangGraph/3.超步与边与循环/';
+          this.page.title = '2.超步与边以及实战循环';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

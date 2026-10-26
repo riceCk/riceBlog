@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="提示词模板 模板 &#x3D; 带变量的”模具”，用来生成消息；消息 &#x3D; 最终发给模型的”成品”。┌─────────────────────────────────────────────────────────────┐│                    提示词系统的层次结构                       │├─────────────────────────────────────">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.LangChain-提示词">
+<meta property="og:url" content="http://yoursite.com/2026/03/20/LangChain/2.%E6%8F%90%E7%A4%BA%E8%AF%8D/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="提示词模板 模板 &#x3D; 带变量的”模具”，用来生成消息；消息 &#x3D; 最终发给模型的”成品”。┌─────────────────────────────────────────────────────────────┐│                    提示词系统的层次结构                       │├─────────────────────────────────────">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-03-20T13:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.375Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/03/20/LangChain/2.提示词/"/>
+
+
+
+
+
+  <title>1.LangChain-提示词 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/03/20/LangChain/2.%E6%8F%90%E7%A4%BA%E8%AF%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">1.LangChain-提示词</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-03-20T21:30:00+08:00">
+                2026-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangChain/" itemprop="url" rel="index">
+                    <span itemprop="name">LangChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/03/20/LangChain/2.%E6%8F%90%E7%A4%BA%E8%AF%8D/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/03/20/LangChain/2.提示词/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="提示词模板"><a href="#提示词模板" class="headerlink" title="提示词模板"></a>提示词模板</h1><p> <strong>模板 = 带变量的”模具”，用来生成消息；消息 = 最终发给模型的”成品”。</strong><br>┌─────────────────────────────────────────────────────────────┐<br>│                    提示词系统的层次结构                       │<br>├─────────────────────────────────────────────────────────────┤<br>│                                                             │<br>│  【模板层】          【消息层】           【执行层】           │<br>│  (定义结构)    →    (生成对象)    →    (发送给模型)<br>│                                                             │<br>│  PromptTemplate         Message            model.invoke()   │<br>│  HumanMessagePrompt     HumanMessage                        │<br>│  SystemMessagePrompt    SystemMessage                       │<br>│  ChatPromptTemplate     AIMessage                           │<br>│                                                             │<br>│  像”填空题”           像”填好的答卷”     像”交卷评分”          │<br>│                                                             │<br>└─────────────────────────────────────────────────────────────┘</p>
+<h2 id="PromptTemplate（纯文本模板）"><a href="#PromptTemplate（纯文本模板）" class="headerlink" title="PromptTemplate（纯文本模板）"></a>PromptTemplate（纯文本模板）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 补全模型（如 GPT-2）</span></span><br><span class="line">import &#123; PromptTemplate &#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line"></span><br><span class="line">const prompt = new PromptTemplate(&#123;</span><br><span class="line">  inputVariables: [<span class="string">&quot;period&quot;</span>, <span class="string">&quot;user&quot;</span>], <span class="comment"># 输入多变量</span></span><br><span class="line">  template: <span class="string">&quot;&#123;&#123;test&#125;&#125;Good &#123;period&#125;, &#123;user&#125;!&quot;</span>, <span class="comment"># 模板内容</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const result = await prompt.format(&#123; period: <span class="string">&quot;morning&quot;</span>, user: <span class="string">&quot;Alice&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure>
+<p>如果最终结果需要保留<code>&#123;&#125;</code>字符，如果输入<code>&#123;test&#125;</code>等，可以使用<code>&#123;&#123;&#125;&#125;</code>进行转义</p>
+<h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><p><strong>PromptTemplate.fromTemplate()</strong> 用来快速创建模板<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import &#123; PromptTemplate &#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line"></span><br><span class="line">const pt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;你是一个有一个翻译助理，请将用户的输入的内容由&#123;input_language&#125;直接翻译翻译成&#123;output_language&#125;。&quot;</span>,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">const res = await pt.format(&#123;</span><br><span class="line">  input_language: <span class="string">&quot;中文&quot;</span>,</span><br><span class="line">  output_language: <span class="string">&quot;英文&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure></p>
+<h2 id="部分填充-and-动态生成变量值"><a href="#部分填充-and-动态生成变量值" class="headerlink" title="部分填充 and 动态生成变量值"></a>部分填充 and 动态生成变量值</h2><p>先传一部分变量，生成一部分填充模板，后续再补全，类似函数编程的<strong>柯里化</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import &#123; PromptTemplate &#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line"></span><br><span class="line">const languageTxt = <span class="string">&quot;中文&quot;</span></span><br><span class="line">const pt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;你是一个有一个翻译助理，请将用户的输入的内容由&#123;input_language&#125;直接翻译成&#123;output_language&#125;。回答用户&#123;text&#125;&quot;</span>,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">const pt2 = await pt.partial(&#123;</span><br><span class="line">  input_language: languageTxt, <span class="comment"># 可以通过变量/函数传入</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const pt3 = await pt2.partial(&#123;</span><br><span class="line">  output_language: <span class="string">&quot;英文&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const result = await pt3.format(&#123;</span><br><span class="line">  text: <span class="string">&quot;以下内容翻译成英文：我爱你&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<h2 id="少量样本提示词"><a href="#少量样本提示词" class="headerlink" title="少量样本提示词"></a>少量样本提示词</h2><p><strong>FewShotPromptTemplate</strong> 方法使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import &#123; PromptTemplate, FewShotPromptTemplate &#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line"></span><br><span class="line">const examples = [</span><br><span class="line">  &#123;</span><br><span class="line">    comment: <span class="string">&quot;这个产品真不错，用的太顺手了&quot;</span>,</span><br><span class="line">    sentiment: <span class="string">&quot;正面&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    comment: <span class="string">&quot;服务态度很差，再也不会来了。&quot;</span>,</span><br><span class="line">    sentiment: <span class="string">&quot;负面&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    comment: <span class="string">&quot;质量一般，性价比不高。&quot;</span>,</span><br><span class="line">    sentiment: <span class="string">&quot;中性&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">const examplePt = PromptTemplate.fromTemplate(</span><br><span class="line">  <span class="string">&quot;评论：&#123;comment&#125; -&gt; 情感：&#123;sentiment&#125;&quot;</span>,</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">const pt = new FewShotPromptTemplate(&#123;</span><br><span class="line">  examples,</span><br><span class="line">  examplePrompt: examplePt,</span><br><span class="line">  suffix: <span class="string">&quot;评论：&#123;comment&#125; -&gt; 情感：&#123;sentiment&#125;&quot;</span>,</span><br><span class="line">  inputVariables: [<span class="string">&quot;comment&quot;</span>, <span class="string">&quot;sentiment&quot;</span>],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const res = await pt.format(&#123;</span><br><span class="line">  comment: <span class="string">&quot;外观还行，性能一般般&quot;</span>,</span><br><span class="line">  sentiment: <span class="string">&quot;中性&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(res);</span><br><span class="line"><span class="comment"># 输出：</span></span><br><span class="line">评论：这个产品真不错，用的太顺手了 -&gt; 情感：正面</span><br><span class="line">评论：服务态度很差，再也不会来了。 -&gt; 情感：负面</span><br><span class="line">评论：质量一般，性价比不高。 -&gt; 情感：中性</span><br><span class="line"></span><br><span class="line">评论：外观还行，性能一般般 -&gt; 情感：中性</span><br></pre></td></tr></table></figure></p>
+<h1 id="Message-消息对象"><a href="#Message-消息对象" class="headerlink" title="Message 消息对象"></a>Message 消息对象</h1><p>Message 模板是LangChain.js中大模型交互的<strong>基本单位</strong>，用来表示<em>谁说了什么</em>，并且携带额外的元信息</p>
+<ul>
+<li>UserMessage: 用户输入</li>
+<li>AIMessage: 模型输出</li>
+<li>SystemMessage：系统指令，比如告诉模型【你是一个助手】角色设定</li>
+<li>FunctionMessage/ToolMessage: Function Calling或MCP工具调用结果</li>
+<li>ChatMessage: 通用的消息格式，可以指定角色</li>
+</ul>
+<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import &#123; SystemMessage, HumanMessage &#125; from <span class="string">&quot;@langchain/core/messages&quot;</span>;</span><br><span class="line">const msg = new SystemMessage(</span><br><span class="line">  <span class="string">&quot;你是一位中国专业导游，请使用中文向游客介绍旅游景点&quot;</span>,</span><br><span class="line">);</span><br><span class="line">const msg1 = new HumanMessage(<span class="string">&quot;你好&quot;</span>);</span><br><span class="line">console.log(msg);</span><br><span class="line">console.log(msg1);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印如下</span></span><br><span class="line">SystemMessage &#123;</span><br><span class="line">  <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你是一位中国专业导游，请使用中文向游客介绍旅游景点&quot;</span>,</span><br><span class="line">  <span class="string">&quot;additional_kwargs&quot;</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">&quot;response_metadata&quot;</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">HumanMessage &#123;</span><br><span class="line">  <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你好&quot;</span>,</span><br><span class="line">  <span class="string">&quot;additional_kwargs&quot;</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">&quot;response_metadata&quot;</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="对象成员"><a href="#对象成员" class="headerlink" title="对象成员"></a>对象成员</h2><h3 id="1-content"><a href="#1-content" class="headerlink" title="1.content"></a>1.content</h3><p>消息主要内容，最核心的字段。</p>
+<ul>
+<li>一般是字符串（最常见）</li>
+<li>也可以对象数据（比如多模态：文字+图片）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对象数据（比如多模态：文字+图片）</span></span><br><span class="line">import &#123; HumanMessage &#125; from <span class="string">&quot;@langchain/core/messages&quot;</span>;</span><br><span class="line"></span><br><span class="line">const msg = new HumanMessage(&#123;</span><br><span class="line">  content: [</span><br><span class="line">    &#123; <span class="built_in">type</span>: <span class="string">&quot;text&quot;</span>, text: <span class="string">&quot;请描述这张图片&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="built_in">type</span>: <span class="string">&quot;image_url&quot;</span>, image_url: <span class="string">&quot;http://xxxx.png&quot;</span> &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(msg);</span><br><span class="line"><span class="comment"># 打印如下</span></span><br><span class="line">HumanMessage &#123;</span><br><span class="line">  <span class="string">&quot;content&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;text&quot;</span>,</span><br><span class="line">      <span class="string">&quot;text&quot;</span>: <span class="string">&quot;请描述这张图片&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;image_url&quot;</span>,</span><br><span class="line">      <span class="string">&quot;image_url&quot;</span>: <span class="string">&quot;http://xxxx.png&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="string">&quot;additional_kwargs&quot;</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">&quot;response_metadata&quot;</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-additional-kwargs"><a href="#2-additional-kwargs" class="headerlink" title="2.additional_kwargs"></a>2.additional_kwargs</h3><p>附属参数，用来保存OpenAI/其他模型API兼容的扩展字段。</p>
+<h3 id="3-invalid-tool-calls"><a href="#3-invalid-tool-calls" class="headerlink" title="3.invalid_tool_calls"></a>3.invalid_tool_calls</h3><p>当模型给出的工具调用结果无法被LangChain标准化时（比如<strong>解析失败</strong>或<strong>结构不合法</strong>）</p>
+<h1 id="结构化提示词"><a href="#结构化提示词" class="headerlink" title="结构化提示词"></a>结构化提示词</h1><p>信息是由于人类、ai、还是chatbot指定的system信息，这种结构化的消息输入有助于模型更好的理解对话的上下文和流程，从而生成更加准确、更自然的回应</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类名</th>
+<th style="text-align:center">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ChatPrompTemplate</td>
+<td style="text-align:center">构造整个多轮提示词结构</td>
+</tr>
+<tr>
+<td style="text-align:center">SystemMessagePromptTemplate</td>
+<td style="text-align:center">设置系统规则/行为模式</td>
+</tr>
+<tr>
+<td style="text-align:center">HumanMessagePromptTemplate</td>
+<td style="text-align:center">模拟用户输入</td>
+</tr>
+<tr>
+<td style="text-align:center">AIMessagePromptTemplate</td>
+<td style="text-align:center">模拟模型输出（上下文中使用）</td>
+</tr>
+</tbody>
+</table>
+<p>角色的概念对LLM理解和构建整个对话流程非常重要，相同的内容由不同的role发送出来的意义是不同的。</p>
+<ul>
+<li><code>system</code>角色的消息通常用于设置对话的上下文或指定模型采取特定的行为模式。这些消息不会直接显示在对话中，但是他们对<strong>模型的行为有指导作用</strong></li>
+<li><code>user</code>角色代表真实用户在对话中的发言。</li>
+<li><code>assistant</code>角色的信息代表AI模型的回复</li>
+</ul>
+<h2 id="快速上手-1"><a href="#快速上手-1" class="headerlink" title="快速上手"></a>快速上手</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">  SystemMessagePromptTemplate,</span><br><span class="line">  HumanMessagePromptTemplate,</span><br><span class="line">  ChatPromptTemplate,</span><br><span class="line">&#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line">import &#123; ChatOllama &#125; from <span class="string">&quot;@langchain/ollama&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> buildPrompt(sysTemplate, userTemplate) &#123;</span><br><span class="line">  const sysPt = SystemMessagePromptTemplate.fromTemplate(sysTemplate);</span><br><span class="line">  const hpt = HumanMessagePromptTemplate.fromTemplate(userTemplate);</span><br><span class="line">  <span class="built_in">return</span> ChatPromptTemplate.fromMessages([sysPt, hpt]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const sysTemplate =</span><br><span class="line">  <span class="string">&quot;你是一位中国专业导游，请使用中文向游客介绍&#123;location&#125;的&#123;topic&#125;，并提供相关的历史背景和文化信息。&quot;</span>;</span><br><span class="line">const userTemplate = <span class="string">&quot;我想问：&#123;question&#125;，请你用中文回答我。&quot;</span>;</span><br><span class="line"></span><br><span class="line">const pt = buildPrompt(sysTemplate, userTemplate);</span><br><span class="line"></span><br><span class="line">const res = await pt.formatMessages(&#123;</span><br><span class="line">  location: <span class="string">&quot;中国某些地区&quot;</span>,</span><br><span class="line">  topic: <span class="string">&quot;茶叶文化&quot;</span>,</span><br><span class="line">  question: <span class="string">&quot;请你介绍一下中国的茶叶文化&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(res) <span class="comment">#打印出来数据</span></span><br><span class="line"></span><br><span class="line">const model = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  stream: <span class="literal">true</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const stream = await model.stream(res);</span><br><span class="line"><span class="keyword">for</span> await (const chunk of stream) &#123;</span><br><span class="line">  process.stdout.write(chunk.content);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>执行结果如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  SystemMessage &#123;</span><br><span class="line">    <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你是一位中国专业导游，请使用中文向游客介绍中国某些地区的茶叶文化，并提供相关的历史背景和文化信息。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;additional_kwargs&quot;</span>: &#123;&#125;,</span><br><span class="line">    <span class="string">&quot;response_metadata&quot;</span>: &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  HumanMessage &#123;</span><br><span class="line">    <span class="string">&quot;content&quot;</span>: <span class="string">&quot;我想问：请你介绍一下中国的茶叶文化，请你用中文回答我。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;additional_kwargs&quot;</span>: &#123;&#125;,</span><br><span class="line">    <span class="string">&quot;response_metadata&quot;</span>: &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># stream 流输出解答</span></span><br></pre></td></tr></table></figure><br>这里的Langchain.js<strong>标准的聊天消息对象结构</strong>，每条消息都表示一次对象中的一轮发言</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">字段名</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:left">含义与作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SystemMessage/HumanMessage</td>
+<td style="text-align:center">类实例</td>
+<td style="text-align:left">表示消息的角色类型</td>
+</tr>
+<tr>
+<td style="text-align:left">content</td>
+<td style="text-align:center">string</td>
+<td style="text-align:left">消息正文，即这条消息说了什么</td>
+</tr>
+<tr>
+<td style="text-align:left">additional_kwargs</td>
+<td style="text-align:center">object</td>
+<td style="text-align:left">额外的模型参数（可选），如工具调用，函数定义，引用等</td>
+</tr>
+<tr>
+<td style="text-align:left">response_metadata</td>
+<td style="text-align:center">object</td>
+<td style="text-align:left">模型生成后自动附加的元信息（如token用量、日志信息等）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="组合多个提示词"><a href="#组合多个提示词" class="headerlink" title="组合多个提示词"></a>组合多个提示词</h2><p>实际工程中，常常需要根据多个变量、上下文来源，动态拼接结构复杂、逻辑清晰的Prompt,此时，如果把所有逻辑都写在一个大模板里，会让Prompt难以维护、难以复用。</p>
+<p>这就是<code>PipelinePromptTemplate</code>的用武之地，他们允许我们将多个小的Prompt模板，按顺序组合成一个“流水线”的大模板，既能<strong>模块化建设</strong>，又能<strong>复用逻辑片段</strong>。</p>
+<p>在<code>PipelinePromptTemplate</code>中，有两个重要组合部分：</p>
+<ul>
+<li>pipelinePrompts: 一个数组，每项都是一个小模板（Prompt）,执行后产出一个变量，供后续模板使用</li>
+<li>finalPrompt: 最终的主模板，应用前面生成的变量，并装成完整的Prompt</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">  PromptTemplate,</span><br><span class="line">  PipelinePromptTemplate,</span><br><span class="line">&#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line"></span><br><span class="line">const getDate = () =&gt; new Date().toLocaleDateString();</span><br><span class="line"><span class="comment"># 1.创建一个主模板</span></span><br><span class="line">const mainPt = PromptTemplate.fromTemplate(</span><br><span class="line">  `你是一个智能助理，今天&#123;<span class="built_in">date</span>&#125;,主人的信息是&#123;userInfo&#125;,</span><br><span class="line">  请根据上下文完成以下任务：</span><br><span class="line">  &#123;todo&#125;`,</span><br><span class="line">);</span><br><span class="line"><span class="comment"># 2.创建子模板</span></span><br><span class="line">const timePt = PromptTemplate.fromTemplate(<span class="string">&quot;&#123;date&#125;, 现在是&#123;time&#125;&quot;</span>);</span><br><span class="line">const filledTimePl = await timePt.partial(&#123;</span><br><span class="line">  <span class="built_in">date</span>: getDate,</span><br><span class="line">&#125;);</span><br><span class="line">const userPt = PromptTemplate.fromTemplate(<span class="string">&quot;姓名：&#123;name&#125;, 性别： &#123;gender&#125;&quot;</span>);</span><br><span class="line">const taskTol = PromptTemplate.fromTemplate(`</span><br><span class="line">  我想吃&#123;<span class="keyword">time</span>&#125;的&#123;dish&#125;。</span><br><span class="line">  请再次确认我的信息：&#123;userInfo&#125;</span><br><span class="line">  `);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 可以将子模板填充到主模板里面</span></span><br><span class="line">const finalPt = new PipelinePromptTemplate(&#123;</span><br><span class="line">  pipelinePrompts: [</span><br><span class="line">    &#123;</span><br><span class="line">      name: <span class="string">&quot;date&quot;</span>,</span><br><span class="line">      prompt: filledTimePl,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      name: <span class="string">&quot;userInfo&quot;</span>,</span><br><span class="line">      prompt: userPt,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      name: <span class="string">&quot;todo&quot;</span>,</span><br><span class="line">      prompt: taskTol,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">  finalPrompt: mainPt,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const result = await finalPt.format(&#123;</span><br><span class="line">  <span class="keyword">time</span>: <span class="string">&quot;12:01&quot;</span>,</span><br><span class="line">  name: <span class="string">&quot;张三&quot;</span>,</span><br><span class="line">  gender: <span class="string">&quot;男&quot;</span>,</span><br><span class="line">  dish: <span class="string">&quot;煎蛋&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line">console.log(result);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以想象每个<strong>pipelinePrompt</strong>是一个工序，负责“加工”一段文本，finalPrompt则总装线，评出最终成品。</p>
+<h1 id="消息占位"><a href="#消息占位" class="headerlink" title="消息占位"></a>消息占位</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">  SystemMessagePromptTemplate,</span><br><span class="line">  HumanMessagePromptTemplate,</span><br><span class="line">  ChatPromptTemplate,</span><br><span class="line">  MessagesPlaceholder,</span><br><span class="line">&#125; from <span class="string">&quot;@langchain/core/prompts&quot;</span>;</span><br><span class="line"></span><br><span class="line">import &#123;</span><br><span class="line">  SystemMessage,</span><br><span class="line">  HumanMessage,</span><br><span class="line">  AIMessage,</span><br><span class="line">&#125; from <span class="string">&quot;@langchain/core/messages&quot;</span>;</span><br><span class="line"></span><br><span class="line">const pt = ChatPromptTemplate.fromMessages([</span><br><span class="line">  SystemMessagePromptTemplate.fromTemplate(<span class="string">&quot;你是一个乐于助人的AI助手&quot;</span>),</span><br><span class="line">  new MessagesPlaceholder(<span class="string">&quot;history&quot;</span>),</span><br><span class="line">  HumanMessagePromptTemplate.fromTemplate(<span class="string">&quot;用户问题:&#123;input&#125;&quot;</span>),</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">const res = await pt.formatMessages(&#123;</span><br><span class="line">  input: <span class="string">&quot;你好&quot;</span>,</span><br><span class="line">  <span class="built_in">history</span>: [</span><br><span class="line">    new HumanMessage(<span class="string">&quot;今天天气怎么样&quot;</span>),</span><br><span class="line">    new AIMessage(<span class="string">&quot;今天天气非常晴朗&quot;</span>),</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/03/19/LangChain/1.%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/" rel="next" title="1.LangChain-基本介绍">
+                <i class="fa fa-chevron-left"></i> 1.LangChain-基本介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/03/21/LangChain/3.LCEL/" rel="prev" title="3.LCEL && Runnable接口">
+                3.LCEL && Runnable接口 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">提示词模板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PromptTemplate%EF%BC%88%E7%BA%AF%E6%96%87%E6%9C%AC%E6%A8%A1%E6%9D%BF%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">PromptTemplate（纯文本模板）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">静态方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E5%A1%AB%E5%85%85-and-%E5%8A%A8%E6%80%81%E7%94%9F%E6%88%90%E5%8F%98%E9%87%8F%E5%80%BC"><span class="nav-number">1.3.</span> <span class="nav-text">部分填充 and 动态生成变量值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%91%E9%87%8F%E6%A0%B7%E6%9C%AC%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-number">1.4.</span> <span class="nav-text">少量样本提示词</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Message-%E6%B6%88%E6%81%AF%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">Message 消息对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B"><span class="nav-number">2.1.</span> <span class="nav-text">快速上手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E6%88%90%E5%91%98"><span class="nav-number">2.2.</span> <span class="nav-text">对象成员</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-content"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.content</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-additional-kwargs"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.additional_kwargs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-invalid-tool-calls"><span class="nav-number">2.2.3.</span> <span class="nav-text">3.invalid_tool_calls</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-number">3.</span> <span class="nav-text">结构化提示词</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B-1"><span class="nav-number">3.1.</span> <span class="nav-text">快速上手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%A4%9A%E4%B8%AA%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-number">3.2.</span> <span class="nav-text">组合多个提示词</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%8D%A0%E4%BD%8D"><span class="nav-number">4.</span> <span class="nav-text">消息占位</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/03/20/LangChain/2.%E6%8F%90%E7%A4%BA%E8%AF%8D/';
+          this.page.identifier = '2026/03/20/LangChain/2.提示词/';
+          this.page.title = '1.LangChain-提示词';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

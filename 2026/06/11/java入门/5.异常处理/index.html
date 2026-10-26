@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="⚠️ Java 的异常 🎯 有前端经验的话，try &#x2F; catch &#x2F; finally &#x2F; throw 语法本身没什么新意。这章要带走的是 Java 多出来的几条规矩：   受检异常会卡编译。IOException、SQLException 不处理，代码直接编不过。JS 没有这道门槛。 业务异常往上抛，入口统一接。方法里能补救才 catch；规则不满足就 throw。以后用 @Controlle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.异常处理">
+<meta property="og:url" content="http://yoursite.com/2026/06/11/java%E5%85%A5%E9%97%A8/5.%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="⚠️ Java 的异常 🎯 有前端经验的话，try &#x2F; catch &#x2F; finally &#x2F; throw 语法本身没什么新意。这章要带走的是 Java 多出来的几条规矩：   受检异常会卡编译。IOException、SQLException 不处理，代码直接编不过。JS 没有这道门槛。 业务异常往上抛，入口统一接。方法里能补救才 catch；规则不满足就 throw。以后用 @Controlle">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-06-11T07:24:33.000Z">
+<meta property="article:modified_time" content="2026-10-21T05:45:20.024Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/06/11/java入门/5.异常处理/"/>
+
+
+
+
+
+  <title>5.异常处理 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/06/11/java%E5%85%A5%E9%97%A8/5.%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">5.异常处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-06-11T15:24:33+08:00">
+                2026-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/java%E5%85%A5%E9%97%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">java入门</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/06/11/java%E5%85%A5%E9%97%A8/5.%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/06/11/java入门/5.异常处理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="⚠️-Java-的异常"><a href="#⚠️-Java-的异常" class="headerlink" title="⚠️ Java 的异常"></a>⚠️ Java 的异常</h1><blockquote>
+<p>🎯 有前端经验的话，<code>try / catch / finally / throw</code> 语法本身没什么新意。这章要带走的是 Java 多出来的几条规矩：</p>
+</blockquote>
+<ol>
+<li><strong>受检异常会卡编译</strong>。<code>IOException</code>、<code>SQLException</code> 不处理，代码直接编不过。JS 没有这道门槛。</li>
+<li><strong>业务异常往上抛，入口统一接</strong>。方法里能补救才 <code>catch</code>；规则不满足就 <code>throw</code>。以后用 <code>@ControllerAdvice</code> 转成 <code>&#123;code, msg, data&#125;</code>，角色接近 axios 拦截器。</li>
+<li><strong>NPE 是业务代码最高频的坑</strong>。等同于 JS 的 <code>Cannot read properties of null</code>。Java 没有 <code>?.</code>，调用前要判空。</li>
+<li><strong>收尾用 <code>finally</code>，关资源优先 <code>try-with-resources</code></strong>。成功、失败都要走到。</li>
+</ol>
+<h2 id="异常家族"><a href="#异常家族" class="headerlink" title="异常家族"></a>异常家族</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Throwable</span><br><span class="line">├─ Error                         严重错误，业务代码不捕获</span><br><span class="line">│  ├─ OutOfMemoryError           内存溢出</span><br><span class="line">│  └─ StackOverflowError         栈溢出</span><br><span class="line">└─ Exception</span><br><span class="line">   ├─ IOException                受检：读写</span><br><span class="line">   │  ├─ FileNotFoundException   文件找不到</span><br><span class="line">   │  ├─ UnsupportedEncodingException</span><br><span class="line">   │  └─ SocketException         连接断开</span><br><span class="line">   ├─ SQLException               受检：SQL、连库失败</span><br><span class="line">   ├─ ParseException             受检：日期格式（SimpleDateFormat）</span><br><span class="line">   └─ RuntimeException           非受检：不强制捕获，重点</span><br><span class="line">      ├─ NullPointerException              NPE，业务里踩得最多</span><br><span class="line">      ├─ IllegalArgumentException          参数非法</span><br><span class="line">      │  └─ NumberFormatException          数字转换失败</span><br><span class="line">      ├─ IndexOutOfBoundsException         下标越界</span><br><span class="line">      │  ├─ ArrayIndexOutOfBoundsException</span><br><span class="line">      │  └─ StringIndexOutOfBoundsException</span><br><span class="line">      ├─ ClassCastException                强转失败（多态）</span><br><span class="line">      ├─ ArithmeticException               除以 0</span><br><span class="line">      └─ UnsupportedOperationException     例如对不可变 List 做修改</span><br></pre></td></tr></table></figure>
+<p>Java 用异常表示错误，用 <code>try ... catch</code> 接住。异常本身是类，根是 <code>Throwable</code>。</p>
+<ul>
+<li><code>Error</code>：JVM 级故障，捕获了也救不回来</li>
+<li><code>Exception</code>：程序可以处理的错误</li>
+<li><code>RuntimeException</code> 及其子类：<strong>非受检</strong>，编译器不强迫处理</li>
+<li>其余 <code>Exception</code>：<strong>受检</strong>，必须 <code>catch</code>，或者在方法上 <code>throws</code></li>
+</ul>
+<h1 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h1><p>可以写多个 <code>catch</code>，每个接住对应异常<strong>及其子类</strong>。子类要写在父类前面，否则编译报「已被捕获」。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    process1();</span><br><span class="line">    process2();</span><br><span class="line">    process3();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</span><br><span class="line">    System.out.println(e);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.out.println(e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <code>System.out.println(e)</code> 只有类型和 message 一行。要看调用栈，用 <code>e.printStackTrace()</code>，或交给下面的日志。空的 <code>catch</code> 会把错误吞掉，业务代码里别这么写。</p>
+</blockquote>
+<h2 id="finally-语句"><a href="#finally-语句" class="headerlink" title="finally 语句"></a>finally 语句</h2><p>无论 <code>try</code> 是否抛异常，<code>finally</code> 里的收尾都会执行。重复写在每个 <code>catch</code> 末尾的代码，收进这里：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    process1();</span><br><span class="line">    process2();</span><br><span class="line">    process3();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Bad encoding&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;IO error&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;END&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>finally</code> 里别写 <code>return</code>，它会盖住 <code>try</code> 里真正要返回的值，也可能把异常吞掉。</p>
+<h2 id="捕获多种异常"><a href="#捕获多种异常" class="headerlink" title="捕获多种异常"></a>捕获多种异常</h2><p>互不继承的异常，可以写在同一个 <code>catch</code> 里。有父子关系的不行，还是拆开、子类在前。兜底的 <code>Exception</code> 放最后。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    process1();</span><br><span class="line">    process2();</span><br><span class="line">    process3();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (IOException | NumberFormatException e) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Bad input&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Unknown error&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="try-with-resources"><a href="#try-with-resources" class="headerlink" title="try-with-resources"></a>try-with-resources</h2><p>要关闭的流、连接，放进 <code>try (...)</code>。离开这个块时会自动 <code>close</code>，中途抛异常也会关。比在 <code>finally</code> 里手写 <code>close</code> 少漏。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (<span class="type">InputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;a.txt&quot;</span>)) &#123;</span><br><span class="line">  <span class="comment">// 读取</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>括号里的对象要实现 <code>AutoCloseable</code>。文件、JDBC、<code>Scanner</code> 都满足。</p>
+<h1 id="抛出异常"><a href="#抛出异常" class="headerlink" title="抛出异常"></a>抛出异常</h1><p>两个关键字：</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>throw</code></td>
+<td>方法体内</td>
+<td>立刻抛出一个异常对象</td>
+</tr>
+<tr>
+<td><code>throws</code></td>
+<td>方法签名</td>
+<td>声明「我可能抛出这个受检异常」，交给调用方</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">parseInt</span><span class="params">(String s, <span class="type">int</span> radix)</span> <span class="keyword">throws</span> NumberFormatException &#123;</span><br><span class="line">  <span class="keyword">if</span> (s == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NumberFormatException</span>(<span class="string">&quot;null&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>NumberFormatException</code> 是运行时异常，这里的 <code>throws</code> 写不写都能编译。换成 <code>IOException</code> 就不行：调用方必须 <code>catch</code>，或者继续往上 <code>throws</code>。</p>
+<h1 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h1><p>业务异常继承 <code>RuntimeException</code>（或再抽一层 <code>BaseException</code>）。这样 Service 不用逐个方法写 <code>throws</code>，最后交给全局异常处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BaseException</span> <span class="keyword">extends</span> <span class="title class_">RuntimeException</span> &#123;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">BaseException</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">BaseException</span><span class="params">(String message)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(message);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">BaseException</span><span class="params">(String message, Throwable cause)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(message, cause);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">BaseException</span><span class="params">(Throwable cause)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(cause);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>四个构造方法是在对齐 <code>RuntimeException</code>：平时用带 <code>message</code> 的；要把原始异常留在栈里，用带 <code>cause</code> 的。</p>
+<p><strong>从 <code>BaseException</code> 派生：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoginFailedException</span> <span class="keyword">extends</span> <span class="title class_">BaseException</span> &#123;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">LoginFailedException</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">LoginFailedException</span><span class="params">(String message)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(message);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">LoginFailedException</span><span class="params">(String message, Throwable cause)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(message, cause);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">LoginFailedException</span><span class="params">(Throwable cause)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(cause);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserNotFoundException</span> <span class="keyword">extends</span> <span class="title class_">BaseException</span> &#123;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">UserNotFoundException</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">UserNotFoundException</span><span class="params">(String message)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(message);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">UserNotFoundException</span><span class="params">(String message, Throwable cause)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(message, cause);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">public</span> <span class="title function_">UserNotFoundException</span><span class="params">(Throwable cause)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(cause);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>受检异常进了业务层，把它包成自己的运行时异常再抛出去，原始原因放进 <code>cause</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="comment">// 查库</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BaseException</span>(<span class="string">&quot;查询工单失败&quot;</span>, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>📌 异常用来报告「这条已经做不下去了」。正常的 if / else 分支仍然用 if，不要拿抛异常当流程控制。</p>
+</blockquote>
+<h1 id="NullPointerException"><a href="#NullPointerException" class="headerlink" title="NullPointerException"></a>NullPointerException</h1><p>对象是 <code>null</code> 时，调用它的方法或字段，就会抛 NPE。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    System.out.println(s.toLowerCase());</span><br><span class="line">    <span class="comment">// NullPointerException: Cannot invoke &quot;String.toLowerCase()&quot; because &quot;&lt;local1&gt;&quot; is null</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="定位-NPE"><a href="#定位-NPE" class="headerlink" title="定位 NPE"></a>定位 NPE</h2><p>链式调用时，看报错里的 <code>because &quot;... is null&quot;</code>，能直接指出是哪一截为 <code>null</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Person</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Person</span>();</span><br><span class="line">    System.out.println(p.address.city.toLowerCase());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="type">String</span>[] <span class="variable">name</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>[<span class="number">2</span>];</span><br><span class="line">  <span class="type">Address</span> <span class="variable">address</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Address</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Address</span> &#123;</span><br><span class="line">  String city;</span><br><span class="line">  String street;</span><br><span class="line">  String zipcode;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// because &quot;&lt;local1&gt;.address.city&quot; is null</span></span><br></pre></td></tr></table></figure>
+<p>这里 <code>city</code> 没赋值。写业务时，长链 <code>a.b.c</code> 先判空再调用；明确不允许为 <code>null</code> 的参数，入口处用 <code>Objects.requireNonNull</code>。</p>
+<h1 id="使用-SLF4J-和-Logback"><a href="#使用-SLF4J-和-Logback" class="headerlink" title="使用 SLF4J 和 Logback"></a>使用 SLF4J 和 Logback</h1><p>项目里几乎都走这套：代码只依赖 SLF4J 的 <code>Logger</code>，真正写文件的是 Logback。Spring Boot 自带，现在不用单独配。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(Main.class);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    logger.info(<span class="string">&quot;start&quot;</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="comment">// 异常对象放最后一个参数，才会打出栈</span></span><br><span class="line">      logger.error(<span class="string">&quot;处理失败&quot;</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>级别从低到高：<code>debug</code> → <code>info</code> → <code>warn</code> → <code>error</code>。业务代码别再用 <code>System.out.println</code> 留日志。</p>
+<p>断言、JDK Logging、Commons Logging、Log4j：阶段 1 跳过。断言以后写测试再看；日志实现认 SLF4J 即可。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/06/07/java%E5%85%A5%E9%97%A8/4.Java%E6%A0%B8%E5%BF%83%E7%B1%BB/" rel="next" title="4.Java核心类">
+                <i class="fa fa-chevron-left"></i> 4.Java核心类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/06/12/java%E5%85%A5%E9%97%A8/6.%E5%8F%8D%E5%B0%84/" rel="prev" title="6.反射">
+                6.反射 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%9A%A0%EF%B8%8F-Java-%E7%9A%84%E5%BC%82%E5%B8%B8"><span class="nav-number">1.</span> <span class="nav-text">⚠️ Java 的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%AE%B6%E6%97%8F"><span class="nav-number">1.1.</span> <span class="nav-text">异常家族</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8"><span class="nav-number">2.</span> <span class="nav-text">捕获异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#finally-%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.1.</span> <span class="nav-text">finally 语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E5%A4%9A%E7%A7%8D%E5%BC%82%E5%B8%B8"><span class="nav-number">2.2.</span> <span class="nav-text">捕获多种异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-with-resources"><span class="nav-number">2.3.</span> <span class="nav-text">try-with-resources</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8"><span class="nav-number">3.</span> <span class="nav-text">抛出异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="nav-number">4.</span> <span class="nav-text">自定义异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NullPointerException"><span class="nav-number">5.</span> <span class="nav-text">NullPointerException</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D-NPE"><span class="nav-number">5.1.</span> <span class="nav-text">定位 NPE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-SLF4J-%E5%92%8C-Logback"><span class="nav-number">6.</span> <span class="nav-text">使用 SLF4J 和 Logback</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/06/11/java%E5%85%A5%E9%97%A8/5.%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/';
+          this.page.identifier = '2026/06/11/java入门/5.异常处理/';
+          this.page.title = '5.异常处理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

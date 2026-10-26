@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="检索体系  1.文本切割器 2.嵌入处理 3.存储向量数据库  123456789101112131415161718LangChain 检索体系│├── 数据层│   ├── Document（文档）│   ├── TextLoader（加载）│   └── TextSplitter（切片）│├── 向量化层│   ├── Embeddings（嵌入模型）│   └── MemoryVector">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.检索体系">
+<meta property="og:url" content="http://yoursite.com/2026/03/24/LangChain/6.%E6%A3%80%E7%B4%A2%E4%BD%93%E7%B3%BB/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="检索体系  1.文本切割器 2.嵌入处理 3.存储向量数据库  123456789101112131415161718LangChain 检索体系│├── 数据层│   ├── Document（文档）│   ├── TextLoader（加载）│   └── TextSplitter（切片）│├── 向量化层│   ├── Embeddings（嵌入模型）│   └── MemoryVector">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-03-24T03:34:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.378Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/03/24/LangChain/6.检索体系/"/>
+
+
+
+
+
+  <title>6.检索体系 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/03/24/LangChain/6.%E6%A3%80%E7%B4%A2%E4%BD%93%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">6.检索体系</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-03-24T11:34:00+08:00">
+                2026-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangChain/" itemprop="url" rel="index">
+                    <span itemprop="name">LangChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/03/24/LangChain/6.%E6%A3%80%E7%B4%A2%E4%BD%93%E7%B3%BB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/03/24/LangChain/6.检索体系/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>检索体系</p>
+<ul>
+<li>1.文本切割器</li>
+<li>2.嵌入处理</li>
+<li>3.存储向量数据库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">LangChain 检索体系</span><br><span class="line">│</span><br><span class="line">├── 数据层</span><br><span class="line">│   ├── Document（文档）</span><br><span class="line">│   ├── TextLoader（加载）</span><br><span class="line">│   └── TextSplitter（切片）</span><br><span class="line">│</span><br><span class="line">├── 向量化层</span><br><span class="line">│   ├── Embeddings（嵌入模型）</span><br><span class="line">│   └── MemoryVectorStore（向量库）</span><br><span class="line">│</span><br><span class="line">├── 基础检索器</span><br><span class="line">│   └── store.asRetriever(k) → 向量相似度搜索</span><br><span class="line">│</span><br><span class="line">└── 优化检索器（装饰器模式）</span><br><span class="line">    ├── MultiQueryRetriever → 多问法 → 更全</span><br><span class="line">    ├── ContextualCompressionRetriever → LLM压缩 → 更精</span><br><span class="line">    └── ScoreThresholdRetriever → 阈值过滤 → 更准</span><br></pre></td></tr></table></figure>
+<h1 id="文本切割器"><a href="#文本切割器" class="headerlink" title="文本切割器"></a>文本切割器</h1><p>最通用的使用<code>RecursiveCharacterTextSplitter</code>切割<br>快速上手<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#123; RecursiveCharacterTextSplitter &#125; from <span class="string">&quot;@langchain/classic/text_splitter&quot;</span>;</span><br><span class="line">import &#123; TextLoader &#125; from <span class="string">&quot;@langchain/classic/document_loaders/fs/text&quot;</span>;</span><br><span class="line"></span><br><span class="line">const loader = new TextLoader(<span class="string">&quot;./data/test.txt&quot;</span>);</span><br><span class="line">const docs = await loader.load();</span><br><span class="line">const splitter = new RecursiveCharacterTextSplitter(&#123;</span><br><span class="line">  chunkSize: 64, </span><br><span class="line">  chunkOverlap: 10, </span><br><span class="line">&#125;);</span><br><span class="line">const result = await splitter.splitDocuments(docs);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>chunkSize: 每块的最大长度</li>
+<li>chunkOverlap: 块之间的重叠长度</li>
+</ul>
+<h2 id="其他不同的切割器"><a href="#其他不同的切割器" class="headerlink" title="其他不同的切割器"></a>其他不同的切割器</h2><table>
+<thead>
+<tr>
+<th>Splitter名称</th>
+<th>适用文档类型</th>
+<th>切分策略说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RecursiveCharacterTextSplitter</td>
+<td>普通文本（小说、说明）</td>
+<td>默认最常用，按字符层级递进切分</td>
+</tr>
+<tr>
+<td>MarkdownTextSplitter</td>
+<td>Markdown</td>
+<td>根据标题层级（#、##等）结构来切</td>
+</tr>
+<tr>
+<td>TokenTextSplitter</td>
+<td>精确控制token清空</td>
+<td>按token数切分，不考虑语义</td>
+</tr>
+<tr>
+<td>CharacterTextSplitter</td>
+<td>非结构文本</td>
+<td>纯字符切，简单粗暴</td>
+</tr>
+</tbody>
+</table>
+<p>快速上手<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123; TextLoader &#125; from <span class="string">&quot;@langchain/classic/document_loaders/fs/text&quot;</span>;</span><br><span class="line">import &#123; MarkdownTextSplitter &#125; from <span class="string">&quot;@langchain/classic/text_splitter&quot;</span>;</span><br><span class="line"> const loader = new TextLoader(<span class="string">&quot;./data/1111.md&quot;</span>);</span><br><span class="line">const docs = await loader.load();</span><br><span class="line">const splitter = new MarkdownTextSplitter(&#123;</span><br><span class="line">  chunkSize: 64, </span><br><span class="line">  chunkOverlap: 10, </span><br><span class="line">&#125;);</span><br><span class="line">const result = await splitter.splitDocuments(docs);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<p><strong>切割代码</strong><br><code>RecursiveCharacterTextSplitter.fromLanguage(&#39;js&#39;, &#123;...&#125;)</code> 会根据指定语言注入专门的分隔符表，优先按照函数或类定义等结构分隔（<code>function</code>/<code>class</code>等关键字周围），再按照语句结束符（<code>;</code>）分隔，再按照换行符空格符等兜底分隔<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#123; TextLoader &#125; from <span class="string">&quot;@langchain/classic/document_loaders/fs/text&quot;</span>;</span><br><span class="line">import &#123; RecursiveCharacterTextSplitter &#125; from <span class="string">&quot;@langchain/classic/text_splitter&quot;</span>;</span><br><span class="line"></span><br><span class="line">const loader = new TextLoader(<span class="string">&quot;./data/browser.js&quot;</span>);</span><br><span class="line">const docs = await loader.load();</span><br><span class="line">const splitter = RecursiveCharacterTextSplitter.fromLanguage(<span class="string">&quot;js&quot;</span>, &#123;</span><br><span class="line">  chunkSize: 500, </span><br><span class="line">  chunkOverlap: 0, </span><br><span class="line">&#125;);</span><br><span class="line">const result = await splitter.splitDocuments(docs);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<h1 id="嵌入处理"><a href="#嵌入处理" class="headerlink" title="嵌入处理"></a>嵌入处理</h1><p>嵌入处理，又称为向量化操作，核心就是将文本转为向量形式，从而为下一步做数据运算准备。</p>
+<p>依赖专门的嵌入处理模型。比如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123;OpentAIEmbeddings&#125; from <span class="string">&#x27;@langchain/openai&#x27;</span>;</span><br><span class="line">const embeddings = new OpentAIEmbeddings(&#123;</span><br><span class="line">  apiKey: <span class="string">&#x27;注册apiKey&#x27;</span>,</span><br><span class="line">  model: <span class="string">&#x27;text-embedding-3-largen&#x27;</span>, <span class="comment"># OpenAI 官方提供的专门用于做嵌入的模型</span></span><br><span class="line">&#125;)</span><br><span class="line">const vectors = await embeddings.embedDucuments(documents.map(doc =&gt; doc.pageContent))</span><br></pre></td></tr></table></figure></p>
+<p>快速上手1.1代码<br>通过<code>nomic-embed-text</code>模型进行嵌入式处理<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文本读取</span></span><br><span class="line">const loader = new TextLoader(<span class="string">&quot;./data/test.txt&quot;</span>);</span><br><span class="line">const docs = await loader.load();</span><br><span class="line"><span class="comment"># 文本切割</span></span><br><span class="line">const splitter = new RecursiveCharacterTextSplitter(&#123;</span><br><span class="line">  chunkSize: 64,</span><br><span class="line">  chunkOverlap: 0,</span><br><span class="line">&#125;);</span><br><span class="line">const splittedDocs = await splitter.splitDocuments(docs);</span><br><span class="line"><span class="comment"># 嵌入处理</span></span><br><span class="line">async <span class="keyword">function</span> getEmbedding(text) &#123;</span><br><span class="line">  const res = await fetch(<span class="string">&quot;http://localhost:11434/api/embeddings&quot;</span>, &#123;</span><br><span class="line">    method: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">    headers: &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span> &#125;,</span><br><span class="line">    body: JSON.stringify(&#123;</span><br><span class="line">      model: <span class="string">&quot;nomic-embed-text&quot;</span>,</span><br><span class="line">      prompt: text,</span><br><span class="line">    &#125;),</span><br><span class="line">  &#125;);</span><br><span class="line">  const result = await res.json();</span><br><span class="line">  <span class="built_in">return</span> result.embedding;</span><br><span class="line">&#125;</span><br><span class="line">const results = [];</span><br><span class="line"><span class="keyword">for</span> (const doc of splittedDocs) &#123;</span><br><span class="line">  const embedding = await getEmbedding(doc.pageContent);</span><br><span class="line">  results.push( &#123; ...doc, embedding &#125;);</span><br><span class="line">&#125;</span><br><span class="line">console.log(results);</span><br></pre></td></tr></table></figure><br>不过目前例子，进行嵌入式属于串行嵌入，花费时间比较长，需要用到并发的嵌入操作</p>
+<h2 id="自定义嵌入类"><a href="#自定义嵌入类" class="headerlink" title="自定义嵌入类"></a>自定义嵌入类</h2><p>要实现并发的嵌入操作，需要<strong>自定义个嵌入类</strong><br>Embeddings是LangChain中抽象出来的<strong>嵌入操作类</strong>，不同厂商的向量模型，都通过继承改基类暴露统一方法，从而能在向量库、检索器等组件互换使用<br>基类提供两组最核心的方法：</p>
+<ul>
+<li><code>embedDocuments(texts: string[]) =&gt; Promise&lt;number[][]&gt;</code>: 批量嵌入用于索引的文本（返回二维向量）</li>
+<li><code>embedQuery(text:string) =&gt; Promise&lt;number[]&gt;</code>: 为查询文本生成向量（返回一维向量）</li>
+</ul>
+<p>使用并发方法：runWithConcurrency<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;*&#125; items 要处理的任务列表</span><br><span class="line"> * @param &#123;*&#125; worker 处理单个任务的异步函数</span><br><span class="line"> * @param &#123;*&#125; maxConcurrency 最大并发量</span><br><span class="line"> */</span><br><span class="line"><span class="built_in">export</span> async <span class="keyword">function</span> runWithConcurrency(items, worker, maxConcurrency) &#123;</span><br><span class="line">  <span class="built_in">let</span> i = 0; <span class="comment"># 指向当前任务</span></span><br><span class="line">  const workers = []; <span class="comment"># 用于存储promise</span></span><br><span class="line">  <span class="comment"># 启动工人开始干活</span></span><br><span class="line">  async <span class="keyword">function</span> <span class="function"><span class="title">spawn</span></span>() &#123;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; items.length) &#123;</span><br><span class="line">      const idx = i++;</span><br><span class="line">      await worker(items[idx], idx);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment"># 可将最大并发数看作n个工人</span></span><br><span class="line">  const n = Math.max(1, Math.min(maxConcurrency, items.length));</span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">let</span> i = 0; i &lt; n; i++) &#123;</span><br><span class="line">    workers.push(spawn());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment"># 等待所以任务执行完</span></span><br><span class="line">  await Promise.allSettled(workers);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实现自定义并发类，这里之所以引入Embeddings基类，类似做个接口的规范，软件工程里是一种常见的设计模式，叫做“<strong>接口实现</strong>”。通过继承一个抽象基类，你向框架（LangChain）声明：“我实现了你要求的嵌入能力，请把我当作标准组件来使用。”<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Embeddings &#125; from <span class="string">&quot;@langchain/core/embeddings&quot;</span>;</span><br><span class="line">import &#123; runWithConcurrency &#125; from <span class="string">&quot;./concurrency.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> class NomicEmbeddings extends Embeddings &#123;</span><br><span class="line">  constructor(concurrency = 3) &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.model = <span class="string">&quot;nomic-embed-text&quot;</span>;</span><br><span class="line">    this.apiUrl = <span class="string">&quot;http://localhost:11434/api/embeddings&quot;</span>;</span><br><span class="line">    this.concurrency = concurrency;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 对单个文本做嵌入式操作，这是一个内部方法</span><br><span class="line">   * @param &#123;*&#125; text 单个文本</span><br><span class="line">   */</span><br><span class="line">  async _fetchEmbedding(text) &#123;</span><br><span class="line">    const res = await fetch(this.apiUrl, &#123;</span><br><span class="line">      method: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">      headers: &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span> &#125;,</span><br><span class="line">      body: JSON.stringify(&#123;</span><br><span class="line">        model: this.model,</span><br><span class="line">        prompt: text,</span><br><span class="line">      &#125;),</span><br><span class="line">    &#125;);</span><br><span class="line">    const result = await res.json();</span><br><span class="line">    <span class="built_in">return</span> result.embedding;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 对单个文本做嵌入操作</span><br><span class="line">   * @param &#123;*&#125; text</span><br><span class="line">   */</span><br><span class="line">  async embedQuery(text) &#123;</span><br><span class="line">    <span class="built_in">return</span> await this._fetchEmbedding(text);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * 对一组文本做嵌入</span><br><span class="line">   * @param &#123;*&#125; doucments</span><br><span class="line">   */</span><br><span class="line">  async embedDocuments(documents) &#123;</span><br><span class="line">    const results = Array.from(&#123; length: documents.length &#125;); // 存放结果的数组</span><br><span class="line">    await runWithConcurrency(</span><br><span class="line">      documents,</span><br><span class="line">      async (text, idx) =&gt; &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">          results[idx] = await this._fetchEmbedding(text);</span><br><span class="line">        &#125; catch (err) &#123;</span><br><span class="line">          results[idx] = err;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      this.concurrency,</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">return</span> results;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>使用<strong>NomicEmbeddings</strong>方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文本读取</span></span><br><span class="line">const loader = new TextLoader(<span class="string">&quot;./data/test.txt&quot;</span>);</span><br><span class="line">const docs = await loader.load();</span><br><span class="line"><span class="comment"># 文本切割</span></span><br><span class="line">const splitter = new RecursiveCharacterTextSplitter(&#123;</span><br><span class="line">  chunkSize: 300,</span><br><span class="line">  chunkOverlap: 0,</span><br><span class="line">&#125;);</span><br><span class="line">const splittedDocs = await splitter.splitDocuments(docs);</span><br><span class="line">const texts = splittedDocs.map((doc) =&gt; doc.pageContent)</span><br><span class="line"></span><br><span class="line">const embeddings = new NomicEmbeddings(<span class="number">5</span>);</span><br><span class="line">const res = await embeddings.embedDocuments(</span><br><span class="line">  splittedDocs.map((doc) =&gt; doc.pageContent),</span><br><span class="line">);</span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure></p>
+<h2 id="第三方并发库"><a href="#第三方并发库" class="headerlink" title="第三方并发库"></a>第三方并发库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm add p-limit</span><br></pre></td></tr></table></figure>
+<p>用来限制并发执行Promise个数，可以用于Node.js和浏览器环境<br>基本用法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import pLimit from <span class="string">&#x27;p-limit&#x27;</span></span><br><span class="line">const <span class="built_in">limit</span> = PLimit(3);</span><br><span class="line">const tasks = urls.map(url =&gt; <span class="built_in">limit</span>(() =&gt; fetchJson(url)))</span><br><span class="line">const results = await Promise.all(tasks)</span><br></pre></td></tr></table></figure></p>
+<p>改造1.1代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import pLimit from <span class="string">&quot;p-limit&quot;</span>;</span><br><span class="line"></span><br><span class="line">const texts = splittedDocs.map((doc) =&gt; doc.pageContent);</span><br><span class="line">const limit = pLimit(<span class="number">3</span>);</span><br><span class="line">const tasks = texts.map((docs) =&gt; limit(() =&gt; getEmbedding(docs)));</span><br><span class="line">const result = await Promise.all(tasks);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure></p>
+<h1 id="存储向量数据库"><a href="#存储向量数据库" class="headerlink" title="存储向量数据库"></a>存储向量数据库</h1><ul>
+<li>内存型</li>
+<li>本地自托管</li>
+<li>云托管</li>
+</ul>
+<p>LangChain内置了MemoryVectorStore,这是一个内存型向量库，用于将文档向量存储到内存中，适合本地调试、快速演练，零依赖、即插即用</p>
+<p><strong>添加文档内存</strong><br>添加文档可以调用<code>MemoryVectorStore</code>实例的<code>addDocuments</code>方法，该方法接受一个数组，数组里面每一项是Document实例对象，之后自动调用embeddings.embedDoucuments生成向量并存入内存<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import &#123; MemoryVectorStore &#125; from <span class="string">&quot;@langchain/classic/vectorstores/memory&quot;</span>;</span><br><span class="line">import &#123; NomicEmbeddings &#125; from <span class="string">&quot;./utils/embed.js&quot;</span>;</span><br><span class="line">import &#123; TextLoader &#125; from <span class="string">&quot;@langchain/classic/document_loaders/fs/text&quot;</span>;</span><br><span class="line">import &#123; RecursiveCharacterTextSplitter &#125; from <span class="string">&quot;@langchain/classic/text_splitter&quot;</span>;</span><br><span class="line"></span><br><span class="line">const loader = new TextLoader(<span class="string">&quot;data/test.txt&quot;</span>);</span><br><span class="line">const docs = await loader.load();</span><br><span class="line"></span><br><span class="line">const splitter = new RecursiveCharacterTextSplitter(&#123;</span><br><span class="line">  chunkSize: 64,</span><br><span class="line">  chunkOverlap: 0,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const splitterDocs = await splitter.splitDocuments(docs);</span><br><span class="line">const embeddings = new NomicEmbeddings(4);</span><br><span class="line"></span><br><span class="line">const store = new MemoryVectorStore(embeddings);</span><br><span class="line"></span><br><span class="line">await store.addDocuments(splitterDocs);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 存到内存里</span></span><br><span class="line">console.log(store.memoryVectors);</span><br></pre></td></tr></table></figure></p>
+<p><strong>检索操作</strong><br><code>store.asRetriever(2)</code>是一个简写，等价于<code>store.asRetriever(&#123;k: 2&#125;)</code>，表达创建一个检索器，每次查询前两条最相似的<code>Document</code>。返回值是个<code>VectorStoreReteriver</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const retriever = store.asRetriever(2);</span><br><span class="line">const res = await retriever.invoke(<span class="string">&quot;Agent评测思路&quot;</span>);</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置对象支持如下的参数：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const retriever = store.asRetriever(&#123;</span><br><span class="line">  k: 2,</span><br><span class="line">  searchType: <span class="string">&quot;mmr&quot;</span>,</span><br><span class="line">  searchKwargs: &#123; fetchK: 20, lambda: 0.5 &#125;,</span><br><span class="line">  filter: (doc) =&gt; doc.metadata?.<span class="built_in">source</span>?.endsWith(<span class="string">&quot;data/test.txt&quot;</span>),</span><br><span class="line">  tags: [<span class="string">&quot;demo&quot;</span>, <span class="string">&quot;kong&quot;</span>],</span><br><span class="line">  metadata: &#123; lesson: <span class="string">&quot;RAG-intro&quot;</span> &#125;,</span><br><span class="line">  verbose: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>k: 每次查询返回的文档条数：不填默认<code>4</code>.</li>
+<li>searchType: 检索策略：<ul>
+<li>“similarity”（默认）：按向量相似度排序返回前k条；</li>
+<li>“mmr”: 最大边际相关性，在相关性与多样性之间折中。</li>
+</ul>
+</li>
+<li>searchKwargs: MMR的细化参数，仅当<code>searchType: &#39;mmr&#39;</code>时生效<ul>
+<li>fetchK: 先抓取的候选集合规模（越大，MMR可选空间越大）</li>
+<li>lambda：0~1的权衡系数；0 更多偏向多样性、1更偏向相关性</li>
+</ul>
+</li>
+<li>filter: 用于预筛选候选文档，返回<code>true</code>的文档才参与检索</li>
+<li>callbacks: 检索过程中的回调钩子（开始/结束/错误等），与LangChain的客观性机制对接</li>
+<li>tags：给该检索器打标签，便于在日志/跟踪里区分。</li>
+<li>metadata: 附加的上下文信息，会随运行一起记录，便于审计与调试</li>
+<li>verbose: 是否开启详情日志，默认false</li>
+</ul>
+<h1 id="检索优化"><a href="#检索优化" class="headerlink" title="检索优化"></a>检索优化</h1><p>RAG标准流程：<br>1.索引：外挂知识库<br>2.检索<br>3.生成</p>
+<p><strong>Advanced RAG</strong><br>针对上述3个阶段做了优化，例如检索阶段，新增<strong>检索前处理</strong>以及<strong>检索后处理</strong>。<br>检索前处理：<br>1.查询转换<br>2.查询扩充<br>3.……</p>
+<h2 id="MultiQueryRetriever"><a href="#MultiQueryRetriever" class="headerlink" title="MultiQueryRetriever"></a>MultiQueryRetriever</h2><p>MultiQueryRetriever是LangChain中一个工具类，作用是<strong>用一个大模型</strong>把用户问题改写成多种表述（多视角查询），<strong>对每个改写分别检索</strong>，然后合并去重结果，缓解<strong>单一措辞</strong>导致召回不足的问题</p>
+<p>快速上手</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const loader = new TextLoader(<span class="string">&quot;data/test.txt&quot;</span>);</span><br><span class="line">const docs = await loader.load();</span><br><span class="line">const splitter = new RecursiveCharacterTextSplitter(&#123;</span><br><span class="line">  chunkSize: 64,</span><br><span class="line">  chunkOverlap: 0,</span><br><span class="line">&#125;);</span><br><span class="line">const splittedDocs = await splitter.splitDocuments(docs);</span><br><span class="line">const embeddings = new NomicEmbeddings(3);</span><br><span class="line">const store = new MemoryVectorStore(embeddings);</span><br><span class="line">await store.addDocuments(splittedDocs);</span><br><span class="line">const retriever = store.asRetriever(2);</span><br><span class="line">const llm = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line">const r = MultiQueryRetriever.fromLLM(&#123;</span><br><span class="line">  llm, <span class="comment"># 使用什么模型改写提示词</span></span><br><span class="line">  retriever, <span class="comment"># 基础检索器</span></span><br><span class="line">  queryCount: 3, <span class="comment"># 要扩充的数据量</span></span><br><span class="line">&#125;);</span><br><span class="line">const res = await r.invoke(<span class="string">&quot;Agent评测思路&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>这里asRetriever检索器k指定的2，理论上应该是两条结果，queryCount扩散3条，所以理论上是2*3=6结果（对每个改写分别检索），不过合并去重结果，会4条数据</p>
+<h2 id="ContextualCompressionRetriever"><a href="#ContextualCompressionRetriever" class="headerlink" title="ContextualCompressionRetriever"></a>ContextualCompressionRetriever</h2><p>该类工具类用于在检索出原始相关文档之后，进一步压缩内容过滤掉不相关的部分，返回更简洁、更聚焦于问题的文档片段<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">const llm = new ChatOllama(&#123;</span><br><span class="line">  model: <span class="string">&quot;llama3&quot;</span>,</span><br><span class="line">  temperature: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建了一个压缩器</span></span><br><span class="line">const extractor = LLMChainExtractor.fromLLM(llm);</span><br><span class="line"><span class="comment"># 构建一段文档</span></span><br><span class="line">const docs = [</span><br><span class="line">  new Document(&#123;</span><br><span class="line">    pageContent: `孔乙己走到酒店，说“要一碟茴香豆”。茴香豆常作为下酒小菜，价格便宜，常见于短衣帮和穿长衫的顾客点酒时。`,</span><br><span class="line">  &#125;),</span><br><span class="line">  new Document(&#123;</span><br><span class="line">    pageContent: `另一个段落：今天的天气很好，阳光明媚。`,</span><br><span class="line">  &#125;),</span><br><span class="line">  new Document(&#123;</span><br><span class="line">    pageContent: `游泳池边上，游过一群小黄鸭`,</span><br><span class="line">  &#125;),</span><br><span class="line">  new Document(&#123;</span><br><span class="line">    pageContent: `茴香豆可以拿来泡茶，上次我就看到有一个大婶儿拿茴香豆来泡茶`,</span><br><span class="line">  &#125;),</span><br><span class="line">];</span><br><span class="line">const query = <span class="string">&quot;茴香豆的作用&quot;</span>;</span><br><span class="line">const res = await extractor.compressDocuments(docs, query);</span><br><span class="line">console.log(res); <span class="comment"># 压缩内容过滤掉不相关的部分</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="ScoreThresholdRetriever"><a href="#ScoreThresholdRetriever" class="headerlink" title="ScoreThresholdRetriever"></a>ScoreThresholdRetriever</h2><p>是基于相似度“阈值过滤”的检索器：它在向量库中检索时，只返回<strong>相似度分数不低于</strong>你设定的阈值的文档，该类继承自<code>VectorStoreRetriever</code>，提供<code>invocke()</code>等可运行接口方法<br>使用实例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const r = ScoreThresholdRetriever.fromVectorStore(store, &#123;</span><br><span class="line">  minSimilarityScore: 0.7,</span><br><span class="line">&#125;);</span><br><span class="line">const res = await r.invoke(<span class="string">&quot;茴香豆是做什么用的&quot;</span>);</span><br><span class="line">console.log(res);</span><br></pre></td></tr></table></figure><br>除了该配置之外，还支持下面配置：</p>
+<ul>
+<li><code>kIncrement: number</code>(默认10)每次追加抓取的候选数量递增，用于在需要时扩大候选集，按照阈值过滤</li>
+<li><code>maxK:number(默认100)</code> 抓取候选的上限，避免无限扩大搜索范围</li>
+<li><code>searchType: &#39;similarity&#39; | &#39;mmr&#39;</code>: 可选设为<code>mmr</code>做多样性与相关性的权衡：默认’similarity’</li>
+<li>其余通用项：<code>filter</code>,<code>verbose</code>,<code>callbacks</code>,<code>tags</code>,<code>metadata</code></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/03/23/LangChain/5.%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90Loader/" rel="next" title="3.本地资源Loader">
+                <i class="fa fa-chevron-left"></i> 3.本地资源Loader
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/04/21/LangChain/8.%E5%88%9B%E5%BB%BAAgent/" rel="prev" title="8.创建Agent">
+                8.创建Agent <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%88%87%E5%89%B2%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">文本切割器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%B8%8D%E5%90%8C%E7%9A%84%E5%88%87%E5%89%B2%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">其他不同的切割器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B5%8C%E5%85%A5%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">嵌入处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B5%8C%E5%85%A5%E7%B1%BB"><span class="nav-number">2.1.</span> <span class="nav-text">自定义嵌入类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B9%B6%E5%8F%91%E5%BA%93"><span class="nav-number">2.2.</span> <span class="nav-text">第三方并发库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">存储向量数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E7%B4%A2%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">检索优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MultiQueryRetriever"><span class="nav-number">4.1.</span> <span class="nav-text">MultiQueryRetriever</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ContextualCompressionRetriever"><span class="nav-number">4.2.</span> <span class="nav-text">ContextualCompressionRetriever</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ScoreThresholdRetriever"><span class="nav-number">4.3.</span> <span class="nav-text">ScoreThresholdRetriever</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/03/24/LangChain/6.%E6%A3%80%E7%B4%A2%E4%BD%93%E7%B3%BB/';
+          this.page.identifier = '2026/03/24/LangChain/6.检索体系/';
+          this.page.title = '6.检索体系';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

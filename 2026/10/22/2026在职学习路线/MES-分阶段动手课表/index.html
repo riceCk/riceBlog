@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="学习路线," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前端转 Java · MES 方向分阶段动手课表 配合 MES-在职学习路线清单.md 使用。你当前进度：阶段 1 已开始，廖雪峰看到 3.1.5 多态。原则：每一步必须写代码；中文资料优先；不学分布式&#x2F;高并发；不买万元课也能走完全程。   0. 先对照海报课：哪些拿来用，哪些扔掉海报「AI 大全栈 &#x2F; 10500」模块很多，不要按它的目录买课、也不要按它的顺序学。下面是映射到你泰州 MES 目标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MES 分阶段动手课表">
+<meta property="og:url" content="http://yoursite.com/2026/10/22/2026%E5%9C%A8%E8%81%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/MES-%E5%88%86%E9%98%B6%E6%AE%B5%E5%8A%A8%E6%89%8B%E8%AF%BE%E8%A1%A8/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="前端转 Java · MES 方向分阶段动手课表 配合 MES-在职学习路线清单.md 使用。你当前进度：阶段 1 已开始，廖雪峰看到 3.1.5 多态。原则：每一步必须写代码；中文资料优先；不学分布式&#x2F;高并发；不买万元课也能走完全程。   0. 先对照海报课：哪些拿来用，哪些扔掉海报「AI 大全栈 &#x2F; 10500」模块很多，不要按它的目录买课、也不要按它的顺序学。下面是映射到你泰州 MES 目标">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-10-22T02:46:51.000Z">
+<meta property="article:modified_time" content="2026-10-26T08:45:43.769Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="学习路线">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/10/22/2026在职学习路线/MES-分阶段动手课表/"/>
+
+
+
+
+
+  <title>MES 分阶段动手课表 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/10/22/2026%E5%9C%A8%E8%81%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/MES-%E5%88%86%E9%98%B6%E6%AE%B5%E5%8A%A8%E6%89%8B%E8%AF%BE%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MES 分阶段动手课表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-10-22T10:46:51+08:00">
+                2026-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E5%9C%A8%E8%81%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" itemprop="url" rel="index">
+                    <span itemprop="name">在职学习路线</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/10/22/2026%E5%9C%A8%E8%81%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/MES-%E5%88%86%E9%98%B6%E6%AE%B5%E5%8A%A8%E6%89%8B%E8%AF%BE%E8%A1%A8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/10/22/2026在职学习路线/MES-分阶段动手课表/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前端转-Java-·-MES-方向分阶段动手课表"><a href="#前端转-Java-·-MES-方向分阶段动手课表" class="headerlink" title="前端转 Java · MES 方向分阶段动手课表"></a>前端转 Java · MES 方向分阶段动手课表</h1><blockquote>
+<p>配合 <code>MES-在职学习路线清单.md</code> 使用。你当前进度：<strong>阶段 1 已开始，廖雪峰看到 3.1.5 多态。</strong><br>原则：每一步必须写代码；中文资料优先；不学分布式/高并发；不买万元课也能走完全程。</p>
+</blockquote>
+<hr>
+<h2 id="0-先对照海报课：哪些拿来用，哪些扔掉"><a href="#0-先对照海报课：哪些拿来用，哪些扔掉" class="headerlink" title="0. 先对照海报课：哪些拿来用，哪些扔掉"></a>0. 先对照海报课：哪些拿来用，哪些扔掉</h2><p>海报「AI 大全栈 / 10500」模块很多，<strong>不要按它的目录买课、也不要按它的顺序学。</strong><br>下面是映射到你泰州 MES 目标后的取舍。</p>
+<table>
+<thead>
+<tr>
+<th>海报模块</th>
+<th>对本路线</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JAVA</td>
+<td>✅ 正在学</td>
+<td>用廖雪峰（已剪裁），不另买课</td>
+</tr>
+<tr>
+<td>Spring 全家桶</td>
+<td>✅ 精简版</td>
+<td>只学 <strong>Spring Boot + Web + 事务</strong>，不学 Cloud</td>
+</tr>
+<tr>
+<td>数据库和 ORM</td>
+<td>✅</td>
+<td>MySQL + MyBatis-Plus</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>👀</td>
+<td>阶段 4 再碰登录态/字典缓存</td>
+</tr>
+<tr>
+<td>MQ 消息队列</td>
+<td>⏭️</td>
+<td>工单 CRUD 用不到</td>
+</tr>
+<tr>
+<td>微服务架构</td>
+<td>🚫</td>
+<td>单体会更贴本地岗</td>
+</tr>
+<tr>
+<td>企业中间件</td>
+<td>⏭️</td>
+<td></td>
+</tr>
+<tr>
+<td>高并发</td>
+<td>🚫</td>
+<td>明确禁止</td>
+</tr>
+<tr>
+<td>AI 编程工具 / Vibe Coding</td>
+<td>✅ 当助手</td>
+<td>用 Cursor / 通义等加速写代码，<strong>不能替代你自己写 CRUD</strong></td>
+</tr>
+<tr>
+<td>Spec / Agent Coding、代码审核、自动化测试</td>
+<td>👀</td>
+<td>后期有空再看，不挡主线</td>
+</tr>
+<tr>
+<td>Transformer / Harness / Loop / LangGraph / DeepAgent</td>
+<td>⏭️/🚫</td>
+<td>科研向，本地 MES 岗不问</td>
+</tr>
+<tr>
+<td>n8n</td>
+<td>👀</td>
+<td>可了解低代码编排，不作为技能主线</td>
+</tr>
+<tr>
+<td>RAG / LangChain</td>
+<td>✅ 附加</td>
+<td><strong>主项目闭环后再做</strong> SOP 问答</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td>👀</td>
+<td>会 SSH、基础命令即可</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>✅ 后期</td>
+<td>一键起 MySQL + 自己的 jar</td>
+</tr>
+<tr>
+<td>K8s / DevOps / 安全审计 / 监控全家桶</td>
+<td>🚫</td>
+<td></td>
+</tr>
+<tr>
+<td>海报里的「智能客服 / 内容审核」项目</td>
+<td>🚫</td>
+<td>行业不对；你的项目必须是 <strong>工单/报工 MES</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>结论：</strong> 海报里真正对你有用的是「Java + Spring Boot + 库表 + AI 当助手 + 后期 RAG + Docker」。其余当广告。</p>
+<hr>
+<h2 id="1-总课表（接在现有清单上）"><a href="#1-总课表（接在现有清单上）" class="headerlink" title="1. 总课表（接在现有清单上）"></a>1. 总课表（接在现有清单上）</h2><p>每周仍按 10～12 小时。阶段 1 未验收，不要跳去 Spring 后面。</p>
+<table>
+<thead>
+<tr>
+<th>代号</th>
+<th>名称</th>
+<th>预估</th>
+<th>你必须交出来的东西</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0</td>
+<td>MES 业务入门</td>
+<td>2～3 周（可与 S1 前半并行）</td>
+<td>词汇表 + 主流程图</td>
+</tr>
+<tr>
+<td><strong>S1A</strong></td>
+<td>Java 语法够用（你正在这）</td>
+<td>2～2.5 周</td>
+<td>内存版「车间/物料」小练习</td>
+</tr>
+<tr>
+<td><strong>S1B</strong></td>
+<td>Maven + IDEA 工程</td>
+<td>3～5 天</td>
+<td>能 <code>mvn package</code> 的空壳</td>
+</tr>
+<tr>
+<td><strong>S1C</strong></td>
+<td>Spring Boot + MySQL + MP</td>
+<td>2.5～3 周</td>
+<td>车间 CRUD 接口</td>
+</tr>
+<tr>
+<td><strong>S1D</strong></td>
+<td>登录权限 + 接口文档</td>
+<td>1～1.5 周</td>
+<td>带登录的 <code>mes-basic-api</code></td>
+</tr>
+<tr>
+<td>S2</td>
+<td>工单业务后端</td>
+<td>5～6 周</td>
+<td><strong>最小 MES：工单 CRUD + 状态 + 报工</strong></td>
+</tr>
+<tr>
+<td>S3</td>
+<td>Vue 联调</td>
+<td>5～6 周</td>
+<td>页面能走通主流程</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>打磨部署</td>
+<td>4～5 周</td>
+<td>README + 演示脚本</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>面试</td>
+<td>3～4 周（可重叠）</td>
+<td>题库 + 开始投递</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>可选 AI 加分</td>
+<td>1～2 周</td>
+<td>SOP 文档问答挂到 MES 上</td>
+</tr>
+</tbody>
+</table>
+<p>下面每个阶段都按固定六块写：<strong>学习目标｜核心知识点（含取舍）｜实操任务｜中文资源｜预估时间｜避坑</strong>。</p>
+<hr>
+<h2 id="S0-·-MES-业务入门"><a href="#S0-·-MES-业务入门" class="headerlink" title="S0 · MES 业务入门"></a>S0 · MES 业务入门</h2><h3 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h3><p>能用车间的人听得懂的话，讲清：MES 管什么、不管什么；一张工单从下达到完工怎么走。</p>
+<h3 id="核心知识点"><a href="#核心知识点" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ 对象：车间、产线、设备、物料、工艺路线、工序、工单、报工、质检、WIP</li>
+<li>✅ 主流程：计划下发 → 开工单 → 领料 → 开工 → 报工 → 质检 → 入库</li>
+<li>👀 ERP / WMS / QMS 边界；离散 vs 流程</li>
+<li>⏭️ ISA-95 全文、PLC/OPC、APS 算法、精益生产专著</li>
+</ul>
+<h3 id="实操任务（必须动手，不是只看视频）"><a href="#实操任务（必须动手，不是只看视频）" class="headerlink" title="实操任务（必须动手，不是只看视频）"></a>实操任务（必须动手，不是只看视频）</h3><ol>
+<li>用纸或 <a href="https://app.diagrams.net/">diagrams.net</a> 画一张 <strong>工单主流程图</strong>（方框+箭头，标角色）。</li>
+<li>建一个笔记页，自己写 <strong>40 个词</strong> 的解释（工单、报工、不良、超报、下达、关闭……），禁止复制粘贴百科。</li>
+<li>用自己的话录音 5 分钟：MES 和 ERP 有什么区别。听一遍，卡壳的词补进词汇表。</li>
+</ol>
+<h3 id="中文学习资源"><a href="#中文学习资源" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li>B 站搜索：<code>MES系统讲解 工单 报工</code>（选有界面演示的，看 2～3 个即可，不要连播 20 集）</li>
+<li>科普检索：<code>制造执行系统 MES 功能模块</code>、<code>生产工单 报工 质检</code></li>
+<li>厂商介绍页只看「模块图」（用友/鼎捷/宝信等公开介绍），当词典，不当教材</li>
+</ul>
+<h3 id="预估时间"><a href="#预估时间" class="headerlink" title="预估时间"></a>预估时间</h3><p>2～3 周，每周 8～10 小时。可与 S1A 晚上学语法、周末补业务并行。</p>
+<h3 id="避坑提醒"><a href="#避坑提醒" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>看懂界面 ≠ 懂业务。以你能讲、能画为准。</li>
+<li>不要收集一堆「工业互联网」PPT。</li>
+</ul>
+<hr>
+<h2 id="S1A-·-Java-语法够用（当前阶段）"><a href="#S1A-·-Java-语法够用（当前阶段）" class="headerlink" title="S1A · Java 语法够用（当前阶段）"></a>S1A · Java 语法够用（当前阶段）</h2><h3 id="学习目标-1"><a href="#学习目标-1" class="headerlink" title="学习目标"></a>学习目标</h3><p>看懂并手写：类、继承、多态、接口、异常、List/Map、时间、简单 Lambda。<br><strong>不是</strong>学完廖雪峰全书。</p>
+<h3 id="核心知识点（对接廖雪峰目录）"><a href="#核心知识点（对接廖雪峰目录）" class="headerlink" title="核心知识点（对接廖雪峰目录）"></a>核心知识点（对接廖雪峰目录）</h3><p><strong>✅ 精读并敲代码</strong></p>
+<ul>
+<li>3.1.6 抽象类、3.1.7 接口、3.1.8 静态、3.1.9 包</li>
+<li>3.2.1 字符串、3.2.4 包装类型、3.2.5 JavaBean、3.2.6 枚举、3.2.9 BigDecimal</li>
+<li>4.1～4.5 异常与 NPE；4.10 SLF4J/Logback（可稍后和 Spring 一起）</li>
+<li>7.1～7.2 泛型使用</li>
+<li>8.1～8.2 List、8.4 Map、8.9 Set</li>
+<li>10.3 LocalDateTime、10.5 DateTimeFormatter、10.7 最佳实践</li>
+<li>19.1～19.2 Lambda；19.3 Stream 的 map/filter/toList</li>
+</ul>
+<p><strong>👀 浏览</strong></p>
+<ul>
+<li>3.1.10 作用域、3.1.11 内部类、3.1.12 jar</li>
+<li>3.2.2 StringBuilder、3.2.7 record</li>
+<li>8.3 equals、8.5 hashCode、8.14～8.15</li>
+<li>6.1 使用注解</li>
+</ul>
+<p><strong>⏭️ 直接跳过（不要深挖）</strong></p>
+<ul>
+<li>3.1.13～3.1.14、3.2.8 BigInteger</li>
+<li>第 5 章反射、7.4～7.7、8.10～8.13 队列栈</li>
+<li>第 9 章大部分 IO、第 13～14、16、20、21、24 整章</li>
+<li>多线程、网络、设计模式全书、Spring Cloud</li>
+</ul>
+<blockquote>
+<p>详细对照表见 <code>MES-在职学习路线清单.md</code> 附录。</p>
+</blockquote>
+<h3 id="实操任务（每学完一小块必须写）"><a href="#实操任务（每学完一小块必须写）" class="headerlink" title="实操任务（每学完一小块必须写）"></a>实操任务（每学完一小块必须写）</h3><p>用 <strong>制造名词</strong> 练习，不要再用 <code>Animal/Dog</code>。</p>
+<ol>
+<li><strong>多态/接口作业（本周就做）</strong></li>
+</ol>
+<ul>
+<li>写接口 <code>Device</code>：方法 <code>start()</code>、<code>stop()</code>、<code>getStatus()</code></li>
+<li>实现类 <code>CncMachine</code>、<code>AssemblyLine</code></li>
+<li><code>main</code> 里用 <code>List&lt;Device&gt;</code> 装两种设备，循环调用（体会多态）</li>
+</ul>
+<ol start="2">
+<li><strong>枚举作业</strong></li>
+</ol>
+<ul>
+<li><code>WorkOrderStatus</code>：待下达、已下达、生产中、暂停、完工、关闭</li>
+<li>写方法：哪些状态允许报工、哪些允许关闭</li>
+</ul>
+<ol start="3">
+<li><strong>集合作业（内存版迷你 MES）</strong></li>
+</ol>
+<ul>
+<li><code>Workshop</code>、<code>Material</code> 两个 JavaBean</li>
+<li>用 <code>HashMap&lt;String, Material&gt;</code> 按物料编码增删改查</li>
+<li>用 <code>ArrayList&lt;Workshop&gt;</code> 按名称过滤</li>
+</ul>
+<ol start="4">
+<li><strong>数量作业</strong></li>
+</ol>
+<ul>
+<li>用 <code>BigDecimal</code> 算：计划 100，已报工 96，本次报工 5 → 应拦截超报</li>
+<li><strong>禁止</strong>用 <code>double</code> 做数量</li>
+</ul>
+<ol start="5">
+<li><strong>时间作业</strong></li>
+</ol>
+<ul>
+<li>工单 <code>planStart</code>/<code>planEnd</code> 用 <code>LocalDateTime</code>，格式化成 <code>yyyy-MM-dd HH:mm</code></li>
+</ul>
+<h3 id="中文学习资源-1"><a href="#中文学习资源-1" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li>主教材：<a href="https://liaoxuefeng.com/books/java/">廖雪峰 Java 教程</a>（按上表剪裁，不要目录通读）</li>
+<li>卡壳时查：<a href="https://www.runoob.com/java/java-tutorial.html">菜鸟教程 Java</a> 对应单页</li>
+<li>集合直观理解：B 站搜 <code>Java ArrayList HashMap 通俗</code>（看 1 个短系列即可）</li>
+</ul>
+<h3 id="预估时间-1"><a href="#预估时间-1" class="headerlink" title="预估时间"></a>预估时间</h3><p>从多态起再 <strong>2～2.5 周</strong>（每周 10 小时）。做完上面 5 个练习再进 S1B。</p>
+<h3 id="避坑提醒-1"><a href="#避坑提醒-1" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>看完一节马上写练习，不要攒着「周末一起敲」。</li>
+<li>接口这一节是重中之重：后面 <code>XxxService</code> 全是接口+实现。</li>
+<li>不要因为教程后面还有「反射/多线程」而焦虑，那些是刻意跳过的。</li>
+</ul>
+<hr>
+<h2 id="S1B-·-Maven-IDEA-工程化"><a href="#S1B-·-Maven-IDEA-工程化" class="headerlink" title="S1B · Maven + IDEA 工程化"></a>S1B · Maven + IDEA 工程化</h2><h3 id="学习目标-2"><a href="#学习目标-2" class="headerlink" title="学习目标"></a>学习目标</h3><p>能新建 Maven 项目、加依赖、编译打包，理解 <code>src/main/java</code> 和包名。</p>
+<h3 id="核心知识点-1"><a href="#核心知识点-1" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ Maven：坐标、依赖、<code>mvn compile/package</code></li>
+<li>✅ IDEA：JDK 17（或 11）、项目结构、运行 main</li>
+<li>👀 <code>mvnw</code>、多模块</li>
+<li>⏭️ 发布到私服、复杂插件</li>
+</ul>
+<h3 id="实操任务"><a href="#实操任务" class="headerlink" title="实操任务"></a>实操任务</h3><ol>
+<li>安装 JDK 17 + IntelliJ IDEA Community。</li>
+<li>新建 Maven 项目 <code>mes-basic-api</code>，包名例如 <code>com.taizhou.mes</code>。</li>
+<li>写一个 <code>HelloMes</code> 打印 <code>MES basic api</code>，命令行 <code>mvn -q exec</code> 或 IDEA 运行成功。</li>
+<li>把 S1A 的 <code>Device</code>/<code>WorkOrderStatus</code> 搬进这个项目，保证能编译。</li>
+</ol>
+<h3 id="中文学习资源-2"><a href="#中文学习资源-2" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li><a href="https://liaoxuefeng.com/books/java/maven/index.html">廖雪峰 · Maven 基础</a>（15.1～15.3 ✅，后面 👀）</li>
+<li>IDEA 中文入门：B 站搜 <code>IDEA 2024 入门 创建 Maven</code></li>
+</ul>
+<h3 id="预估时间-2"><a href="#预估时间-2" class="headerlink" title="预估时间"></a>预估时间</h3><p>3～5 天（可塞进一个周末 + 两个晚上）。</p>
+<h3 id="避坑提醒-2"><a href="#避坑提醒-2" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>JDK 版本和语言级别不一致会导致一堆红字，先统一 17。</li>
+<li>先别上 Spring，确认普通 Java 项目能跑。</li>
+</ul>
+<hr>
+<h2 id="S1C-·-Spring-Boot-MySQL-MyBatis-Plus（阶段-1-核心）"><a href="#S1C-·-Spring-Boot-MySQL-MyBatis-Plus（阶段-1-核心）" class="headerlink" title="S1C · Spring Boot + MySQL + MyBatis-Plus（阶段 1 核心）"></a>S1C · Spring Boot + MySQL + MyBatis-Plus（阶段 1 核心）</h2><h3 id="学习目标-3"><a href="#学习目标-3" class="headerlink" title="学习目标"></a>学习目标</h3><p>独立从零起一个 Boot 项目：连上 MySQL，给「车间」做增删改查+分页，用 Apifox/Knife4j 点通。</p>
+<h3 id="核心知识点-2"><a href="#核心知识点-2" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ Spring Boot 启动、<code>application.yml</code>、分层 Controller / Service / Mapper / Entity</li>
+<li>✅ 统一返回体 <code>&#123;code, msg, data&#125;</code>、全局异常、<code>@Valid</code> 校验</li>
+<li>✅ MySQL：建库建表、主键、索引直觉（按车间编码、状态查）</li>
+<li>✅ 事务概念（先知道 <code>@Transactional</code> 用在「改两张表」时）</li>
+<li>✅ MyBatis-Plus：<code>BaseMapper</code>、条件构造器、分页</li>
+<li>👀 Lombok、逻辑删除、自动填充</li>
+<li>⏭️ Hibernate/JPA 深度、手写复杂 XML、连接池调优、读写分离</li>
+</ul>
+<h3 id="实操任务（按天做，不要只看视频）"><a href="#实操任务（按天做，不要只看视频）" class="headerlink" title="实操任务（按天做，不要只看视频）"></a>实操任务（按天做，不要只看视频）</h3><p><strong>第 1 天：空项目跑起来</strong></p>
+<ol>
+<li><a href="https://start.spring.io/">Spring Initializr</a> 选 Maven、Java 17、Spring Web、Validation（或纯手写 pom）。</li>
+<li>写一个 <code>GET /api/health</code> 返回 <code>ok</code>。浏览器能打开。</li>
+</ol>
+<p><strong>第 2～3 天：数据库</strong></p>
+<ol>
+<li>本地安装 MySQL 8，建库 <code>mes_demo</code>。</li>
+<li>建表 <code>workshop</code>：<code>id, code, name, status, remark, created_at</code>。</li>
+<li>手工 <code>INSERT</code> 3 条车间数据。</li>
+</ol>
+<p><strong>第 4～6 天：CRUD 写完</strong></p>
+<ol>
+<li>Entity <code>Workshop</code>、Mapper、Service、Controller。</li>
+<li>接口必须有：新增、按 id 查、分页列表（支持名称模糊）、修改、删除。</li>
+<li>用 Apifox 把 5 个接口各打一遍，截图或导出记录留着。</li>
+</ol>
+<p><strong>第 7 天：统一返回 + 校验</strong></p>
+<ol>
+<li>车间编码不能空、不能重复；删除不存在的 id 要返回明确错误，而不是 500。</li>
+</ol>
+<h3 id="中文学习资源-3"><a href="#中文学习资源-3" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li>Spring Boot 入门（中文社区整理）：<a href="https://springboot.io/">Spring Boot 中文索引</a> ；官方参考可开翻译：文档里先跟「第一个应用」走</li>
+<li>更顺的中文路径：<a href="https://liaoxuefeng.com/books/java/springboot/first-app/index.html">廖雪峰 · Spring Boot 第一个应用</a>（23.1～23.3 ✅）</li>
+<li>ORM：<a href="https://baomidou.com/getting-started/">MyBatis-Plus 中文 · 快速开始</a></li>
+<li>分页：<a href="https://baomidou.com/plugins/pagination/">MyBatis-Plus 分页插件</a>（做到列表再看）</li>
+<li>B 站搜：<code>Spring Boot 3 MyBatis-Plus CRUD</code>（选 <strong>单体后台</strong>，标题带「秒杀/微服务/高并发」的直接划掉）</li>
+<li>SQL：<a href="https://www.runoob.com/mysql/mysql-tutorial.html">菜鸟教程 MySQL</a> 建表/增删改查/索引入门几页</li>
+</ul>
+<h3 id="预估时间-3"><a href="#预估时间-3" class="headerlink" title="预估时间"></a>预估时间</h3><p>2.5～3 周。</p>
+<h3 id="避坑提醒-3"><a href="#避坑提醒-3" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>Spring Boot 3 必须 JDK 17，和 MP 要用 <code>mybatis-plus-spring-boot3-starter</code>。</li>
+<li>不要同时引入 MyBatis 官方 starter 和 MP starter。</li>
+<li>接口路径用 <code>/api/workshops</code> 这种 REST，别写成 <code>doAdd.action</code>。</li>
+<li>数量、金额字段以后一律 <code>decimal</code>，不要 <code>float</code>。</li>
+</ul>
+<hr>
+<h2 id="S1D-·-登录、RBAC、接口文档"><a href="#S1D-·-登录、RBAC、接口文档" class="headerlink" title="S1D · 登录、RBAC、接口文档"></a>S1D · 登录、RBAC、接口文档</h2><h3 id="学习目标-4"><a href="#学习目标-4" class="headerlink" title="学习目标"></a>学习目标</h3><p>做出可演示的 <code>mes-basic-api</code>：登录拿 token，不同角色看到不同权限；文档页能调试。</p>
+<h3 id="核心知识点-3"><a href="#核心知识点-3" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ JWT <strong>或</strong> Session 二选一（建议 JWT，前后端分离方便）</li>
+<li>✅ 用户-角色-菜单（先做用户-角色，菜单可先写死配置）</li>
+<li>✅ 拦截器/过滤器：除登录外校验 token</li>
+<li>✅ Knife4j 打开 <code>doc.html</code></li>
+<li>👀 Redis 存 token（先内存/数据库也行）</li>
+<li>⏭️ Spring Security 全家桶、OAuth2、网关鉴权</li>
+</ul>
+<h3 id="实操任务-1"><a href="#实操任务-1" class="headerlink" title="实操任务"></a>实操任务</h3><ol>
+<li>表：<code>sys_user</code>、<code>sys_role</code>、<code>sys_user_role</code>。预置 <code>admin</code> / <code>operator</code>。</li>
+<li><code>POST /api/auth/login</code> 返回 token；错误密码返回 明确业务码。</li>
+<li>车间写接口：admin 可删，operator 只能查、不能删（先在代码里判断角色即可）。</li>
+<li>接入 Knife4j，给接口写中文注释，用文档页把登录+CRUD 走通。</li>
+<li><strong>阶段 1 总验收：</strong> 换一台电脑或清 Maven 缓存后，按 README 能启动并演示。</li>
+</ol>
+<h3 id="中文学习资源-4"><a href="#中文学习资源-4" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li><a href="https://doc.xiaominfo.com/docs/quick-start">Knife4j 中文 · 快速开始</a></li>
+<li>JWT 原理+落地：B 站搜 <code>Spring Boot JWT 登录 拦截器</code>（避开 Security 复杂课；先拦截器版）</li>
+<li>统一异常：搜 <code>Spring Boot 全局异常处理 ControllerAdvice</code></li>
+</ul>
+<h3 id="预估时间-4"><a href="#预估时间-4" class="headerlink" title="预估时间"></a>预估时间</h3><p>1～1.5 周。</p>
+<h3 id="避坑提醒-4"><a href="#避坑提醒-4" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>别一上来上完整 Spring Security，容易学一周还没登录页。拦截器足够支撑 Demo 和面试讲解。</li>
+<li>密码至少 <code>BCrypt</code> 哈希，不要明文。中文说明见 Spring 文档或搜 <code>BCryptPasswordEncoder 示例</code>。</li>
+</ul>
+<hr>
+<h2 id="S2-·-最小-MES-后端（工单-CRUD-是硬指标）"><a href="#S2-·-最小-MES-后端（工单-CRUD-是硬指标）" class="headerlink" title="S2 · 最小 MES 后端（工单 CRUD 是硬指标）"></a>S2 · 最小 MES 后端（工单 CRUD 是硬指标）</h2><h3 id="学习目标-5"><a href="#学习目标-5" class="headerlink" title="学习目标"></a>学习目标</h3><p>在 <code>mes-basic-api</code> 上扩展成 <strong>最小 MES 后端 Demo</strong>：工单全生命周期 + 简单报工，能用接口演示，不需要前端也能讲清业务。</p>
+<h3 id="核心知识点-4"><a href="#核心知识点-4" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ 表设计：物料、工单、工单状态、报工记录</li>
+<li>✅ 状态机：待下达 → 已下达 → 生产中 → 完工 / 关闭（暂停可选）</li>
+<li>✅ 报工：合格数、不良数；超报拦截；更新工单完成数量必须 <strong>同一事务</strong></li>
+<li>✅ 列表筛选：工单号、状态、日期</li>
+<li>✅ Excel 导出工单列表（加分，尽量做）</li>
+<li>👀 质检单、领料、设备台账（本阶段能做质检更好，做不完放到 S3）</li>
+<li>⏭️ APS 排程、复杂 BOM 多层、设备采集、微服务拆分</li>
+</ul>
+<h3 id="实操任务（按模块提交）"><a href="#实操任务（按模块提交）" class="headerlink" title="实操任务（按模块提交）"></a>实操任务（按模块提交）</h3><p><strong>模块 A · 物料主数据（2～3 晚）</strong></p>
+<ul>
+<li>表 <code>material(code, name, spec, unit)</code></li>
+<li>CRUD 接口，编码唯一</li>
+</ul>
+<p><strong>模块 B · 工单 CRUD（1.5 周）</strong></p>
+<ul>
+<li>表 <code>work_order</code>：工单号、物料、计划数量、完成数量、状态、计划时间、车间 id</li>
+<li>接口：创建（默认待下达）、修改（仅待下达可改）、分页查询、详情</li>
+<li>动作接口：下达、开工、完工、关闭（非法状态流转必须报业务错误）</li>
+</ul>
+<p><strong>模块 C · 报工（1.5 周）</strong></p>
+<ul>
+<li>表 <code>report_record</code>：工单 id、合格数、不良数、报工人、时间</li>
+<li><code>POST /api/work-orders/&#123;id&#125;/reports</code><ol>
+<li>校验状态允许报工</li>
+<li>合格+不良+已完成 ≤ 计划数，否则拒绝</li>
+<li>插入报工行 + 更新工单完成数，加 <code>@Transactional</code></li>
+<li>完成数达到计划数时，可自动变完工或提示去点完工（你选一种写进 README）</li>
+</ol>
+</li>
+</ul>
+<p><strong>模块 D · 自测脚本</strong></p>
+<ul>
+<li>用 Apifox 收藏一套请求：建物料 → 建工单 → 下达 → 开工 → 报工两次 → 超报失败 → 完工</li>
+<li>故意不写事务对比一次（本地实验后改回来），自己能讲「没事务会怎样」</li>
+</ul>
+<h3 id="中文学习资源-5"><a href="#中文学习资源-5" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li>事务：<a href="https://liaoxuefeng.com/books/java/jdbc/transaction/index.html">廖雪峰 · JDBC 事务</a> 建立概念；实际用 Spring <code>@Transactional</code></li>
+<li>状态流转自己画图，比任何课都重要</li>
+<li>EasyExcel 中文：搜 <code>EasyExcel 快速开始 阿里</code>（导出工单）</li>
+<li>B 站可搜 <code>工单 状态机</code> 理解思想，不要去找互联网「订单中台」课</li>
+</ul>
+<h3 id="预估时间-5"><a href="#预估时间-5" class="headerlink" title="预估时间"></a>预估时间</h3><p>5～6 周。</p>
+<h3 id="避坑提醒-5"><a href="#避坑提醒-5" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li><strong>工单号、状态、四个数量（计划/完成/合格/不良）</strong> 是业务核心，比框架花活重要。</li>
+<li>不要并行开发质检+库存+设备+看板。工单+报工不通，后面全是空中楼阁。</li>
+<li>数量用 <code>decimal</code>/<code>BigDecimal</code>。</li>
+</ul>
+<hr>
+<h2 id="S3-·-Vue3-联调（发挥你的前端优势）"><a href="#S3-·-Vue3-联调（发挥你的前端优势）" class="headerlink" title="S3 · Vue3 联调（发挥你的前端优势）"></a>S3 · Vue3 联调（发挥你的前端优势）</h2><h3 id="学习目标-6"><a href="#学习目标-6" class="headerlink" title="学习目标"></a>学习目标</h3><p>车间管理员能在浏览器里完成：登录 → 建物料 → 开工单 → 报工 → 看列表状态。这是你简历主项目的「可见部分」。</p>
+<h3 id="核心知识点-5"><a href="#核心知识点-5" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ Vue3 + Vite + Element Plus（或你已熟的 AntD Vue）</li>
+<li>✅ Axios 封装、token 放到 Header、401 跳登录</li>
+<li>✅ 工单列表/详情、状态按钮、报工弹窗</li>
+<li>✅ 按钮级权限（删除/关闭按角色隐藏）</li>
+<li>👀 ECharts 工单数量柱状图</li>
+<li>⏭️ 微前端、Nuxt、原生 APP</li>
+</ul>
+<h3 id="实操任务-2"><a href="#实操任务-2" class="headerlink" title="实操任务"></a>实操任务</h3><ol>
+<li>新建 <code>mes-web</code>，登录页对接 S1D。</li>
+<li>车间、物料两个管理页（你最熟的 CRUD 页面，先热手）。</li>
+<li>工单页：表格 + 状态下拉 + 「下达/开工/报工/完工」按钮。</li>
+<li>报工弹窗：填合格/不良，超报时展示后端返回的中文错误。</li>
+<li>（可选）一个简单首页：今日工单数、生产中数量。</li>
+</ol>
+<h3 id="中文学习资源-6"><a href="#中文学习资源-6" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li><a href="https://cn.vuejs.org/">Vue3 中文文档</a></li>
+<li><a href="https://element-plus.org/zh-CN/">Element Plus 中文文档</a></li>
+<li><a href="https://echarts.apache.org/handbook/zh/get-started/">ECharts 中文手册</a></li>
+<li>Vite：<a href="https://cn.vitejs.dev/">中文指南</a></li>
+</ul>
+<h3 id="预估时间-6"><a href="#预估时间-6" class="headerlink" title="预估时间"></a>预估时间</h3><p>5～6 周。</p>
+<h3 id="避坑提醒-6"><a href="#避坑提醒-6" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>不要重写一套前端框架。你的差异化在 <strong>业务闭环</strong>，不在换技术栈。</li>
+<li>错误信息必须是中文业务句（「报工数量超过剩余可报数量」），方便面试演示。</li>
+</ul>
+<hr>
+<h2 id="S4-·-打磨、部署、简历"><a href="#S4-·-打磨、部署、简历" class="headerlink" title="S4 · 打磨、部署、简历"></a>S4 · 打磨、部署、简历</h2><h3 id="学习目标-7"><a href="#学习目标-7" class="headerlink" title="学习目标"></a>学习目标</h3><p>别人按 README 能跑起来；你能 8 分钟演示主流程；简历有一条像样的制造业项目。</p>
+<h3 id="核心知识点-6"><a href="#核心知识点-6" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ README：环境、账号、演示路径、表结构截图/ER 图</li>
+<li>✅ 简单部署：单机 <code>java -jar</code> + Nginx 托管前端，或 Docker Compose 起 MySQL</li>
+<li>👀 操作日志、防重复提交</li>
+<li>⏭️ K8s、CI 全家桶、监控告警平台</li>
+</ul>
+<h3 id="实操任务-3"><a href="#实操任务-3" class="headerlink" title="实操任务"></a>实操任务</h3><ol>
+<li>补 ER 图（车间、物料、工单、报工、用户角色）。</li>
+<li>写 README（安装 JDK/MySQL、导入 SQL、启动命令、演示账号）。</li>
+<li>自己按 README 在「干净环境」走一遍。</li>
+<li>录 8 分钟演示（或写逐步截图脚本）。</li>
+<li>按路线清单第 6 节话术改简历项目描述。</li>
+<li>（建议）<code>docker-compose.yml</code>：只含 MySQL，后端仍可本地跑。</li>
+</ol>
+<h3 id="中文学习资源-7"><a href="#中文学习资源-7" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li>Docker 入门中文：搜 <code>Docker Compose 中文 入门 MySQL</code>（官方中文：<a href="https://docker.github.net.cn/">Docker 文档中文社区</a> 或华为云/腾讯云翻译的 Compose 入门）</li>
+<li>Nginx 静态部署：菜鸟教程 Nginx + 搜 <code>Vue Vite 打包 nginx</code></li>
+</ul>
+<h3 id="预估时间-7"><a href="#预估时间-7" class="headerlink" title="预估时间"></a>预估时间</h3><p>4～5 周（含修 bug）。</p>
+<h3 id="避坑提醒-7"><a href="#避坑提醒-7" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>简历不要写 Kafka、微服务、千万并发。面试官按你写的追问。</li>
+<li>Demo 是 Demo，面试别吹成某车企真实 MES。</li>
+</ul>
+<hr>
+<h2 id="S5-·-面试冲刺（可与-S4-后两周重叠）"><a href="#S5-·-面试冲刺（可与-S4-后两周重叠）" class="headerlink" title="S5 · 面试冲刺（可与 S4 后两周重叠）"></a>S5 · 面试冲刺（可与 S4 后两周重叠）</h2><h3 id="学习目标-8"><a href="#学习目标-8" class="headerlink" title="学习目标"></a>学习目标</h3><p>业务题能答、项目能画表、开始投泰州制造信息化/MES 岗。</p>
+<h3 id="核心知识点-7"><a href="#核心知识点-7" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ 工单状态、超报、事务、权限、MES vs ERP</li>
+<li>✅ 你的表为什么这么拆</li>
+<li>👀 索引怎么建、慢 SQL 怎么看 explain</li>
+<li>⏭️ 算法刷题大战、JVM 调优、分布式事务</li>
+</ul>
+<h3 id="实操任务-4"><a href="#实操任务-4" class="headerlink" title="实操任务"></a>实操任务</h3><ol>
+<li>准备 20 道自问自答（业务 10 + 项目技术 10），写在笔记里 <strong>大声说出来</strong>。</li>
+<li>对着 ER 图，不看代码讲一遍报工接口。</li>
+<li>列出 ≥15 家目标：药企信息化、工厂数字化、本地 MES 实施的研发岗。</li>
+<li>同步保留一条「资深 Vue」保底简历。</li>
+</ol>
+<h3 id="中文学习资源-8"><a href="#中文学习资源-8" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li>用你自己的 Demo 当唯一教材</li>
+<li>SQL：菜鸟教程 <code>EXPLAIN</code>、索引几页</li>
+<li>路线清单第 6 节高频题</li>
+</ul>
+<h3 id="预估时间-8"><a href="#预估时间-8" class="headerlink" title="预估时间"></a>预估时间</h3><p>3～4 周。</p>
+<h3 id="避坑提醒-8"><a href="#避坑提醒-8" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>先投岗位再追求完美功能。本地窗口窄，空窗贵。</li>
+</ul>
+<hr>
+<h2 id="S6-·-可选加分：MES-上的-SOP-问答（对应海报-RAG，但缩水）"><a href="#S6-·-可选加分：MES-上的-SOP-问答（对应海报-RAG，但缩水）" class="headerlink" title="S6 · 可选加分：MES 上的 SOP 问答（对应海报 RAG，但缩水）"></a>S6 · 可选加分：MES 上的 SOP 问答（对应海报 RAG，但缩水）</h2><p><strong>前置：S2 工单闭环已完成。</strong> 否则禁止开始。</p>
+<h3 id="学习目标-9"><a href="#学习目标-9" class="headerlink" title="学习目标"></a>学习目标</h3><p>上传一份作业指导书 PDF/Markdown，按问题返回带引用的答案。证明「AI 接到现有 MES」，不是会玩聊天机器人。</p>
+<h3 id="核心知识点-8"><a href="#核心知识点-8" class="headerlink" title="核心知识点"></a>核心知识点</h3><ul>
+<li>✅ 文档切分、向量检索、提问、引用原文</li>
+<li>👀 LangChain 中文入门概念</li>
+<li>⏭️ 微调、Transformer 原理、LangGraph、多智能体、私有化大模型训练</li>
+</ul>
+<h3 id="实操任务-5"><a href="#实操任务-5" class="headerlink" title="实操任务"></a>实操任务</h3><ol>
+<li>写 3 篇假 SOP（设备开机、报工规范、不良处理）。</li>
+<li>做一个 <code>/api/ai/ask</code>：入参问题，出参答案+来源段落。</li>
+<li>前端工单页加「规范问答」抽屉即可。</li>
+</ol>
+<h3 id="中文学习资源-9"><a href="#中文学习资源-9" class="headerlink" title="中文学习资源"></a>中文学习资源</h3><ul>
+<li>搜 <code>RAG 检索增强 原理 通俗</code>、<code>Spring Boot 调用 通义千问 API</code></li>
+<li>LangChain 有中文社区文档，<strong>只看 RAG 最小例子</strong></li>
+<li>模型 API 用国内：通义/智谱/DeepSeek 开放平台中文文档（注意费用，控制在几块钱试跑）</li>
+</ul>
+<h3 id="预估时间-9"><a href="#预估时间-9" class="headerlink" title="预估时间"></a>预估时间</h3><p>1～2 周。</p>
+<h3 id="避坑提醒-9"><a href="#避坑提醒-9" class="headerlink" title="避坑提醒"></a>避坑提醒</h3><ul>
+<li>简历占比不超过 15%。</li>
+<li>不要写「精通大模型」。写「为 MES 增加 SOP 检索问答」。</li>
+</ul>
+<hr>
+<h2 id="2-每周节奏（打工人版）"><a href="#2-每周节奏（打工人版）" class="headerlink" title="2. 每周节奏（打工人版）"></a>2. 每周节奏（打工人版）</h2><table>
+<thead>
+<tr>
+<th>时段</th>
+<th>做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工作日晚 1～1.5h</td>
+<td>看一小节 + <strong>当天练习代码提交到自己的 git</strong></td>
+</tr>
+<tr>
+<td>周六 3～4h</td>
+<td>本周实操任务收口</td>
+</tr>
+<tr>
+<td>周日 2h</td>
+<td>复习错点 + 更新自检清单打勾</td>
+</tr>
+<tr>
+<td>加班周</td>
+<td>降到 6h，只复习不贪新章</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AI 编程工具怎么用（对应海报「高效 AI 编程」）：</strong></p>
+<ul>
+<li>✅ 允许：解释报错、生成样板 getter、问「MyBatis-Plus 分页怎么写」</li>
+<li>✅ 允许：让它根据你的表结构生成首版 Entity，你必须读改</li>
+<li>⏭️ 禁止：整页 Controller 让 AI 写完你却讲不清</li>
+<li>验收标准：关掉 AI，你能从零写出报工接口的关键 30 行</li>
+</ul>
+<hr>
+<h2 id="3-学习自检清单（每学完一块就勾）"><a href="#3-学习自检清单（每学完一块就勾）" class="headerlink" title="3. 学习自检清单（每学完一块就勾）"></a>3. 学习自检清单（每学完一块就勾）</h2><h3 id="S0-业务"><a href="#S0-业务" class="headerlink" title="S0 业务"></a>S0 业务</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> 5 分钟讲清 MES vs ERP</li>
+<li style="list-style: none"><input type="checkbox"></input> 画出主流程并标角色</li>
+<li style="list-style: none"><input type="checkbox"></input> 词汇表 ≥ 40 词，都是自己的话</li>
+<li style="list-style: none"><input type="checkbox"></input> 能解释：下达、报工、超报、WIP、工艺路线</li>
+</ul>
+<h3 id="S1A-Java-语法"><a href="#S1A-Java-语法" class="headerlink" title="S1A Java 语法"></a>S1A Java 语法</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> 接口+两个实现类，用父类型集合调用</li>
+<li style="list-style: none"><input type="checkbox"></input> 工单状态枚举 + 允许报工的判断方法</li>
+<li style="list-style: none"><input type="checkbox"></input> HashMap 内存增删改查物料</li>
+<li style="list-style: none"><input type="checkbox"></input> BigDecimal 超报计算写对</li>
+<li style="list-style: none"><input type="checkbox"></input> LocalDateTime 格式化输出</li>
+<li style="list-style: none"><input type="checkbox"></input> 廖雪峰反射/多线程/Cloud <strong>没有</strong>当成当前任务</li>
+</ul>
+<h3 id="S1B-工程"><a href="#S1B-工程" class="headerlink" title="S1B 工程"></a>S1B 工程</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> IDEA 运行 Maven 项目无红字</li>
+<li style="list-style: none"><input type="checkbox"></input> 知道 <code>pom.xml</code> 里依赖坐标是什么意思</li>
+</ul>
+<h3 id="S1C-Spring-库"><a href="#S1C-Spring-库" class="headerlink" title="S1C Spring + 库"></a>S1C Spring + 库</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> <code>/api/health</code> 通</li>
+<li style="list-style: none"><input type="checkbox"></input> 车间 5 个接口 Apifox 全绿</li>
+<li style="list-style: none"><input type="checkbox"></input> 编码重复、参数空有中文错误</li>
+<li style="list-style: none"><input type="checkbox"></input> 分页按名称过滤可用</li>
+<li style="list-style: none"><input type="checkbox"></input> 能自己讲：请求怎么到 Controller 再到数据库</li>
+</ul>
+<h3 id="S1D-权限文档"><a href="#S1D-权限文档" class="headerlink" title="S1D 权限文档"></a>S1D 权限文档</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> 登录拿 token，无 token 访问车间失败</li>
+<li style="list-style: none"><input type="checkbox"></input> admin / operator 权限有差异</li>
+<li style="list-style: none"><input type="checkbox"></input> Knife4j 能调试</li>
+<li style="list-style: none"><input type="checkbox"></input> 密码非明文</li>
+</ul>
+<h3 id="S2-最小-MES"><a href="#S2-最小-MES" class="headerlink" title="S2 最小 MES"></a>S2 最小 MES</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> 物料 CRUD</li>
+<li style="list-style: none"><input type="checkbox"></input> 工单创建/查询/修改</li>
+<li style="list-style: none"><input type="checkbox"></input> 下达、开工、完工、关闭；非法流转被拒绝</li>
+<li style="list-style: none"><input type="checkbox"></input> 报工写入记录并更新完成数</li>
+<li style="list-style: none"><input type="checkbox"></input> 超报失败</li>
+<li style="list-style: none"><input type="checkbox"></input> <code>@Transactional</code> 用在报工上，能口述没事务的后果</li>
+<li style="list-style: none"><input type="checkbox"></input> Apifox 一套主流程收藏能重放</li>
+</ul>
+<h3 id="S3-前端"><a href="#S3-前端" class="headerlink" title="S3 前端"></a>S3 前端</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> 登录进系统</li>
+<li style="list-style: none"><input type="checkbox"></input> 页面完成建工单→报工</li>
+<li style="list-style: none"><input type="checkbox"></input> 超报错误展示给用户</li>
+<li style="list-style: none"><input type="checkbox"></input> 角色按钮差异可见</li>
+</ul>
+<h3 id="S4-打磨"><a href="#S4-打磨" class="headerlink" title="S4 打磨"></a>S4 打磨</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> README 陌生人 30 分钟能启动</li>
+<li style="list-style: none"><input type="checkbox"></input> ER 图能手画</li>
+<li style="list-style: none"><input type="checkbox"></input> 8 分钟演示稿</li>
+<li style="list-style: none"><input type="checkbox"></input> 简历项目描述无微服务/高并发词汇</li>
+</ul>
+<h3 id="S5-面试"><a href="#S5-面试" class="headerlink" title="S5 面试"></a>S5 面试</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> 20 题能口头答</li>
+<li style="list-style: none"><input type="checkbox"></input> 目标公司清单 ≥ 15</li>
+<li style="list-style: none"><input type="checkbox"></input> 保底前端简历已准备</li>
+</ul>
+<h3 id="S6-可选"><a href="#S6-可选" class="headerlink" title="S6 可选"></a>S6 可选</h3><ul>
+<li style="list-style: none"><input type="checkbox"></input> 问答接口能引用 SOP 原文</li>
+<li style="list-style: none"><input type="checkbox"></input> 挂在 MES 页面上，而不是独立玩具</li>
+</ul>
+<hr>
+<h2 id="4-你现在立刻做的-7-天任务（从多态开始）"><a href="#4-你现在立刻做的-7-天任务（从多态开始）" class="headerlink" title="4. 你现在立刻做的 7 天任务（从多态开始）"></a>4. 你现在立刻做的 7 天任务（从多态开始）</h2><table>
+<thead>
+<tr>
+<th>天</th>
+<th>动手做什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>廖雪峰 3.1.6 抽象类 + 3.1.7 接口；写完 <code>Device</code> 练习</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>3.1.8～3.1.9；把类放到 <code>com.taizhou.mes.demo</code> 包</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>枚举 <code>WorkOrderStatus</code> + 允许报工/关闭</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>3.2.1、3.2.4～3.2.6；物料 JavaBean</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>BigDecimal 超报计算练习</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>异常 4.1～4.5：给「超报」写个自定义异常 <code>OverReportException</code></td>
+</tr>
+<tr>
+<td>D7</td>
+<td>内存版 Map 物料仓库；复习一周，勾 S1A 自检前 4 项</td>
+</tr>
+</tbody>
+</table>
+<p>第 8 天起按附录顺序进入集合/时间，然后 S1B。</p>
+<hr>
+<h2 id="5-和原清单的关系"><a href="#5-和原清单的关系" class="headerlink" title="5. 和原清单的关系"></a>5. 和原清单的关系</h2><ul>
+<li>战略、投递、避坑、学历谈薪：仍看 <code>MES-在职学习路线清单.md</code></li>
+<li><strong>每天学什么、写什么代码、看哪份中文资料、勾哪条自检：</strong> 看本文</li>
+<li>海报万元课：不作为教材，只当「模块对照表」；你的主项目永远是 <strong>工单 CRUD + 报工事务</strong>，不是智能客服</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" rel="tag"># 学习路线</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/10/16/%E6%A0%87%E7%AD%BE/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/10/22/2026%E5%9C%A8%E8%81%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/MES-%E5%9C%A8%E8%81%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E6%B8%85%E5%8D%95/" rel="prev" title="MES 在职学习路线清单">
+                MES 在职学习路线清单 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E8%BD%AC-Java-%C2%B7-MES-%E6%96%B9%E5%90%91%E5%88%86%E9%98%B6%E6%AE%B5%E5%8A%A8%E6%89%8B%E8%AF%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">前端转 Java · MES 方向分阶段动手课表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%85%88%E5%AF%B9%E7%85%A7%E6%B5%B7%E6%8A%A5%E8%AF%BE%EF%BC%9A%E5%93%AA%E4%BA%9B%E6%8B%BF%E6%9D%A5%E7%94%A8%EF%BC%8C%E5%93%AA%E4%BA%9B%E6%89%94%E6%8E%89"><span class="nav-number">1.1.</span> <span class="nav-text">0. 先对照海报课：哪些拿来用，哪些扔掉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%80%BB%E8%AF%BE%E8%A1%A8%EF%BC%88%E6%8E%A5%E5%9C%A8%E7%8E%B0%E6%9C%89%E6%B8%85%E5%8D%95%E4%B8%8A%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">1. 总课表（接在现有清单上）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S0-%C2%B7-MES-%E4%B8%9A%E5%8A%A1%E5%85%A5%E9%97%A8"><span class="nav-number">1.3.</span> <span class="nav-text">S0 · MES 业务入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-number">1.3.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">1.3.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1%EF%BC%88%E5%BF%85%E9%A1%BB%E5%8A%A8%E6%89%8B%EF%BC%8C%E4%B8%8D%E6%98%AF%E5%8F%AA%E7%9C%8B%E8%A7%86%E9%A2%91%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">实操任务（必须动手，不是只看视频）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4"><span class="nav-number">1.3.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92"><span class="nav-number">1.3.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S1A-%C2%B7-Java-%E8%AF%AD%E6%B3%95%E5%A4%9F%E7%94%A8%EF%BC%88%E5%BD%93%E5%89%8D%E9%98%B6%E6%AE%B5%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">S1A · Java 语法够用（当前阶段）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%88%E5%AF%B9%E6%8E%A5%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="nav-number">1.4.2.</span> <span class="nav-text">核心知识点（对接廖雪峰目录）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1%EF%BC%88%E6%AF%8F%E5%AD%A6%E5%AE%8C%E4%B8%80%E5%B0%8F%E5%9D%97%E5%BF%85%E9%A1%BB%E5%86%99%EF%BC%89"><span class="nav-number">1.4.3.</span> <span class="nav-text">实操任务（每学完一小块必须写）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-1"><span class="nav-number">1.4.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-1"><span class="nav-number">1.4.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S1B-%C2%B7-Maven-IDEA-%E5%B7%A5%E7%A8%8B%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">S1B · Maven + IDEA 工程化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-1"><span class="nav-number">1.5.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.5.3.</span> <span class="nav-text">实操任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-2"><span class="nav-number">1.5.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-2"><span class="nav-number">1.5.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-2"><span class="nav-number">1.5.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S1C-%C2%B7-Spring-Boot-MySQL-MyBatis-Plus%EF%BC%88%E9%98%B6%E6%AE%B5-1-%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">S1C · Spring Boot + MySQL + MyBatis-Plus（阶段 1 核心）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-3"><span class="nav-number">1.6.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-2"><span class="nav-number">1.6.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1%EF%BC%88%E6%8C%89%E5%A4%A9%E5%81%9A%EF%BC%8C%E4%B8%8D%E8%A6%81%E5%8F%AA%E7%9C%8B%E8%A7%86%E9%A2%91%EF%BC%89"><span class="nav-number">1.6.3.</span> <span class="nav-text">实操任务（按天做，不要只看视频）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-3"><span class="nav-number">1.6.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-3"><span class="nav-number">1.6.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-3"><span class="nav-number">1.6.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S1D-%C2%B7-%E7%99%BB%E5%BD%95%E3%80%81RBAC%E3%80%81%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3"><span class="nav-number">1.7.</span> <span class="nav-text">S1D · 登录、RBAC、接口文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-4"><span class="nav-number">1.7.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-3"><span class="nav-number">1.7.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1-1"><span class="nav-number">1.7.3.</span> <span class="nav-text">实操任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-4"><span class="nav-number">1.7.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-4"><span class="nav-number">1.7.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-4"><span class="nav-number">1.7.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S2-%C2%B7-%E6%9C%80%E5%B0%8F-MES-%E5%90%8E%E7%AB%AF%EF%BC%88%E5%B7%A5%E5%8D%95-CRUD-%E6%98%AF%E7%A1%AC%E6%8C%87%E6%A0%87%EF%BC%89"><span class="nav-number">1.8.</span> <span class="nav-text">S2 · 最小 MES 后端（工单 CRUD 是硬指标）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-5"><span class="nav-number">1.8.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-4"><span class="nav-number">1.8.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1%EF%BC%88%E6%8C%89%E6%A8%A1%E5%9D%97%E6%8F%90%E4%BA%A4%EF%BC%89"><span class="nav-number">1.8.3.</span> <span class="nav-text">实操任务（按模块提交）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-5"><span class="nav-number">1.8.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-5"><span class="nav-number">1.8.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-5"><span class="nav-number">1.8.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S3-%C2%B7-Vue3-%E8%81%94%E8%B0%83%EF%BC%88%E5%8F%91%E6%8C%A5%E4%BD%A0%E7%9A%84%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8A%BF%EF%BC%89"><span class="nav-number">1.9.</span> <span class="nav-text">S3 · Vue3 联调（发挥你的前端优势）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-6"><span class="nav-number">1.9.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-5"><span class="nav-number">1.9.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1-2"><span class="nav-number">1.9.3.</span> <span class="nav-text">实操任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-6"><span class="nav-number">1.9.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-6"><span class="nav-number">1.9.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-6"><span class="nav-number">1.9.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S4-%C2%B7-%E6%89%93%E7%A3%A8%E3%80%81%E9%83%A8%E7%BD%B2%E3%80%81%E7%AE%80%E5%8E%86"><span class="nav-number">1.10.</span> <span class="nav-text">S4 · 打磨、部署、简历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-7"><span class="nav-number">1.10.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-6"><span class="nav-number">1.10.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1-3"><span class="nav-number">1.10.3.</span> <span class="nav-text">实操任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-7"><span class="nav-number">1.10.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-7"><span class="nav-number">1.10.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-7"><span class="nav-number">1.10.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S5-%C2%B7-%E9%9D%A2%E8%AF%95%E5%86%B2%E5%88%BA%EF%BC%88%E5%8F%AF%E4%B8%8E-S4-%E5%90%8E%E4%B8%A4%E5%91%A8%E9%87%8D%E5%8F%A0%EF%BC%89"><span class="nav-number">1.11.</span> <span class="nav-text">S5 · 面试冲刺（可与 S4 后两周重叠）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-8"><span class="nav-number">1.11.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-7"><span class="nav-number">1.11.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1-4"><span class="nav-number">1.11.3.</span> <span class="nav-text">实操任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-8"><span class="nav-number">1.11.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-8"><span class="nav-number">1.11.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-8"><span class="nav-number">1.11.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S6-%C2%B7-%E5%8F%AF%E9%80%89%E5%8A%A0%E5%88%86%EF%BC%9AMES-%E4%B8%8A%E7%9A%84-SOP-%E9%97%AE%E7%AD%94%EF%BC%88%E5%AF%B9%E5%BA%94%E6%B5%B7%E6%8A%A5-RAG%EF%BC%8C%E4%BD%86%E7%BC%A9%E6%B0%B4%EF%BC%89"><span class="nav-number">1.12.</span> <span class="nav-text">S6 · 可选加分：MES 上的 SOP 问答（对应海报 RAG，但缩水）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-9"><span class="nav-number">1.12.1.</span> <span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9-8"><span class="nav-number">1.12.2.</span> <span class="nav-text">核心知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%93%8D%E4%BB%BB%E5%8A%A1-5"><span class="nav-number">1.12.3.</span> <span class="nav-text">实操任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90-9"><span class="nav-number">1.12.4.</span> <span class="nav-text">中文学习资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E4%BC%B0%E6%97%B6%E9%97%B4-9"><span class="nav-number">1.12.5.</span> <span class="nav-text">预估时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%9D%91%E6%8F%90%E9%86%92-9"><span class="nav-number">1.12.6.</span> <span class="nav-text">避坑提醒</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%AF%8F%E5%91%A8%E8%8A%82%E5%A5%8F%EF%BC%88%E6%89%93%E5%B7%A5%E4%BA%BA%E7%89%88%EF%BC%89"><span class="nav-number">1.13.</span> <span class="nav-text">2. 每周节奏（打工人版）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AD%A6%E4%B9%A0%E8%87%AA%E6%A3%80%E6%B8%85%E5%8D%95%EF%BC%88%E6%AF%8F%E5%AD%A6%E5%AE%8C%E4%B8%80%E5%9D%97%E5%B0%B1%E5%8B%BE%EF%BC%89"><span class="nav-number">1.14.</span> <span class="nav-text">3. 学习自检清单（每学完一块就勾）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#S0-%E4%B8%9A%E5%8A%A1"><span class="nav-number">1.14.1.</span> <span class="nav-text">S0 业务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S1A-Java-%E8%AF%AD%E6%B3%95"><span class="nav-number">1.14.2.</span> <span class="nav-text">S1A Java 语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S1B-%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.14.3.</span> <span class="nav-text">S1B 工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S1C-Spring-%E5%BA%93"><span class="nav-number">1.14.4.</span> <span class="nav-text">S1C Spring + 库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S1D-%E6%9D%83%E9%99%90%E6%96%87%E6%A1%A3"><span class="nav-number">1.14.5.</span> <span class="nav-text">S1D 权限文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S2-%E6%9C%80%E5%B0%8F-MES"><span class="nav-number">1.14.6.</span> <span class="nav-text">S2 最小 MES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S3-%E5%89%8D%E7%AB%AF"><span class="nav-number">1.14.7.</span> <span class="nav-text">S3 前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S4-%E6%89%93%E7%A3%A8"><span class="nav-number">1.14.8.</span> <span class="nav-text">S4 打磨</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S5-%E9%9D%A2%E8%AF%95"><span class="nav-number">1.14.9.</span> <span class="nav-text">S5 面试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#S6-%E5%8F%AF%E9%80%89"><span class="nav-number">1.14.10.</span> <span class="nav-text">S6 可选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BD%A0%E7%8E%B0%E5%9C%A8%E7%AB%8B%E5%88%BB%E5%81%9A%E7%9A%84-7-%E5%A4%A9%E4%BB%BB%E5%8A%A1%EF%BC%88%E4%BB%8E%E5%A4%9A%E6%80%81%E5%BC%80%E5%A7%8B%EF%BC%89"><span class="nav-number">1.15.</span> <span class="nav-text">4. 你现在立刻做的 7 天任务（从多态开始）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%92%8C%E5%8E%9F%E6%B8%85%E5%8D%95%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.16.</span> <span class="nav-text">5. 和原清单的关系</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/10/22/2026%E5%9C%A8%E8%81%8C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/MES-%E5%88%86%E9%98%B6%E6%AE%B5%E5%8A%A8%E6%89%8B%E8%AF%BE%E8%A1%A8/';
+          this.page.identifier = '2026/10/22/2026在职学习路线/MES-分阶段动手课表/';
+          this.page.title = 'MES 分阶段动手课表';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Micro-app 框架官网地址 使用框架基调 1、框架安装1npm i @micro-zoe&#x2F;micro-app@latest --save 2、子应用对应的view页面123456789101112131415&lt;template&gt;  &lt;div&gt;    &lt;!--       name(必传)：应用名称      url(必传)：应用地址，会被自动补全为http:&#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="micro.app 框架">
+<meta property="og:url" content="http://yoursite.com/2025/05/29/%E5%BE%AE%E5%89%8D%E7%AB%AF/micro.app%20%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="Micro-app 框架官网地址 使用框架基调 1、框架安装1npm i @micro-zoe&#x2F;micro-app@latest --save 2、子应用对应的view页面123456789101112131415&lt;template&gt;  &lt;div&gt;    &lt;!--       name(必传)：应用名称      url(必传)：应用地址，会被自动补全为http:&#x2F;&#x2F;">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/image-20230602211251896.png">
+<meta property="og:image" content="http://yoursite.com/Users/yingside/Desktop/assets/image-20230603221130681.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/image-20230606202921562.png">
+<meta property="article:published_time" content="2025-05-29T13:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.411Z">
+<meta property="article:author" content="陈凯">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/image-20230602211251896.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2025/05/29/微前端/micro.app 框架/"/>
+
+
+
+
+
+  <title>micro.app 框架 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2025/05/29/%E5%BE%AE%E5%89%8D%E7%AB%AF/micro.app%20%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">micro.app 框架</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-05-29T21:30:00+08:00">
+                2025-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">微前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2025/05/29/%E5%BE%AE%E5%89%8D%E7%AB%AF/micro.app%20%E6%A1%86%E6%9E%B6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2025/05/29/微前端/micro.app 框架/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Micro-app-框架"><a href="#Micro-app-框架" class="headerlink" title="Micro-app 框架"></a>Micro-app 框架</h1><p><a href="https://jd-opensource.github.io/micro-app/">官网地址</a></p>
+<h2 id="使用框架基调"><a href="#使用框架基调" class="headerlink" title="使用框架基调"></a>使用框架基调</h2><p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/image-20230602211251896.png" alt="image-20230602211251896"></p>
+<h2 id="1、框架安装"><a href="#1、框架安装" class="headerlink" title="1、框架安装"></a>1、框架安装</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @micro-zoe/micro-app@latest --save</span><br></pre></td></tr></table></figure>
+<h2 id="2、子应用对应的view页面"><a href="#2、子应用对应的view页面" class="headerlink" title="2、子应用对应的view页面"></a>2、子应用对应的view页面</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">      name(必传)：应用名称</span></span><br><span class="line"><span class="comment">      url(必传)：应用地址，会被自动补全为http://localhost:3000/index.html</span></span><br><span class="line"><span class="comment">      baseroute(可选)：基座应用分配给子应用的基础路由，就是上面的 `/my-page`</span></span><br><span class="line"><span class="comment">     --&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">micro-app</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">name</span>=<span class="string">&#x27;app-vue2-demo&#x27;</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">url</span>=<span class="string">&#x27;http://localhost:4001/&#x27;</span> </span></span><br><span class="line"><span class="tag">      <span class="attr">baseroute</span>=<span class="string">&#x27;/app-vue2-demo&#x27;</span></span></span><br><span class="line"><span class="tag">     &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">micro-app</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="3、页面对应的路由"><a href="#3、页面对应的路由" class="headerlink" title="3、页面对应的路由"></a>3、页面对应的路由</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">//路由路径最好是非严格匹配</span></span><br><span class="line">  <span class="attr">path</span>: <span class="string">&quot;/app-vue2-demo*&quot;</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Vue2DemoPage&quot;</span>,</span><br><span class="line">  <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&quot;@/views/Vue2DemoPage.vue&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>别忘记，view页面也需要配置</p>
+<h2 id="4、子应用的配置"><a href="#4、子应用的配置" class="headerlink" title="4、子应用的配置"></a>4、子应用的配置</h2><p>子程序路由需要判断是否加上主程序给予的路由前缀</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const router = new VueRouter(&#123;</span><br><span class="line">  mode: &quot;history&quot;,</span><br><span class="line">  base: window.__MICRO_APP_BASE_ROUTE__ || &#x27;/&#x27;,</span><br><span class="line">  。。。。。</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5、子程序需要设置跨域"><a href="#5、子程序需要设置跨域" class="headerlink" title="5、子程序需要设置跨域"></a>5、子程序需要设置跨域</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">devServer</span>: &#123;</span><br><span class="line">  <span class="attr">port</span>: <span class="number">4001</span>,</span><br><span class="line">  <span class="attr">headers</span>: &#123;</span><br><span class="line">  <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置总结"><a href="#配置总结" class="headerlink" title="配置总结"></a>配置总结</h3><p>主应用</p>
+<p>1、创建一个页面，需要加入micro-app自定义元素</p>
+<p>2、配置路由</p>
+<p>子应用</p>
+<p>1、如果在微前端中，加上路由前缀</p>
+<p>2、设置跨域</p>
+<h4 id="页面渲染实现原理"><a href="#页面渲染实现原理" class="headerlink" title="页面渲染实现原理"></a>页面渲染实现原理</h4><p>其实micro-app原理很简单：WebComponent(Custom Element) + HTMLEntry</p>
+<p>其实就是把子应用的资源读取过来，直接在基座程序中运行</p>
+<p><img src="/Users/yingside/Desktop/assets/image-20230603221130681.png" alt="image-20230603221130681"></p>
+<h3 id="与react子应用集成"><a href="#与react子应用集成" class="headerlink" title="与react子应用集成"></a>与react子应用集成</h3><p>主应用</p>
+<p>1、创建一个页面，需要加入micro-app自定义元素</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;micro-app </span><br><span class="line">  name=&#x27;app-react-demo&#x27; </span><br><span class="line">  url=&#x27;http://localhost:4002/&#x27; </span><br><span class="line">  baseroute=&#x27;/app-react-demo&#x27;</span><br><span class="line">&gt;</span><br><span class="line">&lt;/micro-app&gt;</span><br></pre></td></tr></table></figure>
+<p>2、配置路由</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">//路由路径最好是非严格匹配</span></span><br><span class="line">  <span class="attr">path</span>: <span class="string">&quot;/app-react-demo*&quot;</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;ReactDemoPage&quot;</span>,</span><br><span class="line">  <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&quot;@/views/ReactDemoPage.vue&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子应用</p>
+<p>1、如果在微前端中，加上路由前缀</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Router</span> basename=&#123;<span class="variable language_">window</span>.<span class="property">__MICRO_APP_BASE_ROUTE__</span> || <span class="string">&#x27;/&#x27;</span>&#125;&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">Routes</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/&quot;</span> <span class="attr">element</span>=<span class="string">&#123;</span>&lt;<span class="attr">LayoutMain</span> /&gt;</span>&#125; &gt; </span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Route</span> <span class="attr">index</span> <span class="attr">element</span>=<span class="string">&#123;</span>&lt;<span class="attr">Home</span> /&gt;</span>&#125; /&gt;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;about&quot;</span> <span class="attr">element</span>=<span class="string">&#123;</span>&lt;<span class="attr">About</span> /&gt;</span>&#125; /&gt;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;info&quot;</span> <span class="attr">element</span>=<span class="string">&#123;</span>&lt;<span class="attr">Info</span> /&gt;</span>&#125; /&gt;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Route</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">Routes</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Router</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>2、设置跨域</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">headers</span>: &#123;</span><br><span class="line">  <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>: <span class="string">&#x27;*&#x27;</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>3、静态资源的处理</p>
+<p>在子应用中的src下创建public-path.js文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">__MICRO_APP_ENVIRONMENT__</span>) &#123;</span><br><span class="line">  <span class="comment">// eslint-disable-next-line</span></span><br><span class="line">  __webpack_public_path__ = <span class="variable language_">window</span>.<span class="property">__MICRO_APP_PUBLIC_PATH__</span> <span class="comment">//http://localhost:4002  默认/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个文件放入到程序的入口文件index.js中直接执行，建议最好放在第一行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;./public-path&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="与vite项目子应用集成"><a href="#与vite项目子应用集成" class="headerlink" title="与vite项目子应用集成"></a>与vite项目子应用集成</h3><p>当子应用是vite应用时需要做特别的适配，适配vite的代价是巨大的，我们必须关闭沙箱功能，因为沙箱在<code>module script</code>下不支持，这导致大部分功能失效，包括：环境变量、样式隔离、元素隔离、资源路径补全、baseroute 等。</p>
+<p>在嵌入vite子应用时，<code>micro-app</code>的功能只负责渲染，其它的行为由应用自行决定，这包括如何防止样式、JS变量、元素的冲突。</p>
+<p>在module模式下，引入的资源大多为相对地址，兼容主要做的事情就是将地址补全。</p>
+<blockquote>
+<p>vite的module模式是指vite在开发模式下直接使用ES模块来加载代码，而不是像传统的构建工具一样通过打包和压缩，将所有代码打包成一个文件。这种模式让我们开发的时候效率很高，不过却给微前端的集成带来了麻烦</p>
+<p>因为我们之前说过micro-app集成的原理，就是把子应用打包好的index.html直接拉过来，然后在基座中运行子应用的代码。vite 这种module模式的话。缺少了这个统一的入口，集成起来就非常的麻烦</p>
+</blockquote>
+<h4 id="1、基座项目中添加页面"><a href="#1、基座项目中添加页面" class="headerlink" title="1、基座项目中添加页面"></a>1、基座项目中添加页面</h4><p>views中添加页面ViteDemoPage.vue</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Main - Vite Vue3 Demo<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">micro-app</span> <span class="attr">name</span>=<span class="string">&#x27;app-vite-demo&#x27;</span> <span class="attr">url</span>=<span class="string">&#x27;http://localhost:4003/&#x27;</span> <span class="attr">baseroute</span>=<span class="string">&#x27;/app-vite-demo&#x27;</span> <span class="attr">iframe</span>&gt;</span><span class="tag">&lt;/<span class="name">micro-app</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>路由中添加：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>: <span class="string">&quot;/app-vite-demo*&quot;</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;AppViteDemo&quot;</span>,</span><br><span class="line">  <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&quot;@/views/ViteDemoPage.vue&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>app.vue页面别忘记添加路由</p>
+<h4 id="2、适配vite项目，子应用修改vite-config-ts文件"><a href="#2、适配vite项目，子应用修改vite-config-ts文件" class="headerlink" title="2、适配vite项目，子应用修改vite.config.ts文件"></a>2、适配vite项目，子应用修改vite.config.ts文件</h4><p>无论micro-app框架还是single-spa框架，适配vite项目代价都很大，如果你要集成的项目很多是vite项目，建议直接使用iframe的方式接入，或者使用wujie</p>
+<p>这里主要说明两点：</p>
+<p>1、path如果报错，需要导入nodejs的TypeScript 的声明文件包 npm i –save-dev @types/node</p>
+<p>2、赋值的自定义插件报错，直接any</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span></span><br><span class="line"><span class="keyword">import</span> vue <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; resolve &#125; <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; join &#125; <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; writeFileSync &#125; <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// https://vitejs.dev/config/</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="comment">//域名，生成环境是是你具体的域名，开发环境下为空字符串，这里手动加上了微前端的路由前缀</span></span><br><span class="line">  <span class="attr">base</span>: <span class="string">`<span class="subst">$&#123;process.env.NODE_ENV === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;http://my-site.com&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;</span>/app-vite-demo/`</span>,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="title function_">vue</span>(),</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;@&#x27;</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&#x27;src&#x27;</span>) <span class="comment">// 设置 `@` 指向 `src` 目录</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">server</span>: &#123;</span><br><span class="line">    <span class="attr">port</span>: <span class="number">4003</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="3、子项目修改容器id和渲染容器id"><a href="#3、子项目修改容器id和渲染容器id" class="headerlink" title="3、子项目修改容器id和渲染容器id"></a>3、子项目修改容器id和渲染容器id</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- index.html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;my-vite-app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"><span class="title function_">createApp</span>(<span class="title class_">App</span>).<span class="title function_">mount</span>(<span class="string">&#x27;#my-vite-app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="4、修改路由"><a href="#4、修改路由" class="headerlink" title="4、修改路由"></a>4、修改路由</h4><p>vite子项目需要修改为<strong>hash路由</strong></p>
+<p>由于主应用关闭的沙箱功能，所以基座应用的环境变量不能使用了，所以，每次切换路由的时候就会产生问题</p>
+<p>由于hash路由，使用的是地址栏的处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHashHistory</span>(),</span><br><span class="line">  routes,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="5、静态资源"><a href="#5、静态资源" class="headerlink" title="5、静态资源"></a>5、静态资源</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://vitejs.dev&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;viteLogo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;logo&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Vite logo&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://vuejs.org/&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;vueLogo&quot;</span> <span class="attr">class</span>=<span class="string">&quot;logo vue&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Vue logo&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">HelloWorld</span> <span class="attr">msg</span>=<span class="string">&quot;子应用 -- Vite+Vue@3.x&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">HelloWorld</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/HelloWorld.vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> vueLogo = <span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&#x27;@/assets/vue.svg&#x27;</span>, <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>).<span class="property">href</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> viteLogo = <span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">&#x27;/vite.svg&#x27;</span>, <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>).<span class="property">href</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>如果图片比较多，可以用计算属性稍微封装一下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://vitejs.dev&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;imgUrl(&#x27;/vite.svg&#x27;)&quot;</span> <span class="attr">class</span>=<span class="string">&quot;logo&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Vite logo&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://vuejs.org/&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">&quot;imgUrl(&#x27;.https://raw.githubusercontent.com/riceCk/riceBlog/master/images/vue.svg&#x27;)&quot;</span> <span class="attr">class</span>=<span class="string">&quot;logo vue&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Vue logo&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">HelloWorld</span> <span class="attr">msg</span>=<span class="string">&quot;子应用 -- Vite+Vue@3.x&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;computed&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">HelloWorld</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/HelloWorld.vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// const vueLogo = new URL(&#x27;@/assets/vue.svg&#x27;, import.meta.url).href</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// const viteLogo = new URL(&#x27;/vite.svg&#x27;, import.meta.url).href</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> imgUrl = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> <span class="function">(<span class="params">url: string</span>) =&gt;</span> <span class="keyword">new</span> <span class="title function_">URL</span>(url, <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">url</span>).<span class="property">href</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="6、基座应用的修改，关闭沙箱功能"><a href="#6、基座应用的修改，关闭沙箱功能" class="headerlink" title="6、基座应用的修改，关闭沙箱功能"></a>6、基座应用的修改，关闭沙箱功能</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;micro-app </span><br><span class="line">  name=<span class="string">&#x27;app-vite-demo&#x27;</span> </span><br><span class="line">  url=<span class="string">&#x27;http://localhost:4003/&#x27;</span> </span><br><span class="line">  baseroute=<span class="string">&#x27;/app-vite-demo&#x27;</span></span><br><span class="line">  iframe</span><br><span class="line"> &gt;</span><br><span class="line"> &lt;/micro-app&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="7、基座应用处理子应用静态资源"><a href="#7、基座应用处理子应用静态资源" class="headerlink" title="7、基座应用处理子应用静态资源"></a>7、基座应用处理子应用静态资源</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">microApp.<span class="title function_">start</span>(&#123;</span><br><span class="line">  <span class="string">&#x27;disable-memory-router&#x27;</span>: <span class="literal">true</span>, <span class="comment">// 关闭虚拟路由系统</span></span><br><span class="line">  <span class="string">&#x27;disable-patch-request&#x27;</span>: <span class="literal">true</span>, <span class="comment">// 关闭对子应用请求的拦截</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="8、出现的问题"><a href="#8、出现的问题" class="headerlink" title="8、出现的问题"></a>8、出现的问题</h4><p><strong>开发者工具console窗口报错</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vite] failed to connect to <span class="title function_">websocket</span> (<span class="title class_">SyntaxError</span>: <span class="title class_">Failed</span> to construct <span class="string">&#x27;WebSocket&#x27;</span>: <span class="title class_">The</span> <span class="variable constant_">URL</span> <span class="string">&#x27;ws://:/app-vite-demo/&#x27;</span> is invalid.)</span><br></pre></td></tr></table></figure>
+<p>这个是由于框架自身问题导致，不影响运行，官方已经在1.0beta版本修复了这个问题</p>
+<p><strong>由于沙箱隔离关闭，导致环境变量，css隔离，元素隔离、资源路径补全、baseroute等失效</strong></p>
+<p>这个问题只有开发者在开发的时候自行定义好开发规范进行规避</p>
+<h3 id="requestIdleCallback"><a href="#requestIdleCallback" class="headerlink" title="requestIdleCallback"></a>requestIdleCallback</h3><p>requestIdleCallback浏览器渲染一帧的剩余空闲时间执行优先度相对较低的任务</p>
+<p>页面是通过一帧一帧渲染出来的，通常60FPS是流程的，和浏览器刷新同步。这就意味着：<strong>一秒之内要进行60次渲染，每次重新渲染的时间不能超过16.66(1000/60)毫秒</strong></p>
+<p>浏览器一帧做了什么事情？</p>
+<p>顺序</p>
+<ul>
+<li><p>用户事件</p>
+</li>
+<li><p>js事件轮询</p>
+</li>
+<li>begin frame<ul>
+<li>window.resize</li>
+<li>scroll</li>
+<li>媒体查询</li>
+<li>动画时间</li>
+</ul>
+</li>
+<li>requestAnimationFrame（在每次渲染之前执行，不会重新触发浏览器重绘）</li>
+<li>浏览器渲染<ul>
+<li>样式计算</li>
+<li>布局</li>
+<li>重绘</li>
+<li>合成</li>
+</ul>
+</li>
+<li>requestIdleCallback(空闲时间)</li>
+</ul>
+<h2 id="6、数据通信"><a href="#6、数据通信" class="headerlink" title="6、数据通信"></a>6、数据通信</h2><p>实现原理 数据中心(发布订阅+数据缓存)</p>
+<p><img src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/image-20230606202921562.png" alt="image-20230606202921562"></p>
+<h3 id="父应用直接传递"><a href="#父应用直接传递" class="headerlink" title="父应用直接传递"></a>父应用直接传递</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;micro-app </span><br><span class="line">	......</span><br><span class="line">	:data=&#x27;dataForChild&#x27;</span><br><span class="line">&gt;</span><br><span class="line">&lt;/micro-app&gt;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      dataForChild:&#123;type:&#x27;发送给子应用的数据&#x27;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="子应用直接获取"><a href="#子应用直接获取" class="headerlink" title="子应用直接获取"></a>子应用直接获取</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=&quot;handleData&quot;&gt;获取父应用传递数据&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">  handleData() &#123; </span><br><span class="line">    const data = window.microApp.getData()</span><br><span class="line">    console.log(data);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="子应用发送消息给父应用"><a href="#子应用发送消息给父应用" class="headerlink" title="子应用发送消息给父应用"></a>子应用发送消息给父应用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=&quot;sendData&quot;&gt;子应用反馈数据&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">  sendData() &#123; </span><br><span class="line">    window.microApp.dispatch(&#123;type: &#x27;子应用发送的数据&#x27;&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="父应用直接接收消息"><a href="#父应用直接接收消息" class="headerlink" title="父应用直接接收消息"></a>父应用直接接收消息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;micro-app </span><br><span class="line">  ......</span><br><span class="line">  @datachange=&#x27;handleDataChange&#x27;</span><br><span class="line">&gt;</span><br><span class="line">&lt;/micro-app&gt;</span><br><span class="line"></span><br><span class="line">handleDataChange (e) &#123;</span><br><span class="line">	console.log(&#x27;来自子应用的数据：&#x27;, e.detail.data);</span><br><span class="line">	//ele通知</span><br><span class="line">	this.$notify(&#123;</span><br><span class="line">    title: &#x27;子应用信息&#x27;,</span><br><span class="line">    message: e.detail.data.type,</span><br><span class="line">    position: &#x27;top-left&#x27;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="父应用主动发送信息给子应用"><a href="#父应用主动发送信息给子应用" class="headerlink" title="父应用主动发送信息给子应用"></a>父应用主动发送信息给子应用</h3><p>在vue2DemoPage页面发送消息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=&quot;sendDataToVue2&quot;&gt;父应用-发送数据给app-vue2-demo&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">import microApp from &#x27;@micro-zoe/micro-app&#x27;</span><br><span class="line">sendDataToVue2() &#123; </span><br><span class="line">   microApp.setData(&#x27;app-vue2-demo&#x27;, &#123;type: &#x27;发送新的数据&#x27;,path:&quot;/about&quot;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="子应用监听父应用发送的消息"><a href="#子应用监听父应用发送的消息" class="headerlink" title="子应用监听父应用发送的消息"></a>子应用监听父应用发送的消息</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//element ui将通知挂载到Vue.prototype上，vue实例可以通过this获取，在main函数中，可以直接导入Notification</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Notification</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;element-ui&#x27;</span>;</span><br><span class="line"><span class="comment">// 与基座进行数据交互</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">handleMicroData</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 是否是微前端环境</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">window</span>.<span class="property">__MICRO_APP_ENVIRONMENT__</span>) &#123;</span><br><span class="line">    <span class="comment">// 主动获取基座下发的数据</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;vue2-demo getData:&#x27;</span>, <span class="variable language_">window</span>.<span class="property">microApp</span>.<span class="title function_">getData</span>())</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听基座下发的数据变化</span></span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">microApp</span>.<span class="title function_">addDataListener</span>(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;vue2-demo addDataListener:&#x27;</span>, data)</span><br><span class="line">      <span class="title class_">Notification</span>(&#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;子应用信息&#x27;</span>,</span><br><span class="line">        <span class="attr">message</span>: data.<span class="property">type</span>,</span><br><span class="line">        <span class="attr">position</span>: <span class="string">&#x27;bottom-right&#x27;</span></span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 当基座下发path时进行跳转</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">path</span> &amp;&amp; data.<span class="property">path</span> !== router.<span class="property">currentRoute</span>.<span class="property">path</span>) &#123;</span><br><span class="line">        router.<span class="title function_">push</span>(data.<span class="property">path</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = <span class="literal">null</span></span><br><span class="line"><span class="comment">// 👇 将渲染操作放入 mount 函数 -- 必填</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">mount</span> (<span class="params"></span>) &#123;</span><br><span class="line">  app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    router,</span><br><span class="line">    <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">  &#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line">  <span class="title function_">handleMicroData</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="子应用主动发送消息"><a href="#子应用主动发送消息" class="headerlink" title="子应用主动发送消息"></a>子应用主动发送消息</h3><p>和上面一样，只是这里基座应用通过事件监听获取，并且根据子应用发送的地址基座路由进行跳转</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sendData() &#123; </span><br><span class="line">	window.microApp.dispatch(&#123;type: &#x27;子应用发送的数据&#x27;, path:&quot;/app-react-demo/about&quot;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="基座应用监听"><a href="#基座应用监听" class="headerlink" title="基座应用监听"></a>基座应用监听</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">microApp.<span class="title function_">addDataListener</span>(<span class="string">&#x27;app-vue2-demo&#x27;</span>, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123; </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;基座主动监听&quot;</span>, data);</span><br><span class="line">  <span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.$notify(&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;子应用信息&#x27;</span>,</span><br><span class="line">    <span class="attr">message</span>: data.<span class="property">type</span>,</span><br><span class="line">    <span class="attr">position</span>: <span class="string">&#x27;bottom-left&#x27;</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当收到子应用发path时进行跳转</span></span><br><span class="line">  <span class="keyword">if</span> (data.<span class="property">path</span> &amp;&amp; data.<span class="property">path</span> !== router.<span class="property">currentRoute</span>.<span class="property">path</span>) &#123;</span><br><span class="line">    router.<span class="title function_">push</span>(data.<span class="property">path</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2024/01/13/Electron/3_%E7%AA%97%E5%8F%A3%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="next" title="3.窗口基础知识">
+                <i class="fa fa-chevron-left"></i> 3.窗口基础知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/02/19/%E5%89%8D%E7%AB%AF+ai/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="prev" title="本地部署大模型">
+                本地部署大模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Micro-app-%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">Micro-app 框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A1%86%E6%9E%B6%E5%9F%BA%E8%B0%83"><span class="nav-number">1.1.</span> <span class="nav-text">使用框架基调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%A1%86%E6%9E%B6%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">1、框架安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%AD%90%E5%BA%94%E7%94%A8%E5%AF%B9%E5%BA%94%E7%9A%84view%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.3.</span> <span class="nav-text">2、子应用对应的view页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E9%A1%B5%E9%9D%A2%E5%AF%B9%E5%BA%94%E7%9A%84%E8%B7%AF%E7%94%B1"><span class="nav-number">1.4.</span> <span class="nav-text">3、页面对应的路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E5%AD%90%E5%BA%94%E7%94%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">4、子应用的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E5%AD%90%E7%A8%8B%E5%BA%8F%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.</span> <span class="nav-text">5、子程序需要设置跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.1.</span> <span class="nav-text">配置总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">页面渲染实现原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8Ereact%E5%AD%90%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90"><span class="nav-number">1.6.2.</span> <span class="nav-text">与react子应用集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8Evite%E9%A1%B9%E7%9B%AE%E5%AD%90%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90"><span class="nav-number">1.6.3.</span> <span class="nav-text">与vite项目子应用集成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%9F%BA%E5%BA%A7%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%B7%BB%E5%8A%A0%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">1、基座项目中添加页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E9%80%82%E9%85%8Dvite%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%AD%90%E5%BA%94%E7%94%A8%E4%BF%AE%E6%94%B9vite-config-ts%E6%96%87%E4%BB%B6"><span class="nav-number">1.6.3.2.</span> <span class="nav-text">2、适配vite项目，子应用修改vite.config.ts文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%AD%90%E9%A1%B9%E7%9B%AE%E4%BF%AE%E6%94%B9%E5%AE%B9%E5%99%A8id%E5%92%8C%E6%B8%B2%E6%9F%93%E5%AE%B9%E5%99%A8id"><span class="nav-number">1.6.3.3.</span> <span class="nav-text">3、子项目修改容器id和渲染容器id</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E4%BF%AE%E6%94%B9%E8%B7%AF%E7%94%B1"><span class="nav-number">1.6.3.4.</span> <span class="nav-text">4、修改路由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90"><span class="nav-number">1.6.3.5.</span> <span class="nav-text">5、静态资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E5%9F%BA%E5%BA%A7%E5%BA%94%E7%94%A8%E7%9A%84%E4%BF%AE%E6%94%B9%EF%BC%8C%E5%85%B3%E9%97%AD%E6%B2%99%E7%AE%B1%E5%8A%9F%E8%83%BD"><span class="nav-number">1.6.3.6.</span> <span class="nav-text">6、基座应用的修改，关闭沙箱功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%E3%80%81%E5%9F%BA%E5%BA%A7%E5%BA%94%E7%94%A8%E5%A4%84%E7%90%86%E5%AD%90%E5%BA%94%E7%94%A8%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90"><span class="nav-number">1.6.3.7.</span> <span class="nav-text">7、基座应用处理子应用静态资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%E3%80%81%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.3.8.</span> <span class="nav-text">8、出现的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requestIdleCallback"><span class="nav-number">1.6.4.</span> <span class="nav-text">requestIdleCallback</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1"><span class="nav-number">1.7.</span> <span class="nav-text">6、数据通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%B6%E5%BA%94%E7%94%A8%E7%9B%B4%E6%8E%A5%E4%BC%A0%E9%80%92"><span class="nav-number">1.7.1.</span> <span class="nav-text">父应用直接传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%BA%94%E7%94%A8%E7%9B%B4%E6%8E%A5%E8%8E%B7%E5%8F%96"><span class="nav-number">1.7.2.</span> <span class="nav-text">子应用直接获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%BA%94%E7%94%A8%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF%E7%BB%99%E7%88%B6%E5%BA%94%E7%94%A8"><span class="nav-number">1.7.3.</span> <span class="nav-text">子应用发送消息给父应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%B6%E5%BA%94%E7%94%A8%E7%9B%B4%E6%8E%A5%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF"><span class="nav-number">1.7.4.</span> <span class="nav-text">父应用直接接收消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%88%B6%E5%BA%94%E7%94%A8%E4%B8%BB%E5%8A%A8%E5%8F%91%E9%80%81%E4%BF%A1%E6%81%AF%E7%BB%99%E5%AD%90%E5%BA%94%E7%94%A8"><span class="nav-number">1.7.5.</span> <span class="nav-text">父应用主动发送信息给子应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%BA%94%E7%94%A8%E7%9B%91%E5%90%AC%E7%88%B6%E5%BA%94%E7%94%A8%E5%8F%91%E9%80%81%E7%9A%84%E6%B6%88%E6%81%AF"><span class="nav-number">1.7.6.</span> <span class="nav-text">子应用监听父应用发送的消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E5%BA%94%E7%94%A8%E4%B8%BB%E5%8A%A8%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="nav-number">1.7.7.</span> <span class="nav-text">子应用主动发送消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E5%BA%A7%E5%BA%94%E7%94%A8%E7%9B%91%E5%90%AC"><span class="nav-number">1.7.8.</span> <span class="nav-text">基座应用监听</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2025/05/29/%E5%BE%AE%E5%89%8D%E7%AB%AF/micro.app%20%E6%A1%86%E6%9E%B6/';
+          this.page.identifier = '2025/05/29/微前端/micro.app 框架/';
+          this.page.title = 'micro.app 框架';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

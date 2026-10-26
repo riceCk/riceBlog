@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="📚 Java 核心类字符串和编码String字符串比较 s1 &#x3D;&#x3D; s2：编译期会把相同字面量放进常量池，引用相同则 &#x3D;&#x3D; 为 true。比较内容请用 equals()。 12345678910public class Main &#123;  public static void main(String[] args) &#123;    String s1 &#x3D; &quot;hello&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.Java核心类">
+<meta property="og:url" content="http://yoursite.com/2026/06/07/java%E5%85%A5%E9%97%A8/4.Java%E6%A0%B8%E5%BF%83%E7%B1%BB/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="📚 Java 核心类字符串和编码String字符串比较 s1 &#x3D;&#x3D; s2：编译期会把相同字面量放进常量池，引用相同则 &#x3D;&#x3D; 为 true。比较内容请用 equals()。 12345678910public class Main &#123;  public static void main(String[] args) &#123;    String s1 &#x3D; &quot;hello&amp;quo">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-06-07T14:12:44.000Z">
+<meta property="article:modified_time" content="2026-10-20T07:00:54.574Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/06/07/java入门/4.Java核心类/"/>
+
+
+
+
+
+  <title>4.Java核心类 | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/06/07/java%E5%85%A5%E9%97%A8/4.Java%E6%A0%B8%E5%BF%83%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">4.Java核心类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-06-07T22:12:44+08:00">
+                2026-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/java%E5%85%A5%E9%97%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">java入门</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/06/07/java%E5%85%A5%E9%97%A8/4.Java%E6%A0%B8%E5%BF%83%E7%B1%BB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/06/07/java入门/4.Java核心类/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="📚-Java-核心类"><a href="#📚-Java-核心类" class="headerlink" title="📚 Java 核心类"></a>📚 Java 核心类</h1><h2 id="字符串和编码"><a href="#字符串和编码" class="headerlink" title="字符串和编码"></a>字符串和编码</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p><strong>字符串比较</strong></p>
+<p><code>s1 == s2</code>：编译期会把相同字面量放进常量池，引用相同则 <code>==</code> 为 <code>true</code>。比较内容请用 <code>equals()</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="string">&quot;HELLO&quot;</span>.toLowerCase();</span><br><span class="line">    System.out.println(s1 == s2); <span class="comment">// true</span></span><br><span class="line">    System.out.println(s1 == s3); <span class="comment">// false</span></span><br><span class="line">    System.out.println(s1.equals(s2)); <span class="comment">// true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>String</code> 还提供了搜索、提取子串等方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否包含子串</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.contains(<span class="string">&quot;ll&quot;</span>); <span class="comment">// true</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.indexOf(<span class="string">&quot;l&quot;</span>); <span class="comment">// 2</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.lastIndexOf(<span class="string">&quot;l&quot;</span>); <span class="comment">// 3</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.startsWith(<span class="string">&quot;He&quot;</span>); <span class="comment">// true</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.endsWith(<span class="string">&quot;lo&quot;</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><strong>提取子串：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;Hello&quot;</span>.substring(<span class="number">2</span>); <span class="comment">// &quot;llo&quot;</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.substring(<span class="number">2</span>, <span class="number">4</span>); <span class="comment">// &quot;ll&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>去除首尾空白：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;  \tHello\r\n &quot;</span>.trim(); <span class="comment">// &quot;Hello&quot;</span></span><br><span class="line"><span class="comment">// 与 trim() 不同：中文空格 \u3000 也会被 strip() 移除</span></span><br><span class="line"><span class="string">&quot;\u3000Hello\u3000&quot;</span>.strip(); <span class="comment">// &quot;Hello&quot;</span></span><br><span class="line"><span class="string">&quot; Hello &quot;</span>.stripLeading(); <span class="comment">// &quot;Hello &quot;</span></span><br><span class="line"><span class="string">&quot; Hello &quot;</span>.stripTrailing(); <span class="comment">// &quot; Hello&quot;</span></span><br></pre></td></tr></table></figure>
+<p><code>isEmpty()</code> / <code>isBlank()</code> 判断空串与空白串：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;</span>.isEmpty();        <span class="comment">// true，长度为 0</span></span><br><span class="line"><span class="string">&quot;  &quot;</span>.isEmpty();      <span class="comment">// false，长度不为 0</span></span><br><span class="line"><span class="string">&quot;  \n&quot;</span>.isBlank();    <span class="comment">// true，只含空白字符</span></span><br><span class="line"><span class="string">&quot; Hello &quot;</span>.isBlank(); <span class="comment">// false，含非空白字符</span></span><br></pre></td></tr></table></figure>
+<p><strong>替换子串</strong></p>
+<p>按字符/字符串替换，或用正则替换：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">s.replace(<span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;w&#x27;</span>); <span class="comment">// &quot;hewwo&quot;</span></span><br><span class="line">s.replace(<span class="string">&quot;ll&quot;</span>, <span class="string">&quot;~~&quot;</span>); <span class="comment">// &quot;he~~o&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正则表达式替换</span></span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;A,,B;C ,D&quot;</span>;</span><br><span class="line">s2.replaceAll(<span class="string">&quot;[\\,\\;\\s]+&quot;</span>, <span class="string">&quot;,&quot;</span>); <span class="comment">// &quot;A,B,C,D&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>分割字符串</strong></p>
+<p>使用 <code>split()</code>，参数是正则。特殊符号（<code>.</code> <code>*</code> <code>+</code> 等）需要转义，例如 <code>\\,</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;A,B,C,D,&quot;</span>;</span><br><span class="line"><span class="type">String</span>[] <span class="variable">ss</span> <span class="operator">=</span> s.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">System.out.println(Arrays.toString(ss));</span><br></pre></td></tr></table></figure>
+<p><strong>拼接字符串</strong></p>
+<p>静态方法 <code>join()</code> 用指定分隔符连接数组，和 JS 的数组转字符串类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span>[] <span class="variable">arr</span> <span class="operator">=</span> &#123;<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>&#125;;</span><br><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> String.join(<span class="string">&quot;***&quot;</span>, arr); <span class="comment">// &quot;A***B***C&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>格式化字符串</strong></p>
+<p><code>formatted()</code> 与 <code>format()</code> 可替换占位符生成新字符串：</p>
+<ul>
+<li><code>%s</code>：字符串</li>
+<li><code>%d</code>：整数</li>
+<li><code>%x</code>：十六进制整数</li>
+<li><code>%f</code>：浮点数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;Hi %s, your score is %d!&quot;</span>;</span><br><span class="line">    System.out.println(s.formatted(<span class="string">&quot;Alice&quot;</span>, <span class="number">80</span>));</span><br><span class="line">    System.out.println(String.format(<span class="string">&quot;Hi %s, your score is %.2f!&quot;</span>, <span class="string">&quot;Bob&quot;</span>, <span class="number">59.5</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>类型转换</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String.valueOf(<span class="number">123</span>); <span class="comment">// &quot;123&quot;</span></span><br><span class="line"><span class="type">int</span> <span class="variable">n1</span> <span class="operator">=</span> Integer.parseInt(<span class="string">&quot;123&quot;</span>); <span class="comment">// 123</span></span><br><span class="line"><span class="type">int</span> <span class="variable">n2</span> <span class="operator">=</span> Integer.parseInt(<span class="string">&quot;ff&quot;</span>, <span class="number">16</span>); <span class="comment">// 按十六进制转换 → 255</span></span><br></pre></td></tr></table></figure>
+<p><strong>字符串转 boolean：</strong></p>
+<ul>
+<li>仅当 <code>str.equals(&quot;true&quot;)</code> → <code>true</code></li>
+<li><code>&quot;TRUE&quot;</code> / <code>&quot;True&quot;</code> / <code>&quot;1&quot;</code> / <code>&quot;yes&quot;</code> / <code>&quot;false&quot;</code> / 空串 → 全部为 <code>false</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="variable">b1</span> <span class="operator">=</span> Boolean.parseBoolean(<span class="string">&quot;true&quot;</span>); <span class="comment">// true</span></span><br><span class="line"><span class="type">boolean</span> <span class="variable">b2</span> <span class="operator">=</span> Boolean.parseBoolean(<span class="string">&quot;FALSE&quot;</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h3><p>支持 <code>append</code> 拼接、<code>insert</code> 插入、<code>replace</code> 替换等，<strong>可链式调用</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span>[] <span class="variable">fields</span> <span class="operator">=</span> &#123;<span class="string">&quot;name&quot;</span>, <span class="string">&quot;position&quot;</span>, <span class="string">&quot;salary&quot;</span>&#125;;</span><br><span class="line"><span class="type">String</span> <span class="variable">table</span> <span class="operator">=</span> <span class="string">&quot;employee&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">insert</span> <span class="operator">=</span> buildInsertSql(table, fields);</span><br><span class="line"><span class="comment">// insert = &quot;INSERT INTO employee (name, position, salary) VALUES (?, ?, ?)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="type">String</span> <span class="title function_">buildInsertSql</span><span class="params">(String table, String[] fields)</span> &#123;</span><br><span class="line">  <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">  sb.append(<span class="string">&quot;INSERT INTO &quot;</span>).append(table + <span class="string">&quot; (&quot;</span>);</span><br><span class="line">  <span class="keyword">for</span> (String field : fields) &#123;</span><br><span class="line">    sb.append(field + <span class="string">&quot;, &quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  sb.replace(sb.length() - <span class="number">2</span>, sb.length(), <span class="string">&quot;) &quot;</span>).append(<span class="string">&quot;VALUES (?, ?, ?)&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> sb.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="StringJoiner"><a href="#StringJoiner" class="headerlink" title="StringJoiner"></a>StringJoiner</h3><p><strong><code>new StringJoiner(delimiter, prefix, suffix)</code></strong></p>
+<ul>
+<li><code>delimiter</code>：拼接分隔符，如 <code>,</code></li>
+<li><code>prefix</code>：开头内容</li>
+<li><code>suffix</code>：结尾内容</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span>[] <span class="variable">names</span> <span class="operator">=</span> &#123;<span class="string">&quot;Bob&quot;</span>, <span class="string">&quot;Alice&quot;</span>, <span class="string">&quot;Grace&quot;</span>&#125;;</span><br><span class="line"><span class="type">var</span> <span class="variable">sj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringJoiner</span>(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;Hello &quot;</span>, <span class="string">&quot;!&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">  sj.add(name);</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(sj.toString()); <span class="comment">// Hello Bob,Alice,Grace!</span></span><br><span class="line">sj.add(<span class="string">&quot;kevin&quot;</span>);</span><br><span class="line">System.out.println(sj.toString()); <span class="comment">// Hello Bob,Alice,Grace,kevin!</span></span><br></pre></td></tr></table></figure>
+<p>不需要指定「开头」「结尾」时，可用 <code>String.join()</code>（内部也是 <code>StringJoiner</code>）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span>[] <span class="variable">names</span> <span class="operator">=</span> &#123;<span class="string">&quot;Bob&quot;</span>, <span class="string">&quot;Alice&quot;</span>, <span class="string">&quot;Grace&quot;</span>&#125;;</span><br><span class="line"><span class="type">var</span> <span class="variable">s</span> <span class="operator">=</span> String.join(<span class="string">&quot;, &quot;</span>, names);</span><br></pre></td></tr></table></figure>
+<h3 id="包装类型"><a href="#包装类型" class="headerlink" title="包装类型"></a>包装类型</h3><p>Java 数据类型分两种：</p>
+<ul>
+<li><strong>基本类型：</strong> <code>byte</code>、<code>short</code>、<code>int</code>、<code>long</code>、<code>boolean</code>、<code>float</code>、<code>double</code>、<code>char</code></li>
+<li><strong>引用类型：</strong> 所有 <code>class</code> 和 <code>interface</code></li>
+</ul>
+<p>引用类型可赋 <code>null</code>；基本类型不行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="literal">null</span>; <span class="comment">// compile error!</span></span><br></pre></td></tr></table></figure>
+<p><strong>Integer 使用注意：</strong></p>
+<ol>
+<li><code>==</code> 比较的是<strong>对象地址</strong>，不是数值；比数值用 <code>.equals()</code></li>
+<li>缓存范围：<code>-128 ~ 127</code>，此区间内 <code>valueOf</code> 复用对象；超出则新建，不能靠 <code>==</code></li>
+<li><code>new Integer()</code> 一定创建新对象，不与缓存相等</li>
+<li>开发规范：<strong>不要用 <code>new Integer</code>，统一用 <code>Integer.valueOf()</code></strong></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">n1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Integer</span>(i); <span class="comment">// 不推荐</span></span><br><span class="line"><span class="type">Integer</span> <span class="variable">n2</span> <span class="operator">=</span> Integer.valueOf(i);</span><br><span class="line"><span class="type">Integer</span> <span class="variable">n3</span> <span class="operator">=</span> Integer.valueOf(<span class="string">&quot;100&quot;</span>);</span><br><span class="line">System.out.println(n1 == n2); <span class="comment">// false</span></span><br><span class="line">System.out.println(n2 == n3); <span class="comment">// true</span></span><br><span class="line">System.out.println(n3 == n1); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p><strong>自动装箱 / 拆箱</strong></p>
+<p><code>int</code> → <code>Integer</code> 叫自动装箱（Auto Boxing）；<code>Integer</code> → <code>int</code> 叫自动拆箱（Auto Unboxing）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Integer</span> <span class="variable">n</span> <span class="operator">=</span> <span class="number">100</span>; <span class="comment">// 编译器自动 Integer.valueOf(int)</span></span><br><span class="line"><span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> n; <span class="comment">// 编译器自动 Integer.intValue()</span></span><br></pre></td></tr></table></figure>
+<h3 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h3><p><strong>enum</strong> 定义枚举：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">Weekday</span> &#123;</span><br><span class="line">  SUN, MON, TUE, WED, THU, FRI, SAT;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Weekday</span> <span class="variable">day</span> <span class="operator">=</span> Weekday.SUN;</span><br><span class="line"><span class="keyword">if</span> (day == Weekday.SAT || day == Weekday.SUN) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Work at home!&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Work at office!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常用方法：<code>name()</code>、<code>ordinal()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> Weekday.SUN.name(); <span class="comment">// &quot;SUN&quot;</span></span><br><span class="line"><span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> Weekday.MON.ordinal(); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p><strong>enum</strong>本身就是<code>class</code>，可以定义<code>private</code>构建方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Weekday</span> <span class="variable">day</span> <span class="operator">=</span> Weekday.SUN;</span><br><span class="line">    <span class="keyword">if</span> (day.dayValue == <span class="number">6</span> || day.dayValue == <span class="number">0</span>) &#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Work at home!&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      System.out.println(<span class="string">&quot;Work at office!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Weekday</span> &#123;</span><br><span class="line">  MON(<span class="number">1</span>), TUE(<span class="number">2</span>), WED(<span class="number">3</span>), THU(<span class="number">4</span>), FRI(<span class="number">5</span>), SAT(<span class="number">6</span>), SUN(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> dayValue;</span><br><span class="line">  <span class="type">private</span> <span class="title function_">Weekday</span><span class="params">(<span class="type">int</span> dayValue)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.dayValue = dayValue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>enum</strong>重写<code>toString()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Weekday</span> <span class="variable">day</span> <span class="operator">=</span> Weekday.SUN;</span><br><span class="line"><span class="keyword">if</span> (day.dayValue == <span class="number">6</span> || day.dayValue == <span class="number">0</span>) &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;Today is &quot;</span> + day + <span class="string">&quot;. Work at home!&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;Today is &quot;</span> + day + <span class="string">&quot;. Work at office!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Weekday</span> &#123;</span><br><span class="line">  MON(<span class="number">1</span>, <span class="string">&quot;星期一&quot;</span>), TUE(<span class="number">2</span>, <span class="string">&quot;星期二&quot;</span>), WED(<span class="number">3</span>, <span class="string">&quot;星期三&quot;</span>), THU(<span class="number">4</span>, <span class="string">&quot;星期四&quot;</span>), FRI(<span class="number">5</span>, <span class="string">&quot;星期五&quot;</span>), SAT(<span class="number">6</span>, <span class="string">&quot;星期六&quot;</span>), SUN(<span class="number">0</span>, <span class="string">&quot;星期日&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> dayValue;</span><br><span class="line">  <span class="keyword">private</span> String chinese;</span><br><span class="line"></span><br><span class="line">  <span class="type">private</span> <span class="title function_">Weekday</span><span class="params">(<span class="type">int</span> dayValue, String chinese)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.dayValue = dayValue;</span><br><span class="line">    <span class="built_in">this</span>.chinese = chinese;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">String</span> <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.chinese;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="记录类"><a href="#记录类" class="headerlink" title="记录类"></a>记录类</h3><p><strong>record</strong>的基本用法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Point</span> <span class="variable">p</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Point</span>(<span class="number">123</span>, <span class="number">222</span>);</span><br><span class="line">System.out.println(p.x());  <span class="comment">// 123</span></span><br><span class="line">System.out.println(p); # Point[x=<span class="number">123</span>, y=<span class="number">222</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">record</span> <span class="title class_">Point</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+<p>进阶用法<strong>添加静态方法</strong>，并且<code>public Point &#123;...&#125;</code>编写检查逻辑，限制入参规则</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Point</span> <span class="variable">p</span> <span class="operator">=</span>  Point.of(<span class="number">12</span>, <span class="number">33</span>);</span><br><span class="line">System.out.println(p.x());</span><br><span class="line">System.out.println(p);</span><br><span class="line"></span><br><span class="line"><span class="keyword">record</span> <span class="title class_">Point</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">Point</span> <span class="title function_">of</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Point</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">Point</span> <span class="title function_">of</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Point</span>(x, y);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> Point&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">0</span> || y &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="BigDecimal"><a href="#BigDecimal" class="headerlink" title="BigDecimal"></a>BigDecimal</h3><p><code>scale()</code>表示小数位数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BigDecimal</span> <span class="variable">d1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;123.45&quot;</span>);</span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">d2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;123.4500&quot;</span>);</span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">d3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;1234500&quot;</span>);</span><br><span class="line">System.out.println(d1.scale()); <span class="comment">// 2,两位小数</span></span><br><span class="line">System.out.println(d2.scale()); <span class="comment">// 4</span></span><br><span class="line">System.out.println(d3.scale()); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+<p><code>stripTrailingZeros()</code>方法，可以将一个BigDecimal格式化为一个相等的，但去掉了末尾0的BigDecimal</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BigDecimal</span> <span class="variable">d1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;123.4500&quot;</span>);</span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">d2</span> <span class="operator">=</span> d1.stripTrailingZeros();</span><br><span class="line">System.out.println(d1.scale()); <span class="comment">// 4</span></span><br><span class="line">System.out.println(d2.scale()); <span class="comment">// 2,因为去掉了00</span></span><br><span class="line"></span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">d3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;1234500&quot;</span>);</span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">d4</span> <span class="operator">=</span> d3.stripTrailingZeros();</span><br><span class="line">System.out.println(d3.scale()); <span class="comment">// 0</span></span><br><span class="line">System.out.println(d4.scale()); <span class="comment">// -2</span></span><br><span class="line"><span class="comment">// 如果一个BigDecimal的scale()返回负数，例如，-2，表示这个数是个整数，并且末尾有2个0。</span></span><br></pre></td></tr></table></figure>
+<p><code>setScale</code>指定的方法进行四舍五入或者直接截断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BigDecimal</span> <span class="variable">d1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;123.456789&quot;</span>);</span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">d2</span> <span class="operator">=</span> d1.setScale(<span class="number">4</span>, RoundingMode.HALF_UP); <span class="comment">// 四舍五入，123.4568</span></span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">d3</span> <span class="operator">=</span> d1.setScale(<span class="number">4</span>, RoundingMode.DOWN); <span class="comment">// 直接截断，123.4567</span></span><br><span class="line">System.out.println(d2);</span><br><span class="line">System.out.println(d3);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/06/06/java%E5%85%A5%E9%97%A8/3.%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%E4%B9%8B%E4%BA%8C/" rel="next" title="3.面向对象编程之二">
+                <i class="fa fa-chevron-left"></i> 3.面向对象编程之二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/06/11/java%E5%85%A5%E9%97%A8/5.%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" rel="prev" title="5.异常处理">
+                5.异常处理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%93%9A-Java-%E6%A0%B8%E5%BF%83%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">📚 Java 核心类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E7%BC%96%E7%A0%81"><span class="nav-number">1.1.</span> <span class="nav-text">字符串和编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">1.1.1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringBuilder"><span class="nav-number">1.1.2.</span> <span class="nav-text">StringBuilder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringJoiner"><span class="nav-number">1.1.3.</span> <span class="nav-text">StringJoiner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.4.</span> <span class="nav-text">包装类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E7%B1%BB"><span class="nav-number">1.1.5.</span> <span class="nav-text">枚举类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%B1%BB"><span class="nav-number">1.1.6.</span> <span class="nav-text">记录类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BigDecimal"><span class="nav-number">1.1.7.</span> <span class="nav-text">BigDecimal</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/06/07/java%E5%85%A5%E9%97%A8/4.Java%E6%A0%B8%E5%BF%83%E7%B1%BB/';
+          this.page.identifier = '2026/06/07/java入门/4.Java核心类/';
+          this.page.title = '4.Java核心类';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

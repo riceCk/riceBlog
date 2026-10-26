@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/riceBlog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/riceBlog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/riceBlog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/riceBlog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/riceBlog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/riceBlog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/riceBlog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Agent开发," />
+
+
+
+
+
+  <link rel="alternate" href="/riceBlog/atom.xml" title="riceCK" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="LangChain中创建AgentLangChain HubHugging Face Hub 的“提示词版”核心 API 就两个： pull(identifier: string)：从 Hub 拉取指定资源（prompt 或 chain）。  参数 identifier 的形式通常是： &quot;hwchase17&#x2F;react&quot; &quot;hwchase17&#x2F;openai-tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8.创建Agent">
+<meta property="og:url" content="http://yoursite.com/2026/04/21/LangChain/8.%E5%88%9B%E5%BB%BAAgent/index.html">
+<meta property="og:site_name" content="riceCK">
+<meta property="og:description" content="LangChain中创建AgentLangChain HubHugging Face Hub 的“提示词版”核心 API 就两个： pull(identifier: string)：从 Hub 拉取指定资源（prompt 或 chain）。  参数 identifier 的形式通常是： &quot;hwchase17&#x2F;react&quot; &quot;hwchase17&#x2F;openai-tools">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-04-21T13:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-16T03:12:37.380Z">
+<meta property="article:author" content="陈凯">
+<meta property="article:tag" content="Agent开发">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2026/04/21/LangChain/8.创建Agent/"/>
+
+
+
+
+
+  <title>8.创建Agent | riceCK</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/riceBlog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">riceCK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">欢迎来到帅比凯的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/riceBlog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/riceBlog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/riceBlog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/riceBlog/2026/04/21/LangChain/8.%E5%88%9B%E5%BB%BAAgent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="riceCK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">8.创建Agent</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2026-04-21T21:30:00+08:00">
+                2026-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/riceBlog/categories/LangChain/" itemprop="url" rel="index">
+                    <span itemprop="name">LangChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/riceBlog/2026/04/21/LangChain/8.%E5%88%9B%E5%BB%BAAgent/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2026/04/21/LangChain/8.创建Agent/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="LangChain中创建Agent"><a href="#LangChain中创建Agent" class="headerlink" title="LangChain中创建Agent"></a>LangChain中创建Agent</h1><h2 id="LangChain-Hub"><a href="#LangChain-Hub" class="headerlink" title="LangChain Hub"></a>LangChain Hub</h2><p>Hugging Face Hub 的“提示词版”<br>核心 API 就两个：</p>
+<p><strong><code>pull(identifier: string)</code></strong>：从 Hub 拉取指定资源（prompt 或 chain）。</p>
+<ul>
+<li>参数 <code>identifier</code> 的形式通常是：<ul>
+<li><code>&quot;hwchase17/react&quot;</code></li>
+<li><code>&quot;hwchase17/openai-tools-agent&quot;</code></li>
+<li><code>&quot;org_name/custom_prompt&quot;</code></li>
+</ul>
+</li>
+<li>返回值取决于资源类型：<ul>
+<li>如果是 prompt，就返回 <code>PromptTemplate</code> 或 <code>ChatPromptTemplate</code> 对象；</li>
+<li>如果是 chain，就返回 chain runnable。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const prompt = await pull(<span class="string">&quot;hwchase17/react&quot;</span>);</span><br><span class="line"><span class="comment"># 得到的提示词</span></span><br><span class="line">Answer the following questions as best you can. You have access to the following tools:</span><br><span class="line"></span><br><span class="line">&#123;tools&#125;</span><br><span class="line"></span><br><span class="line">Use the following format:</span><br><span class="line"></span><br><span class="line">Question: the input question you must answer</span><br><span class="line">Thought: you should always think about what to <span class="keyword">do</span></span><br><span class="line">Action: the action to take, should be one of [&#123;tool_names&#125;]</span><br><span class="line">Action Input: the input to the action</span><br><span class="line">Observation: the result of the action</span><br><span class="line">... (this Thought/Action/Action Input/Observation can repeat N <span class="built_in">times</span>)</span><br><span class="line">Thought: I now know the final answer</span><br><span class="line">Final Answer: the final answer to the original input question</span><br><span class="line"></span><br><span class="line">Begin!</span><br><span class="line"></span><br><span class="line">Question: &#123;input&#125;</span><br><span class="line">Thought:&#123;agent_scratchpad&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><p>前面介绍的模型携带 Tools：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const modelWithTool = new ChatOpenAI(&#123;</span><br><span class="line">  model: <span class="string">&quot;gpt-3.5-turbo-1106&quot;</span>,</span><br><span class="line">  apiKey: process.env.API_KEY,</span><br><span class="line">  temperature: 0,</span><br><span class="line">&#125;).withConfig(&#123;</span><br><span class="line">  tools: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">type</span>: <span class="string">&quot;function&quot;</span>,</span><br><span class="line">      <span class="keyword">function</span>: &#123;</span><br><span class="line">        name: <span class="string">&quot;getCurrentWeather&quot;</span>,</span><br><span class="line">        description: <span class="string">&quot;获取指定城市当前天气&quot;</span>,</span><br><span class="line">        parameters: getCurrentWeatherJsonSchema,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在 LangChain.js 中，提供了一个 Tool 工具，能够生成给 Agent 消费的 Tool 工具：</p>
+<p>示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; tool &#125; <span class="keyword">from</span> <span class="string">&quot;@langchain/core/tools&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; z &#125; <span class="keyword">from</span> <span class="string">&quot;zod&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> weatherTool = <span class="title function_">tool</span>(</span><br><span class="line">  <span class="title function_">async</span> (city) =&gt; <span class="string">`<span class="subst">$&#123;city&#125;</span>：多云转晴，28℃ / 20℃（示例数据）`</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;weather&quot;</span>,</span><br><span class="line">    <span class="attr">description</span>: <span class="string">&quot;查询城市天气。输入城市名。&quot;</span>,</span><br><span class="line">    <span class="attr">schema</span>: z.<span class="title function_">string</span>(),</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="createReactAgent"><a href="#createReactAgent" class="headerlink" title="createReactAgent"></a>createReactAgent</h2><p>核心机制：ReAct 框架（Reasoning + Acting）<br>必填 params 参数：</p>
+<ul>
+<li><code>llm</code>：任一兼容的聊天/文本 LLM。</li>
+<li><code>tools</code>：工具列表（结构化工具）。</li>
+<li><code>prompt</code>：ReAct 模板（推荐直接从 Hub 拉 <code>hwchase17/react</code>）。这个 prompt 决定了该 agent 的输入变量集合。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const prompt = await pull(<span class="string">&quot;hwchase17/react&quot;</span>);</span><br><span class="line"></span><br><span class="line">const llm = new ChatOpenAI(&#123;</span><br><span class="line">  model: <span class="string">&quot;gpt-4o-mini&quot;</span>,</span><br><span class="line">  temperature: 0,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const tools = [weatherTool, weekdayTool];</span><br><span class="line"></span><br><span class="line">const agent = await createReactAgent(&#123;</span><br><span class="line">  llm,</span><br><span class="line">  tools,</span><br><span class="line">  prompt,</span><br><span class="line">&#125;);</span><br><span class="line">输入 → Assign预处理 → 模板渲染 → LLM补全 → ReAct输出解析 → (AgentAction | AgentFinish)</span><br></pre></td></tr></table></figure>
+<h2 id="AgentExecutor"><a href="#AgentExecutor" class="headerlink" title="AgentExecutor"></a>AgentExecutor</h2><p>AgentExecutor，顾名思义，就是 agent 执行器，它把你已经构造好的 agent 和 tools 结合起来，负责外层的 ReAct 式决策循环：反复“让 agent 规划一步 → 调工具 → 回填观察 → 再问 agent”，直到结束。</p>
+<ol>
+<li>调用 agent：agent 会返回 <strong><code>AgentAction</code></strong>（要调哪个工具+参数）或 <strong><code>AgentFinish</code></strong>（结束）</li>
+<li>执行工具：当拿到 <code>AgentAction</code> 时，AgentExecutor 根据 <code>action.tool</code> 找到对应 tool，校验 <code>toolInput</code>，执行并得到 observation。</li>
+<li>记录中间步骤：把 <code>&#123; action, observation &#125;</code> 追加成一条 AgentStep，同时把它格式化进 <code>agent_scratchpad</code>，供下一轮给 agent 使用。</li>
+<li>判断是否继续：如果 agent 返回 <strong><code>AgentFinish</code></strong>，或到达最大迭代次数，则停止并产出最终结果。官方提供了一个 <code>shouldContinueGetter()</code> 用来判断是否继续（基于已执行轮数）。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const executor = new AgentExecutor(&#123;</span><br><span class="line">  agent,</span><br><span class="line">  tools,</span><br><span class="line">  returnIntermediateSteps: <span class="literal">true</span>, <span class="comment"># 开启中间步骤，方便观察</span></span><br><span class="line">  maxIterations: 5,</span><br><span class="line">  handleParsingErrors: <span class="literal">true</span>, <span class="comment"># 观察错误</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="createToolCallingAgent"><a href="#createToolCallingAgent" class="headerlink" title="createToolCallingAgent"></a>createToolCallingAgent</h2><p>核心机制：直接提示（Direct Prompting）与结构化输出（Structured Output）</p>
+<ul>
+<li>工作方式：该代理使用现代大语言模型（LLM）原生支持的函数调用（Function Calling）或工具调用（Tool Calling）能力。代理提示模型直接输出一个结构化的调用指令，指定要使用的工具（tool）及其输入参数。</li>
+<li>推理过程：模型在单步内决定是否调用工具，并直接生成调用请求。如果需要调用，它会输出一个工具调用动作；否则，直接生成最终回复。</li>
+<li>特点：<ul>
+<li>高效：通常只需要一次或少数几次模型调用即可完成任务。</li>
+<li>依赖模型能力：要求底层LLM支持结构化输出或工具调用功能（如OpenAI的<code>gpt-3.5-turbo</code>或<code>gpt-4</code>系列）。</li>
+<li>简洁：不涉及复杂的思维链（Chain-of-Thought）推理。</li>
+</ul>
+</li>
+<li>适用场景：适用于现代支持工具调用的LLM，追求效率和低延迟的场景。</li>
+</ul>
+<p><strong>总结对比表</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>createToolCallingAgent</code></th>
+<th><code>createReactAgent</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>底层机制</strong></td>
+<td>原生工具调用（Tool Calling）</td>
+<td>ReAct 框架（Reason + Act）</td>
+</tr>
+<tr>
+<td><strong>推理方式</strong></td>
+<td>直接决策，无显式思考过程</td>
+<td>多步思维链（Thought → Action → Observation）</td>
+</tr>
+<tr>
+<td><strong>模型要求</strong></td>
+<td>需支持结构化输出/工具调用的LLM</td>
+<td>任何文本生成模型均可（兼容性更强）</td>
+</tr>
+<tr>
+<td><strong>调用效率</strong></td>
+<td>高（通常1-2次调用）</td>
+<td>较低（可能多次循环）</td>
+</tr>
+<tr>
+<td><strong>可解释性</strong></td>
+<td>低（直接输出调用或回复）</td>
+<td>高（显示完整推理链）</td>
+</tr>
+<tr>
+<td><strong>适用LLM</strong></td>
+<td>OpenAI, Anthropic, 支持tool calling的模型</td>
+<td>所有模型，尤其适合不支持tool calling的模型</td>
+</tr>
+<tr>
+<td><strong>典型应用</strong></td>
+<td>快速响应、生产环境高效执行</td>
+<td>教学、调试、复杂任务分析</td>
+</tr>
+</tbody>
+</table>
+<h2 id="streamEvents"><a href="#streamEvents" class="headerlink" title="streamEvents"></a>streamEvents</h2><p>这是 <code>AgentExecutor</code> 提供的一个异步可迭代方法，用于在执行过程中实时产生事件流，而不是等待整个执行完成才返回结果。</p>
+<p>与 <code>.invoke()</code> 或 <code>.stream()</code> 不同，<code>.streamEvents()</code> 提供的是<strong>最细粒度的执行过程信息</strong>，适合用于调试、监控、前端实时展示等场景。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const events = await executor.streamEvents(</span><br><span class="line">  &#123; input, chat_history &#125;,</span><br><span class="line">  &#123; version: <span class="string">&quot;v2&quot;</span> &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> await (const event of events) &#123;</span><br><span class="line">  <span class="keyword">if</span> (event.event === <span class="string">&quot;on_chat_model_stream&quot;</span>) &#123;</span><br><span class="line">    const token = event.data.chunk.content; <span class="comment"># 获取当前生成的 token</span></span><br><span class="line">    process.stdout.write(token); <span class="comment"># 实时打印（像打字机一样）</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (event.event === <span class="string">&quot;on_tool_start&quot;</span>) &#123;</span><br><span class="line">    console.log(`正在调用工具: <span class="variable">$&#123;event.name&#125;</span>`);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (event.event === <span class="string">&quot;on_tool_end&quot;</span>) &#123;</span><br><span class="line">    console.log(`工具结果:`, event.data.output);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/riceBlog/tags/Agent%E5%BC%80%E5%8F%91/" rel="tag"># Agent开发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/riceBlog/2026/03/24/LangChain/6.%E6%A3%80%E7%B4%A2%E4%BD%93%E7%B3%BB/" rel="next" title="6.检索体系">
+                <i class="fa fa-chevron-left"></i> 6.检索体系
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/riceBlog/2026/04/21/LangChain/7.Memory%E5%9F%BA%E7%A1%80/" rel="prev" title="1.Memory 记忆功能">
+                1.Memory 记忆功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://raw.githubusercontent.com/riceCk/riceBlog/master/images/avatar.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/riceBlog/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/riceBlog/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/riceBlog/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/riceBlog/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LangChain%E4%B8%AD%E5%88%9B%E5%BB%BAAgent"><span class="nav-number">1.</span> <span class="nav-text">LangChain中创建Agent</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LangChain-Hub"><span class="nav-number">1.1.</span> <span class="nav-text">LangChain Hub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tools"><span class="nav-number">1.2.</span> <span class="nav-text">Tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#createReactAgent"><span class="nav-number">1.3.</span> <span class="nav-text">createReactAgent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AgentExecutor"><span class="nav-number">1.4.</span> <span class="nav-text">AgentExecutor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#createToolCallingAgent"><span class="nav-number">1.5.</span> <span class="nav-text">createToolCallingAgent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#streamEvents"><span class="nav-number">1.6.</span> <span class="nav-text">streamEvents</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈凯</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/riceBlog/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/riceBlog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/riceBlog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/riceBlog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/riceBlog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2026/04/21/LangChain/8.%E5%88%9B%E5%BB%BAAgent/';
+          this.page.identifier = '2026/04/21/LangChain/8.创建Agent/';
+          this.page.title = '8.创建Agent';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+<script src="/riceBlog/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
